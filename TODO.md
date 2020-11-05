@@ -1,4 +1,8 @@
 # TODO:
-- [ ] I2C Protokollanalyse Testen
-- [ ] Stabilität des Oszilloskops und Logic Analyzers Testen
-- [ ] Software Oszilloskop u. Logic Analyzer analysieren
+- [x] I2C Protokollanalyse Testen: Geht nicht. Nur Demo Modus in Applikation verfügbar.
+- [x] Stabilität des Oszilloskops und Logic Analyzers Testen: Irrelevant
+- [x] Software Oszilloskop u. Logic Analyzer analysieren: Kein Zugriff auf Code
+- [ ] Aufbau normaler Software Analysieren + Developers Guide drucharbeiten
+- [ ] Ansprechen/Auslesen der High Freq. Schnittstellen (über c Schnittstelle(rp.h), Ausgeben done)
+- [ ] Definieren der Arbeitsschritte
+- [ ] Definieren der Umsetzung (High Freq. or not)
