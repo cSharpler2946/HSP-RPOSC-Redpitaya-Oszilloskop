@@ -4,6 +4,7 @@
 #include <thread>
 #include <gmodule.h>
 #include <libsigrokdecode/libsigrokdecode.h>
+#define ToErr (srd_error_code)
 
 using namespace std;
 
@@ -12,7 +13,7 @@ void callback(struct srd_proto_data *pdata, void *cb_data)
     cout << "Received callback" << endl;
 }
 
-const char *decoderId = "uart";
+const char *decoderId = "counter";
 
 int main() {
     cout << "Starting libsigrokdecode test application" << endl;
@@ -21,7 +22,7 @@ int main() {
     //Print version
     cout << "libsigrokdecode version: " << srd_lib_version_string_get() << endl;
 
-    srd_error_code err = (srd_error_code) srd_init(NULL);
+    srd_error_code err = ToErr srd_init(NULL);
 
     // List contains correct path "/usr/share/libsigrokdecode/decoders"
     // GSList * tmp = srd_searchpaths_get();
@@ -29,22 +30,42 @@ int main() {
     //Create new decoder session
     srd_session *sess;
     srd_session_new(&sess);
-    err = (srd_error_code) srd_session_start(sess);
+    err = ToErr srd_session_start(sess);
 
     //Load an list all decoders
-    //err = (srd_error_code) srd_decoder_load_all();
+    //err = ToErr srd_decoder_load_all();
     //Load only one decoder by name
-    err = (srd_error_code) srd_decoder_load(decoderId);
+    err = ToErr srd_decoder_load(decoderId);
     const GSList *l = srd_decoder_list();
     //Get decoder by id: ids are unique identifier strings for each decoder. Can be found in "/usr/share/libsigrokdecode/decoders/<decoder>/pd.py"
-    cout << srd_decoder_doc_get(srd_decoder_get_by_id(decoderId)) << endl;
+    //cout << srd_decoder_doc_get(srd_decoder_get_by_id(decoderId)) << endl;
 
     //Create protocol decoder instance
     srd_decoder_inst *inst = srd_inst_new(sess, decoderId, NULL);
 
-    //Add samplerate to decoder instance TODO: Create GHashTable (GLib) containing options
+    //Printing current options, Getting gvariant type -> Here it is only s(string) and x(int64)
+    GSList *i;
+    for (i = inst->decoder->options; i; i = i->next) {
+        struct srd_decoder_option *p = static_cast<srd_decoder_option *>(i->data);
+        cout << p->id << ":"<< g_variant_type_peek_string(g_variant_get_type(p->def)) << ":";
+        g_list_foreach(reinterpret_cast<GList *>(p->values), [](gpointer data, gpointer user_data){ cout << data << ","; }, NULL);
+        cout << endl;
+    }
+
+    //Add samplerate to decoder instance TODO: Create GHashTable (GLib) containing options. Currently not working!!
+    const gchar *key = "data_edge";
+    GVariant *value = g_variant_new("s","rising");
     GHashTable *options = g_hash_table_new(g_int_hash, g_int_equal);
-    g_hash_table_insert(options, "samplerate", "9800");
+    g_hash_table_insert(options, (gpointer) key, value);
+
+    //Printing contents of gHashTable
+    g_hash_table_foreach(options, [](gpointer key, gpointer value, gpointer user_data){ cout << "Table:" << (char *)key << (char *)value << endl; } ,NULL);
+
+    err = ToErr srd_inst_option_set(inst, options);
+
+    //Setting SRD_CONF_SAMPLERATE
+    GVariant *metadata = g_variant_new ("t", 100000); //Following function only supports the uint64 (="t") data type!!
+    err = ToErr srd_session_metadata_set(sess, SRD_CONF_SAMPLERATE, metadata);
 
 
 
@@ -57,10 +78,10 @@ int main() {
     }
 
     //Add callback
-    err = (srd_error_code) srd_pd_output_callback_add(sess, SRD_OUTPUT_BINARY, &callback, NULL);
+    err = ToErr srd_pd_output_callback_add(sess, SRD_OUTPUT_BINARY, &callback, NULL);
 
     //Send data to session
-    err = (srd_error_code) srd_session_send(sess, 0, 1023, inbuf, 1024, 1);
+    err = ToErr srd_session_send(sess, 0, 1023, inbuf, 1024, 1);
 
     this_thread::sleep_for(chrono::milliseconds(10000));
 
