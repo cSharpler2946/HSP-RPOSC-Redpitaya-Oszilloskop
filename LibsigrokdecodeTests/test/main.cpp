@@ -13,7 +13,7 @@ void callback(struct srd_proto_data *pdata, void *cb_data)
     cout << "Received callback" << endl;
 }
 
-const char *decoderId = "counter";
+const char *decoderId = "pwm";
 
 int main() {
     cout << "Starting libsigrokdecode test application" << endl;
@@ -22,7 +22,7 @@ int main() {
     //Print version
     cout << "libsigrokdecode version: " << srd_lib_version_string_get() << endl;
 
-    srd_error_code err = ToErr srd_init(NULL);
+    srd_error_code err = ToErr srd_init(nullptr);
 
     // List contains correct path "/usr/share/libsigrokdecode/decoders"
     // GSList * tmp = srd_searchpaths_get();
@@ -30,9 +30,11 @@ int main() {
     //Create new decoder session
     srd_session *sess;
     srd_session_new(&sess);
-    err = ToErr srd_session_start(sess);
+    //Add callback
+    err = ToErr srd_pd_output_callback_add(sess, SRD_OUTPUT_ANN, &callback, nullptr);
+    //err = ToErr srd_session_start(sess);
 
-    //Load an list all decoders
+    //Load and list all decoders
     //err = ToErr srd_decoder_load_all();
     //Load only one decoder by name
     err = ToErr srd_decoder_load(decoderId);
@@ -41,44 +43,49 @@ int main() {
     //cout << srd_decoder_doc_get(srd_decoder_get_by_id(decoderId)) << endl;
 
     //Create protocol decoder instance
-    srd_decoder_inst *inst = srd_inst_new(sess, decoderId, NULL);
+    srd_decoder_inst *inst = srd_inst_new(sess, decoderId, nullptr);
 
     //Printing current options, Getting gvariant type -> Here it is only s(string) and x(int64)
+    /*
     GSList *i;
     for (i = inst->decoder->options; i; i = i->next) {
         struct srd_decoder_option *p = static_cast<srd_decoder_option *>(i->data);
         cout << p->id << ":"<< g_variant_type_peek_string(g_variant_get_type(p->def)) << ":";
-        g_list_foreach(reinterpret_cast<GList *>(p->values), [](gpointer data, gpointer user_data){ cout << data << ","; }, NULL);
+        g_list_foreach(reinterpret_cast<GList *>(p->values), [](gpointer data, gpointer user_data){ cout << data << ","; }, nullptr);
         cout << endl;
     }
+     */
 
-    //Add samplerate to decoder instance TODO: Create GHashTable (GLib) containing options. Currently not working!!
+    //Add channel
+    GHashTable *channels = g_hash_table_new(g_int_hash, g_int_equal);
+    err = ToErr srd_inst_channel_set_all(inst, channels);
+
+    GArray *pinStates = g_array_new(false, true, 5);
+    srd_inst_initial_pins_set_all(inst, pinStates);
+
+    //Add options to decoder instance
     const gchar *key = "data_edge";
     GVariant *value = g_variant_new("s","rising");
     GHashTable *options = g_hash_table_new(g_int_hash, g_int_equal);
     g_hash_table_insert(options, (gpointer) key, value);
-
     //Printing contents of gHashTable
-    g_hash_table_foreach(options, [](gpointer key, gpointer value, gpointer user_data){ cout << "Table:" << (char *)key << (char *)value << endl; } ,NULL);
-
+    //g_hash_table_foreach(options, [](gpointer key, gpointer value, gpointer user_data){ cout << "Table:" << (char *)key << (char *)value << endl; } ,nullptr);
     err = ToErr srd_inst_option_set(inst, options);
 
     //Setting SRD_CONF_SAMPLERATE
     GVariant *metadata = g_variant_new ("t", 100000); //Following function only supports the uint64 (="t") data type!!
     err = ToErr srd_session_metadata_set(sess, SRD_CONF_SAMPLERATE, metadata);
 
-
-
     //Generate Sample data
     uint8_t inbuf[1024];
-    srand(time(NULL));
+    srand(time(nullptr));
     for(int i = 0; i<1024; i++)
     {
         inbuf[i]=rand() % 255;
     }
 
-    //Add callback
-    err = ToErr srd_pd_output_callback_add(sess, SRD_OUTPUT_BINARY, &callback, NULL);
+    //Start session
+    err = ToErr srd_session_start(sess);
 
     //Send data to session
     err = ToErr srd_session_send(sess, 0, 1023, inbuf, 1024, 1);
