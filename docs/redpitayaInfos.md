@@ -13,5 +13,8 @@ possible Samplingrates are defined in rp.h
 - 122,07 kS
 - 1,258 kS
 - 1,907 kS
-further informations here.. 
+further informations here..
 https://redpitaya.readthedocs.io/en/latest/appsFeatures/examples/acqRF-samp-and-dec.html#s-rate-and-dec
+
+ringbuffer stuff
+https://github.com/RedPitaya/RedPitaya/issues/100
