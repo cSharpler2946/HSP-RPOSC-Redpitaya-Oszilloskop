@@ -4,16 +4,19 @@
 #include <thread>
 #include <gmodule.h>
 #include <libsigrokdecode/libsigrokdecode.h>
+#include <stdint.h>
 #define ToErr (srd_error_code)
 
 using namespace std;
 
-void callback(struct srd_proto_data *pdata, void *cb_data)
+void callbackAnnotation(struct srd_proto_data *pdata, void *cb_data)
 {
-    cout << "Received callback" << endl;
+    int annIndex = *(int*)pdata->data;
+    char **annString = (gchar **)g_slist_nth_data(pdata->pdo->di->decoder->annotations, annIndex); //double pointer!!
+    printf("CB: %d-%d: %d: %s\n", pdata->start_sample, pdata->end_sample, annIndex, *annString);
 }
 
-const char *decoderId = "pwm";
+const char *decoderId = "counter";
 
 int main() {
     cout << "Starting libsigrokdecode test application" << endl;
@@ -31,7 +34,7 @@ int main() {
     srd_session *sess;
     srd_session_new(&sess);
     //Add callback
-    err = ToErr srd_pd_output_callback_add(sess, SRD_OUTPUT_ANN, &callback, nullptr);
+    err = ToErr srd_pd_output_callback_add(sess, SRD_OUTPUT_ANN, &callbackAnnotation, nullptr);
     //err = ToErr srd_session_start(sess);
 
     //Load and list all decoders
