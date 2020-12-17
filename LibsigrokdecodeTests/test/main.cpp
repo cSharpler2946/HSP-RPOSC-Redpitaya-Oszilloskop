@@ -11,12 +11,20 @@ using namespace std;
 
 void callbackAnnotation(struct srd_proto_data *pdata, void *cb_data)
 {
+    srd_proto_data_annotation *data = (srd_proto_data_annotation *)pdata->data;
+    char **annString = (gchar **)g_slist_nth_data(pdata->pdo->di->decoder->annotations, data->ann_class); //double pointer!!
+    printf("CB: %d-%d: %d: %s: %s\n", pdata->start_sample, pdata->end_sample, data->ann_class, *annString, *data->ann_text);
+
+}
+
+void callbackBinary(struct srd_proto_data *pdata, void *cb_data)
+{
     int annIndex = *(int*)pdata->data;
     char **annString = (gchar **)g_slist_nth_data(pdata->pdo->di->decoder->annotations, annIndex); //double pointer!!
     printf("CB: %d-%d: %d: %s\n", pdata->start_sample, pdata->end_sample, annIndex, *annString);
 }
 
-const char *decoderId = "counter";
+const char *decoderId = "pwm";
 
 int main() {
     cout << "Starting libsigrokdecode test application" << endl;
@@ -35,7 +43,7 @@ int main() {
     srd_session_new(&sess);
     //Add callback
     err = ToErr srd_pd_output_callback_add(sess, SRD_OUTPUT_ANN, &callbackAnnotation, nullptr);
-    //err = ToErr srd_session_start(sess);
+    err = ToErr srd_pd_output_callback_add(sess, SRD_OUTPUT_BINARY, &callbackBinary, nullptr);
 
     //Load and list all decoders
     //err = ToErr srd_decoder_load_all();
