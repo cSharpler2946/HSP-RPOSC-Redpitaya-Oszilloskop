@@ -7,6 +7,7 @@ Above configs config files include their configured IP in name.
 - To start VPN: `wg-quick up <nameofconf>`
 - To stop VPN: `wg-quick down <nameofconf>`
 - If error `resolvconf: command not found` run `sudo ln -s /usr/bin/resolvectl /usr/local/bin/resolvconf`
+- `sudo wg show all` shows the current connection
 
 ## Install (Windows):
 - Install: https://download.wireguard.com/windows-client/wireguard-installer.exe
