@@ -1,5 +1,5 @@
 Config for VPN which **only** tunnels IPs in Range 10.13.13.0/24.
-Above configs config files include their configured IP in name.
+Above config files include their configured IP in their name.
 
 ## Install (Ubuntu/Mint):
 - `sudo apt install wireguard`
