@@ -5,6 +5,17 @@
  * (c) Red Pitaya  http://www.redpitaya.com
  */
 
+//  import Vue from 'vue'
+//  import App from './App.vue'
+
+// createApp(App).mount('#app')
+
+ new Vue({
+    el: '#app',
+    template: '<App/>',
+    components: { App }
+})
+
 
 (function(APP, $, undefined) {
     
@@ -82,8 +93,6 @@
     };
 
 }(window.APP = window.APP || {}, jQuery));
-
-
 
 
 // Page onload event handler
