@@ -1,5 +1,6 @@
 # this file is from Google Drive and should be ignored - SE
 desktop.ini
+.vs/
 
 # Added cpp project build with Clion --> took my default jetbrains gitignore
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider

@@ -9,16 +9,3 @@ body {
     overflow: auto;
     margin: 0;
 }
-
-#content {
-    width: 500px;
-    height: 250px;
-    margin: 0 auto;
-    background-color: #333333;
-    text-align: center;
-}
-
-#hello_message {
-    padding-top: 20px;
-    margin-bottom: 20px;
-}
