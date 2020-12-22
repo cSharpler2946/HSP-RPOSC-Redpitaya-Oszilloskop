@@ -24,12 +24,39 @@ void callbackBinary(struct srd_proto_data *pdata, void *cb_data)
     printf("CB: %d-%d: %d: %s\n", pdata->start_sample, pdata->end_sample, annIndex, *annString);
 }
 
-const char *decoderId = "pwm";
+/*
+ * Prints options from .py file. NOT the current options!
+ * Supports only GVariantTypes s(string), x(int64) and d(double).
+ * Currently has glib error, but works: g_variant_get_uint64: assertion 'g_variant_is_of_type (value, G_VARIANT_TYPE_UINT64)' failed
+ */
+void printOptions(GSList *options)
+{
+    GSList *i;
+    for (i = options; i; i = i->next) {
+        struct srd_decoder_option *p = static_cast<srd_decoder_option *>(i->data);
+        const GVariantType *type = g_variant_get_type(p->def);
+        const gchar * typeS = g_variant_type_peek_string(type);
+        cout << p->id << ":" << typeS << ":";
+        if(g_variant_is_of_type(p->def, G_VARIANT_TYPE_INT64)) {
+            cout << g_variant_get_uint64(p->def) << ":";
+            g_list_foreach(reinterpret_cast<GList *>(p->values), [](gpointer data, gpointer user_data){ cout << g_variant_get_int64((GVariant*)data) << ","; }, nullptr);
+        } else if (g_variant_is_of_type(p->def, G_VARIANT_TYPE_STRING)) {
+            cout << g_variant_get_string(p->def, nullptr) << ":";
+            g_list_foreach(reinterpret_cast<GList *>(p->values), [](gpointer data, gpointer user_data){ cout << g_variant_get_string((GVariant*)data, nullptr) << ","; }, nullptr);
+        } else if (g_variant_is_of_type(p->def, G_VARIANT_TYPE_DOUBLE)) {
+            cout << g_variant_get_double(p->def) << ":";
+            g_list_foreach(reinterpret_cast<GList *>(p->values), [](gpointer data, gpointer user_data){ cout << g_variant_get_double((GVariant*)data) << ","; }, nullptr);
+        }
+        cout << endl;
+    }
+}
+
+const char *decoderId = "counter";
 
 int main() {
     cout << "Starting libsigrokdecode test application" << endl;
     //Setting the loglevel (0-5) of sigrokdecode. Does NOT log in order with rest of program!!
-    srd_log_loglevel_set(5);
+    //srd_log_loglevel_set(5);
     //Print version
     cout << "libsigrokdecode version: " << srd_lib_version_string_get() << endl;
 
@@ -42,8 +69,8 @@ int main() {
     srd_session *sess;
     srd_session_new(&sess);
     //Add callback
-    err = ToErr srd_pd_output_callback_add(sess, SRD_OUTPUT_ANN, &callbackAnnotation, nullptr);
-    err = ToErr srd_pd_output_callback_add(sess, SRD_OUTPUT_BINARY, &callbackBinary, nullptr);
+    //err = ToErr srd_pd_output_callback_add(sess, SRD_OUTPUT_ANN, &callbackAnnotation, nullptr);
+    //err = ToErr srd_pd_output_callback_add(sess, SRD_OUTPUT_BINARY, &callbackBinary, nullptr);
 
     //Load and list all decoders
     //err = ToErr srd_decoder_load_all();
@@ -56,23 +83,14 @@ int main() {
     //Create protocol decoder instance
     srd_decoder_inst *inst = srd_inst_new(sess, decoderId, nullptr);
 
-    //Printing current options, Getting gvariant type -> Here it is only s(string) and x(int64)
-    /*
-    GSList *i;
-    for (i = inst->decoder->options; i; i = i->next) {
-        struct srd_decoder_option *p = static_cast<srd_decoder_option *>(i->data);
-        cout << p->id << ":"<< g_variant_type_peek_string(g_variant_get_type(p->def)) << ":";
-        g_list_foreach(reinterpret_cast<GList *>(p->values), [](gpointer data, gpointer user_data){ cout << data << ","; }, nullptr);
-        cout << endl;
-    }
-     */
+    printOptions(inst->decoder->options);
 
     //Add channel
-    GHashTable *channels = g_hash_table_new(g_int_hash, g_int_equal);
-    err = ToErr srd_inst_channel_set_all(inst, channels);
+    //GHashTable *channels = g_hash_table_new(g_int_hash, g_int_equal);
+    //err = ToErr srd_inst_channel_set_all(inst, channels);
 
-    GArray *pinStates = g_array_new(false, true, 5);
-    srd_inst_initial_pins_set_all(inst, pinStates);
+    //GArray *pinStates = g_array_new(false, true, 5);
+    //srd_inst_initial_pins_set_all(inst, pinStates);
 
     //Add options to decoder instance
     const gchar *key = "data_edge";
@@ -80,7 +98,7 @@ int main() {
     GHashTable *options = g_hash_table_new(g_int_hash, g_int_equal);
     g_hash_table_insert(options, (gpointer) key, value);
     //Printing contents of gHashTable
-    //g_hash_table_foreach(options, [](gpointer key, gpointer value, gpointer user_data){ cout << "Table:" << (char *)key << (char *)value << endl; } ,nullptr);
+    //g_hash_table_foreach(options, [](gpointer key, gpointer value, gpointer user_data){ cout << "Table:" << (char **)key << (char *)value << endl; } ,nullptr);
     err = ToErr srd_inst_option_set(inst, options);
 
     //Setting SRD_CONF_SAMPLERATE
