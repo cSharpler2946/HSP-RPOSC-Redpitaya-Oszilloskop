@@ -29,7 +29,7 @@ void callbackBinary(struct srd_proto_data *pdata, void *cb_data)
 }
 
 /*
- * Prints options from .py file. NOT the current options!
+ * lPrints options from .py file. NOT the current options!
  * Supports only GVariantTypes s(string), x(int64) and d(double).
  * Currently has glib error, but works: g_variant_get_uint64: assertion 'g_variant_is_of_type (value, G_VARIANT_TYPE_UINT64)' failed
  */
