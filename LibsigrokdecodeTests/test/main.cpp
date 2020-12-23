@@ -5,6 +5,10 @@
 #include <gmodule.h>
 #include <libsigrokdecode/libsigrokdecode.h>
 #include <stdint.h>
+
+#define PY_SSIZE_T_CLEAN
+#include <Python.h>
+
 #define ToErr (srd_error_code)
 
 using namespace std;
@@ -29,10 +33,10 @@ void callbackBinary(struct srd_proto_data *pdata, void *cb_data)
  * Supports only GVariantTypes s(string), x(int64) and d(double).
  * Currently has glib error, but works: g_variant_get_uint64: assertion 'g_variant_is_of_type (value, G_VARIANT_TYPE_UINT64)' failed
  */
-void printOptions(GSList *options)
+void printOptions(srd_decoder_inst * inst)
 {
     GSList *i;
-    for (i = options; i; i = i->next) {
+    for (i = inst->decoder->options; i; i = i->next) {
         struct srd_decoder_option *p = static_cast<srd_decoder_option *>(i->data);
         const GVariantType *type = g_variant_get_type(p->def);
         const gchar * typeS = g_variant_type_peek_string(type);
@@ -48,6 +52,31 @@ void printOptions(GSList *options)
             g_list_foreach(reinterpret_cast<GList *>(p->values), [](gpointer data, gpointer user_data){ cout << g_variant_get_double((GVariant*)data) << ","; }, nullptr);
         }
         cout << endl;
+    }
+}
+
+void printCurrentOptions(srd_decoder_inst * inst)
+{
+    PyObject *pyOptions = PyObject_GetAttrString(static_cast<PyObject *>(inst->py_inst), "options");
+    GSList *i;
+    for (i = inst->decoder->options; i; i = i->next) {
+        struct srd_decoder_option *p = static_cast<srd_decoder_option *>(i->data);
+        gchar *key = p->id;
+        string value;
+        PyObject *tmpVal = PyDict_GetItemString(pyOptions, key);
+        value = Py_STRINGIFY(tmpVal);
+        //TODO: Stringyfy does not work as expected.
+        /*
+        if(g_variant_is_of_type(p->def, G_VARIANT_TYPE_INT64)) {
+            //int64
+            PyFromLo
+        } else if (g_variant_is_of_type(p->def, G_VARIANT_TYPE_STRING)) {
+            //string
+        } else if (g_variant_is_of_type(p->def, G_VARIANT_TYPE_DOUBLE)) {
+            //double
+        }
+         */
+        cout << value << endl;
     }
 }
 
@@ -83,7 +112,7 @@ int main() {
     //Create protocol decoder instance
     srd_decoder_inst *inst = srd_inst_new(sess, decoderId, nullptr);
 
-    printOptions(inst->decoder->options);
+    printOptions(inst);
 
     //Add channel
     //GHashTable *channels = g_hash_table_new(g_int_hash, g_int_equal);
@@ -91,6 +120,8 @@ int main() {
 
     //GArray *pinStates = g_array_new(false, true, 5);
     //srd_inst_initial_pins_set_all(inst, pinStates);
+
+    printCurrentOptions(inst);
 
     //Add options to decoder instance
     const gchar *key = "data_edge";
@@ -100,6 +131,8 @@ int main() {
     //Printing contents of gHashTable
     //g_hash_table_foreach(options, [](gpointer key, gpointer value, gpointer user_data){ cout << "Table:" << (char **)key << (char *)value << endl; } ,nullptr);
     err = ToErr srd_inst_option_set(inst, options);
+
+    printCurrentOptions(inst);
 
     //Setting SRD_CONF_SAMPLERATE
     GVariant *metadata = g_variant_new ("t", 100000); //Following function only supports the uint64 (="t") data type!!
