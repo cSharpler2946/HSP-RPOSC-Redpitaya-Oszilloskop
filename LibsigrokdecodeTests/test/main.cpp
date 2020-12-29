@@ -5,6 +5,11 @@
 #include <gmodule.h>
 #include <libsigrokdecode/libsigrokdecode.h>
 #include <stdint.h>
+#include <map>
+
+#define PY_SSIZE_T_CLEAN
+#include <Python.h>
+
 #define ToErr (srd_error_code)
 
 using namespace std;
@@ -24,12 +29,128 @@ void callbackBinary(struct srd_proto_data *pdata, void *cb_data)
     printf("CB: %d-%d: %d: %s\n", pdata->start_sample, pdata->end_sample, annIndex, *annString);
 }
 
-const char *decoderId = "pwm";
+/*
+ * Prints options from .py file. NOT the current options!
+ * Supports only GVariantTypes s(string), x(int64) and d(double).
+ * Currently has glib error, but works: g_variant_get_uint64: assertion 'g_variant_is_of_type (value, G_VARIANT_TYPE_UINT64)' failed
+ *
+ * @param inst Pointer to Decoder Instance
+ */
+void printOptions(srd_decoder_inst * inst)
+{
+    GSList *i;
+    for (i = inst->decoder->options; i; i = i->next) {
+        struct srd_decoder_option *p = static_cast<srd_decoder_option *>(i->data);
+        const GVariantType *type = g_variant_get_type(p->def);
+        const gchar * typeS = g_variant_type_peek_string(type);
+        cout << p->id << ":" << typeS << ":";
+        if(g_variant_is_of_type(p->def, G_VARIANT_TYPE_INT64)) {
+            cout << g_variant_get_uint64(p->def) << ":";
+            g_list_foreach(reinterpret_cast<GList *>(p->values), [](gpointer data, gpointer user_data){ cout << g_variant_get_int64((GVariant*)data) << ","; }, nullptr);
+        } else if (g_variant_is_of_type(p->def, G_VARIANT_TYPE_STRING)) {
+            cout << g_variant_get_string(p->def, nullptr) << ":";
+            g_list_foreach(reinterpret_cast<GList *>(p->values), [](gpointer data, gpointer user_data){ cout << g_variant_get_string((GVariant*)data, nullptr) << ","; }, nullptr);
+        } else if (g_variant_is_of_type(p->def, G_VARIANT_TYPE_DOUBLE)) {
+            cout << g_variant_get_double(p->def) << ":";
+            g_list_foreach(reinterpret_cast<GList *>(p->values), [](gpointer data, gpointer user_data){ cout << g_variant_get_double((GVariant*)data) << ","; }, nullptr);
+        }
+        cout << endl;
+    }
+}
+
+/*
+ * Prints current options from python object.
+ * **setOptions() must be called at least once before!!**
+ * Supports only GVariantTypes s(string), x(int64) and d(double).
+ *
+ * @param inst Pointer to Decoder Instance.
+ */
+void printCurrentOptions(srd_decoder_inst * inst)
+{
+    PyObject *pyOptions = PyObject_GetAttrString(static_cast<PyObject *>(inst->py_inst), "options");
+    if(PyTuple_Check(pyOptions)) {
+        cout << "Error: Run setOptions() before using printCurrentOptions()" << endl;
+        return;
+    }
+    GSList *i;
+    for (i = inst->decoder->options; i; i = i->next) {
+        struct srd_decoder_option *p = static_cast<srd_decoder_option *>(i->data);
+        gchar *key = p->id;
+        string value;
+        PyObject *tmpVal = PyDict_GetItemString(pyOptions, key);
+        if(g_variant_is_of_type(p->def, G_VARIANT_TYPE_INT64)) {
+            //int64
+            value = to_string(PyLong_AsLong(tmpVal));
+        } else if (g_variant_is_of_type(p->def, G_VARIANT_TYPE_STRING)) {
+            //string
+            value = PyUnicode_AsUTF8(tmpVal);
+        } else if (g_variant_is_of_type(p->def, G_VARIANT_TYPE_DOUBLE)) {
+            //double
+            value = to_string(PyFloat_AsDouble(tmpVal));
+        }
+        cout << key << ":" <<value << endl;
+    }
+}
+
+/*
+ * Sets the current options.
+ *
+ * @param inst Pointer to Decoder Instance
+ * @param options New options as map<string, string>
+ *
+ * @return srd_error_code produced by srd_inst_option_set()
+ */
+srd_error_code setOptions(srd_decoder_inst * inst, map<string,string> options)
+{
+    //Construct g_hash_table from options:map<>
+    GHashTable *table = g_hash_table_new(g_int_hash, g_int_equal);
+    for (const auto& [key, value] : options)
+    {
+        const gchar *gkey = key.c_str();
+        //Searches srd_decoder_options for type string of option. Ignores options that can not be found in inst->decoder->options
+        srd_decoder_option * p = static_cast<srd_decoder_option *>(g_slist_find_custom(inst->decoder->options, gkey, [](gconstpointer elem, gconstpointer cmp){
+            return strcmp(((srd_decoder_option *)elem)->id, (char *)cmp);
+        })->data);
+        if (p == nullptr) {
+            cout << "Provided option not found: " << gkey << endl;
+            continue;
+        }
+
+        GVariant * gvalue;
+        if(g_variant_is_of_type(p->def, G_VARIANT_TYPE_INT64)) {
+            //int64
+            gvalue = g_variant_new_int64(stol(value));
+        } else if (g_variant_is_of_type(p->def, G_VARIANT_TYPE_STRING)) {
+            //string
+            gvalue = g_variant_new_string(value.c_str());
+        } else if (g_variant_is_of_type(p->def, G_VARIANT_TYPE_DOUBLE)) {
+            //double
+            gvalue = g_variant_new_double(stod(value));
+        }
+
+        if(gvalue == nullptr) {
+            cout << "Error converting option to gvariant: " << gkey << endl;
+            continue;
+        }
+
+        g_hash_table_insert(table, (gpointer)gkey, (gpointer)gvalue);
+    }
+
+    return ToErr srd_inst_option_set(inst, table);
+}
+
+srd_error_code setSampleRate(srd_session* sess, uint64_t rate)
+{
+    GVariant *metadata = g_variant_new ("t", rate); //Following function only supports the uint64 (="t") data type!!
+    return ToErr srd_session_metadata_set(sess, SRD_CONF_SAMPLERATE, metadata);
+}
+
+const char *decoderId = "counter";
 
 int main() {
     cout << "Starting libsigrokdecode test application" << endl;
     //Setting the loglevel (0-5) of sigrokdecode. Does NOT log in order with rest of program!!
-    srd_log_loglevel_set(5);
+    //srd_log_loglevel_set(5);
     //Print version
     cout << "libsigrokdecode version: " << srd_lib_version_string_get() << endl;
 
@@ -42,8 +163,8 @@ int main() {
     srd_session *sess;
     srd_session_new(&sess);
     //Add callback
-    err = ToErr srd_pd_output_callback_add(sess, SRD_OUTPUT_ANN, &callbackAnnotation, nullptr);
-    err = ToErr srd_pd_output_callback_add(sess, SRD_OUTPUT_BINARY, &callbackBinary, nullptr);
+    //err = ToErr srd_pd_output_callback_add(sess, SRD_OUTPUT_ANN, &callbackAnnotation, nullptr);
+    //err = ToErr srd_pd_output_callback_add(sess, SRD_OUTPUT_BINARY, &callbackBinary, nullptr);
 
     //Load and list all decoders
     //err = ToErr srd_decoder_load_all();
@@ -56,36 +177,25 @@ int main() {
     //Create protocol decoder instance
     srd_decoder_inst *inst = srd_inst_new(sess, decoderId, nullptr);
 
-    //Printing current options, Getting gvariant type -> Here it is only s(string) and x(int64)
-    /*
-    GSList *i;
-    for (i = inst->decoder->options; i; i = i->next) {
-        struct srd_decoder_option *p = static_cast<srd_decoder_option *>(i->data);
-        cout << p->id << ":"<< g_variant_type_peek_string(g_variant_get_type(p->def)) << ":";
-        g_list_foreach(reinterpret_cast<GList *>(p->values), [](gpointer data, gpointer user_data){ cout << data << ","; }, nullptr);
-        cout << endl;
-    }
-     */
+    printOptions(inst);
 
     //Add channel
-    GHashTable *channels = g_hash_table_new(g_int_hash, g_int_equal);
-    err = ToErr srd_inst_channel_set_all(inst, channels);
+    //GHashTable *channels = g_hash_table_new(g_int_hash, g_int_equal);
+    //err = ToErr srd_inst_channel_set_all(inst, channels);
 
-    GArray *pinStates = g_array_new(false, true, 5);
-    srd_inst_initial_pins_set_all(inst, pinStates);
+    //GArray *pinStates = g_array_new(false, true, 5);
+    //srd_inst_initial_pins_set_all(inst, pinStates);
+
+    printCurrentOptions(inst);
 
     //Add options to decoder instance
-    const gchar *key = "data_edge";
-    GVariant *value = g_variant_new("s","rising");
-    GHashTable *options = g_hash_table_new(g_int_hash, g_int_equal);
-    g_hash_table_insert(options, (gpointer) key, value);
-    //Printing contents of gHashTable
-    //g_hash_table_foreach(options, [](gpointer key, gpointer value, gpointer user_data){ cout << "Table:" << (char *)key << (char *)value << endl; } ,nullptr);
-    err = ToErr srd_inst_option_set(inst, options);
+    map<string, string> newOptions = {{"data_edge", "rising"}, {"divider", "5"}};
+    err = setOptions(inst, newOptions);
+
+    printCurrentOptions(inst);
 
     //Setting SRD_CONF_SAMPLERATE
-    GVariant *metadata = g_variant_new ("t", 100000); //Following function only supports the uint64 (="t") data type!!
-    err = ToErr srd_session_metadata_set(sess, SRD_CONF_SAMPLERATE, metadata);
+    err = setSampleRate(sess, 100000);
 
     //Generate Sample data
     uint8_t inbuf[1024];
