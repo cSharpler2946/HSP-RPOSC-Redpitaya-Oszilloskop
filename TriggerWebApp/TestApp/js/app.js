@@ -77,24 +77,31 @@
                 try {
                     var data = new Uint8Array(ev.data);
                     var inflate = pako.inflate(data);
-                    var text = String.fromCharCode.apply(null, new Uint8Array(inflate));
+                    //var text = String.fromCharCode.apply(null, new Uint8Array(inflate));
+                    var text = new TextDecoder().decode(new Uint8Array(inflate));
                     var receive = JSON.parse(text);
 
-                    //Recieving parameters
-                    if (receive.parameters) {
-                        console.log("received parameters: ");
-                        console.log(receive.parameters)
-                    }
-                    if (receive.signals) {
-                        console.log("received signals: ");
-                        console.log(receive.signals)
-                    }
+                    APP.dispatch_received_data(receive.parameters, receive.signals);
 
                 } catch (e) {
                     console.log(e);
                 } finally {}
             };
         }
+    };
+
+    APP.dispatch_received_data = function(parameters, signals) {
+        if (parameters) {
+            if(parameters["WRITE_POINTER"]) {
+                $("#write_pointer").val(parameters["WRITE_POINTER"].value)
+            }
+        }
+        if (signals) {
+            if(signals["VOLTAGE"]) {
+                $("#output_data").text(signals["VOLTAGE"].value);
+            }
+        }
+        
     };
 
 }(window.APP = window.APP || {}, jQuery));
@@ -107,7 +114,7 @@ $(function() {
     APP.startApp();
     
     APP.led_state = false;
-    $('#led_state').click(function() {
+    /*$('#led_state').click(function() {
         console.log('Button clicked');
         if(APP.led_state == true){
             $('#led_on').hide();
@@ -124,5 +131,12 @@ $(function() {
         local['LED_STATE'] = { value: APP.led_state };
         APP.ws.send(JSON.stringify({ parameters: local }));
 
+    })*/
+    $("#trigger_acq").click(function() {
+        console.log("Button clicked");
+        $("#output_data").text("");
+        var out_parameters = {};
+        out_parameters["START_ACQUISITION"] = { value: true };
+        APP.ws.send(JSON.stringify({ parameters: out_parameters }));
     })
 });

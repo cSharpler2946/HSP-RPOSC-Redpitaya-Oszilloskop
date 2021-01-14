@@ -17,17 +17,3 @@ body {
     background-color: #333333;
     text-align: center;
 }
-
-#led_off {
-    color: #F00;
-}
-
-#led_on {
-    display: none;
-    color: #0F0;
-}
-
-#led_state {
-    margin-top: 20px;
-    padding: 10px;
-}
