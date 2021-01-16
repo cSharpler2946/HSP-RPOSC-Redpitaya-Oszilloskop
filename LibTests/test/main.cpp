@@ -7,6 +7,8 @@
 #include <stdint.h>
 #include <map>
 
+#include "uartTestData.h"
+
 #define PY_SSIZE_T_CLEAN
 #include <Python.h>
 
@@ -18,8 +20,11 @@ void callbackAnnotation(struct srd_proto_data *pdata, void *cb_data)
 {
     srd_proto_data_annotation *data = (srd_proto_data_annotation *)pdata->data;
     char **annString = (gchar **)g_slist_nth_data(pdata->pdo->di->decoder->annotations, data->ann_class); //double pointer!!
-    printf("CB: %d-%d: %d: %s: %s\n", pdata->start_sample, pdata->end_sample, data->ann_class, *annString, *data->ann_text);
-
+    //printf("CB: %d-%d: %d: %s: %s\n", pdata->start_sample, pdata->end_sample, data->ann_class, *annString, *data->ann_text);
+    string s = *annString;
+    if(s == "rx-data") {
+        printf("%s", *data->ann_text);
+    }
 }
 
 void callbackBinary(struct srd_proto_data *pdata, void *cb_data)
@@ -108,13 +113,14 @@ srd_error_code setOptions(srd_decoder_inst * inst, map<string,string> options)
     {
         const gchar *gkey = key.c_str();
         //Searches srd_decoder_options for type string of option. Ignores options that can not be found in inst->decoder->options
-        srd_decoder_option * p = static_cast<srd_decoder_option *>(g_slist_find_custom(inst->decoder->options, gkey, [](gconstpointer elem, gconstpointer cmp){
+        GSList * tmp = g_slist_find_custom(inst->decoder->options, gkey, [](gconstpointer elem, gconstpointer cmp){
             return strcmp(((srd_decoder_option *)elem)->id, (char *)cmp);
-        })->data);
-        if (p == nullptr) {
+        });
+        if (tmp == nullptr) {
             cout << "Provided option not found: " << gkey << endl;
             continue;
         }
+        srd_decoder_option * p = static_cast<srd_decoder_option *>(tmp->data);
 
         GVariant * gvalue;
         if(g_variant_is_of_type(p->def, G_VARIANT_TYPE_INT64)) {
@@ -145,7 +151,7 @@ srd_error_code setSampleRate(srd_session* sess, uint64_t rate)
     return ToErr srd_session_metadata_set(sess, SRD_CONF_SAMPLERATE, metadata);
 }
 
-const char *decoderId = "counter";
+const char *decoderId = "uart";
 
 int main() {
     cout << "Starting libsigrokdecode test application" << endl;
@@ -163,7 +169,7 @@ int main() {
     srd_session *sess;
     srd_session_new(&sess);
     //Add callback
-    //err = ToErr srd_pd_output_callback_add(sess, SRD_OUTPUT_ANN, &callbackAnnotation, nullptr);
+    err = ToErr srd_pd_output_callback_add(sess, SRD_OUTPUT_ANN, &callbackAnnotation, nullptr);
     //err = ToErr srd_pd_output_callback_add(sess, SRD_OUTPUT_BINARY, &callbackBinary, nullptr);
 
     //Load and list all decoders
@@ -177,26 +183,40 @@ int main() {
     //Create protocol decoder instance
     srd_decoder_inst *inst = srd_inst_new(sess, decoderId, nullptr);
 
+    cout << "--- Available options:" << endl;
     printOptions(inst);
 
+    cout << "--- Opt channels:" << endl;
+    GSList * i;
+    for (i = inst->decoder->opt_channels; i; i = i->next)
+    {
+        srd_channel * ch = static_cast<srd_channel *>(i->data);
+        cout << ch->id << endl;
+    }
+
     //Add channel
-    //GHashTable *channels = g_hash_table_new(g_int_hash, g_int_equal);
-    //err = ToErr srd_inst_channel_set_all(inst, channels);
+    GHashTable * channels = g_hash_table_new(g_int_hash, g_int_equal);
+    GVariant * gkey = (GVariant *)("rx"); //Looks like they raped glib...
+    GVariant * gvalue = g_variant_new_int32(0);
+    g_hash_table_insert(channels, gkey, gvalue);
+    err = ToErr srd_inst_channel_set_all(inst, channels);
 
     //GArray *pinStates = g_array_new(false, true, 5);
     //srd_inst_initial_pins_set_all(inst, pinStates);
 
-    printCurrentOptions(inst);
-
     //Add options to decoder instance
-    map<string, string> newOptions = {{"data_edge", "rising"}, {"divider", "5"}};
+    map<string, string> newOptions = {{"baudrate", "4800"}, {"data_bits", "8"},
+                                      {"parity", "even"}, {"stop_bits", "1"},
+                                      {"bit_order", "lsb-first"}, {"format", "ascii"}};
     err = setOptions(inst, newOptions);
 
+    cout << "--- Current options:" << endl;
     printCurrentOptions(inst);
 
     //Setting SRD_CONF_SAMPLERATE
-    err = setSampleRate(sess, 100000);
+    err = setSampleRate(sess, 15258);
 
+    /*
     //Generate Sample data
     uint8_t inbuf[1024];
     srand(time(nullptr));
@@ -210,8 +230,36 @@ int main() {
 
     //Send data to session
     err = ToErr srd_session_send(sess, 0, 1023, inbuf, 1024, 1);
+    */
 
-    this_thread::sleep_for(chrono::milliseconds(10000));
+    //Prepare UART data
+    cout << "--- Prepare data:" << endl;
+    double min = DBL_MAX;
+    double max = -DBL_MAX;
+    for(double curr: testdata)
+    {
+        if(curr < min)
+            min = curr;
+        if(curr > max)
+            max = curr;
+    }
+    int arrsize = sizeof(testdata)/sizeof(testdata[0]);
+    cout << "Range: " << min << " to " << max << ", Number of samples: " << arrsize << endl;
+    double step = UINT8_MAX/max-min;
+    uint8_t * inbuf = new uint8_t[arrsize];
+    for(int i = 0; i<arrsize; i++)
+    {
+        inbuf[i] = (uint8_t)testdata[i]*step;
+        //cout << (int)inbuf[i] << endl;
+    }
+
+    //Start session
+    err = ToErr srd_session_start(sess);
+
+    //Send prepared test data to decoder
+    err = ToErr srd_session_send(sess, 0, arrsize-1, inbuf, arrsize, 1);
+
+    //this_thread::sleep_for(chrono::milliseconds(10000));
 
     return 0;
 }
