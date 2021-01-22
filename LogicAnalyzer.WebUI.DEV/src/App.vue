@@ -19,7 +19,7 @@
         </div>
       </div>
 
-      <Channel v-for="n in 10" :key="n" :channelId="n" :channelName="`Channel ${n}`" />
+      <Channel v-for="n in 20" :key="n" :channelId="n" :channelName="`Channel ${n}`" />
 
       <!-- final border in case the right-panels height is bigger than the left-panels height -->
       <div class="row" style="border-top: 1px solid gray; padding: 0;"></div>
