@@ -1,16 +1,22 @@
+/*
+ * Red Pitaya Template Application
+ *
+ *
+ * (c) Red Pitaya  http://www.redpitaya.com
+ */
+
+
 (function(APP, $, undefined) {
-    
+
     // App configuration
     APP.config = {};
-    APP.config.app_id = '3.read_voltage_value';
+    APP.config.app_id = 'RPOSC-LogicAnalyser';
     APP.config.app_url = '/bazaar?start=' + APP.config.app_id + '?' + location.search.substr(1);
     APP.config.socket_url = 'ws://' + window.location.hostname + ':9002';
 
     // WebSocket
     APP.ws = null;
 
-    // Parameters
-    APP.processing = false;
 
 
 
@@ -56,7 +62,6 @@
         if (APP.ws) {
 
             APP.ws.onopen = function() {
-                $('#hello_message').text("Hello, Red Pitaya!");
                 console.log('Socket opened');
             };
 
@@ -65,97 +70,73 @@
             };
 
             APP.ws.onerror = function(ev) {
-                $('#hello_message').text("Connection error");
-                console.log('Websocket error: ', ev);         
+                console.log('Websocket error: ', ev);
             };
 
             APP.ws.onmessage = function(ev) {
-                console.log('Message recieved');
-
-
-                //Capture signals
-                if (APP.processing) {
-                    return;
-                }
-                APP.processing = true;
-
                 try {
                     var data = new Uint8Array(ev.data);
                     var inflate = pako.inflate(data);
-                    var text = String.fromCharCode.apply(null, new Uint8Array(inflate));
+                    //var text = String.fromCharCode.apply(null, new Uint8Array(inflate));
+                    var text = new TextDecoder().decode(new Uint8Array(inflate));
                     var receive = JSON.parse(text);
 
-                    if (receive.parameters) {
-                        
-                    }
+                    APP.dispatch_received_data(receive.parameters, receive.signals);
 
-                    if (receive.signals) {
-                        APP.processSignals(receive.signals);
-                    }
-                    APP.processing = false;
                 } catch (e) {
-                    APP.processing = false;
                     console.log(e);
-                } finally {
-                    APP.processing = false;
-                }
-
-
-
+                } finally {}
             };
         }
     };
 
-
-
-
-    //Read value
-    APP.readValue = function() {
-
-        var local = {};
-        local['READ_VALUE'] = { value: true };
-        APP.ws.send(JSON.stringify({ parameters: local }));
-    };
-
-
-
-
-    // Processes newly received data for signals
-    APP.processSignals = function(new_signals) {
-
-        var voltage;
-
-
-        // Draw signals
-        for (sig_name in new_signals) {
-
-            // Ignore empty signals
-            if (new_signals[sig_name].size == 0) continue;
-
-            // Read signal
-            voltage = new_signals[sig_name].value[0];
-
-            //Update value
-            $('#value').text(parseFloat(voltage).toFixed(2) + "V");
+    APP.dispatch_received_data = function(parameters, signals) {
+        if (parameters) {
+            if(parameters["WRITE_POINTER"]) {
+                $("#write_pointer").val(parameters["WRITE_POINTER"].value)
+            }
         }
-    };
+        if (signals) {
+            if(signals["VOLTAGE"]) {
+                $("#output_data").text(signals["VOLTAGE"].value);
+            }
+        }
 
+    };
 
 }(window.APP = window.APP || {}, jQuery));
 
 
 
-
 // Page onload event handler
 $(function() {
-
-    // Button click func
-    $("#read_button").click(function() {
-
-        APP.readValue(); 
-    });
-
-
     // Start application
     APP.startApp();
+
+    APP.led_state = false;
+    /*$('#led_state').click(function() {
+        console.log('Button clicked');
+        if(APP.led_state == true){
+            $('#led_on').hide();
+            $('#led_off').show();
+            APP.led_state = false;
+        }
+        else{
+            $('#led_off').hide();
+            $('#led_on').show();
+            APP.led_state = true;
+        }
+
+        var local = {};
+        local['LED_STATE'] = { value: APP.led_state };
+        APP.ws.send(JSON.stringify({ parameters: local }));
+
+    })*/
+    $("#trigger_acq").click(function() {
+        console.log("Button clicked");
+        $("#output_data").text("");
+        var out_parameters = {};
+        out_parameters["START_ACQUISITION"] = { value: true };
+        APP.ws.send(JSON.stringify({ parameters: out_parameters }));
+    })
 });

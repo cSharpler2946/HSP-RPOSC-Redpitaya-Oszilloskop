@@ -11,23 +11,9 @@ body {
 }
 
 #content {
-    width: 400px;
-    height: 200px;
+    width: 1280px;
+    height: 1024px;
     margin: 0 auto;
     background-color: #333333;
     text-align: center;
-}
-
-#hello_message {
-    padding-top: 20px;
-    margin-bottom: 20px;
-}
-
-#value {
-    margin-top: 20px;
-}
-
-#read_button {
-    margin-top: 20px;
-    padding: 10px;
 }

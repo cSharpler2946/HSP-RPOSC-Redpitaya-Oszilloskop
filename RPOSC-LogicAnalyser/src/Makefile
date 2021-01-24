@@ -15,10 +15,11 @@ LIBS = -L$(INSTALL_DIR)/lib
 LIBS += -L$(INSTALL_DIR)/rp_sdk
 
 # LibSigrokDecode + python includes
+INCLUDE += -I/usr/include/libsigrokdecode
 INCLUDE += -I/usr/include/glib-2.0
 INCLUDE += -I/usr/lib64/glib-2.0/include #Fedora path for testing
-INCLUDE += -I/usr/lib/x86_64-linux-gnu/glib-2.0/include
-INCLUDE += -I/usr/include/python3.9 #Derived from fedora!! Not tested in ubuntu
+INCLUDE += -I/usr/lib/arm-linux-gnueabihf/glib-2.0/include
+INCLUDE += -I/usr/include/python3.5 
 
 # LibSigrokDecode + python3 libraries
 LIBS += -L/usr/lib64/
