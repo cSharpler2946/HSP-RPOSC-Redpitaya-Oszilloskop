@@ -16,3 +16,8 @@ Above config files include their configured IP in their name.
 ## Server Install (only for me as note!):
 - Install wireguard, kernel-headers on host system
 - Run docker-compose
+
+https://www.sigmdel.ca/michel/ha/wireguard/wireguard_02_en.html
+https://www.raspberrypi.org/documentation/configuration/wireless/access-point-bridged.md
+
+https://github.com/cSharpler2946/HSP-RPOSC-Redpitaya-Oszilloskop.git
