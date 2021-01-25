@@ -25,7 +25,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lange="scss" scoped>
 
 .decoded-data{
     text-align: left;

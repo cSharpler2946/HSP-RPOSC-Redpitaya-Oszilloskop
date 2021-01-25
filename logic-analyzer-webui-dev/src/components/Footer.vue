@@ -14,10 +14,11 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import './../styles/_variables';
 
 #footer{
-    border-top: 1px solid rgb(15, 235, 161);
+    border-top: 1px solid $primaryColor;
 }
 
 </style>

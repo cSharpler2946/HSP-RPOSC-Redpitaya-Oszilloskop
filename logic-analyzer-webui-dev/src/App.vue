@@ -7,10 +7,10 @@
     <div id="left-panel" class="col-md-9">
       <div id="logic-analyzer-header" class="row">
         <div class="channels-header col-md-3">
-            <button id="startAnalyzing" type="button" class="btn"> 
-              <span>Start Analyzing</span> 
+            <button id="startAnalyzing" type="button" class="btn">
+              <span>Start Analyzing</span>
               <i class="fas fa-play" style="vertical-align: middle; margin-left: 10px;"></i>
-            </button>   
+            </button>
         </div>
         <div class="signals-header col-md-9">
           <div class="align-self-center">
@@ -19,14 +19,12 @@
         </div>
       </div>
 
-      <Channel v-for="n in 20" :key="n" :channelId="n" :channelName="`Channel ${n}`" />
+      <Channel v-for="n in 10" :key="n" :channelId="n" :channelName="`Channel ${n}`" />
 
       <!-- final border in case the right-panels height is bigger than the left-panels height -->
-      <div class="row" style="border-top: 1px solid gray; padding: 0;"></div>
     </div>
 
     <div id="right-panel" class="col-md-3">
-      
       <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
           <a class="nav-link active col" id="nav-parameter-tab" data-bs-toggle="tab" href="#nav-parameter" role="tab" aria-controls="nav-parameter" aria-selected="true">
@@ -39,16 +37,13 @@
       </nav>
       <div class="tab-content" id="nav-tabContent">
         <div class="tab-pane fade show active" id="nav-parameter" role="tabpanel" aria-labelledby="nav-parameter-tab">
-          <Parameters />
+          <Parameters/>
         </div>
         <div class="tab-pane fade" id="nav-decoded-data" role="tabpanel" aria-labelledby="nav-decoded-data-tab">
           <DecodedData/>
         </div>
       </div>
-
-
     </div>
-
   </div>
 </div>
 
@@ -66,23 +61,18 @@ import RedPitaya from './redpitaya.js'
 
 export default {
   name: 'App',
-  data(){
+  data () {
     return {
       app_id: 'TestApp',
-      app_url:  'bla',
+      app_url: 'bla',
       socket_url: 'ws://' + window.location.hostname + ':9002',
-
-      redpitaya: null,
+      redpitaya: null
     }
   },
   computed: {
     // Make calculations/computations in here
-    
   },
-  methods:{
-    // Provide methods for RedPitaya in here (e.g. sth. like "GetProtocols()")
-  },
-  mounted(){
+  mounted () {
     // TODO: Build up WebSocket-Connection with RedPitaya in here.
     this.redpitaya = new RedPitaya(this.app_id, this.app_url, this.socket_url);
     this.redpitaya.test();
@@ -97,44 +87,64 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+@import './styles/_variables';
+@import './styles/_mixins';
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: $color;
+}
+
+#logic-analyzer-header{
+  border-bottom: 1px solid $primaryColor;
 }
 
 .channels-header{
   padding: 4px;
-  border-right: 1px solid rgb(15, 235, 161);
+  border-right: 1px solid $primaryColor;
 }
 
 .signals-header{
-  background-color: rgb(15, 235, 161);
+  background-color: $primaryColor;
   display: flex;
   justify-content: center;
+  color: $colorInverted;
 }
 
 #left-panel {
-  background-color: rgb(211, 211, 211);
+  background-color: $panelBackgroundColor;
+  min-height: 100%;
 }
 
 #startAnalyzing{
   width: 100%;
-  background-color: rgb(4, 179, 120);
-  color: white;
-}
-
-#startAnalyzing:hover{
-  background-color: rgb(10, 194, 132);
+  background-color: $primaryColor;
+  color: $colorInverted;
+  &:hover{
+    background-color: $primaryColorHover;
+  }
 }
 
 #right-panel {
-  border-left: 1px solid rgb(15, 235, 161);
-  background-color: rgb(211, 211, 211);
+  border-left: 1px solid $primaryColor;
+  background-color: $panelBackgroundColor;
   padding: 0;
+}
+
+.navbar-light .navbar-nav .nav-link {
+  @include link();
+}
+
+.nav-tabs .nav-link{
+  @include link();
+}
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active{
+  @include link();
 }
 
 </style>
