@@ -34,10 +34,11 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import './../styles/_variables';
 
 .channel-wrapper{
-    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
     height: 40px;
 }
 
@@ -51,20 +52,20 @@ export default {
 
 .channel-box{
     text-align: left;
-    border-right: 1px solid rgb(15, 235, 161);
+    border-right: 1px solid $primaryColor;
     display: flex;
     justify-content: flex-end;
 }
 
 .channel-settings-btn{
-    color: rgb(4, 179, 120);
+    color: $primaryColor;
     cursor: pointer;
     margin-top: 2px;
     margin-left: 10px;
 }
 
 .signal-box{
-    background-color: white;
+    background-color: $signalBackgroundColor;
 }
 
 </style>
