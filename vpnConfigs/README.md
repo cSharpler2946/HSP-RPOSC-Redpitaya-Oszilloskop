@@ -3,6 +3,7 @@ Above config files include their configured IP in their name.
 
 ## Install (Ubuntu/Mint):
 - `sudo apt install wireguard`
+- `sudo pacman -s wireguard-tools` for pacman
 - Save .conf file to /etc/wireguard
 - To start VPN: `wg-quick up <nameofconf>`
 - To stop VPN: `wg-quick down <nameofconf>`
@@ -17,7 +18,13 @@ Above config files include their configured IP in their name.
 - Install wireguard, kernel-headers on host system
 - Run docker-compose
 
-https://www.sigmdel.ca/michel/ha/wireguard/wireguard_02_en.html
-https://www.raspberrypi.org/documentation/configuration/wireless/access-point-bridged.md
+for automatic startup use the wireguard build in service by following this link
+https://www.ivpn.net/knowledgebase/linux/linux-autostart-wireguard-in-systemd/
 
-https://github.com/cSharpler2946/HSP-RPOSC-Redpitaya-Oszilloskop.git
+to install wireguard on raspberrypi use this link
+https://www.sigmdel.ca/michel/ha/wireguard/wireguard_02_en.html
+
+To use raspberry as man in the middle, we used the raspberry vnc server and connected with realVncViewer (link below). Redpitaya connected via LAN to the Raspberry allows Web access via (rp-f05007.local) and ssh via root@rp-f05007.local. Of course you need to be connected to the VPN-Server with wireguard to access the raspberry and the RP.
+https://www.realvnc.com/de/connect/download/viewer/
+User: pi
+PW: raspberry
