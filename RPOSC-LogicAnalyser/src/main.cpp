@@ -42,6 +42,8 @@ float buff[16384];
 
 uint32_t previous_write_pointer = 0;
 
+char* logfile = "log/debug.log";
+
 const char *rp_app_desc(void)
 {
     return (const char *)"RPOSC Logic Analyzer\n";
@@ -52,7 +54,8 @@ int rp_app_init(void)
 {
     fprintf(stderr, "Loading RPOSC Logic Analyzer\n");
     //loguru::init();
-
+    loguru::add_file(logfile, loguru::Append, loguru::Verbosity_INFO);
+    LOG_F(INFO, "THE app staaaarts maaaan....");
     //Testing if JSON Library works
     nlohmann::json j;
 
