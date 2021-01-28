@@ -13,25 +13,27 @@ class RedPitaya {
 
     test(){
         console.log("Successfully accessed the redpitaya instance.");
+        console.log("app_id: " + this.app_id);
+        console.log("app_url: " + this.app_url);
+        console.log("socket_url: " + this.socket_url);
     }
 
-    start() {
+    start(){
+        var self = this;
+
         $.get(this.app_url)
-                .done(function(dresult) {
-                    if (dresult.status == 'OK') {
-                        this.connectWebSocket();
-                    } else if (dresult.status == 'ERROR') {
-                        console.log(dresult.reason ? dresult.reason : 'Could not start the application (ERR1)');
-                        this.start();
-                    } else {
-                        console.log('Could not start the application (ERR2)');
-                        this.start();
-                    }
-                })
-                .fail(function() {
-                    console.log('Could not start the application (ERR3)');
-                    this.start();
-                });
+            .done(function(dresult) {
+                if (dresult.status == 'OK') {
+                    self.connectWebSocket();
+                } else if (dresult.status == 'ERROR') {
+                    console.error(dresult.reason ? dresult.reason : `Could not start the application ${self.app_id}.` );
+                } else {
+                    console.error(`Unknown error: Could not start the application [${self.app_id}].`);
+                }
+            })
+            .fail(function() {
+                console.error(`Failed to make a request to ${self.app_url}`);
+            });
     }
 
     connectWebSocket() {
@@ -68,6 +70,11 @@ class RedPitaya {
                 }
             };
         }
+    }
+
+    receiveData(arg1, arg2){
+        // Holst daten
+        // return data;
     }
 
     dispatch_received_data(parameters, signals) {
