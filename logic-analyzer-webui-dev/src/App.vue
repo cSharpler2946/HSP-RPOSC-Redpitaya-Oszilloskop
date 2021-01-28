@@ -1,20 +1,24 @@
 <template>
   <Navbar title="Logic Analyzer" brand="logo.png"/>
 
+
+
 <div class="container-fluid">
 
   <div class="row">
     <div id="left-panel" class="col-md-9">
       <div id="logic-analyzer-header" class="row">
-        <div class="channels-header col-md-3">
+
+        <div class="channels-header col-md-3 order-md-1 order-2">
             <button id="startAnalyzing" type="button" class="btn">
               <span>Start Analyzing</span>
               <i class="fas fa-play" style="vertical-align: middle; margin-left: 10px;"></i>
             </button>
         </div>
-        <div class="signals-header col-md-9">
+
+        <div class="signals-header col-md-9 order-md-2 order-1">
           <div class="align-self-center">
-            <h3>Logic Analyzer</h3>
+            <h3>{{heading}}</h3>
           </div>
         </div>
       </div>
@@ -64,18 +68,30 @@ export default {
   data () {
     return {
       app_id: 'TestApp',
-      app_url: 'bla',
-      socket_url: 'ws://' + window.location.hostname + ':9002',
-      redpitaya: null
+      app_port: 9200,
+      redpitaya: null,
+      heading: 'Logic Analyzer',
     }
   },
   computed: {
     // Make calculations/computations in here
+    get_app_url(){
+      return `/bizaar?start=${this.app_id}?${location.search.substr(1)}`;
+    },
+    get_socket_url(){
+      return `ws://${window.location.hostname}:${this.app_port}`;
+    }
+  },
+  methods:{
+    getData: function(){
+      var data = this.redpitaya.receiveData(arg1, arg2);
+      this.decodedData = data;
+    }
   },
   mounted () {
-    // TODO: Build up WebSocket-Connection with RedPitaya in here.
-    this.redpitaya = new RedPitaya(this.app_id, this.app_url, this.socket_url);
-    this.redpitaya.test();
+    // Build up WebSocket-Connection with RedPitaya in here.
+    this.redpitaya = new RedPitaya(this.app_id, this.get_app_url, this.get_socket_url);
+    this.redpitaya.start();
   },
   components: {
     Navbar,
@@ -131,6 +147,7 @@ export default {
 
 #right-panel {
   border-left: 1px solid $primaryColor;
+  border-bottom: 1px solid $primaryColor;
   background-color: $panelBackgroundColor;
   padding: 0;
 }

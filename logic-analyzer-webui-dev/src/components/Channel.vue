@@ -1,21 +1,19 @@
 <template>
     <div class="channel-wrapper row">
 
-        <div class="channel-id-box col-md-1">
-            <div class="channel-id align-self-center">
+        <div class="channel-id-box col-md-1 col-2">
+            <div class="channel-id">
             {{ channelId }}
             </div>
         </div>
 
-        <div class="channel-box col-md-2">
-            <div class="channel align-self-center">
-                {{ channelName }}
+        <div class="channel-box col-md-2 col-10">
+            <div class="col channel">
+                {{ channelName }} 
                 <i class="fas fa-cog channel-settings-btn"></i>
             </div>
         </div>
-
-        <div class="signal-box col-md-9">
-
+        <div class="signal-box col-md-9 col-12">
 
         </div>
     </div>
@@ -39,22 +37,20 @@ export default {
 
 .channel-wrapper{
     border-bottom: 1px solid gray;
-    height: 40px;
 }
 
 .channel-id-box{
     border-right: 1px solid gray;
     text-align: center;
     font-weight: bold;
-    display: flex;
-    justify-content: center;
 }
 
 .channel-box{
     text-align: left;
     border-right: 1px solid $primaryColor;
-    display: flex;
-    justify-content: flex-end;
+    @media (max-width: 768px) {
+        border-right: none;
+    }
 }
 
 .channel-settings-btn{
@@ -66,6 +62,7 @@ export default {
 
 .signal-box{
     background-color: $signalBackgroundColor;
+    min-height: 40px;
 }
 
 </style>

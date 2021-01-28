@@ -1,7 +1,10 @@
 <template>
     <div class="container-fluid">
         <div id="footer" class="row">
-
+            <hr/>
+            <div class="col">
+                &copy; OTH Regensburg
+            </div>
         </div>
     </div>
 </template>
@@ -18,7 +21,8 @@ export default {
 @import './../styles/_variables';
 
 #footer{
-    border-top: 1px solid $primaryColor;
+    margin-top: 50px;
+    text-align: left;
 }
 
 </style>
