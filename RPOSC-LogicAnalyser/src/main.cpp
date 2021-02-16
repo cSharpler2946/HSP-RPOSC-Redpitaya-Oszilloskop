@@ -22,13 +22,9 @@
 // Define to cast int return into srd_error_codes
 #define ToErr (srd_error_code)
 
-
-
-
 //Signal size
 #define SIGNAL_SIZE_DEFAULT      1024
 #define SIGNAL_UPDATE_INTERVAL      10
-
 
 CFloatSignal ss_signal_1("VOLTAGE", 16384, 0.0f);
 CIntParameter write_pointer_parameter("WRITE_POINTER", CBaseParameter::AccessMode::RW, 0, false, 0, 20000);
@@ -48,7 +44,6 @@ const char *rp_app_desc(void)
 {
     return (const char *)"RPOSC Logic Analyzer\n";
 }
-
 
 int rp_app_init(void)
 {
@@ -95,7 +90,6 @@ int rp_app_init(void)
     return 0;
 }
 
-
 int rp_app_exit(void)
 {
     fprintf(stderr, "Unloading RPOSC Logic Analyzer\n");
@@ -123,9 +117,6 @@ int rp_get_signals(float ***s, int *sig_num, int *sig_len)
 }
 /* Internal functions end */
 
-
-
-
 void UpdateSignals(void){
   if(acquisition_pending && acquisition_complete)
     {
@@ -135,7 +126,6 @@ void UpdateSignals(void){
         ss_signal_1.Set(v);
     }
 }
-
 
 void UpdateParams(void){
   uint32_t write_pointer;
@@ -165,6 +155,5 @@ void OnNewParams(void){}
  * Callback function, which gets called when signals changed.
  */
 void OnNewSignals(void){}
-
 
 void PostUpdateSignals(void){}
