@@ -1,9 +1,12 @@
 <template>
     <form method="post">
         <select class="form-select" aria-label="Choose a protocol.">
-            <option selected>-- Choose protocol --</option>
+            <!--option selected>-- Choose protocol --</option>
             <option value="1">I2C</option>
-            <option value="2">CAN</option>
+            <option value="2">CAN</option-->
+            <option v-for="decoder in decoders" v-bind:key="decoder">
+                {{ decoder["name"] }}
+            </option>
         </select>
 
         <div style="margin-bottom: 15px;"></div>
@@ -53,7 +56,7 @@
 export default {
     name: "Parameters",
     props: {
-
+        decoders: Array
     }
 }
 </script>
