@@ -1,18 +1,30 @@
-using namespace std
-#include "Aquirer.h"
+#include "Acquirer.h"
+#include "ACQChoosenOptions.h"
+#include <vector>
+#include <list>
+#include <string>
 
-private:
-   list<int> supportedSampleRates;
+/* TODO: Hier ACQChoosenOptions object das im Konstruktor übergeben wird nehmen und entsprechen in startAcquire auf fpga image setzen
+* Vor Starten die SetSrdMetadata starten, die von Florian geschrieben wurde..
+* Dann das acquirieren starten und wenn fertig boolean mit true zurück geben, wenn irgendein Fehler, dann false
+* Variablen entsprechend anpassen und public setzen (werden in UI angezeigt)
+* Datentypen sind std::string und alles was mehrdimensional ist vectoren
+* Defaultwerte für Konstruktorparameters.
+* keine Werte wie sampleRate setzen, da die beim Start aus ChoosenOptions geholt werden.
+* möglichen Werte aus header aussuchen und reinschreiben (z.B. supportedSampleRates)
+*/
+
+   list<int> supportedSampleRates = new list<int>(1000,5000,10000);
    int choosenSampleRate;
-   list<string> availableChannels;
-   list<string> supportedDecimations;
-   list<string> supportedGains;
-   list<double> aquiredData;
+   std::list<int> availableChannels;
+   std::list<string> supportedDecimations;
+   std::list<string> supportedGains;
+   std::list<double> aquiredData; //Todo: für channel 1 und 2
 
 class Acquirer{
 public:
   // set the chossen parameters to private variables but make sure they are supported ones
-  Acquirer(int sampleRate, list<string> channels, list<string> decimation, list<string> gains)
+  Acquirer(int sampleRate = 15003, ACQChoosenOptions *choosenOptions, list<string> decimation, list<string> gains)
   {
     if(supportedSampleRates.Contains(sampleRate))
     {
@@ -20,29 +32,16 @@ public:
     }
   }
 
-  void ChangeSampleRate(int rate)
+  bool startAcquire()
   {
-    choosenSampleRate = rate
+    // take ACQChoosenOptions and write to fpga image.
+    //
+    // start acquisition for all channels and return bool if finished
   }
 
-  void startAquire()
+  vector<double> getData(int channel)
   {
-
-  }
-
-  list<double> getData()
-  {
+    // get data from specified channel
     return aquiredData;
   }
-}
-
-class AcqChosenOptions : Acquirer
-{
-private:
-  Acquirer acquirer = new Acquirer()
-  void setAcqOptions()
-  {
-
-  }
-  override
 }
