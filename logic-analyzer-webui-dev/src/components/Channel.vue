@@ -13,6 +13,7 @@
                 <i class="fas fa-cog channel-settings-btn"></i>
             </div>
         </div>
+
         <div class="signal-box col-md-9 col-12">
 
         </div>
@@ -43,6 +44,9 @@ export default {
     border-right: 1px solid gray;
     text-align: center;
     font-weight: bold;
+     @media (max-width: 768px) {
+        border-bottom: 1px solid gray;
+    }
 }
 
 .channel-box{
@@ -50,6 +54,7 @@ export default {
     border-right: 1px solid $primaryColor;
     @media (max-width: 768px) {
         border-right: none;
+        border-bottom: 1px solid gray;
     }
 }
 

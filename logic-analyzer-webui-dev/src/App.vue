@@ -6,21 +6,29 @@
 <div class="container-fluid">
 
   <div class="row">
-    <div id="left-panel" class="col-md-9">
+
+<div class="signals-header col-md-9 d-md-none d-block">
+          <div class="align-self-center">
+            <h3>{{heading}}</h3>
+          </div>
+        </div>
+
+    <div id="left-panel" class="col-md-9 order-md-1 order-2">
       <div id="logic-analyzer-header" class="row">
 
-        <div class="channels-header col-md-3 order-md-1 order-2">
+        <div class="channels-header col-md-3">
             <button id="startAnalyzing" type="button" class="btn">
               <span>Start Analyzing</span>
               <i class="fas fa-play" style="vertical-align: middle; margin-left: 10px;"></i>
             </button>
         </div>
 
-        <div class="signals-header col-md-9 order-md-2 order-1">
+        <div class="signals-header col-md-9 d-md-block d-none">
           <div class="align-self-center">
             <h3>{{heading}}</h3>
           </div>
         </div>
+        
       </div>
 
       <Channel v-for="n in 10" :key="n" :channelId="n" :channelName="`Channel ${n}`" />
@@ -28,7 +36,16 @@
       <!-- final border in case the right-panels height is bigger than the left-panels height -->
     </div>
 
-    <div id="right-panel" class="col-md-3">
+    <!-- Button for colapsing the entire right panel on mobile devices. -->
+    <div class="col d-md-none">
+        <button @click="toggleRightPanel"
+        id="toggleRightPanelBtn" class="btn float-end" type="button" data-bs-toggle="collapse" data-bs-target="#right-panel" 
+        aria-expanded="true" aria-controls="right-panel" aria-label="Toggle right panel.">
+          {{ rightPanelToggler.text }} <i :style="toggleRightPanelIcon" class="fas fa-caret-down"></i>
+        </button>
+    </div>
+
+    <div id="right-panel" class="collapse show col-md-3 order-md-2 order-1">
       <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
           <a class="nav-link active col" id="nav-parameter-tab" data-bs-toggle="tab" href="#nav-parameter" role="tab" aria-controls="nav-parameter" aria-selected="true">
@@ -39,7 +56,7 @@
           </a>
         </div>
       </nav>
-      <div class="tab-content" id="nav-tabContent">
+      <div class="tab-content" id="parameters-tabContent">
         <div class="tab-pane fade show active" id="nav-parameter" role="tabpanel" aria-labelledby="nav-parameter-tab">
           <Parameters :decoders="decoders"/>
         </div>
@@ -72,6 +89,12 @@ export default {
       app_port: 9200,
       redpitaya: null,
       heading: 'Logic Analyzer',
+      rightPanelToggler:{
+        collapsed: true,
+        text: "Hide Parameters",
+        iconTransform: 0.5,
+      },
+      rightPanelText: "Hide Parameters",
       decoders: [
           {
               "id": "Hello!",
@@ -80,6 +103,12 @@ export default {
       ]
     }
   },
+  // props: {
+  //   rightPanelCollapsed: {
+  //     type: Boolean,
+  //     default: false
+  //   }
+  // },
   computed: {
     // Make calculations/computations in here
     get_app_url(){
@@ -87,19 +116,35 @@ export default {
     },
     get_socket_url(){
       return `ws://${window.location.hostname}:${this.app_port}`;
-    }
+    },
+    toggleRightPanelIcon() {
+      return { transform: 'rotate(' + this.rightPanelToggler.iconTransform + 'turn)' };
+    },
   },
   methods:{
     getData: function(){
       var data = this.redpitaya.receiveData(arg1, arg2);
       this.decodedData = data;
+    },
+    toggleRightPanel(){
+      if(this.rightPanelToggler.collapsed){
+        this.rightPanelToggler.text = "Show Parameters";
+        this.rightPanelToggler.iconTransform = 0;
+      }
+      else{
+        this.rightPanelToggler.text = "Hide Parameters";
+        this.rightPanelToggler.iconTransform = 0.5;
+      }
+
+      this.rightPanelToggler.collapsed = !this.rightPanelToggler.collapsed;
     }
   },
   mounted () {
     // Build up WebSocket-Connection with RedPitaya in here.
     //this.redpitaya = new RedPitaya(this.app_id, this.get_app_url, this.get_socket_url);
-    this.redpitaya = new RedPitayaStub(this.decoders);
-    this.redpitaya.start();
+    // this.redpitaya = new RedPitayaStub(this.decoders);
+    // this.redpitaya.start();
+
   },
   components: {
     Navbar,
@@ -130,6 +175,9 @@ export default {
 .channels-header{
   padding: 4px;
   border-right: 1px solid $primaryColor;
+  @media (max-width: 768px) {
+        border: none;
+  }
 }
 
 .signals-header{
@@ -153,11 +201,24 @@ export default {
   }
 }
 
+@media(min-width: 768px){
+  #right-panel:not(.show){
+      display: block;
+  }
+}
+
 #right-panel {
   border-left: 1px solid $primaryColor;
   border-bottom: 1px solid $primaryColor;
   background-color: $panelBackgroundColor;
   padding: 0;
+
+  @media (max-width: 768px) {
+        border: none;
+        border-bottom: 1px solid $primaryColor;
+        border-top: 1px solid $primaryColor;
+        padding-bottom: 25px;
+  }
 }
 
 .navbar-light .navbar-nav .nav-link {
