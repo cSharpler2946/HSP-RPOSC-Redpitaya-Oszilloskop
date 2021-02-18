@@ -62,7 +62,7 @@ class RedPitaya {
                     //var text = String.fromCharCode.apply(null, new Uint8Array(inflate));
                     var text = new TextDecoder().decode(new Uint8Array(inflate));
                     var receive = JSON.parse(text);
-                    this.dispatch_received_data(receive.parameters, receive.signals);
+                    console.log(receive)
                 } catch (e) {
                     console.log(e);
                 } finally {

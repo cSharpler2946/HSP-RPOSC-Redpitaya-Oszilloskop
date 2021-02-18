@@ -58,7 +58,7 @@
       </nav>
       <div class="tab-content" id="parameters-tabContent">
         <div class="tab-pane fade show active" id="nav-parameter" role="tabpanel" aria-labelledby="nav-parameter-tab">
-          <Parameters :decoders="decoders"/>
+          <Parameters :decoders="decoders" v-on:selectedDecoderChanged="onSelectedDecoderChanged"/>
         </div>
         <div class="tab-pane fade" id="nav-decoded-data" role="tabpanel" aria-labelledby="nav-decoded-data-tab">
           <DecodedData/>
@@ -86,7 +86,7 @@ export default {
   data () {
     return {
       app_id: 'TestApp',
-      app_port: 9200,
+      app_port: 9002,
       redpitaya: null,
       heading: 'Logic Analyzer',
       rightPanelToggler:{
@@ -112,7 +112,7 @@ export default {
   computed: {
     // Make calculations/computations in here
     get_app_url(){
-      return `/bizaar?start=${this.app_id}?${location.search.substr(1)}`;
+      return `/bazaar?start=${this.app_id}?${location.search.substr(1)}`;
     },
     get_socket_url(){
       return `ws://${window.location.hostname}:${this.app_port}`;
@@ -137,6 +137,9 @@ export default {
       }
 
       this.rightPanelToggler.collapsed = !this.rightPanelToggler.collapsed;
+    }
+    onSelectedDecoderChanged: function(newDecoder) {
+        this.redpitaya.sendSelectedDecoder(newDecoder);
     }
   },
   mounted () {

@@ -27,11 +27,16 @@ function originIsAllowed(origin) {
 }
 
 var connection = null;
-var sharedData = {
+var dataToSend = {
     signals: {},
     parameters: {}
 };
-var state = "Initial";
+var state = "";
+
+var receivedData = {
+    signals: {},
+    parameters: {}
+}
 
 const decoders =
 [
@@ -49,6 +54,44 @@ const decoders =
     }
 ];
 
+const decoder_options =
+{
+    "I2C":
+    [
+        {
+            "id": "address_format",
+            "desc": "Displayed slave address format",
+            "def": "shifted",
+            "values": ["shifted", "unshifted"]
+        }
+    ],
+    "UART":
+    [
+        {'id': 'baudrate', 'desc': 'Baud rate', 'default': 115200},
+        {'id': 'data_bits', 'desc': 'Data bits', 'default': 8,
+            'values': (5, 6, 7, 8, 9)},
+        {'id': 'parity', 'desc': 'Parity', 'default': 'none',
+            'values': ('none', 'odd', 'even', 'zero', 'one', 'ignore')},
+        {'id': 'stop_bits', 'desc': 'Stop bits', 'default': 1.0,
+            'values': (0.0, 0.5, 1.0, 1.5)},
+        {'id': 'bit_order', 'desc': 'Bit order', 'default': 'lsb-first',
+            'values': ('lsb-first', 'msb-first')},
+        {'id': 'format', 'desc': 'Data format', 'default': 'hex',
+            'values': ('ascii', 'dec', 'hex', 'oct', 'bin')},
+        {'id': 'invert_rx', 'desc': 'Invert RX', 'default': 'no',
+            'values': ('yes', 'no')},
+        {'id': 'invert_tx', 'desc': 'Invert TX', 'default': 'no',
+            'values': ('yes', 'no')},
+        {'id': 'sample_point', 'desc': 'Sample point (%)', 'default': 50},
+        {'id': 'rx_packet_delim', 'desc': 'RX packet delimiter (decimal)',
+            'default': -1},
+        {'id': 'tx_packet_delim', 'desc': 'TX packet delimiter (decimal)',
+            'default': -1},
+        {'id': 'rx_packet_len', 'desc': 'RX packet length', 'default': -1},
+        {'id': 'tx_packet_len', 'desc': 'TX packet length', 'default': -1},
+    ]
+}
+
 wsServer.on('request', function(request) {
     if (!originIsAllowed(request.origin)) {
       // Make sure we only accept requests from an allowed origin
@@ -58,16 +101,20 @@ wsServer.on('request', function(request) {
     }
     
     connection = request.accept(null, request.origin);
+    state = "Initial";
     console.log((new Date()) + ' Connection accepted.');
     stm_doStep();
     connection.on('message', function(message) {
         if (message.type === 'utf8') {
-            console.log('Received Message: ' + message.utf8Data);
-            //connection.sendUTF(message.utf8Data);
+            var receivedDecoded = JSON.parse(message.utf8Data);
+            Object.assign(receivedData["parameters"], receivedDecoded["parameters"]);
+            Object.assign(receivedData["signals"], receivedDecoded["signals"]);
+            console.log("Received message. New receivedData:");
+            console.log(receivedData);
+            stm_doStep();
         }
         else if (message.type === 'binary') {
             console.log('Received Binary Message of ' + message.binaryData.length + ' bytes');
-            //connection.sendBytes(message.binaryData);
         }
     });
     connection.on('close', function(reasonCode, description) {
@@ -79,14 +126,28 @@ function stm_doStep() {
     switch(state) {
         case "Initial":
             console.log("Sending decoder list.");
-            sharedData.signals["SRD_DECODER_LIST"] = JSON.stringify(decoders, null, 4);
-            sync_data();
+            var decoders_json_repr = decoders.map(JSON.stringify);
+            dataToSend.signals["SRD_DECODER_LIST"] = {value: decoders_json_repr};
+            send_data();
+            state = "SelectingDecoder";
+            break;
+        case "SelectingDecoder":
+            if(receivedData.parameters["CHOSEN_DECODER"]) {
+                var chosenDecoder = JSON.parse(receivedData.parameters["CHOSEN_DECODER"].value);
+                var chosen_decoder_options = decoder_options[chosenDecoder["id"]];
+                var chosen_decoder_options_json_repr = chosen_decoder_options.map(JSON.stringify);
+                dataToSend.parameters = {};
+                dataToSend.signals = {};
+                dataToSend.signals["SRD_REQUESTED_OPTIONS"] = {value: chosen_decoder_options_json_repr};
+                send_data();
+            }
             break;
     }
 }
 
-function sync_data() {
-    console.log(sharedData)
-    var compressed = pako.deflate(JSON.stringify(sharedData));
+function send_data() {
+    const util = require("util");
+    console.log(util.inspect(dataToSend, true, 10));
+    var compressed = pako.deflate(JSON.stringify(dataToSend));
     connection.sendBytes(Buffer.from(compressed));
 }

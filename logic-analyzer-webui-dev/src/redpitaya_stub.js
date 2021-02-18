@@ -35,7 +35,8 @@ class RedPitayaStub {
                     var receive = JSON.parse(text);
                     if(receive.signals) {
                         if(receive.signals["SRD_DECODER_LIST"]) {
-                            var new_decoder_list = JSON.parse(receive.signals["SRD_DECODER_LIST"]);
+                            var decoders_json_repr = receive.signals["SRD_DECODER_LIST"].value;
+                            var new_decoder_list = decoders_json_repr.map(JSON.parse);
                             myself.decoders.splice(0);
                             myself.decoders.push(...new_decoder_list);
                         }
@@ -49,6 +50,12 @@ class RedPitayaStub {
                 }
             };
         }
+    }
+
+    sendSelectedDecoder(selectedDecoder) {
+        var parameters = {};
+        parameters["CHOSEN_DECODER"] = { value: JSON.stringify(selectedDecoder, null, 4) };
+        this.webSocket.send(JSON.stringify({ parameters: parameters }));
     }
 }
 
