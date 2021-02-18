@@ -8,11 +8,21 @@
         </div>
 
         <div class="channel-box col-md-2 col-10">
-            <div class="col channel">
-                {{ channelName }} 
-                <i class="fas fa-cog channel-settings-btn"></i>
+            <div class="row" style="padding:0;">
+
+            <div @dblclick="edit = true" class="col-9 channel">
+                <div v-show="edit == false">
+                    <label> {{ channelName }}</label>
+                </div>
+                <input class="form-control" v-show="edit == true" v-model="channelName" :maxlength="maxCharacters" v-on:blur="edit=false; $emit('update')" @keyup.enter="edit=false; $emit('update')">
+            </div>
+
+            <div class="col-3 channel-settings">
+                <i class="fas fa-cog channel-settings-btn float-end"></i>
+            </div>
             </div>
         </div>
+        
 
         <div class="signal-box col-md-9 col-12">
 
@@ -23,12 +33,27 @@
 <script>
 export default {
     name: "Channel",
+    data(){
+        return {
+            editedChannel: null,
+            maxCharacters: 20,
+        }
+    },
     props: {
         channelId: {
             type: Number,
             required: true
         },
-        channelName: String
+        channelName: String,
+        edit: {
+            type: Boolean,
+            default: false,
+        },
+    },
+    methods: {
+        editChannelName: function(channel){
+            this.editedChannel = channel;
+        },
     }
 }
 </script>
