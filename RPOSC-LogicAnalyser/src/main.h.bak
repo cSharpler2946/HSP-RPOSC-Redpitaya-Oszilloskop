@@ -2,7 +2,6 @@
 
 #include <DataManager.h>
 #include <CustomParameters.h>
-#include "CStringSignal.h"
 #include "rpApp.h"
 
 #ifdef __cplusplus
