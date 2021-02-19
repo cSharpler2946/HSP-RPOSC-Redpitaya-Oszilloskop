@@ -137,7 +137,7 @@ export default {
       }
 
       this.rightPanelToggler.collapsed = !this.rightPanelToggler.collapsed;
-    }
+    },
     onSelectedDecoderChanged: function(newDecoder) {
         this.redpitaya.sendSelectedDecoder(newDecoder);
     }
