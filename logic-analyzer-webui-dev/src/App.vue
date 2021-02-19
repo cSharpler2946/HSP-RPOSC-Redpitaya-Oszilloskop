@@ -18,8 +18,8 @@
 
         <div class="channels-header col-md-3">
             <button id="startAnalyzing" type="button" class="btn">
-              <span>Start Analyzing</span>
-              <i class="fas fa-play" style="vertical-align: middle; margin-left: 10px;"></i>
+              <span>Start Analyzing </span>
+              <font-awesome-icon icon="play" style="vertical-align: middle; margin-left: 10px;" />
             </button>
         </div>
 
@@ -41,7 +41,7 @@
         <button @click="toggleRightPanel"
         id="toggleRightPanelBtn" class="btn float-end" type="button" data-bs-toggle="collapse" data-bs-target="#right-panel" 
         aria-expanded="true" aria-controls="right-panel" aria-label="Toggle right panel.">
-          {{ rightPanelToggler.text }} <i :style="toggleRightPanelIcon" class="fas fa-caret-down"></i>
+          {{ rightPanelToggler.text }} <font-awesome-icon icon="caret-down" :style="toggleRightPanelIcon" />
         </button>
     </div>
 

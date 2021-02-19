@@ -16,15 +16,15 @@
                     v-on:blur="edit=false; $emit('update')" @keyup.enter="edit=false; $emit('update')">
                 </div>
 
-                <div class="col-2 channel-settings">
-                    <i @click="openChannelSettings" class="fas fa-cog channel-settings-btn float-end" 
-                    data-bs-toggle="modal" v-bind:data-bs-target="'#channel-settings-modal-' + channelId"></i>
+                <div class="col-2 channel-settings d-flex align-items-center">
+                    <font-awesome-icon icon="cog" @click="openChannelSettings" class="fas fa-cog channel-settings-btn" 
+                    data-bs-toggle="modal" v-bind:data-bs-target="'#channel-settings-modal-' + channelId" />
                 </div>
             </div>
         </div>
 
         <div class="signal-box col-md-9 col-12">
-
+            <apexchart width="100%" height="50px" type="line" :options="chartOptions" :series="series"></apexchart>
         </div>
     </div>
          
@@ -71,6 +71,60 @@ export default {
             channelSettingComponents: [],
             decoderChannel: null,
             selected: null,
+            edit: false,
+            chartOptions: {
+                chart: {
+                    id: "signal-channel-" + this.channelId,
+                    toolbar: false,
+                    background: '#fff',
+                    offsetX: 0,
+                    offsetY: 0,
+                    parentHeightOffset: 15,
+                    sparkline: {
+                        enabled: true,
+                    }
+                },
+                fill: {
+                    colors: [
+                        '#09DE10'           
+                    ],
+                    type: 'gradient',
+                    gradient: {
+                        shade: 'dark',
+                        type: 'horizontal',
+                        shadeIntensity: 1,
+                        inverseColors: false,
+                        opacityFrom: 1,
+                        opacityTo: 1,
+                        stops: [0, 100, 100, 100, 100, 100, 100],
+                        gradientToColors: [
+                            '#1df299'
+                        ]
+                    }
+                },
+                xaxis:{
+                    type: 'numeric',
+                    labels: {
+                        show: false,
+                    }
+                },
+                yaxis:{
+                    type: 'numeric',
+                    labels: {
+                        show: false,
+                    }
+                },
+                stroke: {
+                    curve: 'stepline'
+                },
+                grid: {
+                    show: false
+                }
+            },
+            series: [{
+                name: '',
+                data: [],
+            }],       
         }
     },
     props: {
@@ -79,10 +133,6 @@ export default {
             required: true
         },
         channelName: String,
-        edit: {
-            type: Boolean,
-            default: false,
-        },
     },
     methods: {
         editChannelName: function(channel){
@@ -110,6 +160,11 @@ export default {
         editChannelSettings: function(selected){
             this.decoderChannel = selected;
         },
+    },
+    mounted() {
+        if(this.channelId === 1){
+            this.series[0].data = [1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1];
+        }
     }
 }
 </script>
@@ -143,13 +198,12 @@ export default {
 .channel-settings-btn{
     color: $primaryColor;
     cursor: pointer;
-    margin-top: 2px;
-    margin-left: 10px;
 }
 
 .signal-box{
     background-color: $signalBackgroundColor;
-    min-height: 40px;
+    min-height: 50px;
+    padding: 10px;
 }
 
 </style>
