@@ -3,7 +3,13 @@
 #include <DataManager.h>
 #include <CustomParameters.h>
 #include "rpApp.h"
+
 #include "CStringSignal.h"
+
+#include "Acquirer.hpp"
+#include "SRDDecoderList.hpp"
+#include "ChosenDecoder.hpp"
+#include "SRDRequestedOptions.hpp"
 
 #ifdef __cplusplus
 extern "C" {
