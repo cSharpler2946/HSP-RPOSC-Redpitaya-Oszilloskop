@@ -3,6 +3,7 @@
 #include <DataManager.h>
 #include <CustomParameters.h>
 #include "rpApp.h"
+#include "CStringSignal.h"
 
 #ifdef __cplusplus
 extern "C" {
