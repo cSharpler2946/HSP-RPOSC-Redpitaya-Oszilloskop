@@ -5,7 +5,7 @@
 
 class PContainer: public SPContainer {
     public:
-        PContainer(std::string name, CBaseParameter::AccessMode am, string defaultVal, int fpga_update);
+        PContainer(std::string name, CBaseParameter::AccessMode am, std::string defaultVal, int fpga_update);
         void OnNew();
 
     protected:
