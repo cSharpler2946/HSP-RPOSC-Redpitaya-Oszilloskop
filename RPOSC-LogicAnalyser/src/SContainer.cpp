@@ -7,7 +7,7 @@ SContainer::SContainer(std::string _name, int _size, std::string _def_value) {
 void SContainer::OnNew() {
     VALUE->Update();
 
-    if(VALUE->Value() == true)
+    if(VALUE->IsValueChanged())
     {
         OnNewInternal();
     }

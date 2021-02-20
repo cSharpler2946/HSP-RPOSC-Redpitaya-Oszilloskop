@@ -7,7 +7,7 @@ PContainer::PContainer(std::string name, CBaseParameter::AccessMode am, string d
 void PContainer::OnNew() {
     VALUE->Update();
 
-    if(VALUE->Value() == true)
+    if(VALUE->IsValueChanged())
     {
         OnNewInternal();
     }

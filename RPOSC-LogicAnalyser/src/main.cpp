@@ -17,6 +17,9 @@
 #include "../lib/nlohmann/json.hpp"
 
 #include "Acquirer.h"
+#include "SRDDecoderList.hpp"
+#include "ChosenDecoder.hpp"
+#include "SRDRequestedOptions.hpp"
 
 #include "main.h"
 
@@ -73,13 +76,23 @@ int rp_app_init(void)
     }
     //End: Tests
 
-
-    //Initiaize all PContainers and SContainers
+    //Set update intveral for signals
+    CDataManager::GetInstance()->SetSignalInterval(SIGNAL_UPDATE_INTERVAL);
+    //TODO: How about paramters
     
-
     //Intitialize main app
     srd_session_new(&sess);
-    activeAcquirer = new Acquirer(); //TODO: Get parameter (ACQChosenOption)
+
+    //Initiaize all PContainers and SContainers
+    SRDDecoderList *decoderList = new SRDDecoderList("SRDDecoderList", 256, "");
+    sContainerList.push_back(decoderList);
+    SRDRequestedOptions *reqOptions = new SRDRequestedOptions("SRDRequestedOptions", 127, "");
+    sContainerList.push_back(reqOptions);
+    ChosenDecoder *chosenDecoder = new ChosenDecoder("ChosenDecoder", CBaseParameter::RW, false, 0, *reqOptions);
+    pContainerList.push_back(chosenDecoder);
+
+
+    //activeAcquirer = new Acquirer(); //TODO: Get parameter (ACQChosenOption)
 
     usleep(100);
 
@@ -113,20 +126,26 @@ int rp_get_signals(float ***s, int *sig_num, int *sig_len)
 }
 /* Internal functions end */
 
+
+
 void UpdateSignals(void){
     // Call Update UpdateFunctions of all signals.
+    /*
     for(SContainer curr: sContainerList)
     {
         curr.Update();
     }
+    */
 }
 
 void UpdateParams(void){
     // Call Update functions of all parameters.
+    /*
     for(PContainer curr: pContainerList)
     {
         curr.Update();
     }
+    */
 }
 
 /**
