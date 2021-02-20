@@ -1,6 +1,6 @@
 #pragma once
 
-#include <CustomParameters.h>
+//#include <CustomParameters.h>
 #include <string>
 
 //TODO: Class has to be tested!
