@@ -81,14 +81,14 @@ int rp_app_init(void)
     //TODO: How about paramters
 
     //Intitialize main app
-    srd_session_new(srdSession);
+    srd_session_new(&srdSession);
 
     //Initiaize all PContainers and SContainers
     SRDDecoderList *decoderList = new SRDDecoderList("SRDDecoderList", 256, "");
     sContainerList.push_back(decoderList);
     SRDRequestedOptions *reqOptions = new SRDRequestedOptions("SRDRequestedOptions", 127, "", srdDecoderInst);
     sContainerList.push_back(reqOptions);
-    ChosenDecoder *chosenDecoder = new ChosenDecoder("ChosenDecoder", CBaseParameter::RW, false, 0, *reqOptions);
+    ChosenDecoder *chosenDecoder = new ChosenDecoder("ChosenDecoder", CBaseParameter::RW, false, 0, *reqOptions, srdDecoderInst);
     pContainerList.push_back(chosenDecoder);
 
 
@@ -152,9 +152,9 @@ void UpdateParams(void){
  * Callback function, which gets called when paramters changed.
  */
 void OnNewParams(void){
-    for(PContainer curr: pContainerList)
+    for(PContainer *curr: pContainerList)
     {
-        curr.onNew();
+        curr->onNew();
     }
 }
 
@@ -162,9 +162,9 @@ void OnNewParams(void){
  * Callback function, which gets called when signals changed.
  */
 void OnNewSignals(void){
-    for(SContainer curr: sContainerList)
+    for(SContainer *curr: sContainerList)
     {
-        curr.onNew();
+        curr->onNew();
     }
 }
 
