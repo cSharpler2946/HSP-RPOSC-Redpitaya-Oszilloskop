@@ -23,6 +23,7 @@ INCLUDE += -I/usr/include/python3.5
 
 # LibSigrokDecode + python3 libraries
 LIBS += -L/usr/lib/
+LIBS += -L/usr/lib/arm-linux-gnueabihf/
 
 # JSON includes
 INCLUDE += -I../lib/nlohmann
@@ -34,7 +35,7 @@ COMMON_FLAGS+=-Wall -fPIC -Os -s
 CXXFLAGS+=$(COMMON_FLAGS) -std=c++11 $(INCLUDE)
 LDFLAGS = -shared $(COMMON_FLAGS) $(LIBS)
 LDFLAGS+= -Wl,--whole-archive,--no-as-needed
-LDFLAGS+= -lcryptopp -lrpapp -lrp -lrp_sdk
+LDFLAGS+= -lcryptopp -lrpapp -lrp -lrp_sdk -lsigrokdecode
 LDFLAGS+= -Wl,--no-whole-archive
 
 CXXOBJECTS=$(CXXSOURCES:.cpp=.o)
