@@ -26,6 +26,14 @@
 #define SIGNAL_SIZE_DEFAULT      1024
 #define SIGNAL_UPDATE_INTERVAL      10
 
+const char* logfile = "log/debug.log";
+vector<PContainer*> pContainerList;
+vector<SContainer*> sContainerList;
+
+static srd_session *srdSession;
+static srd_decoder_inst *srdDecoderInst;
+static Acquirer *activeAcquirer;
+
 CFloatSignal ss_signal_1("VOLTAGE", 16384, 0.0f);
 CIntParameter write_pointer_parameter("WRITE_POINTER", CBaseParameter::AccessMode::RW, 0, false, 0, 20000);
 CBooleanParameter start_acquisition("START_ACQUISITION", CBaseParameter::AccessMode::RW, false, false);
@@ -37,8 +45,6 @@ uint32_t buff_size = 16382;
 float buff[16384];
 
 uint32_t previous_write_pointer = 0;
-
-char* logfile = "log/debug.log";
 
 const char *rp_app_desc(void)
 {
