@@ -58,7 +58,8 @@
       </nav>
       <div class="tab-content" id="parameters-tabContent">
         <div class="tab-pane fade show active" id="nav-parameter" role="tabpanel" aria-labelledby="nav-parameter-tab">
-          <Parameters :decoders="decoders" v-on:selectedDecoderChanged="onSelectedDecoderChanged"/>
+          <Parameters :decoders="decoders" v-on:selectedDecoderChanged="onSelectedDecoderChanged"
+            :requestedOptions="requestedOptions"/>
         </div>
         <div class="tab-pane fade" id="nav-decoded-data" role="tabpanel" aria-labelledby="nav-decoded-data-tab">
           <DecodedData/>
@@ -100,7 +101,8 @@ export default {
               "id": "Hello!",
               "name": "SampleDecoder1"
           }
-      ]
+      ],
+      requestedOptions: [],
     }
   },
   // props: {
@@ -145,8 +147,8 @@ export default {
   mounted () {
     // Build up WebSocket-Connection with RedPitaya in here.
     //this.redpitaya = new RedPitaya(this.app_id, this.get_app_url, this.get_socket_url);
-    // this.redpitaya = new RedPitayaStub(this.decoders);
-    // this.redpitaya.start();
+    this.redpitaya = new RedPitayaStub(this.decoders, this.requestedOptions);
+    this.redpitaya.start();
 
   },
   components: {

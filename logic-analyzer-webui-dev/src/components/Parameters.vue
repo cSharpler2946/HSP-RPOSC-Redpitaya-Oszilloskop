@@ -3,6 +3,7 @@
         <div class="parameter-wrapper">
         <label>Protocol decoder:</label>
         <select class="form-select" aria-label="Choose a protocol." v-model="selectedDecoder" v-on:change="$emit('selectedDecoderChanged', selectedDecoder)">
+            <option :value="null" disabled hidden>Select decoder</option>
             <option v-for="decoder in decoders" v-bind:key="decoder" v-bind:value="decoder">
                 {{ decoder["name"] }}
             </option>
@@ -14,7 +15,20 @@
 
         <div style="margin-bottom: 15px;"></div>
 
-        <div class="parameter-wrapper">
+        <div class="parameter-wrapper" v-for="option in requestedOptions" v-bind:key="option" v-bind:value="option">
+            <label class="form-label">
+                {{ option["desc"] }}
+            </label>
+            <input type="text" class="form-control form-control-sm" v-if="!('values' in option)" v-model.lazy="chosenOptions[option.id]">
+            <select class="form-select" v-if="'values' in option" v-model="chosenOptions[option.id]">
+                <option v-for="possibleValue in option['values']" v-bind:key="possibleValue">
+                    {{ possibleValue }}
+                </option>
+            </select>
+            <br/>
+        </div>
+
+        <!--div class="parameter-wrapper">
             <label for="sampleRange" class="form-label">Baud Rate:</label>
             <input type="range" class="form-range" id="sampleRange">
 
@@ -50,7 +64,7 @@
                 <input type="text" class="form-control form-control-sm" placeholder="stop bit">
             </div>
             </div>
-        </div>
+        </div-->
 
     </form>
 </template>
@@ -59,11 +73,35 @@
 export default {
     name: "Parameters",
     props: {
-        decoders: Array
+        decoders: Array,
+        requestedOptions: Array
     },
     data () {
         return {
-            selectedDecoder: Object
+            selectedDecoder: null,
+            chosenOptions: {}
+        }
+    },
+    watch: {
+        'chosenOptions': {
+            handler: function (currentOptions, old) {
+                console.log("current options:");
+                console.log(currentOptions);
+            },
+            deep: true
+        },
+        'requestedOptions': {
+            handler: function (currentRequestedOptions) {
+                console.log("setting defaults.");
+                console.log(currentRequestedOptions);
+                var _this = this;
+                currentRequestedOptions.forEach(function(requestedOption) {
+                    console.log("default is:")
+                    console.log(requestedOption);
+                    _this.chosenOptions[requestedOption.id] = requestedOption.default;
+                })
+            },
+            deep: true
         }
     }
 }
