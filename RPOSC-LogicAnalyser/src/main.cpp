@@ -88,7 +88,7 @@ int rp_app_init(void)
     sContainerList.push_back(decoderList);
     SRDRequestedOptions *reqOptions = new SRDRequestedOptions("SRDRequestedOptions", 127, "", srdDecoderInst);
     sContainerList.push_back(reqOptions);
-    ChosenDecoder *chosenDecoder = new ChosenDecoder("ChosenDecoder", CBaseParameter::RW, false, "", *reqOptions, srdDecoderInst);
+    ChosenDecoder *chosenDecoder = new ChosenDecoder("ChosenDecoder", CBaseParameter::RW, false, "", reqOptions, srdDecoderInst);
     pContainerList.push_back(chosenDecoder);
 
 
