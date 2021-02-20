@@ -22,7 +22,7 @@ INCLUDE += -I/usr/lib/arm-linux-gnueabihf/glib-2.0/include
 INCLUDE += -I/usr/include/python3.5 
 
 # LibSigrokDecode + python3 libraries
-LIBS += -L/usr/lib64/
+LIBS += -L/usr/lib/
 
 # JSON includes
 INCLUDE += -I../lib/nlohmann
