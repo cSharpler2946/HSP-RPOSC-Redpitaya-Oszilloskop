@@ -4,10 +4,10 @@
 #include <libsigrokdecode/libsigrokdecode.h>
 #include "SRDRequestedOptions.hpp"
 
-class ChosenDecoder: PContainer {
+class ChosenDecoder: public PContainer {
     public:
-        ChosenDecoder(std::string name, CBaseParameter::AccessMode am, string defaultVal, int fpga_update, SRDReqestedOptions& _reqOptions, srd_decoder_inst *_decoderInstance);
+        ChosenDecoder(std::string name, CBaseParameter::AccessMode am, string defaultVal, int fpga_update, SRDRequestedOptions& _reqOptions, srd_decoder_inst *_decoderInstance);
         void loadChosenDecoder();
-        SRDReqOptions& reqOptions;
+        SRDRequestedOptions& reqOptions;
         srd_decoder_inst *decoderInstance;
-}
+};

@@ -1,3 +1,5 @@
+#pragma once
+
 #include <CustomParameters.h>
 #include <string>
 
