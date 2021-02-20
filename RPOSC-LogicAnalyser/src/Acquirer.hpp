@@ -17,4 +17,10 @@ public:
   Acquirer(ACQChoosenOptions *choosenOptions);
   Acquirer(int sampleRate, int decimation, int pinState, ACQChoosenOptions *acqChoosenOption);
   void ChangeSampleRate(int rate);
+
+private:
+  bool acquisitionPending;
+  bool acquisitionComplete;
+  uint32_t previous_write_pointer;
+  CBooleanParameter start_acquisition;
 };
