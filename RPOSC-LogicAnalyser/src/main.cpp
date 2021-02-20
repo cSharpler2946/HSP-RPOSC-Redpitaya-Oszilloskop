@@ -154,7 +154,7 @@ void UpdateParams(void){
 void OnNewParams(void){
     for(PContainer *curr: pContainerList)
     {
-        curr->onNew();
+        curr->OnNew();
     }
 }
 
@@ -164,7 +164,7 @@ void OnNewParams(void){
 void OnNewSignals(void){
     for(SContainer *curr: sContainerList)
     {
-        curr->onNew();
+        curr->OnNew();
     }
 }
 
