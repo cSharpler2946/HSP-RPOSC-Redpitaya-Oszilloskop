@@ -132,11 +132,21 @@ void UpdateParams(void){
 /**
  * Callback function, which gets called when paramters changed.
  */
-void OnNewParams(void){}
+void OnNewParams(void){
+    for(PContainer *curr: pContainerList)
+    {
+        curr->OnNew();
+    }
+}
 
 /**
  * Callback function, which gets called when signals changed.
  */
-void OnNewSignals(void){}
+void OnNewSignals(void){
+    for(SContainer *curr: sContainerList)
+    {
+        curr->OnNew();
+    }
+}
 
 void PostUpdateSignals(void){}
