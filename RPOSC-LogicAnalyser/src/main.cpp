@@ -16,7 +16,7 @@
 #include "../lib/loguru/loguru.hpp"
 #include "../lib/nlohmann/json.hpp"
 
-#include "Acquirer.h"
+#include "Acquirer.hpp"
 #include "SRDDecoderList.hpp"
 #include "ChosenDecoder.hpp"
 #include "SRDRequestedOptions.hpp"
@@ -79,7 +79,7 @@ int rp_app_init(void)
     //Set update intveral for signals
     CDataManager::GetInstance()->SetSignalInterval(SIGNAL_UPDATE_INTERVAL);
     //TODO: How about paramters
-    
+
     //Intitialize main app
     srd_session_new(&sess);
 

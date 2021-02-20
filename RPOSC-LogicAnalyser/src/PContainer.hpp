@@ -1,3 +1,5 @@
+#pragma once
+
 #include "SPContainer.hpp"
 #include <CustomParameters.h>
 

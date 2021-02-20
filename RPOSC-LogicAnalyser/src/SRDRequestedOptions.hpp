@@ -1,4 +1,5 @@
 #pragma once
+
 #include "SContainer.hpp"
 #include <libsigrokdecode/libsigrokdecode.h>
 
