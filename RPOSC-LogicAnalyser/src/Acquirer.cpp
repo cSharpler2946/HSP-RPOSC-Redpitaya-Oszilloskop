@@ -30,9 +30,10 @@
    ACQChoosenOptions *choosenOptions;
 
    //internal values to check if the acquisition is successfully finished
- private:
-   bool acquisition_pending = false;
-   bool acquisition_complete = false;
+   bool acquisitionPending = false;
+   bool acquisitionComplete = false;
+   uint32_t previous_write_pointer = 0;
+   CBooleanParameter start_acquisition("START_ACQUISITION", CBaseParameter::AccessMode::RW, false, false);
 
   // base constructor with default parameters
   Acquirer::Acquirer(int sampleRate = 1, int decimation = 8, int pinState = 1, ACQChoosenOptions *choosenOptions = new ACQChoosenOptions()){}
@@ -44,18 +45,60 @@
   // sets all the needed parameters and starts the acquisition
   bool startAcquire()
   {
+    // needed variables
+    uint32_t writePointer;
+    rp_AcqGetWritePointer(&writePointer);
+
+    // clear the vector
+    acquiredDataChannelA.clear();
+    acquiredDataChannelB.clear();
+    // SetSrdMetadata();
+
+    // do all the initialization stuff for the Acquisition
     rp_AcqReset();
     rp_AcqSetDecimation(choosenOptions.decimation);
-    rp_AcqSetTriggerDelay() // TODO: Calculate the needed time to get sampleCount with defined sampleRate
+    rp_AcqSetTriggerDelay(choosenOptions.decimation) // TODO: Calculate the needed time to get sampleCount with defined sampleRate
     rp_AcqSetGain(0,choosenOptions.pinState);
+    rp_AcqSetGain(1,choosenOptions.pinState);
     rp_AcqStart();
+    usleep(100)   //TODO: replace this by proper method like timer
 
-    //TODO: Do for loop and calculate if the acquisition is pending and completed see main.cpp.bak
+    // wait for the buffer to be completely written
+    while(!acquisitionPending || !acquisitionComplete){
+      if(previousWritePointer == writePointer)
+      {
+        acquisitionComplete = true;
+      }
+      previousWritePointer = writePointer;
+      if(startAcquisition.IsNewValue())
+      {
+        startAcquisition.Set(false);
+        startAcquisition.Update();
+        rp_AcqSetTriggerSrc(RP_TRIG_SRC_NOW);
+        acquisitionPending = true;
+      }
+    }
+    // write the acquired data into the vectors
+    // therefore create temp buffer array
+    double buffA[choosenOptions.sampleCount];
+    double buffB[choosenOptions.sampleCount];
+    if(acquisitionPending && acquisitionComplete){
+      acquisitionPending = acquisitionComplete = false;
+      rp_AcqGetOldestDataV(0, &choosenOptions.sampleCount, buffA);
+      rp_AcqGetOldestDataV(1, &choosenOptions.sampleCount, buffB);
+      //write data into the vectors
+      acquiredDataChannelA(buffA, buffA+sizeof buffA / sizeof buffA[0]);
+      acquiredDataChannelB(buffB, buffB+sizeof buffB / sizeof buffB[0]);
+    }
 
-    // SetSrdMetadata();
-    // take ACQChoosenOptions and write to fpga image.
-    //
-    // start acquisition for all channels and return bool if finished
+    // check if vectors are filled with data
+    if(!acquiredDataChannelA.empty() && !acquiredDataChannelB.empty())
+    {
+      return true;
+    }
+    else{
+      return false;
+    }
   }
 
   vector<double> getData(int channel)
