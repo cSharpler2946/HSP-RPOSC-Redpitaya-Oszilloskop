@@ -123,32 +123,10 @@ int rp_get_signals(float ***s, int *sig_num, int *sig_len)
 /* Internal functions end */
 
 void UpdateSignals(void){
-  if(acquisition_pending && acquisition_complete)
-    {
-        acquisition_pending = acquisition_complete = false;
-        rp_AcqGetOldestDataV(RP_CH_1, &buff_size, buff);
-        std::vector<float> v(buff, buff + 16384);
-        ss_signal_1.Set(v);
-    }
+
 }
 
 void UpdateParams(void){
-  uint32_t write_pointer;
-    rp_AcqGetWritePointer(&write_pointer);
-    write_pointer_parameter.SendValue(write_pointer);
-    if(previous_write_pointer == write_pointer)
-    {
-        acquisition_complete = true;
-    }
-    previous_write_pointer = write_pointer;
-
-    if(start_acquisition.IsNewValue())
-    {
-        start_acquisition.Set(false);
-        start_acquisition.Update();
-        rp_AcqSetTriggerSrc(RP_TRIG_SRC_NOW);
-        acquisition_pending = true;
-    }
 }
 
 /**
