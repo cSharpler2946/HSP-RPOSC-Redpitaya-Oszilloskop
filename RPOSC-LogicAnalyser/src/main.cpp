@@ -34,18 +34,6 @@ static srd_session *srdSession;
 static srd_decoder_inst *srdDecoderInst;
 static Acquirer *activeAcquirer;
 
-CFloatSignal ss_signal_1("VOLTAGE", 16384, 0.0f);
-CIntParameter write_pointer_parameter("WRITE_POINTER", CBaseParameter::AccessMode::RW, 0, false, 0, 20000);
-CBooleanParameter start_acquisition("START_ACQUISITION", CBaseParameter::AccessMode::RW, false, false);
-
-bool acquisition_pending = false;
-bool acquisition_complete = false;
-
-uint32_t buff_size = 16382;
-float buff[16384];
-
-uint32_t previous_write_pointer = 0;
-
 const char *rp_app_desc(void)
 {
     return (const char *)"RPOSC Logic Analyzer\n";
