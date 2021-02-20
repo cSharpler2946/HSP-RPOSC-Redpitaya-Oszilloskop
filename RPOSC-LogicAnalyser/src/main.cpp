@@ -54,6 +54,8 @@ const char *rp_app_desc(void)
 int rp_app_init(void)
 {
     fprintf(stderr, "Loading RPOSC Logic Analyzer\n");
+
+    //Tests
     //loguru::init();
     loguru::add_file(logfile, loguru::Append, loguru::Verbosity_INFO);
     LOG_F(INFO, "THE app staaaarts maaaan....");
@@ -71,7 +73,7 @@ int rp_app_init(void)
     }
 
     //Libsigrokdecode init
-    /*if ((ToErr srd_init(nullptr)) != SRD_OK)
+    if ((ToErr srd_init(nullptr)) != SRD_OK)
     {
         fprintf(stderr, "LibSigrokDecode init failed\n");
         return EXIT_FAILURE;
@@ -79,18 +81,27 @@ int rp_app_init(void)
     else
     {
         fprintf(stderr, "LibSigrokDecode init success: Using version: %s\n", srd_lib_version_string_get());
-    }*/
+    }
+    //End: Tests
 
-    //Set signal update interval
+    //Set update intveral for signals
     CDataManager::GetInstance()->SetSignalInterval(SIGNAL_UPDATE_INTERVAL);
-    CDataManager::GetInstance()->SetParamInterval(SIGNAL_UPDATE_INTERVAL);
+    //TODO: How about paramters
 
-    rp_AcqReset();
-    usleep(50);
-    rp_AcqSetDecimation(RP_DEC_8192);
-    rp_AcqSetTriggerDelay(8192);
-    rp_AcqSetGain(RP_CH_1, RP_HIGH);
-    rp_AcqStart();
+    //Intitialize main app
+    srd_session_new(&srdSession);
+
+    //Initiaize all PContainers and SContainers
+    SRDDecoderList *decoderList = new SRDDecoderList("SRDDecoderList", 256, "");
+    sContainerList.push_back(decoderList);
+    SRDRequestedOptions *reqOptions = new SRDRequestedOptions("SRDRequestedOptions", 127, "", srdDecoderInst);
+    sContainerList.push_back(reqOptions);
+    ChosenDecoder *chosenDecoder = new ChosenDecoder("ChosenDecoder", CBaseParameter::RW, "", false, reqOptions, srdDecoderInst);
+    pContainerList.push_back(chosenDecoder);
+
+
+    //activeAcquirer = new Acquirer(); //TODO: Get parameter (ACQChosenOption)
+
     usleep(100);
 
     return 0;
