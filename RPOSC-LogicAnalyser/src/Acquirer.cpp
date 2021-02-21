@@ -62,7 +62,7 @@
     rp_AcqSetGain(rp_channel_t(0),rp_pinState_t(choosenOptions->pinState));
     rp_AcqSetGain(rp_channel_t(1),rp_pinState_t(choosenOptions->pinState));
     rp_AcqStart();
-    usleep(100)   //TODO: replace this by proper method like timer
+    usleep(100);   //TODO: replace this by proper method like timer
 
     // wait for the buffer to be completely written
     while(!acquisitionPending || !acquisitionComplete){
