@@ -20,7 +20,7 @@ ACQChoosenOptions::ACQChoosenOptions(){}
 // Translate the userfriendly string into the fitting index
 int ACQChoosenOptions::TranslateSampleRate(string sampleRate){
   int index = -1;
-  Acquirer acquirer;
+  Acquirer acquirer* = new Acquirer();
   auto found = find(acquirer.supportedSampleRates.begin(), acquirer.supportedSampleRates.begin(), sampleRate);
 
   // if element found, we need the index because setting the sampleRate is done by an integer number
@@ -39,7 +39,7 @@ int ACQChoosenOptions::TranslateSampleRate(string sampleRate){
 int ACQChoosenOptions::TranslateDecimation(string decimation)
 {
   int index = -1;
-  Acquirer acquirer;
+  Acquirer acquirer* = new Acquirer();
   auto found = find(acquirer.supportedSampleRates.begin(), acquirer.supportedSampleRates.end(), decimation);
 
   // again check in the vector for the string and use the index later for initialisation
@@ -57,7 +57,7 @@ int ACQChoosenOptions::TranslateDecimation(string decimation)
 int ACQChoosenOptions::TranslatePinState(string pinState)
 {
   int index = -1;
-  Acquirer acquirer;
+  Acquirer acquirer* = new Acquirer();
   auto found = find(acquirer.supportedSampleRates.begin(), acquirer.supportedSampleRates.end(), pinState);
   if(found != acquirer.supportedSampleRates.end())
   {

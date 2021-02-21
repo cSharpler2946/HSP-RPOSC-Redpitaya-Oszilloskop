@@ -23,5 +23,5 @@ private:
   bool acquisitionPending;
   bool acquisitionComplete;
   uint32_t previous_write_pointer;
-  CBooleanParameter start_acquisition;
+  //CBooleanParameter start_acquisition;
 };

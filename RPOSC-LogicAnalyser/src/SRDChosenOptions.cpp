@@ -10,11 +10,11 @@ SRDChosenOptions::OnNewInternal() {
     /*
     * Read options from json to map<string, string>
     * Call setOptions function
-    * Set optionsValid if 
+    * Set optionsValid if
     */
 }
 
-srd_error_code setOptions(srd_decoder_inst * inst, map<string,string> options)
+srd_error_code setOptions(srd_decoder_inst * inst, std::map<string,string> options)
 {
     //Construct g_hash_table from options:map<>
     GHashTable *table = g_hash_table_new(g_int_hash, g_int_equal);
