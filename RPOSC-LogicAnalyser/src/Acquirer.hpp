@@ -16,6 +16,7 @@ public:
   vector<double> getData();
   Acquirer(ACQChoosenOptions *choosenOptions);
   Acquirer(int sampleRate, int decimation, int pinState, ACQChoosenOptions *acqChoosenOption);
+  Acquirer();
   void ChangeSampleRate(int rate);
 
 private:

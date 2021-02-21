@@ -37,6 +37,7 @@
 
   // base constructor with default parameters
   Acquirer::Acquirer(int sampleRate = 1, int decimation = 8, int pinState = 1, ACQChoosenOptions *choosenOptions = new ACQChoosenOptions()){}
+  Acquirer::Acquirer(){}
   Acquirer::Acquirer(ACQChoosenOptions *choosenOptions)
   {
     choosenOptions = choosenOptions;
