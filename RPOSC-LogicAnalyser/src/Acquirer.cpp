@@ -1,5 +1,4 @@
 #include "Acquirer.hpp"
-#include <CustomParameters.h>
 
 /* TODO: Hier ACQChoosenOptions object das im Konstruktor übergeben wird nehmen und entsprechen in startAcquire auf fpga image setzen
 * Vor Starten die SetSrdMetadata starten, die von Florian geschrieben wurde..
@@ -34,7 +33,7 @@
    bool acquisitionPending = false;
    bool acquisitionComplete = false;
    uint32_t previousWritePointer = 0;
-   CBooleanParameter startAcquisition("START_ACQUISITION", CBaseParameter::AccessMode::RW, false, false);
+   //CBooleanParameter startAcquisition("START_ACQUISITION", CBaseParameter::AccessMode::RW, false, false);
 
   // base constructor with default parameters
   Acquirer::Acquirer(int sampleRate = 1, int decimation = 8, int pinState = 1, ACQChoosenOptions *choosenOptions = new ACQChoosenOptions()){}
@@ -72,20 +71,14 @@
         acquisitionComplete = true;
       }
       previousWritePointer = writePointer;
-      if(startAcquisition.IsNewValue())
-      {
-        startAcquisition.Set(false);
-        startAcquisition.Update();
-        rp_AcqSetTriggerSrc(RP_TRIG_SRC_NOW);
-        acquisitionPending = true;
-      }
+      rp_AcqSetTriggerSrc(RP_TRIG_SRC_NOW);
     }
     // write the acquired data into the vectors
     // therefore create temp buffer array
     float buffA[choosenOptions->sampleCount];
     float buffB[choosenOptions->sampleCount];
-    if(acquisitionPending && acquisitionComplete){
-      acquisitionPending = acquisitionComplete = false;
+    if(acquisitionComplete){
+      acquisitionComplete = false;
       rp_AcqGetOldestDataV(rp_channel_t(0), &choosenOptions->sampleCount, buffA);
       rp_AcqGetOldestDataV(rp_channel_t(1), &choosenOptions->sampleCount, buffB);
       //write data into the vectors
