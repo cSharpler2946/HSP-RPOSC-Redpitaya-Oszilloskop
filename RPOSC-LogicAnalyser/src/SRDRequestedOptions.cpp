@@ -12,7 +12,7 @@ void SRDRequestedOptions::Update() {  //again added void as dummy
     * Update value with them
     */
 
-    std::vector<string> options;
+    std::vector<std::string> options;
     options.push_back("{'id': 'baudrate', 'desc': 'Baud rate', 'default': 115200}");
     options.push_back("{'id': 'data_bits', 'desc': 'Data bits', 'default': 8, 'values': (5, 6, 7, 8, 9)}");
     options.push_back("{'id': 'parity', 'desc': 'Parity', 'default': 'none', 'values': ('none', 'odd', 'even', 'zero', 'one', 'ignore')}");
