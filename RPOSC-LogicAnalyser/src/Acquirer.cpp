@@ -98,12 +98,12 @@
     }
   }
 
-  vector<double> getData(int channel)
+  vector<float> getData(int channel)
   {
     // get data from specified channel. The acquiredDataChannel vectors contain as much valued as defined in choosenOptions.sampleCount
     switch (channel) {
       case 0: return acquiredDataChannelA;
       case 1: return acquiredDataChannelB;
-      default: return vector<double>();
+      default: return vector<float>();
     }
   }

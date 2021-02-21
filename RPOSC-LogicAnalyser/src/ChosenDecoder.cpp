@@ -6,11 +6,11 @@ PContainer(name, am, defaultVal, fpga_update) {
     decoderInstance = _decoderInstance;
 }
 
-ChosenDecoder::loadChosenDecoder() {
+void ChosenDecoder::loadChosenDecoder() {
     //Load the chosen decoder
 }
 
-ChosenDecoder::OnNewInternal() {
+void ChosenDecoder::OnNewInternal() {
     /*
     * Read value
     * Call loadChosenDecoder()
@@ -19,4 +19,3 @@ ChosenDecoder::OnNewInternal() {
 
     reqOptions->Update();
 }
-
