@@ -8,4 +8,5 @@ class SRDRequestedOptions: public SContainer {
         SRDRequestedOptions(std::string _name, int _size, std::string _def_value, srd_decoder_inst *_decoderInst);
         bool decoderChanged = false;
         srd_decoder_inst * decoderInst;
+        void Update();    //added because ...
 };

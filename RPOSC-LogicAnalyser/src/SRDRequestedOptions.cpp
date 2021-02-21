@@ -6,7 +6,7 @@ SContainer(_name, _size, _def_value) {
 
 }
 
-SRDRequestedOptions::Update() {
+void SRDRequestedOptions::Update() {  //again added void as dummy
     /*
     * Create vector of options of decoderInst instance
     * Update value with them
