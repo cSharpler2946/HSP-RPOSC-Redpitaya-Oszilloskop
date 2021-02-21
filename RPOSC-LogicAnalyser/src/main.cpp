@@ -26,7 +26,6 @@
 #define SIGNAL_SIZE_DEFAULT      1024
 #define SIGNAL_UPDATE_INTERVAL      10
 
-const char* logfile = "log/debug.log";
 vector<PContainer*> pContainerList;
 vector<SContainer*> sContainerList;
 
@@ -41,34 +40,32 @@ const char *rp_app_desc(void)
 
 int rp_app_init(void)
 {
-    fprintf(stderr, "Loading RPOSC Logic Analyzer\n");
+    LOG_F(INFO, "Loading RPOSC Logic Analyzer\n");
 
     //Tests
     //loguru::init();
-    loguru::add_file(logfile, loguru::Append, loguru::Verbosity_INFO);
-    LOG_F(INFO, "THE app staaaarts maaaan....");
     //Testing if JSON Library works
     nlohmann::json j;
 
     if (rp_Init() != RP_OK)
     {
-        fprintf(stderr, "Red Pitaya API init failed!\n");
+        LOG_F(INFO, "Red Pitaya API init failed!\n");
         return EXIT_FAILURE;
     }
     else
     {
-        fprintf(stderr, "Red Pitaya API init success!\n");
+        LOG_F(INFO, "Red Pitaya API init success!\n");
     }
 
     //Libsigrokdecode init
     if ((ToErr srd_init(nullptr)) != SRD_OK)
     {
-        fprintf(stderr, "LibSigrokDecode init failed\n");
+        LOG_F(INFO, "LibSigrokDecode init failed\n");
         return EXIT_FAILURE;
     }
     else
     {
-        fprintf(stderr, "LibSigrokDecode init success: Using version: %s\n", srd_lib_version_string_get());
+        LOG_F(INFO, "LibSigrokDecode init success: Using version: %s\n", srd_lib_version_string_get());
     }
     //End: Tests
 
@@ -97,7 +94,7 @@ int rp_app_init(void)
 
 int rp_app_exit(void)
 {
-    fprintf(stderr, "Unloading RPOSC Logic Analyzer\n");
+    LOG_F(INFO, "Unloading RPOSC Logic Analyzer\n");
 
 
     rpApp_Release();

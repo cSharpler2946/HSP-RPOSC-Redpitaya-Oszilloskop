@@ -2,6 +2,7 @@
 
 #include "SPContainer.hpp"
 #include <CustomParameters.h>
+#include <string>
 
 class PContainer: public SPContainer {
     public:

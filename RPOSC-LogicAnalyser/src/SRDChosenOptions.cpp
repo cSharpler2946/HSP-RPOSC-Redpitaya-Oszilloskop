@@ -1,16 +1,17 @@
 #include "SRDChosenOptions.hpp"
 #include <gmodule.h> //I think there are the glib functions
 
-SRDChosenOptions::SRDChosenOptions(std::string _name, int _size, std::string _def_value, srd_decoder_inst *_decoderInst):
+SRDChosenOptions::SRDChosenOptions(std::string _name, int _size, std::string _def_value, srd_decoder_inst *_decoderInst, AllOptionsValid *_allOptionsValid):
 SContainer(_name, _size, _def_value) {
     decoderInst = _decoderInst;
+    allOptionsValid = _allOptionsValid;
 }
 
 SRDChosenOptions::OnNewInternal() {
     /*
     * Read options from json to map<string, string>
     * Call setOptions function
-    * Set optionsValid if 
+    * Set optionsValid if setOptions is called once with valid return
     */
 }
 
