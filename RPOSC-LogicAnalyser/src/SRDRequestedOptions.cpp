@@ -18,5 +18,5 @@ void SRDRequestedOptions::Update() {  //again added void as dummy
     options.push_back("{'id': 'parity', 'desc': 'Parity', 'default': 'none', 'values': ('none', 'odd', 'even', 'zero', 'one', 'ignore')}");
     options.push_back("{'id': 'stop_bits', 'desc': 'Stop bits', 'default': 1.0,'values': (0.0, 0.5, 1.0, 1.5)}");
 
-    VALUE.Set(options);
+    VALUE->Set(options); //TODO: changed .Set to ->Set please check if correct
 }
