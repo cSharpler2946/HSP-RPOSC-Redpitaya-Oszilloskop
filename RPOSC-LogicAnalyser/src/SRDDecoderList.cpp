@@ -1,6 +1,8 @@
 #include "SRDDecoderList.hpp"
 
-SRDDecoderList::SRDDecoderList(std::string _name, int _size, std::string _def_value): 
+void CreateDecoderList(); //TODO: entweder das da lassen oder in header aufnehmen...
+
+SRDDecoderList::SRDDecoderList(std::string _name, int _size, std::string _def_value):
 SContainer(_name, _size, _def_value) {
     CreateDecoderList();
     Update();
