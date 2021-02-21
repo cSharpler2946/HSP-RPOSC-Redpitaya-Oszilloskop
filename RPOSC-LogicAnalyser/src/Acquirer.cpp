@@ -33,7 +33,7 @@
    bool acquisitionPending = false;
    bool acquisitionComplete = false;
    uint32_t previousWritePointer = 0;
-   CBooleanParameter start_acquisition("START_ACQUISITION", CBaseParameter::AccessMode::RW, false, false);
+   CBooleanParameter startAcquisition("START_ACQUISITION", CBaseParameter::AccessMode::RW, false, false);
 
   // base constructor with default parameters
   Acquirer::Acquirer(int sampleRate = 1, int decimation = 8, int pinState = 1, ACQChoosenOptions *choosenOptions = new ACQChoosenOptions()){}
