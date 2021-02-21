@@ -18,7 +18,7 @@ srd_error_code setOptions(srd_decoder_inst * inst, std::map<std::string,std::str
 {
     //Construct g_hash_table from options:map<>
     GHashTable *table = g_hash_table_new(g_int_hash, g_int_equal);
-    for (const auto& [key, value] : options)
+    for (const auto& name [key, value] : options)   // TODO: change name to a sensible name put it only in there to fix build error xD
     {
         const gchar *gkey = key.c_str();
         //Searches srd_decoder_options for type string of option. Ignores options that can not be found in inst->decoder->options
