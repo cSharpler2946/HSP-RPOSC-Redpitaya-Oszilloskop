@@ -82,9 +82,10 @@
       rp_AcqGetOldestDataV(rp_channel_t(0), &choosenOptions->sampleCount, buffA);
       rp_AcqGetOldestDataV(rp_channel_t(1), &choosenOptions->sampleCount, buffB);
       //write data into the vectors
-      std::vector<float> v(buffA, buffA+sizeof buffA / sizeof buffA[0]);
-      acquiredDataChannelA = v;
-      acquiredDataChannelB(buffB, buffB+sizeof buffB / sizeof buffB[0]);
+      std::vector<float> a(buffA, buffA+sizeof buffA / sizeof buffA[0]);
+      acquiredDataChannelA = a;
+      std::vector<float> b(buffB, buffB+sizeof buffB / sizeof buffB[0]);
+      acquiredDataChannelB = b;
     }
 
     // check if vectors are filled with data
