@@ -2,6 +2,7 @@
 
 using namespace std;
 #include "ACQChoosenOptions.hpp"
+#include <CustomParameters.h>
 #include <vector>
 #include <list>
 #include <string>
@@ -24,5 +25,5 @@ private:
   bool acquisitionPending;
   bool acquisitionComplete;
   uint32_t previous_write_pointer;
-  //CBooleanParameter start_acquisition;
+  CBooleanParameter start_acquisition;
 };

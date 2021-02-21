@@ -32,8 +32,8 @@
    //internal values to check if the acquisition is successfully finished
    bool acquisitionPending = false;
    bool acquisitionComplete = false;
-   uint32_t previous_write_pointer = 0;
-   //CBooleanParameter start_acquisition("START_ACQUISITION", CBaseParameter::AccessMode::RW, false, false);
+   uint32_t previousWritePointer = 0;
+   CBooleanParameter start_acquisition("START_ACQUISITION", CBaseParameter::AccessMode::RW, false, false);
 
   // base constructor with default parameters
   Acquirer::Acquirer(int sampleRate = 1, int decimation = 8, int pinState = 1, ACQChoosenOptions *choosenOptions = new ACQChoosenOptions()){}
@@ -81,14 +81,15 @@
     }
     // write the acquired data into the vectors
     // therefore create temp buffer array
-    double buffA[choosenOptions->sampleCount];
-    double buffB[choosenOptions->sampleCount];
+    float buffA[choosenOptions->sampleCount];
+    float buffB[choosenOptions->sampleCount];
     if(acquisitionPending && acquisitionComplete){
       acquisitionPending = acquisitionComplete = false;
-      rp_AcqGetOldestDataV(0, &choosenOptions->sampleCount, buffA);
-      rp_AcqGetOldestDataV(1, &choosenOptions->sampleCount, buffB);
+      rp_AcqGetOldestDataV(rp_channel_t(0), &choosenOptions->sampleCount, buffA);
+      rp_AcqGetOldestDataV(rp_channel_t(1), &choosenOptions->sampleCount, buffB);
       //write data into the vectors
-      acquiredDataChannelA(buffA, buffA+sizeof buffA / sizeof buffA[0]);
+      std::vector<float> v(buffA, buffA+sizeof buffA / sizeof buffA[0]);
+      acquiredDataChannelA = v;
       acquiredDataChannelB(buffB, buffB+sizeof buffB / sizeof buffB[0]);
     }
 
