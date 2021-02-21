@@ -57,10 +57,10 @@
 
     // do all the initialization stuff for the Acquisition
     rp_AcqReset();
-    rp_AcqSetDecimation(choosenOptions->decimation);
-    rp_AcqSetTriggerDelay(choosenOptions->decimation) // TODO: Calculate the needed time to get sampleCount with defined sampleRate
-    rp_AcqSetGain(0,choosenOptions->pinState);
-    rp_AcqSetGain(1,choosenOptions->pinState);
+    rp_AcqSetDecimation(rp_acq_decimation_t(choosenOptions->decimation));
+    rp_AcqSetTriggerDelay(choosenOptions->decimation); // TODO: Calculate the needed time to get sampleCount with defined sampleRate
+    rp_AcqSetGain(rp_channel_t(0),rp_pinState_t(choosenOptions->pinState));
+    rp_AcqSetGain(rp_channel_t(1),rp_pinState_t(choosenOptions->pinState));
     rp_AcqStart();
     usleep(100)   //TODO: replace this by proper method like timer
 
