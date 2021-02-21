@@ -2,9 +2,10 @@ import $ from './libs/jquery-3.5.1.min.js';
 import pako from './libs/pako.js';
 
 class RedPitayaStub {
-    constructor(decoders, requestedOptions) {
+    constructor(decoders, requestedOptions, decoderChannels) {
         this.decoders = decoders;
         this.requestedOptions = requestedOptions;
+        this.decoderChannels = decoderChannels;
     }
 
     start(){
@@ -47,6 +48,12 @@ class RedPitayaStub {
                             myself.requestedOptions.splice(0);
                             myself.requestedOptions.push(...requested_options_list);
                         }
+                        if(receive.signals["SRD_CHANNELS"]) {
+                            var decoderChannels_json_repr = receive.signals["SRD_CHANNELS"].value;
+                            var decoderChannels_list = decoderChannels_json_repr.map(JSON.parse);
+                            myself.decoderChannels.splice(0);
+                            myself.decoderChannels.push(...decoderChannels_list);
+                        }
                     }
                     console.log("received:")
                     console.log(receive)
@@ -63,6 +70,22 @@ class RedPitayaStub {
         var parameters = {};
         parameters["CHOSEN_DECODER"] = { value: JSON.stringify(selectedDecoder, null, 4) };
         this.webSocket.send(JSON.stringify({ parameters: parameters }));
+    }
+
+    sendChosenOptions(currentChosenOptions) {
+        var signals = {};
+        var option_list = [];
+        for(var option_id in currentChosenOptions) {
+            option_list.push(
+                {
+                    id: option_id,
+                    value: currentChosenOptions[option_id]
+                }
+            );
+        }
+        var option_list_json = option_list.map(JSON.stringify);
+        signals["SRD_CHOSEN_OPTIONS"] = { value: option_list_json };
+        this.webSocket.send(JSON.stringify({ signals: signals }));
     }
 }
 

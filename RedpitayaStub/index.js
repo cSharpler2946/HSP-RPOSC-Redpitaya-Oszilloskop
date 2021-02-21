@@ -1,6 +1,7 @@
 var WebSocketServer = require('websocket').server;
 var http = require('http');
 var pako = require('pako');
+const util = require("util");
 
 var server = http.createServer(function(request, response) {
     console.log((new Date()) + ' Received request for ' + request.url);
@@ -37,6 +38,8 @@ var receivedData = {
     signals: {},
     parameters: {}
 }
+
+var chosenDecoderNew = false;
 
 const decoders =
 [
@@ -92,6 +95,17 @@ const decoder_options =
     ]
 }
 
+const decoder_channels = {
+    "I2C": [
+        {'id': 'scl', 'name': 'SCL', 'desc': 'Serial clock line', 'isOptional': false},
+        {'id': 'sda', 'name': 'SDA', 'desc': 'Serial data line', 'isOptional': false},
+    ],
+    "UART": [
+        {'id': 'rx', 'name': 'RX', 'desc': 'UART receive line', 'isOptional': true},
+        {'id': 'tx', 'name': 'TX', 'desc': 'UART transmit line', 'isOptional': true},
+    ]
+}
+
 wsServer.on('request', function(request) {
     if (!originIsAllowed(request.origin)) {
       // Make sure we only accept requests from an allowed origin
@@ -109,8 +123,14 @@ wsServer.on('request', function(request) {
             var receivedDecoded = JSON.parse(message.utf8Data);
             Object.assign(receivedData["parameters"], receivedDecoded["parameters"]);
             Object.assign(receivedData["signals"], receivedDecoded["signals"]);
+            if(receivedDecoded["parameters"]["CHOSEN_DECODER"]) {
+                chosenDecoderNew = true;
+            }
+            else {
+                chosenDecoderNew = false;
+            }
             console.log("Received message. New receivedData:");
-            console.log(receivedData);
+            console.log(util.inspect(receivedData, true, 10));
             stm_doStep();
         }
         else if (message.type === 'binary') {
@@ -121,6 +141,10 @@ wsServer.on('request', function(request) {
         console.log((new Date()) + ' Peer ' + connection.remoteAddress + ' disconnected.');
     });
 });
+
+function allOptionsValid() {
+    return true;
+}
 
 function stm_doStep() {
     switch(state) {
@@ -136,17 +160,39 @@ function stm_doStep() {
                 var chosenDecoder = JSON.parse(receivedData.parameters["CHOSEN_DECODER"].value);
                 var chosen_decoder_options = decoder_options[chosenDecoder["id"]];
                 var chosen_decoder_options_json_repr = chosen_decoder_options.map(JSON.stringify);
+                var chosen_decoder_channels = decoder_channels[chosenDecoder["id"]];
+                var chosen_decoder_channels_json_repr = chosen_decoder_channels.map(JSON.stringify);
+                dataToSend.parameters = {};
+                dataToSend.signals = {};
+                dataToSend.signals["SRD_REQUESTED_OPTIONS"] = { value: chosen_decoder_options_json_repr };
+                dataToSend.signals["SRD_CHANNELS"] = { value: chosen_decoder_channels_json_repr };
+                send_data();
+                state = "UserSetsOptions";
+            }
+            break;
+        case "UserSetsOptions":
+            if(allOptionsValid()) {
+                dataToSend.parameters = {};
+                dataToSend.signals = {};
+                dataToSend.parameters["ALL_OPTIONS_VALID"] = { value: JSON.stringify(true) };
+                send_data();
+            }
+            if(chosenDecoderNew) {
+                var chosenDecoder = JSON.parse(receivedData.parameters["CHOSEN_DECODER"].value);
+                var chosen_decoder_options = decoder_options[chosenDecoder["id"]];
+                var chosen_decoder_options_json_repr = chosen_decoder_options.map(JSON.stringify);
+                var chosen_decoder_channels = decoder_channels[chosenDecoder["id"]];
+                var chosen_decoder_channels_json_repr = chosen_decoder_channels.map(JSON.stringify);
                 dataToSend.parameters = {};
                 dataToSend.signals = {};
                 dataToSend.signals["SRD_REQUESTED_OPTIONS"] = {value: chosen_decoder_options_json_repr};
+                dataToSend.signals["SRD_CHANNELS"] = { value: chosen_decoder_channels_json_repr };
                 send_data();
             }
-            break;
     }
 }
 
 function send_data() {
-    const util = require("util");
     console.log(util.inspect(dataToSend, true, 10));
     var compressed = pako.deflate(JSON.stringify(dataToSend));
     connection.sendBytes(Buffer.from(compressed));

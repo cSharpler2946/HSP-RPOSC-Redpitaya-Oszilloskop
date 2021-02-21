@@ -19,8 +19,8 @@
             <label class="form-label">
                 {{ option["desc"] }}
             </label>
-            <input type="text" class="form-control form-control-sm" v-if="!('values' in option)" v-model.lazy="chosenOptions[option.id]">
-            <select class="form-select" v-if="'values' in option" v-model="chosenOptions[option.id]">
+            <input type="text" class="form-control form-control-sm" v-if="!('values' in option)" v-model.lazy="chosenOptions[option.id]" v-on:change="$emit('chosenOptionsChanged', chosenOptions)">
+            <select class="form-select" v-if="'values' in option" v-model="chosenOptions[option.id]" v-on:change="$emit('chosenOptionsChanged', chosenOptions)">
                 <option v-for="possibleValue in option['values']" v-bind:key="possibleValue">
                     {{ possibleValue }}
                 </option>
@@ -92,12 +92,10 @@ export default {
         },
         'requestedOptions': {
             handler: function (currentRequestedOptions) {
-                console.log("setting defaults.");
-                console.log(currentRequestedOptions);
+                console.log("setting default options");
                 var _this = this;
+                this.chosenOptions = {};
                 currentRequestedOptions.forEach(function(requestedOption) {
-                    console.log("default is:")
-                    console.log(requestedOption);
                     _this.chosenOptions[requestedOption.id] = requestedOption.default;
                 })
             },

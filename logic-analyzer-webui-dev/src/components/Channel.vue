@@ -42,10 +42,10 @@
             <label class="col-sm-4 col-form-label">Decoder Channel:</label>
             <div class="col-sm-8">
                 <select v-model="selected" v-bind:id="'select-decoder-' + channelId" class="form-select" aria-label="Select decoder channel">
-                    <option selected>none</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                    <option :value="null" disabled hidden>Select decoder channel</option>
+                    <option v-for="decoderChannel in decoderChannels" v-bind:key="decoderChannel" v-bind:value="decoderChannel.id">
+                        {{ decoderChannel["name"] }}
+                    </option>
                 </select>
             </div>
         </div>
@@ -133,6 +133,7 @@ export default {
             required: true
         },
         channelName: String,
+        decoderChannels: []
     },
     methods: {
         editChannelName: function(channel){
@@ -159,6 +160,11 @@ export default {
         },
         editChannelSettings: function(selected){
             this.decoderChannel = selected;
+            var eventParams = {
+                "channelName": this.channelName,
+                "decoderChannel": this.decoderChannel
+            }
+            this.$emit("decoder-channel-changed", eventParams);
         },
     },
     mounted() {
