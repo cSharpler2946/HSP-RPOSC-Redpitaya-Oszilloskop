@@ -19,7 +19,7 @@ void SRDDecoderList::Update() {
     decoders.push_back("{'id': 'UART','name': 'UART','longname': 'UART RS232','desc': 'Asynchronous point-to-point protocol. Very old.'}");
 
     //Update VALUE
-    VALUE.Set(decoders);
+    VALUE->Set(decoders);
 }
 
 void SRDDecoderList::OnNewInternal() {
