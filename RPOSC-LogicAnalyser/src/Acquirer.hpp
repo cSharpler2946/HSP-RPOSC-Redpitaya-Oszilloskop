@@ -5,6 +5,7 @@ using namespace std;
 #include <vector>
 #include <list>
 #include <string>
+#include <unistd.h>
 #include "rpApp.h"
 
 class Acquirer {
