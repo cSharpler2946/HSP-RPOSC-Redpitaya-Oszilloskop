@@ -25,8 +25,8 @@
    const vector<string> supportedPinState = {"LOW", "HIGH"};
 
    // the choosen options and vectors to write the samples in
-   vector<double> acquiredDataChannelA;
-   vector<double> acquiredDataChannelB;
+   vector<float> acquiredDataChannelA;
+   vector<float> acquiredDataChannelB;
    ACQChoosenOptions *choosenOptions;
 
    //internal values to check if the acquisition is successfully finished
