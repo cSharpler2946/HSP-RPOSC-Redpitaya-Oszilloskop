@@ -1,7 +1,6 @@
 #pragma once
 
 using namespace std;
-#include <CustomParameters.h>
 #include "ACQChoosenOptions.hpp"
 #include <vector>
 #include <list>

@@ -1,4 +1,5 @@
 #include "Acquirer.hpp"
+#include <CustomParameters.h>
 
 /* TODO: Hier ACQChoosenOptions object das im Konstruktor übergeben wird nehmen und entsprechen in startAcquire auf fpga image setzen
 * Vor Starten die SetSrdMetadata starten, die von Florian geschrieben wurde..
