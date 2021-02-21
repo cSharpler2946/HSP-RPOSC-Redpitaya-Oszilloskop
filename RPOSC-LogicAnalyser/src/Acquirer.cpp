@@ -57,10 +57,10 @@
 
     // do all the initialization stuff for the Acquisition
     rp_AcqReset();
-    rp_AcqSetDecimation(choosenOptions.decimation);
-    rp_AcqSetTriggerDelay(choosenOptions.decimation) // TODO: Calculate the needed time to get sampleCount with defined sampleRate
-    rp_AcqSetGain(0,choosenOptions.pinState);
-    rp_AcqSetGain(1,choosenOptions.pinState);
+    rp_AcqSetDecimation(choosenOptions->decimation);
+    rp_AcqSetTriggerDelay(choosenOptions->decimation) // TODO: Calculate the needed time to get sampleCount with defined sampleRate
+    rp_AcqSetGain(0,choosenOptions->pinState);
+    rp_AcqSetGain(1,choosenOptions->pinState);
     rp_AcqStart();
     usleep(100)   //TODO: replace this by proper method like timer
 
@@ -81,12 +81,12 @@
     }
     // write the acquired data into the vectors
     // therefore create temp buffer array
-    double buffA[choosenOptions.sampleCount];
-    double buffB[choosenOptions.sampleCount];
+    double buffA[choosenOptions->sampleCount];
+    double buffB[choosenOptions->sampleCount];
     if(acquisitionPending && acquisitionComplete){
       acquisitionPending = acquisitionComplete = false;
-      rp_AcqGetOldestDataV(0, &choosenOptions.sampleCount, buffA);
-      rp_AcqGetOldestDataV(1, &choosenOptions.sampleCount, buffB);
+      rp_AcqGetOldestDataV(0, &choosenOptions->sampleCount, buffA);
+      rp_AcqGetOldestDataV(1, &choosenOptions->sampleCount, buffB);
       //write data into the vectors
       acquiredDataChannelA(buffA, buffA+sizeof buffA / sizeof buffA[0]);
       acquiredDataChannelB(buffB, buffB+sizeof buffB / sizeof buffB[0]);
