@@ -6,7 +6,8 @@ SContainer(_name, _size, _def_value) {
     decoderInst = _decoderInst;
 }
 
-SRDChosenOptions::OnNewInternal() {
+void SRDChosenOptions::OnNewInternal() {
+  // set to void to fix errors
     /*
     * Read options from json to map<string, string>
     * Call setOptions function
