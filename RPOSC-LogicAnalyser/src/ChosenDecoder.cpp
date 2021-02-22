@@ -5,6 +5,7 @@
 
 ChosenDecoder::ChosenDecoder(std::string name, CBaseParameter::AccessMode am, std::string defaultVal, int fpga_update, SRDRequestedOptions *_reqOptions, srd_decoder_inst *_decoderInstance, AllOptionsValid *_allOptionsValid):
 PContainer(name, am, defaultVal, fpga_update) {
+    LOG_F(INFO, "ChosenDecoder instatiated");
     reqOptions = _reqOptions;
     decoderInstance = _decoderInstance;
     allOptionsValid = _allOptionsValid;
