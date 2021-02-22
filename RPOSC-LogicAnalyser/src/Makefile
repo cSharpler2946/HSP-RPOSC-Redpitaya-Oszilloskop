@@ -19,7 +19,7 @@ INCLUDE += -I/usr/include/libsigrokdecode
 INCLUDE += -I/usr/include/glib-2.0
 INCLUDE += -I/usr/lib64/glib-2.0/include #Fedora path for testing
 INCLUDE += -I/usr/lib/arm-linux-gnueabihf/glib-2.0/include
-INCLUDE += -I/usr/include/python3.5 
+INCLUDE += -I/usr/include/python3.5
 
 # LibSigrokDecode + python3 libraries
 LIBS += -L/usr/lib/
@@ -27,6 +27,8 @@ LIBS += -L/usr/lib/arm-linux-gnueabihf/
 
 # JSON includes
 INCLUDE += -I../lib/nlohmann
+INCLUDE += -I../lib/nlohman/single_include
+INCLUDE += -I../lib/nlohman/builddir
 
 # Loguru includes, etc.
 INCLUDE += -I../lib/loguru
@@ -37,6 +39,7 @@ LDFLAGS = -shared $(COMMON_FLAGS) $(LIBS)
 LDFLAGS+= -Wl,--whole-archive,--no-as-needed
 LDFLAGS+= -lcryptopp -lrpapp -lrp -lrp_sdk -lsigrokdecode
 LDFLAGS+= -Wl,--no-whole-archive
+LDFLAGS+= pkg-config nlohmann_json --cflags
 
 CXXOBJECTS=$(CXXSOURCES:.cpp=.o)
 OBJECTS=$(CXXOBJECTS)
