@@ -1,5 +1,5 @@
 #include "AnnotationData.hpp"
-#include <nlohmann/json.hpp>
+#include "../lib/nlohmann/json.hpp"
 #include "../lib/loguru/loguru.hpp"
 
 AnnotationData::AnnotationData(std::string _name, int _size, std::string _def_value, srd_decoder_inst *_decoderInst):
