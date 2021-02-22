@@ -19,9 +19,6 @@
 
 #include "main.h"
 
-// Define to cast int return into srd_error_codes
-#define ToErr (srd_error_code)
-
 //Signal size
 #define SIGNAL_SIZE_DEFAULT      1024
 #define SIGNAL_UPDATE_INTERVAL      10

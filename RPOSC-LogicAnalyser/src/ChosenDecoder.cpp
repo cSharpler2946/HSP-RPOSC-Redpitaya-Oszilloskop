@@ -1,4 +1,7 @@
 #include "ChosenDecoder.hpp"
+#include <libsigrokdecode/libsigrokdecode.h>
+#include "../lib/nlohmann/json.hpp"
+#include "../lib/loguru/loguru.hpp"
 
 ChosenDecoder::ChosenDecoder(std::string name, CBaseParameter::AccessMode am, std::string defaultVal, int fpga_update, SRDRequestedOptions *_reqOptions, srd_decoder_inst *_decoderInstance, AllOptionsValid *_allOptionsValid):
 PContainer(name, am, defaultVal, fpga_update) {
@@ -8,16 +11,20 @@ PContainer(name, am, defaultVal, fpga_update) {
 }
 
 void ChosenDecoder::loadChosenDecoder() {
+    // TODO: Remove function. Functionality already in OnNewInternal()
     //Load the chosen decoder
     //Set AllOptionsValid::decoderValid=false;
 }
 
 void ChosenDecoder::OnNewInternal() {
-    /* TODO: Integrate decoder loading
-    * Read value
-    * Call loadChosenDecoder()
-    * Initiatate reqOptions to load and update options
-    */
+    nlohmann::json tmp = VALUE.Value();
+    LOG_F(INFO, "Loading decoder with id \"%s\"...", tmp["id"]);
+    if(ToErr srd_decoder_load(tmp["id"] != SRD_OK) {
+        LOG_F(ERROR, "Failed loading decoder. Please select new one");
+        return;
+    }
+    allOptionsValid->setDecoderValidity(true);
+    LOG_F(INFO, "Deocder successfully loaded");
 
     reqOptions->Update();
 }

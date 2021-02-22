@@ -1,5 +1,8 @@
 #pragma once
 
+// Define to cast int return into srd_error_codes
+#define ToErr (srd_error_code)
+
 #include <DataManager.h>
 #include <CustomParameters.h>
 #include "rpApp.h"
