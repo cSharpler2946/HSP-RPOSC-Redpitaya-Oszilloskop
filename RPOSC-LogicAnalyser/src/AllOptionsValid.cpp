@@ -6,7 +6,7 @@ PContainer(name, am, defaultVal) {
 
 }
 
-AllOptionsValid::Update() {
+void AllOptionsValid::Update() {
     json tmp;
     tmp["acquirerValid"]=acquirerValid;
     tmp["channelMapValid"]=channelMapValid;
@@ -15,17 +15,21 @@ AllOptionsValid::Update() {
     VALUE->Set(tmp.dump());
 }
 
-AllOptionsValid::setAcquirerValidity(bool v) {
+void AllOptionsValid::setAcquirerValidity(bool v) {
     acquirerValid = v;
     Update();
 }
 
-AllOptionsValid::setChannelMapValidity(bool v) {
+void AllOptionsValid::setChannelMapValidity(bool v) {
     channelMapValid = v;
     Update();
 }
 
-AllOptionsValid::setDecoderValidity(bool v) {
+void AllOptionsValid::setDecoderValidity(bool v) {
     decoderValid = v;
     Update();
+}
+
+bool AllOptionsValid::areAllOptionsValid() {
+    return acquirerValid && channelMapValid && decoderValid;
 }

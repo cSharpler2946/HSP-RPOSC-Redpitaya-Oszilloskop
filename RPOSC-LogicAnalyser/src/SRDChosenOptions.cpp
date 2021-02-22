@@ -8,8 +8,7 @@ SContainer(_name, _size, _def_value) {
 }
 
 void SRDChosenOptions::OnNewInternal() {
-  // set to void to fix errors
-    /*
+    /* TODO: ChosenOptions::OnNewInternal
     * Read options from json to map<string, string>
     * Call setOptions function
     * Set optionsValid if setOptions is called once with valid return
@@ -18,6 +17,7 @@ void SRDChosenOptions::OnNewInternal() {
 
 srd_error_code setOptions(srd_decoder_inst * inst, std::map<std::string,std::string> options)
 {
+    //TODO: Update copied code to work here
     /*//Construct g_hash_table from options:map<>
     GHashTable *table = g_hash_table_new(g_int_hash, g_int_equal);
     for (const auto& name [key, value] : options)

@@ -6,6 +6,9 @@ AnnotationData::AnnotationData(std::string _name, int _size, std::string _def_va
 SContainer(_name, _size, _def_value) {
     LOG_F(INFO, "Created annotation data");
     decoderInst = _decoderInst;
+
+    //TODO: register callback for annotations
+    // ToErr srd_pd_output_callback_add(sess, SRD_OUTPUT_ANN, &callbackAnnotation, nullptr);
 }
 
 void AnnotationData::Update() {
@@ -21,7 +24,7 @@ void AnnotationData::callbackAnnotation(struct srd_proto_data *pdata, void *cb_d
     json["start"]=pdata->start_sample;
     json["end"]=pdata->end_sample;
     json["annotationClass"]=*annString;
-    json["annotationText"]=*data->ann_text; //TODO: Test if these derefences are right
+    json["annotationText"]=*data->ann_text; //TODO: Test if these dereferences are right
 
     annotationData.push_back(tmp.dump());
     Update();

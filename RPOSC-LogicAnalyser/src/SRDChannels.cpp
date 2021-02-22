@@ -5,8 +5,8 @@ SContainer(_name, _size, _def_value) {
     decoderInst = _decoderInst;
 }
 
-void SRDChannels::Update() {  //set to void because some type is needed to compile :D
-    /*
+void SRDChannels::Update() {
+    /* TODO: readChannels from decoderInstance
     * Read channels from decoderInst
     * Create json
     * set VALUE

@@ -8,6 +8,7 @@ class AllOptionsValid: public PContainer {
         void setChannelMapValidity(bool v);
         void setAcquirerValidity(bool v);
         void setDecoderValidity(bool v);
+        bool areAllOptionsValid();
 
     private:
         bool channelMapValid = false;

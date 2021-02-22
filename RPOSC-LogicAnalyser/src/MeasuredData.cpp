@@ -1,5 +1,5 @@
 #include "MeasuredData.hpp"
-#include <nlohmann/json.hpp>
+#include "../lib/nlohmann/json.hpp"
 
 MeasuredData::MeasuredData(std::string _name, int _size, std::string _def_value):
 SContainer(_name, _size, _def_value) {
@@ -11,10 +11,12 @@ void MeasuredData::Update() {
 }
 
 void MeasuredData::addData(std::string acqChannel, std::vector<double> data) {
-    /*
-    * Convert the acqChannel and the data into a JSON
-    * {acqChannel="CHannel1", data=[1,24, 1,345, ...]}
-    */
+   nlohmann::json tmp;
+   tmp["acqChannel"]=acqChannel;
+   tmp["data"]=data;
+
+   measuredData.push_back(tmp.dump());
+
    Update();
 }
 

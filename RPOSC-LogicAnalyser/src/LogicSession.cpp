@@ -10,7 +10,7 @@ PContainer(name, am, defaultVal) {
 
 void LogicSession::Update() {
     nlohmann::json tmp;
-    tmp["measurementState"]=measurementState; //Should use strings because of declaration in .hpp
+    tmp["measurementState"]=measurementState; //Should use strings because of declaration "NLOHMANN_JSON_SERIALIZE_ENUM" in .hpp
 
     VALUE->Set(tmp.dump());
 }
@@ -20,7 +20,7 @@ void LogicSession::OnNewInternal() {
     measurementState = tmp.get<MeasurementState>();
 
    if(measurementState==starting) {
-       /*
+       /* TODO: Add logic to logicSessions
        * Start measurement chain:
        * - Evtl. check the AllDataValid object
        * - reset MeasuredData and AnnotationData

@@ -13,7 +13,7 @@ void ChosenDecoder::loadChosenDecoder() {
 }
 
 void ChosenDecoder::OnNewInternal() {
-    /*
+    /* TODO: Integrate decoder loading
     * Read value
     * Call loadChosenDecoder()
     * Initiatate reqOptions to load and update options

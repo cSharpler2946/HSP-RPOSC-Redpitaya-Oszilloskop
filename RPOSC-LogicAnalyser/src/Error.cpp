@@ -11,7 +11,7 @@ SContainer(_name, _size, _def_value) {
 }
 
 void Error::Update() {
-    std::vector<String> v{ std::begin(errorList), std::end(errorList) }; //TODO: Check if this works. Reason: Use List to create a buffer, that is never bigger than maxSize
+    std::vector<String> v{ std::begin(errorList), std::end(errorList) }; //TODO: Check if this works. Reason: Use List to create a buffer, that is never bigger than maxSize, Evtl. create OnNewInternal to sync data with frontend
     VALUE->Set(v);
 }
 
