@@ -1,9 +1,10 @@
 #include "SRDDecoderList.hpp"
-
-void CreateDecoderList(); //TODO: entweder das da lassen oder in header aufnehmen...
+#include <libsigrokdecode/libsigrokdecode.h>
+#include "../lib/loguru/loguru.hpp"
 
 SRDDecoderList::SRDDecoderList(std::string _name, int _size, std::string _def_value):
 SContainer(_name, _size, _def_value) {
+    LOG_F(INFO, "SRDDecoder list instantiating");
     CreateDecoderList();
     Update();
 }

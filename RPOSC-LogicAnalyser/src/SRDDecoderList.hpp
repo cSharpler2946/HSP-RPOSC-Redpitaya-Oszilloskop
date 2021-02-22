@@ -6,7 +6,7 @@
 class SRDDecoderList: public SContainer{
     public:
         SRDDecoderList(std::string _name, int _size, std::string _def_value);
-        void createDecoderList();
+        void CreateDecoderList();
         void Update();
         vector<SRDDecoderDefintion> decoderList;
 };
