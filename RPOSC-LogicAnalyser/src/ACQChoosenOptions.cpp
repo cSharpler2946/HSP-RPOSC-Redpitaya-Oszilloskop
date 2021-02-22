@@ -9,7 +9,7 @@ using namespace std;
 // Macht es sinn den Typen aus rp.h zu inkludieren
 int sampleRate; //index to set sampleCount in rp.h
 int decimation; //index to set decimation in rp.h
-int sampleCount; // index to set buffer size to read the data into
+uint32_t sampleCount; // index to set buffer size to read the data into
 string sampleTime; // time to sample (used to calculate if sampleCount and decimation/rate are fitting)
 int pinState;   // needed to set the gain together with the channel
 string probeAttenuation;
@@ -20,13 +20,13 @@ ACQChoosenOptions::ACQChoosenOptions(){}
 // Translate the userfriendly string into the fitting index
 int ACQChoosenOptions::TranslateSampleRate(string sampleRate){
   int index = -1;
-  Acquirer acquirer;
-  auto found = find(acquirer.supportedSampleRates.begin(), acquirer.supportedSampleRates.begin(), sampleRate);
+  Acquirer *acquirer = new Acquirer();
+  auto found = find(acquirer->supportedSampleRates.begin(), acquirer->supportedSampleRates.begin(), sampleRate);
 
   // if element found, we need the index because setting the sampleRate is done by an integer number
-  if(found != acquirer.supportedSampleRates.end())
+  if(found != acquirer->supportedSampleRates.end())
   {
-    index = found - acquirer.supportedSampleRates.begin();
+    index = found - acquirer->supportedSampleRates.begin();
   }
   // if element is not found return -1 as an error
   else{
@@ -39,13 +39,13 @@ int ACQChoosenOptions::TranslateSampleRate(string sampleRate){
 int ACQChoosenOptions::TranslateDecimation(string decimation)
 {
   int index = -1;
-  Acquirer acquirer;
-  auto found = find(acquirer.supportedSampleRates.begin(), acquirer.supportedSampleRates.end(), decimation);
+  Acquirer *acquirer = new Acquirer();
+  auto found = find(acquirer->supportedSampleRates.begin(), acquirer->supportedSampleRates.end(), decimation);
 
   // again check in the vector for the string and use the index later for initialisation
-  if(found != acquirer.supportedSampleRates.end())
+  if(found != acquirer->supportedSampleRates.end())
   {
-    index = found - acquirer.supportedSampleRates.begin();
+    index = found - acquirer->supportedSampleRates.begin();
   }
   else{
     index = -1;
@@ -57,11 +57,11 @@ int ACQChoosenOptions::TranslateDecimation(string decimation)
 int ACQChoosenOptions::TranslatePinState(string pinState)
 {
   int index = -1;
-  Acquirer acquirer;
-  auto found = find(acquirer.supportedSampleRates.begin(), acquirer.supportedSampleRates.end(), pinState);
-  if(found != acquirer.supportedSampleRates.end())
+  Acquirer *acquirer = new Acquirer();
+  auto found = find(acquirer->supportedSampleRates.begin(), acquirer->supportedSampleRates.end(), pinState);
+  if(found != acquirer->supportedSampleRates.end())
   {
-    index = found - acquirer.supportedSampleRates.begin();
+    index = found - acquirer->supportedSampleRates.begin();
   }
   else{
     index = -1;
@@ -71,9 +71,9 @@ int ACQChoosenOptions::TranslatePinState(string pinState)
 }
 
 // convert counter string to int and check if its in the range of the possible buffersize
-int ACQChoosenOptions::TranslateSampleCount(string count)
+uint32_t ACQChoosenOptions::TranslateSampleCount(string count)
 {
-  int index = -1;
+  uint32_t index = -1;
   // convert the string into an integer and check if it's in the range
   index = std::stoi(count);
   if(index > 0 && index < 16 *1024)

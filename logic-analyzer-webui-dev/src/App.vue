@@ -31,7 +31,8 @@
         
       </div>
 
-      <Channel v-for="n in 10" :key="n" :channelId="n" :channelName="`Channel ${n}`" />
+      <Channel v-for="n in 10" :key="n" :channelId="n" :channelName="`Channel ${n}`" :decoderChannels="decoderChannels"
+        v-on:decoder-channel-changed="onDecoderChannelChanged"/>
 
       <!-- final border in case the right-panels height is bigger than the left-panels height -->
     </div>
@@ -59,7 +60,8 @@
       <div class="tab-content" id="parameters-tabContent">
         <div class="tab-pane fade show active" id="nav-parameter" role="tabpanel" aria-labelledby="nav-parameter-tab">
           <Parameters :decoders="decoders" v-on:selectedDecoderChanged="onSelectedDecoderChanged"
-            :requestedOptions="requestedOptions"/>
+            :requestedOptions="requestedOptions"
+            v-on:chosenOptionsChanged="onChosenOptionsChanged"/>
         </div>
         <div class="tab-pane fade" id="nav-decoded-data" role="tabpanel" aria-labelledby="nav-decoded-data-tab">
           <DecodedData/>
@@ -103,6 +105,8 @@ export default {
           }
       ],
       requestedOptions: [],
+      decoderChannels: [],
+      selectedDecoderChannels: [],
     }
   },
   // props: {
@@ -142,12 +146,20 @@ export default {
     },
     onSelectedDecoderChanged: function(newDecoder) {
         this.redpitaya.sendSelectedDecoder(newDecoder);
+    },
+    onChosenOptionsChanged: function(currentChosenOptions) {
+        this.redpitaya.sendChosenOptions(currentChosenOptions);
+    },
+    onDecoderChannelChanged: function(eventParams) {
+        console.log("Decoder channel changed:");
+        console.log(eventParams.channelName);
+        console.log(eventParams.decoderChannel);
     }
   },
   mounted () {
     // Build up WebSocket-Connection with RedPitaya in here.
     //this.redpitaya = new RedPitaya(this.app_id, this.get_app_url, this.get_socket_url);
-    this.redpitaya = new RedPitayaStub(this.decoders, this.requestedOptions);
+    this.redpitaya = new RedPitayaStub(this.decoders, this.requestedOptions, this.decoderChannels);
     this.redpitaya.start();
 
   },

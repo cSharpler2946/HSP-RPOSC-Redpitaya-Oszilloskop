@@ -9,6 +9,7 @@ class ChosenDecoder: public PContainer {
     public:
         ChosenDecoder(std::string name, CBaseParameter::AccessMode am, std::string defaultVal, int fpga_update, SRDRequestedOptions *_reqOptions, srd_decoder_inst *_decoderInstance, AllOptionsValid *_allOptionsValid);
         void loadChosenDecoder();
+        void OnNewInternal();
         SRDRequestedOptions* reqOptions;
         srd_decoder_inst *decoderInstance;
         AllOptionsValid *allOptionsValid;

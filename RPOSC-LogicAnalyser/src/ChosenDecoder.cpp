@@ -7,12 +7,12 @@ PContainer(name, am, defaultVal, fpga_update) {
     allOptionsValid = _allOptionsValid;
 }
 
-ChosenDecoder::loadChosenDecoder() {
+void ChosenDecoder::loadChosenDecoder() {
     //Load the chosen decoder
     //Set AllOptionsValid::decoderValid=false;
 }
 
-ChosenDecoder::OnNewInternal() {
+void ChosenDecoder::OnNewInternal() {
     /*
     * Read value
     * Call loadChosenDecoder()
@@ -21,4 +21,3 @@ ChosenDecoder::OnNewInternal() {
 
     reqOptions->Update();
 }
-

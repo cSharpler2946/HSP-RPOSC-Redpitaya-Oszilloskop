@@ -25,18 +25,19 @@
    const vector<string> supportedPinState = {"LOW", "HIGH"};
 
    // the choosen options and vectors to write the samples in
-   vector<double> acquiredDataChannelA;
-   vector<double> acquiredDataChannelB;
+   vector<float> acquiredDataChannelA;
+   vector<float> acquiredDataChannelB;
    ACQChoosenOptions *choosenOptions;
 
    //internal values to check if the acquisition is successfully finished
    bool acquisitionPending = false;
    bool acquisitionComplete = false;
-   uint32_t previous_write_pointer = 0;
-   CBooleanParameter start_acquisition("START_ACQUISITION", CBaseParameter::AccessMode::RW, false, false);
+   uint32_t previousWritePointer = 0;
+   //CBooleanParameter startAcquisition("START_ACQUISITION", CBaseParameter::AccessMode::RW, false, false);
 
   // base constructor with default parameters
   Acquirer::Acquirer(int sampleRate = 1, int decimation = 8, int pinState = 1, ACQChoosenOptions *choosenOptions = new ACQChoosenOptions()){}
+  Acquirer::Acquirer(){}
   Acquirer::Acquirer(ACQChoosenOptions *choosenOptions)
   {
     choosenOptions = choosenOptions;
@@ -56,12 +57,12 @@
 
     // do all the initialization stuff for the Acquisition
     rp_AcqReset();
-    rp_AcqSetDecimation(choosenOptions.decimation);
-    rp_AcqSetTriggerDelay(choosenOptions.decimation) // TODO: Calculate the needed time to get sampleCount with defined sampleRate
-    rp_AcqSetGain(0,choosenOptions.pinState);
-    rp_AcqSetGain(1,choosenOptions.pinState);
+    rp_AcqSetDecimation(rp_acq_decimation_t(choosenOptions->decimation));
+    rp_AcqSetTriggerDelay(choosenOptions->decimation); // TODO: Calculate the needed time to get sampleCount with defined sampleRate
+    rp_AcqSetGain(rp_channel_t(0),rp_pinState_t(choosenOptions->pinState));
+    rp_AcqSetGain(rp_channel_t(1),rp_pinState_t(choosenOptions->pinState));
     rp_AcqStart();
-    usleep(100)   //TODO: replace this by proper method like timer
+    usleep(100);   //TODO: replace this by proper method like timer
 
     // wait for the buffer to be completely written
     while(!acquisitionPending || !acquisitionComplete){
@@ -70,25 +71,21 @@
         acquisitionComplete = true;
       }
       previousWritePointer = writePointer;
-      if(startAcquisition.IsNewValue())
-      {
-        startAcquisition.Set(false);
-        startAcquisition.Update();
-        rp_AcqSetTriggerSrc(RP_TRIG_SRC_NOW);
-        acquisitionPending = true;
-      }
+      rp_AcqSetTriggerSrc(RP_TRIG_SRC_NOW);
     }
     // write the acquired data into the vectors
     // therefore create temp buffer array
-    double buffA[choosenOptions.sampleCount];
-    double buffB[choosenOptions.sampleCount];
-    if(acquisitionPending && acquisitionComplete){
-      acquisitionPending = acquisitionComplete = false;
-      rp_AcqGetOldestDataV(0, &choosenOptions.sampleCount, buffA);
-      rp_AcqGetOldestDataV(1, &choosenOptions.sampleCount, buffB);
+    float buffA[choosenOptions->sampleCount];
+    float buffB[choosenOptions->sampleCount];
+    if(acquisitionComplete){
+      acquisitionComplete = false;
+      rp_AcqGetOldestDataV(rp_channel_t(0), &choosenOptions->sampleCount, buffA);
+      rp_AcqGetOldestDataV(rp_channel_t(1), &choosenOptions->sampleCount, buffB);
       //write data into the vectors
-      acquiredDataChannelA(buffA, buffA+sizeof buffA / sizeof buffA[0]);
-      acquiredDataChannelB(buffB, buffB+sizeof buffB / sizeof buffB[0]);
+      std::vector<float> a(buffA, buffA+sizeof buffA / sizeof buffA[0]);
+      acquiredDataChannelA = a;
+      std::vector<float> b(buffB, buffB+sizeof buffB / sizeof buffB[0]);
+      acquiredDataChannelB = b;
     }
 
     // check if vectors are filled with data
@@ -101,12 +98,12 @@
     }
   }
 
-  vector<double> getData(int channel)
+  vector<float> getData(int channel)
   {
     // get data from specified channel. The acquiredDataChannel vectors contain as much valued as defined in choosenOptions.sampleCount
     switch (channel) {
       case 0: return acquiredDataChannelA;
       case 1: return acquiredDataChannelB;
-      default: return vector<double>();
+      default: return vector<float>();
     }
   }
