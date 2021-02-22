@@ -22,6 +22,7 @@
 //Signal size
 #define SIGNAL_SIZE_DEFAULT      1024
 #define SIGNAL_UPDATE_INTERVAL      10
+#define PARAMETER_UPDATE_INTERVAL      10
 
 vector<PContainer*> pContainerList;
 vector<SContainer*> sContainerList;
@@ -68,17 +69,17 @@ int rp_app_init(void)
 
     //Set update intveral for signals
     CDataManager::GetInstance()->SetSignalInterval(SIGNAL_UPDATE_INTERVAL);
-    //TODO: How about paramters
+    CDataManager::GetInstance()->SetParamInterval(PARAMETER_UPDATE_INTERVAL);
 
-    //Intitialize main app
-    srd_session_new(&srdSession);
 
     //Initiaize all PContainers and SContainers
     SRDDecoderList *decoderList = new SRDDecoderList("SRDDecoderList", 256, "");
     sContainerList.push_back(decoderList);
     SRDRequestedOptions *reqOptions = new SRDRequestedOptions("SRDRequestedOptions", 127, "", srdDecoderInst);
     sContainerList.push_back(reqOptions);
-    ChosenDecoder *chosenDecoder = new ChosenDecoder("ChosenDecoder", CBaseParameter::RW, "", false, reqOptions, srdDecoderInst);
+    SRDChannels *srdChannels = new SRDChannels("SRDChannels", 16, "", srdDecoderInst);
+    sContainerList.push_back(srdChannels);
+    ChosenDecoder *chosenDecoder = new ChosenDecoder("ChosenDecoder", CBaseParameter::RW, "", false, reqOptions, srdSession, srdChannels, srdDecoderInst);
     pContainerList.push_back(chosenDecoder);
 
 
@@ -93,6 +94,7 @@ int rp_app_exit(void)
 {
     LOG_F(INFO, "Unloading RPOSC Logic Analyzer\n");
 
+    srd_exit();
 
     rpApp_Release();
     return 0;

@@ -13,6 +13,7 @@
 #include "SRDDecoderList.hpp"
 #include "ChosenDecoder.hpp"
 #include "SRDRequestedOptions.hpp"
+#include "SRDChannels.hpp"
 
 #ifdef __cplusplus
 extern "C" {

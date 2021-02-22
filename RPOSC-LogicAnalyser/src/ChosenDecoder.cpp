@@ -3,10 +3,12 @@
 #include "../lib/nlohmann/json.hpp"
 #include "../lib/loguru/loguru.hpp"
 
-ChosenDecoder::ChosenDecoder(std::string name, CBaseParameter::AccessMode am, std::string defaultVal, int fpga_update, SRDRequestedOptions *_reqOptions, srd_decoder_inst *_decoderInstance, AllOptionsValid *_allOptionsValid):
+ChosenDecoder::ChosenDecoder(std::string name, CBaseParameter::AccessMode am, std::string defaultVal, int fpga_update, SRDRequestedOptions *_reqOptions, SRDChannels *_channels, srd_session *_srdSession, srd_decoder_inst *_decoderInstance, AllOptionsValid *_allOptionsValid):
 PContainer(name, am, defaultVal, fpga_update) {
     LOG_F(INFO, "ChosenDecoder instatiated");
     reqOptions = _reqOptions;
+    channels = _channels;
+    srdSession = _srdSession;
     decoderInstance = _decoderInstance;
     allOptionsValid = _allOptionsValid;
 }
@@ -18,15 +20,21 @@ void ChosenDecoder::loadChosenDecoder() {
 }
 
 void ChosenDecoder::OnNewInternal() {
+    LOG_F(INFO, "Unloading all old decoders");
+    srd_error_code err;
+    if((err = ToErr srd_decoder_unload_all(); != SRD_OK) {
+        LOG_F(ERROR, "Failed unloading old decoders! (srd_error_coder: %d)", err);
+    }
     nlohmann::json tmp = VALUE.Value();
     LOG_F(INFO, "Loading decoder with id \"%s\"...", tmp["id"]);
-    srd_error_code err;
-    if((err = ToErr srd_decoder_load(tmp["id"]) != SRD_OK) {
+    if((err = ToErr srd_decoder_load(tmp["id"].dump()) != SRD_OK) {
         LOG_F(ERROR, "Failed loading decoder (srd_error_coder: %d). Please select new one", err);
         return;
     }
-    allOptionsValid->setDecoderValidity(true);
+    decoderInstance = srd_inst_new(srdSession, tmp["id"].dump(), nullptr); //Set decoder instance
+    allOptionsValid->setDecoderValidity(false); //After a new decoder is loaded srd_set_options must be called at least once
     LOG_F(INFO, "Deocder successfully loaded");
 
     reqOptions->Update();
+    channels->Update();
 }
