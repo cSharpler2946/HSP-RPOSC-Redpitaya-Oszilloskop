@@ -1,4 +1,6 @@
 #include "AnnotationData.hpp"
+#include <cassert> // assert
+#define JSON_ASSERT(x) assert(x)
 #include "../lib/nlohmann/json.hpp"
 #include "../lib/loguru/loguru.hpp"
 
