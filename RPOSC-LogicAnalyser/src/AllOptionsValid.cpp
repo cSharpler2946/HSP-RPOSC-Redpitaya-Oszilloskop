@@ -7,7 +7,7 @@ PContainer(name, am, defaultVal, fpga_update) {
 }
 
 void AllOptionsValid::Update() {
-    json tmp;
+    nlohmann::json tmp;
     tmp["acquirerValid"]=acquirerValid;
     tmp["channelMapValid"]=channelMapValid;
     tmp["decoderValid"]=decoderValid;
