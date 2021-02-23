@@ -29,7 +29,7 @@ void ChosenDecoder::OnNewInternal() {
     }
     nlohmann::json tmp = VALUE->Value();
     LOG_F(INFO, "Loading decoder with id \"%s\"...", tmp["id"]);
-    if((err = ToErr srd_decoder_load(tmp["id"].dump()) != SRD_OK) {
+    if((err = ToErr srd_decoder_load(tmp["id"].dump())) != SRD_OK) {
         LOG_F(ERROR, "Failed loading decoder (srd_error_coder: %d). Please select new one", err);
         return;
     }
