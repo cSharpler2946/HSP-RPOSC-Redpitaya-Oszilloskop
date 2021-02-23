@@ -2,7 +2,7 @@
 
 
 LogicSession::LogicSession(std::string name, CBaseParameter::AccessMode am, std::string defaultVal, int fpga_update, Acquirer *_acquirer, srd_session *_srdSession, MeasuredData *_measuredData):
-PContainer(name, am, defaultVal) {
+PContainer(name, am, defaultVal, fpga_update) {
     acquirer = _acquirer;
     srdSession = _srdSession;
     measuredData = _measuredData;
