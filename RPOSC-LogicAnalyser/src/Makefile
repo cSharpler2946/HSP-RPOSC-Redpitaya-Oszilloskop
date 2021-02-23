@@ -27,6 +27,7 @@ LIBS += -L/usr/lib/arm-linux-gnueabihf/
 
 # JSON includes
 INCLUDE += -I/usr/include/
+INCLUDE += -I/usr/include/c++/5/
 INCLUDE += -I../lib/nlohmann/
 
 # Loguru includes, etc.

@@ -1,14 +1,5 @@
-#pragma once
+//#define NDEBUG
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-#include <assert.h>
-
-#ifdef __cplusplus
-}
-#endif
-
+#include <cassert>
 #define JSON_ASSERT(x) assert(x)
 #include "json.hpp"
