@@ -16,7 +16,7 @@ Error::Error(std::string _name, int _size, std::string _def_value):
 SContainer(_name, _size, _def_value) {
     LOG_F(INFO, "Loaded Error object");
     maxSize=_size;
-    loguru::add_callback("network_logger", callbackError, nullptr, loguru::Verbosity_INFO);
+    loguru::add_callback("network_logger", [&]callbackError, nullptr, loguru::Verbosity_INFO);
     LOG_F(INFO, "Added error callback for verbosity INFO");
 }
 
