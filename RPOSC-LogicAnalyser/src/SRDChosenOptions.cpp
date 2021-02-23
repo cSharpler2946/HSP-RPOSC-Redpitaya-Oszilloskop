@@ -19,7 +19,7 @@ void SRDChosenOptions::OnNewInternal() {
     for(std::string curr : optionsV)
     {
         nlohmann::json currentOption = curr;
-        if(setOption(currentOption["id"], currentOption["value"] == SRD_OK))
+        if(setOption(currentOption["id"], currentOption["value"]) == SRD_OK)
             allOptionsValid->setDecoderValidity(true);
     }
 }
