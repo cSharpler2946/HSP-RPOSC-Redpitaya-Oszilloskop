@@ -33,8 +33,8 @@ INCLUDE += -I../lib/nlohmann/
 # Loguru includes, etc.
 INCLUDE += -I../lib/loguru/
 
-COMMON_FLAGS+=-Wall -fPIC -Os -s
-CXXFLAGS+=$(COMMON_FLAGS) -std=c++11 $(INCLUDE)
+COMMON_FLAGS+=-fPIC -Os -s
+CXXFLAGS+=$(COMMON_FLAGS) -std=c++11 -Wno-cpp $(INCLUDE)
 LDFLAGS = -shared $(COMMON_FLAGS) $(LIBS)
 LDFLAGS+= -Wl,--whole-archive,--no-as-needed
 LDFLAGS+= -lcryptopp -lrpapp -lrp -lrp_sdk -lsigrokdecode
