@@ -15,7 +15,7 @@
 
 #include "../lib/loguru/loguru.hpp"
 
-#include "../lib/nlohmann/json.hpp"
+#include "../lib/nlohmann/jsonWrapper.hpp"
 
 #include "main.h"
 
