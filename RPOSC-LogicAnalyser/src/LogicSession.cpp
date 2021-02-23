@@ -16,7 +16,7 @@ void LogicSession::Update() {
 }
 
 void LogicSession::OnNewInternal() {
-    nlohmann::json tmp = VALUE->value;
+    nlohmann::json tmp = VALUE->Value();
     measurementState = tmp.get<MeasurementState>();
 
    if(measurementState==starting) {
