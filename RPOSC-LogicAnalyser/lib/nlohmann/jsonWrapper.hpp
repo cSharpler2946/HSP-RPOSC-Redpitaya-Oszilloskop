@@ -1,6 +1,15 @@
 #pragma once
+
+#define __cplusplus
+#ifdef __cplusplus
 extern "C" {
-    #include <assert.h>
+#endif
+
+#include <assert.h>
+
+#ifdef __cplusplus
 }
+#endif
+
 #define JSON_ASSERT(x) assert(x)
 #include "json.hpp"
