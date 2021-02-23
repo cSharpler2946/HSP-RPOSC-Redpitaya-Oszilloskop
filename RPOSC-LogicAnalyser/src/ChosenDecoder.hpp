@@ -4,6 +4,7 @@
 #include <libsigrokdecode/libsigrokdecode.h>
 #include "SRDRequestedOptions.hpp"
 #include "AllOptionsValid.hpp"
+#include "SRDChannels.hpp"
 
 class ChosenDecoder: public PContainer {
     public:

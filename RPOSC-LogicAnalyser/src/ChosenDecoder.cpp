@@ -3,6 +3,8 @@
 #include "../lib/nlohmann/jsonWrapper.hpp"
 #include "../lib/loguru/loguru.hpp"
 
+#define ToErr (srd_error_code)
+
 ChosenDecoder::ChosenDecoder(std::string name, CBaseParameter::AccessMode am, std::string defaultVal, int fpga_update, SRDRequestedOptions *_reqOptions, SRDChannels *_channels, srd_session *_srdSession, srd_decoder_inst *_decoderInstance, AllOptionsValid *_allOptionsValid):
 PContainer(name, am, defaultVal, fpga_update) {
     LOG_F(INFO, "ChosenDecoder instatiated");
@@ -22,10 +24,10 @@ void ChosenDecoder::loadChosenDecoder() {
 void ChosenDecoder::OnNewInternal() {
     LOG_F(INFO, "Unloading all old decoders");
     srd_error_code err;
-    if((err = ToErr srd_decoder_unload_all(); != SRD_OK) {
+    if((err = ToErr srd_decoder_unload_all()) != SRD_OK) {
         LOG_F(ERROR, "Failed unloading old decoders! (srd_error_coder: %d)", err);
     }
-    nlohmann::json tmp = VALUE.Value();
+    nlohmann::json tmp = VALUE->Value();
     LOG_F(INFO, "Loading decoder with id \"%s\"...", tmp["id"]);
     if((err = ToErr srd_decoder_load(tmp["id"].dump()) != SRD_OK) {
         LOG_F(ERROR, "Failed loading decoder (srd_error_coder: %d). Please select new one", err);
