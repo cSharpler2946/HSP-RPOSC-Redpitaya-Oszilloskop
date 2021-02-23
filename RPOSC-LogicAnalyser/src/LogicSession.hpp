@@ -4,7 +4,7 @@
 #include "Acquirer.hpp"
 #include <libsigrokdecode/libsigrokdecode.h>
 #include "MeasuredData.hpp"
-#include "../lib/nlohmann/json.hpp"
+#include "../lib/nlohmann/jsonWrapper.hpp"
 
 enum MeasurementState{
     stopped,
