@@ -1,8 +1,6 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 
-// import apexcharts
-import VueApexCharts from "vue3-apexcharts";
 // import bootstrap
 import './libs/bootstrap.min.css'
 import './libs/bootstrap.bundle.min.js'
@@ -16,6 +14,5 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 library.add(faPlay, faCaretDown, faCog)
 
 const app = createApp(App);
-app.use(VueApexCharts);
 app.component('font-awesome-icon', FontAwesomeIcon)
 app.mount('#app');
