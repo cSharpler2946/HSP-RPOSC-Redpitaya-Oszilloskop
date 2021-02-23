@@ -1,4 +1,4 @@
-//#define NDEBUG
+#define NDEBUG
 
 #include <cassert>
 #define JSON_ASSERT(x) assert(x)
