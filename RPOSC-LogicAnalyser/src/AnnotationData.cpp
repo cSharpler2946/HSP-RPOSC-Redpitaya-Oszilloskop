@@ -18,6 +18,7 @@ void AnnotationData::Update() {
 }
 
 void AnnotationData::callbackAnnotation(struct srd_proto_data *pdata, void *cb_data) {
+    /* TODO: Implement function following the old lsrd 0.3.0 api version...
     srd_proto_data_annotation *data = (srd_proto_data_annotation *)pdata->data;
     char **annString = (gchar **)g_slist_nth_data(pdata->pdo->di->decoder->annotations, data->ann_class); //double pointer!!
     LOG_F(INFO, "Got annotation data: %d-%d: %d: %s: %s\n", pdata->start_sample, pdata->end_sample, data->ann_class, *annString, *data->ann_text);
@@ -30,6 +31,7 @@ void AnnotationData::callbackAnnotation(struct srd_proto_data *pdata, void *cb_d
 
     annotationData.push_back(tmp.dump());
     Update();
+    */
 }
 
 void AnnotationData::resetData() {
