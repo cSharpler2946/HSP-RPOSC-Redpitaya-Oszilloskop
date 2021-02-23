@@ -3,7 +3,7 @@
 #include <vector>
 
 void callbackError(void* user_data, const loguru::Message& message) {
-    Error obj* = (Error*) user_data;
+    Error *obj = (Error*) user_data;
     std::string completeMessage(message.preamble);
     completeMessage.append(message.indentation).append(message.prefix).append(message.message);
     obj->errorList.push_back(completeMessage);

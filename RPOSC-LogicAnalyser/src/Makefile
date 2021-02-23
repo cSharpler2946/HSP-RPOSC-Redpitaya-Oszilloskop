@@ -33,6 +33,7 @@ INCLUDE += -I../lib/nlohmann/
 # Loguru includes, etc.
 INCLUDE += -I../lib/loguru/
 
+#Removed -Wall from common_flags
 COMMON_FLAGS+=-fPIC -Os -s
 CXXFLAGS+=$(COMMON_FLAGS) -std=c++11 -Wno-cpp $(INCLUDE)
 LDFLAGS = -shared $(COMMON_FLAGS) $(LIBS)
