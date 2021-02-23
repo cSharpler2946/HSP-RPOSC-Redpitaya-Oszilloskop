@@ -23,10 +23,10 @@ void AnnotationData::callbackAnnotation(struct srd_proto_data *pdata, void *cb_d
     LOG_F(INFO, "Got annotation data: %d-%d: %d: %s: %s\n", pdata->start_sample, pdata->end_sample, data->ann_class, *annString, *data->ann_text);
 
     nlohmann::json tmp;
-    json["start"]=pdata->start_sample;
-    json["end"]=pdata->end_sample;
-    json["annotationClass"]=*annString;
-    json["annotationText"]=*data->ann_text; //TODO: Test if these dereferences are right
+    tmp["start"]=pdata->start_sample;
+    tmp["end"]=pdata->end_sample;
+    tmp["annotationClass"]=*annString;
+    tmp["annotationText"]=*data->ann_text; //TODO: Test if these dereferences are right
 
     annotationData.push_back(tmp.dump());
     Update();
