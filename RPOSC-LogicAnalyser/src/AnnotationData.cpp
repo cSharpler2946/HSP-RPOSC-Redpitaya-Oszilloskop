@@ -36,5 +36,5 @@ void AnnotationData::callbackAnnotation(struct srd_proto_data *pdata, void *cb_d
 
 void AnnotationData::resetData() {
     LOG_F(INFO, "Restet annotation data");
-    annotationData.erase();
+    annotationData.clear();
 }
