@@ -33,7 +33,7 @@ void ChosenDecoder::OnNewInternal() {
         LOG_F(ERROR, "Failed loading decoder (srd_error_coder: %d). Please select new one", err);
         return;
     }
-    decoderInstance = srd_inst_new(srdSession, tmp["id"].dump(), nullptr); //Set decoder instance
+    decoderInstance = srd_inst_new(srdSession, tmp["id"].dump().c_str(), nullptr); //Set decoder instance
     allOptionsValid->setDecoderValidity(false); //After a new decoder is loaded srd_set_options must be called at least once
     LOG_F(INFO, "Deocder successfully loaded");
 
