@@ -1,7 +1,5 @@
 #include "AnnotationData.hpp"
-#include <cassert> // assert
-#define JSON_ASSERT(x) assert(x)
-#include "../lib/nlohmann/json.hpp"
+#include "../lib/nlohmann/jsonWrapper.hpp"
 #include "../lib/loguru/loguru.hpp"
 
 AnnotationData::AnnotationData(std::string _name, int _size, std::string _def_value, srd_decoder_inst *_decoderInst):

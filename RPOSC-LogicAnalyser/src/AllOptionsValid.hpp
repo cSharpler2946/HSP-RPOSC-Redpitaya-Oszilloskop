@@ -5,6 +5,7 @@
 class AllOptionsValid: public PContainer {
     public:
         AllOptionsValid(std::string name, CBaseParameter::AccessMode am, std::string defaultVal, int fpga_update);
+        void Update();
         void setChannelMapValidity(bool v);
         void setAcquirerValidity(bool v);
         void setDecoderValidity(bool v);
