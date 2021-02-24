@@ -88,7 +88,7 @@ export default {
   name: 'App',
   data () {
     return {
-      app_id: 'TestApp',
+      app_id: 'RPOSC-LogicAnalyser',
       app_port: 9002,
       redpitaya: null,
       heading: 'Logic Analyzer',
@@ -158,8 +158,8 @@ export default {
   },
   mounted () {
     // Build up WebSocket-Connection with RedPitaya in here.
-    //this.redpitaya = new RedPitaya(this.app_id, this.get_app_url, this.get_socket_url);
-    this.redpitaya = new RedPitayaStub(this.decoders, this.requestedOptions, this.decoderChannels);
+    this.redpitaya = new RedPitaya(this.app_id, this.get_app_url, this.get_socket_url, this.decoders, this.requestedOptions, this.decoderChannels);
+    //this.redpitaya = new RedPitayaStub(this.decoders, this.requestedOptions, this.decoderChannels);
     this.redpitaya.start();
 
   },
