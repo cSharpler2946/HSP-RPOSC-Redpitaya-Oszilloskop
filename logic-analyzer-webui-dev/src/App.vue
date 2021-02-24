@@ -50,10 +50,13 @@
       <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
           <a class="nav-link active col" id="nav-parameter-tab" data-bs-toggle="tab" href="#nav-parameter" role="tab" aria-controls="nav-parameter" aria-selected="true">
-            Parameters
+            Decoder
           </a>
           <a class="nav-link col" id="nav-decoded-data-tab" data-bs-toggle="tab" href="#nav-decoded-data" role="tab" aria-controls="nav-decoded-data" aria-selected="false">
             Decoded Data
+          </a>
+          <a class="nav-link col" id="nav-acquirer-parameters-tab" data-bs-toggle="tab" href="#nav-acquirer-parameters" role="tab" aria-controls="nav-acquirer-parameters" aria-selected="false">
+            Acquirer
           </a>
         </div>
       </nav>
@@ -65,6 +68,9 @@
         </div>
         <div class="tab-pane fade" id="nav-decoded-data" role="tabpanel" aria-labelledby="nav-decoded-data-tab">
           <DecodedData/>
+        </div>
+        <div class="tab-pane fade" id="nav-acquirer-parameters" role="tabpanel" aria-labelledby="nav-acquirer-parameters-tab">
+          <AcquirerParameters/>
         </div>
       </div>
     </div>
@@ -88,7 +94,7 @@ export default {
   name: 'App',
   data () {
     return {
-      app_id: 'TestApp',
+      app_id: 'RPOSC-LogicAnalyser',
       app_port: 9002,
       redpitaya: null,
       heading: 'Logic Analyzer',
@@ -158,7 +164,7 @@ export default {
   },
   mounted () {
     // Build up WebSocket-Connection with RedPitaya in here.
-    //this.redpitaya = new RedPitaya(this.app_id, this.get_app_url, this.get_socket_url);
+    //this.redpitaya = new RedPitaya(this.app_id, this.get_app_url, this.get_socket_url, this.decoders, this.requestedOptions, this.decoderChannels);
     this.redpitaya = new RedPitayaStub(this.decoders, this.requestedOptions, this.decoderChannels);
     this.redpitaya.start();
 
