@@ -36,7 +36,7 @@
    //CBooleanParameter startAcquisition("START_ACQUISITION", CBaseParameter::AccessMode::RW, false, false);
 
   // base constructor with default parameters
-  Acquirer::Acquirer(int sampleRate = 1, int decimation = 8, int pinState = 1, ACQChoosenOptions *choosenOptions = new ACQChoosenOptions()){}
+  Acquirer::Acquirer(int sampleRate = 1, int decimation = 1, int pinState = 1, ACQChoosenOptions *choosenOptions = new ACQChoosenOptions()){}
   Acquirer::Acquirer(){}
   Acquirer::Acquirer(ACQChoosenOptions *choosenOptions)
   {
@@ -44,7 +44,7 @@
   }
 
   // sets all the needed parameters and starts the acquisition
-  bool startAcquire()
+  bool Acquirer::startAcquire()
   {
     // needed variables
     uint32_t writePointer;
@@ -98,7 +98,7 @@
     }
   }
 
-  vector<float> getData(int channel)
+  vector<float> Acquirer::getData(int channel)
   {
     // get data from specified channel. The acquiredDataChannel vectors contain as much valued as defined in choosenOptions.sampleCount
     switch (channel) {

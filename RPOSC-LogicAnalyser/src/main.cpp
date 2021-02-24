@@ -84,8 +84,16 @@ int rp_app_init(void)
     ChosenDecoder *chosenDecoder = new ChosenDecoder("CHOSEN_DECODER", CBaseParameter::RW, "", false, reqOptions, srdChannels, srdSession, srdDecoderInst, allOptionsValid);
     pContainerList.push_back(chosenDecoder);
 
+    // Dummy daten for ACQChosenOptions
+    ACQChoosenOptions *chosenOptions = new chosenOptions();
+    chosenOptions->sampleRate = 1;
+    chosenOptions->decimation = 1;
+    chosenOptions->sampleCount = 16852;
+    chosenOptions->pinState = 1;
 
-    //activeAcquirer = new Acquirer(); //TODO: Get parameter (ACQChosenOption)
+    activeAcquirer = new Acquirer(chosenOptions); //TODO: Get parameter (ACQChosenOption)
+    activeAcquirer->startAcquire();
+    vector<float> data = activeAcquirer->getData(0);
 
     usleep(100);
 
@@ -121,7 +129,10 @@ int rp_get_signals(float ***s, int *sig_num, int *sig_len)
 /* Internal functions end */
 
 void UpdateSignals(void){
-
+  for(int x = 1; x<sContainerList.size(); x++)
+  {
+    sContainerList[x]->Update();
+  }
 }
 
 void UpdateParams(void){
