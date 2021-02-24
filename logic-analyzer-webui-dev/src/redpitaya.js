@@ -2,13 +2,17 @@ import $ from './libs/jquery-3.5.1.min.js';
 import pako from './libs/pako.js';
 
 class RedPitaya {
-    constructor(app_id, app_url, socket_url) {
+    constructor(app_id, app_url, socket_url, decoders, requestedOptions, decoderChannels) {
 
         this.app_id = app_id;
         this.app_url = app_url;
         this.socket_url = socket_url;
 
         this.webSocket = null;
+
+        this.decoders = decoders;
+        this.requestedOptions = requestedOptions;
+        this.decoderChannels = decoderChannels;
     }
 
     test(){
@@ -59,10 +63,34 @@ class RedPitaya {
                 try {
                     var data = new Uint8Array(ev.data);
                     var inflate = pako.inflate(data);
-                    //var text = String.fromCharCode.apply(null, new Uint8Array(inflate));
                     var text = new TextDecoder().decode(new Uint8Array(inflate));
                     var receive = JSON.parse(text);
-                    console.log(receive)
+                    if(receive.signals) {
+                        if(Object.keys(receive.signals).length !== 0) {
+                            console.log("received:")
+                            console.log(receive.signals)
+                        }
+                        
+                        if(receive.signals["SRD_DECODER_LIST"]) {
+                            var decoders_json_repr = receive.signals["SRD_DECODER_LIST"].value;
+                            var new_decoder_list = decoders_json_repr.map(JSON.parse);
+                            myself.decoders.splice(0);
+                            myself.decoders.push(...new_decoder_list);
+                        }
+                        if(receive.signals["SRD_REQUESTED_OPTIONS"]) {
+                            var requested_options_json_repr = receive.signals["SRD_REQUESTED_OPTIONS"].value;
+                            var requested_options_list = requested_options_json_repr.map(JSON.parse);
+                            myself.requestedOptions.splice(0);
+                            myself.requestedOptions.push(...requested_options_list);
+                        }
+                        if(receive.signals["SRD_CHANNELS"]) {
+                            var decoderChannels_json_repr = receive.signals["SRD_CHANNELS"].value;
+                            var decoderChannels_list = decoderChannels_json_repr.map(JSON.parse);
+                            myself.decoderChannels.splice(0);
+                            myself.decoderChannels.push(...decoderChannels_list);
+                        }
+                    }
+                    
                 } catch (e) {
                     console.log(e);
                 } finally {
@@ -70,6 +98,28 @@ class RedPitaya {
                 }
             };
         }
+    }
+
+    sendSelectedDecoder(selectedDecoder) {
+        var parameters = {};
+        parameters["CHOSEN_DECODER"] = { value: JSON.stringify(selectedDecoder, null, 4) };
+        this.webSocket.send(JSON.stringify({ parameters: parameters }));
+    }
+
+    sendChosenOptions(currentChosenOptions) {
+        var signals = {};
+        var option_list = [];
+        for(var option_id in currentChosenOptions) {
+            option_list.push(
+                {
+                    id: option_id,
+                    value: currentChosenOptions[option_id]
+                }
+            );
+        }
+        var option_list_json = option_list.map(JSON.stringify);
+        signals["SRD_CHOSEN_OPTIONS"] = { value: option_list_json };
+        this.webSocket.send(JSON.stringify({ signals: signals }));
     }
 
     receiveData(arg1, arg2){

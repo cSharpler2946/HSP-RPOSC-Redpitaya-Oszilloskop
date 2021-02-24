@@ -1,6 +1,7 @@
 #pragma once
 
 #include "SPContainer.hpp"
+#include <string>
 #include "CStringSignal.h"
 
 class SContainer: public SPContainer {
