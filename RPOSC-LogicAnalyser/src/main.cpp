@@ -73,15 +73,15 @@ int rp_app_init(void)
 
 
     //Initiaize all PContainers and SContainers
-    SRDDecoderList *decoderList = new SRDDecoderList("SRDDecoderList", 256, "");
+    SRDDecoderList *decoderList = new SRDDecoderList("SRD_DECODER_LIST", 256, "");
     sContainerList.push_back(decoderList);
-    SRDRequestedOptions *reqOptions = new SRDRequestedOptions("SRDRequestedOptions", 127, "", srdDecoderInst);
+    SRDRequestedOptions *reqOptions = new SRDRequestedOptions("SRD_REQUESTED_OPTIONS", 127, "", srdDecoderInst);
     sContainerList.push_back(reqOptions);
-    SRDChannels *srdChannels = new SRDChannels("SRDChannels", 16, "", srdDecoderInst);
+    SRDChannels *srdChannels = new SRDChannels("SRD_CHANNELS", 16, "", srdDecoderInst);
     sContainerList.push_back(srdChannels);
-    AllOptionsValid *allOptionsValid = new AllOptionsValid("AllOptionsValid", CBaseParameter::RW, "", false);
+    AllOptionsValid *allOptionsValid = new AllOptionsValid("ALL_OPTIONS_VALID", CBaseParameter::RW, "", false);
     pContainerList.push_back(allOptionsValid);
-    ChosenDecoder *chosenDecoder = new ChosenDecoder("ChosenDecoder", CBaseParameter::RW, "", false, reqOptions, srdChannels, srdSession, srdDecoderInst, allOptionsValid);
+    ChosenDecoder *chosenDecoder = new ChosenDecoder("CHOSEN_DECODER", CBaseParameter::RW, "", false, reqOptions, srdChannels, srdSession, srdDecoderInst, allOptionsValid);
     pContainerList.push_back(chosenDecoder);
 
 
