@@ -9,6 +9,7 @@ INCLUDE += -I$(INSTALL_DIR)/include/api2/
 INCLUDE += -I$(INSTALL_DIR)/include/apiApp/
 INCLUDE += -I$(INSTALL_DIR)/rp_sdk/
 INCLUDE += -I$(INSTALL_DIR)/rp_sdk/libjson/
+INCLUDE += -I$(INSTALL_DIR)
 
 # Standard Redpitaya libraries
 LIBS = -L$(INSTALL_DIR)/lib/
