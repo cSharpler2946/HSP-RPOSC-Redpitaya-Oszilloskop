@@ -1,5 +1,5 @@
 #include "MeasuredData.hpp"
-#include "../lib/nlohmann/json.hpp"
+#include "../lib/nlohmann/jsonWrapper.hpp"
 
 MeasuredData::MeasuredData(std::string _name, int _size, std::string _def_value):
 SContainer(_name, _size, _def_value) {

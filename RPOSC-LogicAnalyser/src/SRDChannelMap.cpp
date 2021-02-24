@@ -7,7 +7,7 @@ PContainer(name, am, defaultVal, fpga_update) {
     currentAcquirer = _currentAcquirer;
 }
 
-SRDChannelMap::OnNewInternal() {
+void SRDChannelMap::OnNewInternal() {
     /* TODO: Implement OnNewInternal for SRDChannelMap
     * Read the new data from VALUE
     * Interpret json
@@ -18,5 +18,5 @@ SRDChannelMap::OnNewInternal() {
 
 void SRDChannelMap::resetChannelMap() {
     allOptionsValid->setChannelMapValidity(false);
-    channelMap.erase();
+    channelMap.clear();
 }

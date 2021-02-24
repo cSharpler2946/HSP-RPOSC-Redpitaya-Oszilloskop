@@ -23,7 +23,7 @@ void SRDDecoderList::Update() {
     VALUE->Set(decoders);
 }
 
-void CreateDecoderList() {
+void SRDDecoderList::CreateDecoderList() {
     /* TODO: Implement conversion from gslist to jsons.
     * !!!This function could probably be implemented to Update()!!!
     * Create decoderList

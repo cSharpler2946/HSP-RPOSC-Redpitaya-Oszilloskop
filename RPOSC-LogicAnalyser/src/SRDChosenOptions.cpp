@@ -2,7 +2,7 @@
 #include <string>
 #include <vector>
 #include "../lib/loguru/loguru.hpp"
-#include "../lib/nlohmann/json.hpp"
+#include "../lib/nlohmann/jsonWrapper.hpp"
 #include <gmodule.h> //I think there are the glib functions
 
 SRDChosenOptions::SRDChosenOptions(std::string _name, int _size, std::string _def_value, srd_decoder_inst *_decoderInst, AllOptionsValid *_allOptionsValid):
@@ -19,7 +19,7 @@ void SRDChosenOptions::OnNewInternal() {
     for(std::string curr : optionsV)
     {
         nlohmann::json currentOption = curr;
-        if(setOption(currentOption["id"], currentOption["value"] == SRD_OK)
+        if(setOption(currentOption["id"], currentOption["value"]) == SRD_OK)
             allOptionsValid->setDecoderValidity(true);
     }
 }

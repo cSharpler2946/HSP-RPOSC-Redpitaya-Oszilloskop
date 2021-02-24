@@ -1,13 +1,13 @@
 #include "AllOptionsValid.hpp"
-#include "../lib/nlohmann/json.hpp"
+#include "../lib/nlohmann/jsonWrapper.hpp"
 
 AllOptionsValid::AllOptionsValid(std::string name, CBaseParameter::AccessMode am, std::string defaultVal, int fpga_update):
-PContainer(name, am, defaultVal) {
+PContainer(name, am, defaultVal, fpga_update) {
 
 }
 
 void AllOptionsValid::Update() {
-    json tmp;
+    nlohmann::json tmp;
     tmp["acquirerValid"]=acquirerValid;
     tmp["channelMapValid"]=channelMapValid;
     tmp["decoderValid"]=decoderValid;
