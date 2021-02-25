@@ -15,8 +15,8 @@ void SRDDecoderList::Update() {
     */
     LOG_F(INFO, "Creating and sending decoder list");
     vector<string> decoders;
-    decoders.push_back("{'id': 'I2C','name': 'I2C','longname': 'I squared C','desc': 'Synchronous open drain protocol with one controller and many peripherals.'}");
-    decoders.push_back("{'id': 'UART','name': 'UART','longname': 'UART RS232','desc': 'Asynchronous point-to-point protocol. Very old.'}");
+    decoders.push_back("{\"id\": \"I2C\",\"name\": \"I2C\",\"longname\": \"I squared C\",\"desc\": \"Synchronous open drain protocol with one controller and many peripherals.\"}");
+    decoders.push_back("{\"id\": \"UART\",\"name\": \"UART\",\"longname\": \"UART RS232\",\"desc\": \"Asynchronous point-to-point protocol. Very old.\"}");
 
     //Update VALUE
     VALUE->Set(decoders);
