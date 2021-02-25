@@ -58,7 +58,20 @@ int main()
 
     opt["data"] += ele;
 
+    cout << ele["id"].dump() << endl;
+
     cout << opt << endl;
+
+    //Test for channelMap
+    string s = "{\"CH_A\":\"rx\",\"CH_B\":\"tx\"}";
+    json cm = json::parse(s);
+
+    for (auto& el : cm.items())
+    {
+        std::cout << "key: " << el.key() << ", value:" << el.value() << '\n';
+    }
+
+
 
     return 0;
 }
