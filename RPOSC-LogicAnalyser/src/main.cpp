@@ -88,13 +88,6 @@ int rp_app_init(void)
     pContainerList.push_back(chosenDecoder);
 
     // Dummy daten for ACQChosenOptions
-    /*ACQChoosenOptions *chosenOptions = new ACQChoosenOptions();
-    chosenOptions->sampleRate = 1;
-    chosenOptions->decimation = 1;
-    chosenOptions->sampleCount = 16852;
-    chosenOptions->pinState = 1;
-
-    // Dummy daten for ACQChosenOptions
     ACQChoosenOptions *chosenOptions = new ACQChoosenOptions();
     chosenOptions->sampleRate = 1;
     chosenOptions->decimation = 1;
@@ -102,10 +95,12 @@ int rp_app_init(void)
     chosenOptions->pinState = 1;
 
     activeAcquirer = new Acquirer(chosenOptions); //TODO: Get parameter (ACQChosenOption)
-    activeAcquirer->startAcquire();
+    activeAcquirer->startAcq();
     vector<double> data = activeAcquirer->getData(0);
+    LOG_F(INFO, data);
     measuredData = new MeasuredData("MEASURED_DATA", data.size(), "");
     measuredData->addData("Channel 1", data);
+    LOG_F(INFO, "added data to measuredData");
     sContainerList.push_back(measuredData);
 
     usleep(100);
