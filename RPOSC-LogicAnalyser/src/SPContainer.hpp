@@ -8,5 +8,5 @@ class SPContainer {
         //virtual void fromJsonString(std::string)=0;
         virtual void OnNew()=0;
         virtual void OnNewInternal(){};
-        void Update(){};
+        virtual void Update(){};
 };
