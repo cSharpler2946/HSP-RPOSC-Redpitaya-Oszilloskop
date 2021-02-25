@@ -93,7 +93,10 @@ int rp_app_init(void)
 
     activeAcquirer = new Acquirer(chosenOptions); //TODO: Get parameter (ACQChosenOption)
     activeAcquirer->startAcquire();
-    vector<float> data = activeAcquirer->getData(0);
+    vector<double> data = activeAcquirer->getData(0);
+    MeasuredData *measuredData = new MeasuredData("MEASURED_DATA", data.size(), "");
+    sContainerList.push_back(measuredData);
+    measuredData->addData("Channel 1", data);
 
     usleep(100);
 
