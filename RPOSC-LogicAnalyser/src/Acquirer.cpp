@@ -44,7 +44,7 @@
   }
 
   // sets all the needed parameters and starts the acquisition
-  bool Acquirer::startAcquire()
+  bool Acquirer::startAcq()
   {
     // needed variables
     uint32_t writePointer;

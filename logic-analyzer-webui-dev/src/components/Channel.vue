@@ -24,7 +24,8 @@
         </div>
 
         <div class="signal-box col-md-9 col-12">
-            <apexchart width="100%" height="50px" type="line" :options="chartOptions" :series="series"></apexchart>
+            <apexchart width="100%" height="100px" type="line" :options="chartOptions" :series="series"></apexchart>
+            <input v-model="chartZoomValue" type="range" class="form-range" v-bind:id="'chart-scrollbar-' + channelId" min="0" max="100" step="1" @input="onChartScroll"/>
         </div>
     </div>
          
@@ -62,6 +63,8 @@
 </template>
 
 <script>
+import apexchart from "vue3-apexcharts";
+
 export default {
     name: "Channel",
     data(){
@@ -72,17 +75,29 @@ export default {
             decoderChannel: null,
             selected: null,
             edit: false,
+            chartZoomValue: 0,
+            chartData: {
+                xmin: 0,
+                xmax: 0,
+            },
             chartOptions: {
                 chart: {
                     id: "signal-channel-" + this.channelId,
-                    toolbar: false,
+                    toolbar: {
+                        enabled: true
+                    },
                     background: '#fff',
                     offsetX: 0,
                     offsetY: 0,
-                    parentHeightOffset: 15,
+                    parentHeightOffset: 0,
                     sparkline: {
-                        enabled: true,
-                    }
+                        enabled: false,
+                    },
+                    events: {
+                        zoomed: (chartContext, { xaxis, yaxis}) => {
+                            this.test(xaxis.min, xaxis.max);
+                        }
+                    },
                 },
                 fill: {
                     colors: [
@@ -106,7 +121,9 @@ export default {
                     type: 'numeric',
                     labels: {
                         show: false,
-                    }
+                    },
+                    min: 1,
+                    max: 10,
                 },
                 yaxis:{
                     type: 'numeric',
@@ -122,9 +139,9 @@ export default {
                 }
             },
             series: [{
-                name: '',
+                name: 'series-1',
                 data: [],
-            }],       
+            }],
         }
     },
     props: {
@@ -166,11 +183,33 @@ export default {
             }
             this.$emit("decoder-channel-changed", eventParams);
         },
+        onChartScroll: function(e){
+            if(this.chartData === null || this.chartData === undefined){
+                return;
+            }
+
+            this.chartData.xmax = this.chartData.xmax + 0.1;
+            this.chartData.xmin = this.chartData.xmin + 0.1;
+
+            this.chartOptions = {...this.chartOptions, ...{
+                xaxis: {
+                    max: this.chartData.xmax,
+                    min: this.chartData.xmin,
+                }
+            }}
+        },
+        test: function(xmin, xmax){
+            this.chartData.xmin = xmin;
+            this.chartData.xmax = xmax;
+        }
     },
     mounted() {
         if(this.channelId === 1){
             this.series[0].data = [1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1];
         }
+    },
+    components: {
+        apexchart
     }
 }
 </script>
@@ -208,7 +247,7 @@ export default {
 
 .signal-box{
     background-color: $signalBackgroundColor;
-    min-height: 50px;
+    min-height: 100px;
     padding: 10px;
 }
 

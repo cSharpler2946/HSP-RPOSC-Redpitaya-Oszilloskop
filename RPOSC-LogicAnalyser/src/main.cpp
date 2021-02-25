@@ -74,8 +74,10 @@ int rp_app_init(void)
 
 
     //Initiaize all PContainers and SContainers
-    SRDDecoderList *decoderList = new SRDDecoderList("SRD_DECODER_LIST", 256, "");
+    SRDDecoderList * decoderList = new SRDDecoderList("SRD_DECODER_LIST", 256, "");
     sContainerList.push_back(decoderList);
+    Startup * startup = new Startup("WEBSOCKET_OPENED", CBaseParameter::RW, "", false, decoderList);
+    pContainerList.push_back(startup);
     SRDRequestedOptions *reqOptions = new SRDRequestedOptions("SRD_REQUESTED_OPTIONS", 127, "", srdDecoderInst);
     sContainerList.push_back(reqOptions);
     SRDChannels *srdChannels = new SRDChannels("SRD_CHANNELS", 16, "", srdDecoderInst);
@@ -92,12 +94,19 @@ int rp_app_init(void)
     chosenOptions->sampleCount = 16852;
     chosenOptions->pinState = 1;
 
+    // Dummy daten for ACQChosenOptions
+    ACQChoosenOptions *chosenOptions = new ACQChoosenOptions();
+    chosenOptions->sampleRate = 1;
+    chosenOptions->decimation = 1;
+    chosenOptions->sampleCount = 16852;
+    chosenOptions->pinState = 1;
+
     activeAcquirer = new Acquirer(chosenOptions); //TODO: Get parameter (ACQChosenOption)
     activeAcquirer->startAcquire();
     vector<double> data = activeAcquirer->getData(0);
     measuredData = new MeasuredData("MEASURED_DATA", data.size(), "");
     measuredData->addData("Channel 1", data);
-    sContainerList.push_back(measuredData);*/
+    sContainerList.push_back(measuredData);
 
     usleep(100);
 
@@ -133,14 +142,13 @@ int rp_get_signals(float ***s, int *sig_num, int *sig_len)
 /* Internal functions end */
 
 void UpdateSignals(void){
-  for(int x = 1; x<sContainerList.size(); x++)
-  {
-    sContainerList[x]->Update();
-  }
-  measuredData->Update();
+    LOG_F(INFO, "Updating Signals");
+    OnNewSignals();
 }
 
 void UpdateParams(void){
+    LOG_F(INFO, "Updating Paramters");
+    OnNewParams();
 }
 
 /**
