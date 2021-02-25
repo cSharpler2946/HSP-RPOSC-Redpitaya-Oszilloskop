@@ -123,10 +123,13 @@ int rp_get_signals(float ***s, int *sig_num, int *sig_len)
 /* Internal functions end */
 
 void UpdateSignals(void){
-    
+    LOG_F(INFO, "Updating Signals");
+    OnNewSignals();
 }
 
 void UpdateParams(void){
+    LOG_F(INFO, "Updating Paramters");
+    OnNewParams();
 }
 
 /**
