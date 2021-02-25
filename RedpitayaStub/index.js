@@ -106,6 +106,26 @@ const decoder_channels = {
     ]
 }
 
+const acquirer_options = {
+    "samplerates": [
+        "125 MS/s",
+        "15.6 MS/s",
+        "1.953 MS/s",
+        "122.07 kS/s",
+        "15.258 kS/s",
+        "1.907 kS/s"
+    ],
+    "gains": [
+        "low",
+        "high"
+    ],
+    "maxSampleCount": "16384",
+    "availableChannels": [
+        "IN1",
+        "IN2"
+    ]
+}
+
 wsServer.on('request', function(request) {
     if (!originIsAllowed(request.origin)) {
       // Make sure we only accept requests from an allowed origin
@@ -149,9 +169,10 @@ function allOptionsValid() {
 function stm_doStep() {
     switch(state) {
         case "Initial":
-            console.log("Sending decoder list.");
+            console.log("Sending decoder list and acquirer options.");
             var decoders_json_repr = decoders.map(JSON.stringify);
             dataToSend.signals["SRD_DECODER_LIST"] = {value: decoders_json_repr};
+            dataToSend.parameters["ACQ_REQUESTED_OPTIONS"] = { value: JSON.stringify(acquirer_options) };
             send_data();
             state = "SelectingDecoder";
             break;

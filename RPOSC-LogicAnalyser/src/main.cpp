@@ -21,8 +21,8 @@
 
 //Signal size
 #define SIGNAL_SIZE_DEFAULT      1024
-#define SIGNAL_UPDATE_INTERVAL      10
-#define PARAMETER_UPDATE_INTERVAL      10
+#define SIGNAL_UPDATE_INTERVAL      2000
+#define PARAMETER_UPDATE_INTERVAL      2000
 
 vector<PContainer*> pContainerList;
 vector<SContainer*> sContainerList;
