@@ -30,6 +30,7 @@ vector<SContainer*> sContainerList;
 static srd_session *srdSession;
 static srd_decoder_inst *srdDecoderInst;
 static Acquirer *activeAcquirer;
+MeasuredData *measuredData;
 
 const char *rp_app_desc(void)
 {
@@ -85,7 +86,7 @@ int rp_app_init(void)
     pContainerList.push_back(chosenDecoder);
 
     // Dummy daten for ACQChosenOptions
-    ACQChoosenOptions *chosenOptions = new chosenOptions();
+    /*ACQChoosenOptions *chosenOptions = new ACQChoosenOptions();
     chosenOptions->sampleRate = 1;
     chosenOptions->decimation = 1;
     chosenOptions->sampleCount = 16852;
@@ -94,9 +95,9 @@ int rp_app_init(void)
     activeAcquirer = new Acquirer(chosenOptions); //TODO: Get parameter (ACQChosenOption)
     activeAcquirer->startAcquire();
     vector<double> data = activeAcquirer->getData(0);
-    MeasuredData *measuredData = new MeasuredData("MEASURED_DATA", data.size(), "");
-    sContainerList.push_back(measuredData);
+    measuredData = new MeasuredData("MEASURED_DATA", data.size(), "");
     measuredData->addData("Channel 1", data);
+    sContainerList.push_back(measuredData);*/
 
     usleep(100);
 
@@ -136,6 +137,7 @@ void UpdateSignals(void){
   {
     sContainerList[x]->Update();
   }
+  measuredData->Update();
 }
 
 void UpdateParams(void){

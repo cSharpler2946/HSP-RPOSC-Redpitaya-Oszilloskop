@@ -41,7 +41,6 @@ LDFLAGS = -shared $(COMMON_FLAGS) $(LIBS)
 LDFLAGS+= -Wl,--whole-archive,--no-as-needed
 LDFLAGS+= -lcryptopp -lrpapp -lrp -lrp_sdk -lsigrokdecode
 LDFLAGS+= -Wl,--no-whole-archive
-LDFLAGS+= pkg-config nlohmann_json --cflags
 
 CXXOBJECTS=$(CXXSOURCES:.cpp=.o)
 OBJECTS=$(CXXOBJECTS)

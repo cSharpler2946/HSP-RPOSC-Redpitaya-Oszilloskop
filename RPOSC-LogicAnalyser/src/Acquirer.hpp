@@ -14,7 +14,7 @@ public:
   const vector<string> supportedDecimations;
   const vector<string> supportedPinState;
   bool startAcquire();
-  vector<double> getData();
+  vector<double> getData(int channel);
   Acquirer(ACQChoosenOptions *choosenOptions);
   Acquirer(int sampleRate, int decimation, int pinState, ACQChoosenOptions *acqChoosenOption);
   Acquirer();
