@@ -1,7 +1,7 @@
 CXX=$(CROSS_COMPILE)g++
 RM=rm
 
-CXXSOURCES=$(wildcard *.cpp) ../lib/loguru/loguru.cpp #TODO Dont know if loguru has to be in there too
+CXXSOURCES=$(wildcard *.cpp) ../lib/loguru/loguru.cpp
 
 # Standard Redpitaya includes
 INCLUDE =  -I$(INSTALL_DIR)/include/
