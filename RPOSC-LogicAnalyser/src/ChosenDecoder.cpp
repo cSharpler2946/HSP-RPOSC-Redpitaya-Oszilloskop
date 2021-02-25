@@ -15,12 +15,6 @@ PContainer(name, am, defaultVal, fpga_update) {
     allOptionsValid = _allOptionsValid;
 }
 
-void ChosenDecoder::loadChosenDecoder() {
-    // TODO: Remove function. Functionality already in OnNewInternal()
-    //Load the chosen decoder
-    //Set AllOptionsValid::decoderValid=false;
-}
-
 void ChosenDecoder::OnNewInternal() {
     LOG_F(INFO, "Unloading all old decoders");
     srd_error_code err;
