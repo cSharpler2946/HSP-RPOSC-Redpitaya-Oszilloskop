@@ -10,6 +10,7 @@ void PContainer::OnNew() {
     if(VALUE->IsValueChanged())
     {
         OnNewInternal();
+        VALUE->Update();
     }
-    VALUE->Update();
+    
 }

@@ -10,6 +10,7 @@ void SContainer::OnNew() {
     if(VALUE->IsValueChanged())
     {
         OnNewInternal();
+        VALUE->Update();
     }
-    VALUE->Update();
+    
 }
