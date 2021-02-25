@@ -5,8 +5,6 @@
 SRDDecoderList::SRDDecoderList(std::string _name, int _size, std::string _def_value):
 SContainer(_name, _size, _def_value) {
     LOG_F(INFO, "SRDDecoder list instantiating");
-    CreateDecoderList();
-    Update();
 }
 
 void SRDDecoderList::Update() {
@@ -32,4 +30,5 @@ void SRDDecoderList::CreateDecoderList() {
     * Loop gslist and put info into decoderList
     * Call Update function or set flag
     */
+    Update();
 }

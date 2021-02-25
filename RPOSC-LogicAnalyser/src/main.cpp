@@ -29,7 +29,10 @@ vector<SContainer*> sContainerList;
 
 static srd_session *srdSession;
 static srd_decoder_inst *srdDecoderInst;
+SRDDecoderList *decoderList;
+bool firstRun = true;
 static Acquirer *activeAcquirer;
+
 
 const char *rp_app_desc(void)
 {
@@ -73,7 +76,7 @@ int rp_app_init(void)
 
 
     //Initiaize all PContainers and SContainers
-    SRDDecoderList *decoderList = new SRDDecoderList("SRD_DECODER_LIST", 256, "");
+    decoderList = new SRDDecoderList("SRD_DECODER_LIST", 256, "");
     sContainerList.push_back(decoderList);
     SRDRequestedOptions *reqOptions = new SRDRequestedOptions("SRD_REQUESTED_OPTIONS", 127, "", srdDecoderInst);
     sContainerList.push_back(reqOptions);
@@ -121,7 +124,10 @@ int rp_get_signals(float ***s, int *sig_num, int *sig_len)
 /* Internal functions end */
 
 void UpdateSignals(void){
-
+    if (firstRun) {
+        decoderList->CreateDecoderList();
+        firstRun = false;
+    }
 }
 
 void UpdateParams(void){
