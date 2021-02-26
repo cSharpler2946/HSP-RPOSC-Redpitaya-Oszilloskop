@@ -21,8 +21,8 @@
 
 //Signal size
 #define SIGNAL_SIZE_DEFAULT      1024
-#define SIGNAL_UPDATE_INTERVAL      10
-#define PARAMETER_UPDATE_INTERVAL      10
+#define SIGNAL_UPDATE_INTERVAL      100000
+#define PARAMETER_UPDATE_INTERVAL      100000
 
 vector<PContainer*> pContainerList;
 vector<SContainer*> sContainerList;
@@ -94,16 +94,19 @@ int rp_app_init(void)
     chosenOptions->sampleCount = 16852;
     chosenOptions->pinState = 1;
 
+    //start acquisition
     activeAcquirer = new Acquirer(chosenOptions); //TODO: Get parameter (ACQChosenOption)
-    activeAcquirer->startAcq();
+    bool result = activeAcquirer->startAcq();
+    LOG_F(INFO, "i bim result: %d", result);
+    // get and send data
     vector<double> data = activeAcquirer->getData(0);
-    LOG_F(INFO, data);
+    LOG_F(INFO, "%f", data[0]);
     measuredData = new MeasuredData("MEASURED_DATA", data.size(), "");
     measuredData->addData("Channel 1", data);
     LOG_F(INFO, "added data to measuredData");
     sContainerList.push_back(measuredData);
 
-    usleep(100);
+    usleep(10000);
 
     return 0;
 }
@@ -139,6 +142,7 @@ int rp_get_signals(float ***s, int *sig_num, int *sig_len)
 void UpdateSignals(void){
     LOG_F(INFO, "Updating Signals");
     OnNewSignals();
+    measuredData->Update();
 }
 
 void UpdateParams(void){

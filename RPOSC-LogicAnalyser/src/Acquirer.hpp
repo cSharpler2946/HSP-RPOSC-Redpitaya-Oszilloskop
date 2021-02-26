@@ -7,6 +7,8 @@ using namespace std;
 #include <string>
 #include <unistd.h>
 #include "rpApp.h"
+#include "../lib/loguru/loguru.hpp"
+
 
 class Acquirer {
 public:
