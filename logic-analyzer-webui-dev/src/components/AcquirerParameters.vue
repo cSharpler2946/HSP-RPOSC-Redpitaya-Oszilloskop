@@ -1,17 +1,6 @@
 <template>
     <form method="post">
-        <div class="parameter-wrapper" v-for="option in requestedOptions" v-bind:key="option" v-bind:value="option">
-            <label class="form-label">
-                {{ option["desc"] }}
-            </label>
-            <input type="text" class="form-control form-control-sm" v-if="!('values' in option)" v-model.lazy="chosenOptions[option.id]" v-on:change="$emit('chosenOptionsChanged', chosenOptions)">
-            <select class="form-select" v-if="'values' in option" v-model="chosenOptions[option.id]" v-on:change="$emit('chosenOptionsChanged', chosenOptions)">
-                <option v-for="possibleValue in option['values']" v-bind:key="possibleValue">
-                    {{ possibleValue }}
-                </option>
-            </select>
-            <br/>
-        </div>
+        <label>{{requestedOptions}}</label>
     </form>
 </template>
 
@@ -19,11 +8,11 @@
 export default {
     name: "AcquirerParameters",
     props: {
-        requestedOptions: Array
+        requestedOptions: "Hello!"
     },
     data () {
         return {
-            chosenOptions: {}
+            chosenOptions: "Hello!"
         }
     },
 }

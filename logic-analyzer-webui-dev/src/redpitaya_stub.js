@@ -43,9 +43,7 @@ class RedPitayaStub {
                             myself.decoders.splice(0);
                             myself.decoders.push(...new_decoder_list);
                         }
-                        if(receive.parameters["ACQ_REQUESTED_OPTIONS"]) {
-                            
-                        }
+                        
                         if(receive.signals["SRD_REQUESTED_OPTIONS"]) {
                             var requested_options_json_repr = receive.signals["SRD_REQUESTED_OPTIONS"].value;
                             var requested_options_list = requested_options_json_repr.map(JSON.parse);
@@ -59,6 +57,13 @@ class RedPitayaStub {
                             myself.decoderChannels.push(...decoderChannels_list);
                         }
                     }
+                    if(receive.parameters) {
+                        if(receive.parameters["ACQ_REQUESTED_OPTIONS"]) {
+                            var acqReqOptions = JSON.parse(receive.parameters["ACQ_REQUESTED_OPTIONS"].value);
+                            //myself.acquirerOptions = acqReqOptions;
+                        }
+                    }
+
                     console.log("received:")
                     console.log(receive)
                 } catch (e) {

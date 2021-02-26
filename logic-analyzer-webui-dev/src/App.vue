@@ -87,6 +87,7 @@ import Footer from './components/Footer.vue'
 import Channel from './components/Channel.vue'
 import Parameters from './components/Parameters.vue'
 import DecodedData from './components/DecodedData.vue'
+import AcquirerParameters from './components/AcquirerParameters.vue'
 import RedPitaya from './redpitaya.js'
 import RedPitayaStub from './redpitaya_stub.js'
 
@@ -113,6 +114,7 @@ export default {
       requestedOptions: [],
       decoderChannels: [],
       selectedDecoderChannels: [],
+      acquirerRequestedOptions: {}
     }
   },
   // props: {
@@ -165,7 +167,7 @@ export default {
   mounted () {
     // Build up WebSocket-Connection with RedPitaya in here.
     //this.redpitaya = new RedPitaya(this.app_id, this.get_app_url, this.get_socket_url, this.decoders, this.requestedOptions, this.decoderChannels);
-    this.redpitaya = new RedPitayaStub(this.decoders, this.requestedOptions, this.decoderChannels);
+    this.redpitaya = new RedPitayaStub(this.decoders, this.requestedOptions, this.decoderChannels, this.acquirerRequestedOptions);
     this.redpitaya.start();
 
   },
@@ -174,7 +176,7 @@ export default {
     Footer,
     Channel,
     Parameters,
-    DecodedData
+    DecodedData,
   }
 }
 </script>
