@@ -51,7 +51,9 @@ class RedPitaya {
         // Define WebSocket event listeners
         if (this.webSocket) {
             this.webSocket.onopen = function() {
-                console.log('Socket opened');               
+                console.log('Socket opened');
+                local['WEBSOCKET_OPENED'] = { value: true };
+                this.ws.send(JSON.stringify({ parameters: local }));
             };
             this.webSocket.onclose = function() {
                 console.log('Socket closed');

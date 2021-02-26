@@ -125,7 +125,10 @@ void UpdateParams(void){
  */
 void OnNewParams(void){
     LOG_F(INFO, "In OnNewParams");
-    //if(startup->IsValueChanged())
+    if(startup->IsValueChanged()) {
+        LOG_F(INFO, "Got WEBSOCKET_OPENED");
+        startup->Update();
+    }
     if(run < 10)
     {
         LOG_F(INFO, "Creating and sending decoder list");
@@ -136,7 +139,6 @@ void OnNewParams(void){
         //Update VALUE
         decoderList->Set(decoders);
 
-        startup->Update();
         run++;
     }
 }
