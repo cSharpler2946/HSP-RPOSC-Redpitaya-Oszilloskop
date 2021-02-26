@@ -79,6 +79,10 @@ class RedPitayaStub {
         var parameters = {};
         parameters["CHOSEN_DECODER"] = { value: JSON.stringify(selectedDecoder, null, 4) };
         this.webSocket.send(JSON.stringify({ parameters: parameters }));
+        console.log("sending decoder");
+        var self = this;
+        setTimeout(function() { console.log("sending decoder"); self.webSocket.send(JSON.stringify({ parameters: parameters })); }, 50);
+        setTimeout(function() { console.log("sending decoder"); self.webSocket.send(JSON.stringify({ parameters: parameters })); }, 50);
     }
 
     sendChosenOptions(currentChosenOptions) {
