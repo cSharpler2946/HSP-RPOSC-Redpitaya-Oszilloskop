@@ -2,10 +2,11 @@ import $ from './libs/jquery-3.5.1.min.js';
 import pako from './libs/pako.js';
 
 class RedPitayaStub {
-    constructor(decoders, requestedOptions, decoderChannels) {
+    constructor(decoders, requestedOptions, decoderChannels, acquirerOptions) {
         this.decoders = decoders;
         this.requestedOptions = requestedOptions;
         this.decoderChannels = decoderChannels;
+        this.acquirerOptions = acquirerOptions;
     }
 
     start(){
@@ -41,6 +42,9 @@ class RedPitayaStub {
                             var new_decoder_list = decoders_json_repr.map(JSON.parse);
                             myself.decoders.splice(0);
                             myself.decoders.push(...new_decoder_list);
+                        }
+                        if(receive.parameters["ACQ_REQUESTED_OPTIONS"]) {
+                            
                         }
                         if(receive.signals["SRD_REQUESTED_OPTIONS"]) {
                             var requested_options_json_repr = receive.signals["SRD_REQUESTED_OPTIONS"].value;
