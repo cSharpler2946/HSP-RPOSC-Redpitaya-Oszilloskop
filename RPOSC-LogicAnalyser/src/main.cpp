@@ -30,6 +30,7 @@ static srd_decoder_inst *srdDecoderInst;
 CStringParameter *startup;
 CStringSignal *decoderList;
 
+bool firstRun = true;
 
 const char *rp_app_desc(void)
 {
@@ -125,7 +126,7 @@ void UpdateParams(void){
 void OnNewParams(void){
     LOG_F(INFO, "In OnNewParams");
     //if(startup->IsValueChanged())
-    if(true)
+    if(firstRun)
     {
         LOG_F(INFO, "Creating and sending decoder list");
         std::vector<std::string> decoders;
@@ -136,6 +137,7 @@ void OnNewParams(void){
         decoderList->Set(decoders);
 
         startup->Update();
+        firstRun = false;
     }
 }
 
