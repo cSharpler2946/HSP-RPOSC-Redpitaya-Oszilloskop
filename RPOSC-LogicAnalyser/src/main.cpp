@@ -111,12 +111,12 @@ int rp_get_signals(float ***s, int *sig_num, int *sig_len)
 
 void UpdateSignals(void){
     LOG_F(INFO, "In UpdateSignals");
-    //OnNewSignals();
+    OnNewSignals();
 }
 
 void UpdateParams(void){
     LOG_F(INFO, "In UpdateParams");
-    //OnNewParams();
+    OnNewParams();
 }
 
 /**
