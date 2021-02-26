@@ -21,11 +21,11 @@
 
 //Signal size
 #define SIGNAL_SIZE_DEFAULT      1024
-#define SIGNAL_UPDATE_INTERVAL      10
-#define PARAMETER_UPDATE_INTERVAL      10
+#define SIGNAL_UPDATE_INTERVAL      2000
+#define PARAMETER_UPDATE_INTERVAL      2000
 
-vector<PContainer*> pContainerList;
-vector<SContainer*> sContainerList;
+std::vector<PContainer*> pContainerList;
+std::vector<SContainer*> sContainerList;
 
 static srd_session *srdSession;
 static srd_decoder_inst *srdDecoderInst;
@@ -77,6 +77,7 @@ int rp_app_init(void)
     sContainerList.push_back(decoderList);
     Startup * startup = new Startup("WEBSOCKET_OPENED", CBaseParameter::RW, "", false, decoderList);
     pContainerList.push_back(startup);
+    /*
     SRDRequestedOptions *reqOptions = new SRDRequestedOptions("SRD_REQUESTED_OPTIONS", 127, "", srdDecoderInst);
     sContainerList.push_back(reqOptions);
     SRDChannels *srdChannels = new SRDChannels("SRD_CHANNELS", 16, "", srdDecoderInst);
@@ -85,6 +86,7 @@ int rp_app_init(void)
     pContainerList.push_back(allOptionsValid);
     ChosenDecoder *chosenDecoder = new ChosenDecoder("CHOSEN_DECODER", CBaseParameter::RW, "", false, reqOptions, srdChannels, srdSession, srdDecoderInst, allOptionsValid);
     pContainerList.push_back(chosenDecoder);
+    */
 
 
     //activeAcquirer = new Acquirer(); //TODO: Get parameter (ACQChosenOption)
@@ -123,12 +125,12 @@ int rp_get_signals(float ***s, int *sig_num, int *sig_len)
 /* Internal functions end */
 
 void UpdateSignals(void){
-    LOG_F(INFO, "Updating Signals");
+    LOG_F(INFO, "In UpdateSignals");
     OnNewSignals();
 }
 
 void UpdateParams(void){
-    LOG_F(INFO, "Updating Paramters");
+    LOG_F(INFO, "In UpdateParams");
     OnNewParams();
 }
 

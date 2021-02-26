@@ -6,11 +6,10 @@ PContainer::PContainer(std::string name, CBaseParameter::AccessMode am, std::str
 }
 
 void PContainer::OnNew() {
-    LOG_F(INFO, "Here in PContainer::OnNew");
+    LOG_F(INFO, "In PContainer::OnNew");
     if(VALUE->IsValueChanged())
     {
         OnNewInternal();
-        VALUE->Update();
     }
     
 }
