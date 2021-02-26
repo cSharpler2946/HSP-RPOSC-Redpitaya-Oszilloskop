@@ -77,6 +77,7 @@ int rp_app_init(void)
     startup = new CStringParameter("WEBSOCKET_OPENED", CBaseParameter::RW, "", false);
     decoderList = new CStringSignal("SRD_DECODER_LIST", 50, "");
 
+
     usleep(100);
 
     return 0;

@@ -41,6 +41,7 @@ class RedPitaya {
     }
 
     connectWebSocket() {
+        var myself = this;
         //Create WebSocket
         if (window.WebSocket) {
             this.webSocket = new WebSocket(this.socket_url);
@@ -52,9 +53,19 @@ class RedPitaya {
         if (this.webSocket) {
             this.webSocket.onopen = function() {
                 console.log('Socket opened');
-                var parameters = {};
-                parameters['WEBSOCKET_OPENED'] = { value: true };
-                this.ws.send(JSON.stringify({ parameters: parameters }));
+                var toSend = JSON.stringify(
+                    {
+                        parameters: {
+                            "WEBSOCKET_OPENED": {
+                                value: "true"
+                            }
+                        },
+                        signals: {}
+                    }
+                );
+                console.log("sending startup:");
+                console.log(toSend);
+                myself.webSocket.send(toSend);
             };
             this.webSocket.onclose = function() {
                 console.log('Socket closed');
@@ -67,15 +78,18 @@ class RedPitaya {
                     var data = new Uint8Array(ev.data);
                     var inflate = pako.inflate(data);
                     var text = new TextDecoder().decode(new Uint8Array(inflate));
+                    console.log("received:")
+                    console.log(text);
                     var receive = JSON.parse(text);
                     if(receive.signals) {
                         if(Object.keys(receive.signals).length !== 0) {
-                            console.log("received:")
-                            console.log(receive.signals)
+                            
                         }
                         
                         if(receive.signals["SRD_DECODER_LIST"]) {
                             var decoders_json_repr = receive.signals["SRD_DECODER_LIST"].value;
+                            console.log("decoders in json:");
+                            decoders_json_repr.forEach(decoder_json => console.log(decoder_json));
                             var new_decoder_list = decoders_json_repr.map(JSON.parse);
                             myself.decoders.splice(0);
                             myself.decoders.push(...new_decoder_list);
@@ -91,6 +105,23 @@ class RedPitaya {
                             var decoderChannels_list = decoderChannels_json_repr.map(JSON.parse);
                             myself.decoderChannels.splice(0);
                             myself.decoderChannels.push(...decoderChannels_list);
+                        }
+                    }
+                    if(receive.parameters) {
+                        if(receive.parameters["WEBSOCKET_OPENED"]) {
+                            var toSend = JSON.stringify(
+                                {
+                                    parameters: {
+                                        "WEBSOCKET_OPENED": {
+                                            value: "true"
+                                        }
+                                    },
+                                    signals: {}
+                                }
+                            );
+                            console.log("sending startup:");
+                            console.log(toSend);
+                            myself.webSocket.send(toSend);
                         }
                     }
                     
