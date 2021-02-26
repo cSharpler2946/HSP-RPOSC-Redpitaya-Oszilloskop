@@ -106,7 +106,7 @@ int rp_app_init(void)
     sContainerList.push_back(measuredData);
     */
 
-    usleep(100);
+    usleep(2000);
 
     return 0;
 }
