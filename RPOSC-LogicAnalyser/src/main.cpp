@@ -24,9 +24,6 @@
 #define SIGNAL_UPDATE_INTERVAL      10
 #define PARAMETER_UPDATE_INTERVAL      10
 
-vector<PContainer*> pContainerList;
-vector<SContainer*> sContainerList;
-
 static srd_session *srdSession;
 static srd_decoder_inst *srdDecoderInst;
 
