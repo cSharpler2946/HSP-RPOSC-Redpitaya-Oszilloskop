@@ -29,7 +29,10 @@ vector<SContainer*> sContainerList;
 
 static srd_session *srdSession;
 static srd_decoder_inst *srdDecoderInst;
-static Acquirer *activeAcquirer;
+
+CStringParameter *startup;
+CStringSignal *decoderList;
+
 
 const char *rp_app_desc(void)
 {
@@ -73,21 +76,8 @@ int rp_app_init(void)
 
 
     //Initiaize all PContainers and SContainers
-    SRDDecoderList * decoderList = new SRDDecoderList("SRD_DECODER_LIST", 256, "");
-    sContainerList.push_back(decoderList);
-    Startup * startup = new Startup("WEBSOCKET_OPENED", CBaseParameter::RW, "", false, decoderList);
-    pContainerList.push_back(startup);
-    SRDRequestedOptions *reqOptions = new SRDRequestedOptions("SRD_REQUESTED_OPTIONS", 127, "", srdDecoderInst);
-    sContainerList.push_back(reqOptions);
-    SRDChannels *srdChannels = new SRDChannels("SRD_CHANNELS", 16, "", srdDecoderInst);
-    sContainerList.push_back(srdChannels);
-    AllOptionsValid *allOptionsValid = new AllOptionsValid("ALL_OPTIONS_VALID", CBaseParameter::RW, "", false);
-    pContainerList.push_back(allOptionsValid);
-    ChosenDecoder *chosenDecoder = new ChosenDecoder("CHOSEN_DECODER", CBaseParameter::RW, "", false, reqOptions, srdChannels, srdSession, srdDecoderInst, allOptionsValid);
-    pContainerList.push_back(chosenDecoder);
-
-
-    //activeAcquirer = new Acquirer(); //TODO: Get parameter (ACQChosenOption)
+    startup = new CStringParameter("WEBSOCKET_OPENED", CBaseParameter::RW, "", false);
+    decoderList = new CStringSignal("SRD_DECODER_LIST", 50, "");
 
     usleep(100);
 
@@ -123,22 +113,31 @@ int rp_get_signals(float ***s, int *sig_num, int *sig_len)
 /* Internal functions end */
 
 void UpdateSignals(void){
-    LOG_F(INFO, "Updating Signals");
-    OnNewSignals();
+    LOG_F(INFO, "In UpdateSignals");
+    //OnNewSignals();
 }
 
 void UpdateParams(void){
-    LOG_F(INFO, "Updating Paramters");
-    OnNewParams();
+    LOG_F(INFO, "In UpdateParams");
+    //OnNewParams();
 }
 
 /**
  * Callback function, which gets called when paramters changed.
  */
 void OnNewParams(void){
-    for(PContainer *curr: pContainerList)
+    LOG_F(INFO, "In OnNewParams");
+    if(startup->IsValueChanged())
     {
-        curr->OnNew();
+        LOG_F(INFO, "Creating and sending decoder list");
+        vector<string> decoders;
+        decoders.push_back("{\"id\": \"I2C\",\"name\": \"I2C\",\"longname\": \"I squared C\",\"desc\": \"Synchronous open drain protocol with one controller and many peripherals.\"}");
+        decoders.push_back("{\"id\": \"UART\",\"name\": \"UART\",\"longname\": \"UART RS232\",\"desc\": \"Asynchronous point-to-point protocol. Very old.\"}");
+
+        //Update VALUE
+        VALUE->Set(decoders);
+
+        startup->Update();
     }
 }
 
@@ -146,10 +145,7 @@ void OnNewParams(void){
  * Callback function, which gets called when signals changed.
  */
 void OnNewSignals(void){
-    for(SContainer *curr: sContainerList)
-    {
-        curr->OnNew();
-    }
+    LOG_F(INFO, "In OnNewSignals");
 }
 
 void PostUpdateSignals(void){}

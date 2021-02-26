@@ -3,6 +3,9 @@
 #include <CustomParameters.h>
 #include <string>
 
+//TODO: Class has to be tested!
+
+
 class CStringSignal : public CCustomSignal<std::string>
 {
 public:
