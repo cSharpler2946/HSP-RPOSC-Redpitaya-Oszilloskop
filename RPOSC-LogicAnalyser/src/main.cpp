@@ -21,8 +21,8 @@
 
 //Signal size
 #define SIGNAL_SIZE_DEFAULT      1024
-#define SIGNAL_UPDATE_INTERVAL      2000
-#define PARAMETER_UPDATE_INTERVAL      2000
+#define SIGNAL_UPDATE_INTERVAL      100
+#define PARAMETER_UPDATE_INTERVAL      100
 
 static srd_session *srdSession;
 static srd_decoder_inst *srdDecoderInst;
@@ -78,7 +78,7 @@ int rp_app_init(void)
     decoderList = new CStringSignal("SRD_DECODER_LIST", 50, "");
 
 
-    usleep(100);
+    //usleep(1000);
 
     return 0;
 }
@@ -129,9 +129,7 @@ void OnNewParams(void){
     if(startup->IsValueChanged()) {
         LOG_F(INFO, "Got WEBSOCKET_OPENED");
         startup->Update();
-    }
-    if(run < 10)
-    {
+  
         LOG_F(INFO, "Creating and sending decoder list");
         std::vector<std::string> decoders;
         decoders.push_back("{\"id\": \"I2C\",\"name\": \"I2C\",\"longname\": \"I squared C\",\"desc\": \"Synchronous open drain protocol with one controller and many peripherals.\"}");
@@ -139,8 +137,6 @@ void OnNewParams(void){
 
         //Update VALUE
         decoderList->Set(decoders);
-
-        run++;
     }
 }
 
