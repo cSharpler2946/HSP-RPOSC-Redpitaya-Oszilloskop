@@ -124,7 +124,8 @@ void UpdateParams(void){
  */
 void OnNewParams(void){
     LOG_F(INFO, "In OnNewParams");
-    if(startup->IsValueChanged())
+    //if(startup->IsValueChanged())
+    if(true)
     {
         LOG_F(INFO, "Creating and sending decoder list");
         std::vector<std::string> decoders;
