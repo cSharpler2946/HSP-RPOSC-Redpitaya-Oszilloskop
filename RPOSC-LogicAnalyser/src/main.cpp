@@ -21,8 +21,8 @@
 
 //Signal size
 #define SIGNAL_SIZE_DEFAULT      1024
-#define SIGNAL_UPDATE_INTERVAL      2000
-#define PARAMETER_UPDATE_INTERVAL      2000
+#define SIGNAL_UPDATE_INTERVAL      1000
+#define PARAMETER_UPDATE_INTERVAL      1000
 
 std::vector<PContainer*> pContainerList;
 std::vector<SContainer*> sContainerList;
@@ -31,6 +31,7 @@ static srd_session *srdSession;
 static srd_decoder_inst *srdDecoderInst;
 static Acquirer *activeAcquirer;
 MeasuredData *measuredData;
+SRDDecoderList *decoderList;
 
 const char *rp_app_desc(void)
 {
@@ -74,9 +75,9 @@ int rp_app_init(void)
 
 
     //Initiaize all PContainers and SContainers
-    SRDDecoderList * decoderList = new SRDDecoderList("SRD_DECODER_LIST", 256, "");
+    decoderList = new SRDDecoderList("SRD_DECODER_LIST", 256, "");
     sContainerList.push_back(decoderList);
-    Startup * startup = new Startup("WEBSOCKET_OPENED", CBaseParameter::RW, "", false, decoderList);
+    /*Startup * startup = new Startup("WEBSOCKET_OPENED", CBaseParameter::RW, "", false, decoderList);
     pContainerList.push_back(startup);
     /*
     SRDRequestedOptions *reqOptions = new SRDRequestedOptions("SRD_REQUESTED_OPTIONS", 127, "", srdDecoderInst);
@@ -106,7 +107,7 @@ int rp_app_init(void)
     sContainerList.push_back(measuredData);
     */
 
-    usleep(2000);
+    usleep(100);
 
     return 0;
 }
@@ -142,6 +143,7 @@ int rp_get_signals(float ***s, int *sig_num, int *sig_len)
 void UpdateSignals(void){
     LOG_F(INFO, "In UpdateSignals");
     OnNewSignals();
+    decoderList->CreateDecoderList();
 }
 
 void UpdateParams(void){
