@@ -91,6 +91,7 @@ int rp_app_init(void)
 
 
     // Dummy daten for ACQChosenOptions
+    /*
     ACQChoosenOptions *chosenOptions = new ACQChoosenOptions();
     chosenOptions->sampleRate = 1;
     chosenOptions->decimation = 1;
@@ -103,6 +104,7 @@ int rp_app_init(void)
     measuredData = new MeasuredData("MEASURED_DATA", data.size(), "");
     measuredData->addData("Channel 1", data);
     sContainerList.push_back(measuredData);
+    */
 
     usleep(100);
 
