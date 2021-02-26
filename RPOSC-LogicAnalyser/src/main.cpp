@@ -21,16 +21,17 @@
 
 //Signal size
 #define SIGNAL_SIZE_DEFAULT      1024
-#define SIGNAL_UPDATE_INTERVAL      2000
-#define PARAMETER_UPDATE_INTERVAL      2000
+#define SIGNAL_UPDATE_INTERVAL      1000
+#define PARAMETER_UPDATE_INTERVAL      1000
 
-vector<PContainer*> pContainerList;
-vector<SContainer*> sContainerList;
+std::vector<PContainer*> pContainerList;
+std::vector<SContainer*> sContainerList;
 
 static srd_session *srdSession;
 static srd_decoder_inst *srdDecoderInst;
 static Acquirer *activeAcquirer;
 MeasuredData *measuredData;
+SRDDecoderList *decoderList;
 
 const char *rp_app_desc(void)
 {
@@ -74,10 +75,11 @@ int rp_app_init(void)
 
 
     //Initiaize all PContainers and SContainers
-    SRDDecoderList * decoderList = new SRDDecoderList("SRD_DECODER_LIST", 256, "");
+    decoderList = new SRDDecoderList("SRD_DECODER_LIST", 256, "");
     sContainerList.push_back(decoderList);
-    Startup * startup = new Startup("WEBSOCKET_OPENED", CBaseParameter::RW, "", false, decoderList);
+    /*Startup * startup = new Startup("WEBSOCKET_OPENED", CBaseParameter::RW, "", false, decoderList);
     pContainerList.push_back(startup);
+    /*
     SRDRequestedOptions *reqOptions = new SRDRequestedOptions("SRD_REQUESTED_OPTIONS", 127, "", srdDecoderInst);
     sContainerList.push_back(reqOptions);
     SRDChannels *srdChannels = new SRDChannels("SRD_CHANNELS", 16, "", srdDecoderInst);
@@ -86,9 +88,11 @@ int rp_app_init(void)
     pContainerList.push_back(allOptionsValid);
     ChosenDecoder *chosenDecoder = new ChosenDecoder("CHOSEN_DECODER", CBaseParameter::RW, "", false, reqOptions, srdChannels, srdSession, srdDecoderInst, allOptionsValid);
     pContainerList.push_back(chosenDecoder);
+    */
 
 
     // Dummy daten for ACQChosenOptions
+    /*
     ACQChoosenOptions *chosenOptions = new ACQChoosenOptions();
     chosenOptions->sampleRate = 1;
     chosenOptions->decimation = 1;
@@ -101,6 +105,7 @@ int rp_app_init(void)
     measuredData = new MeasuredData("MEASURED_DATA", data.size(), "");
     measuredData->addData("Channel 1", data);
     sContainerList.push_back(measuredData);
+    */
 
     usleep(100);
 
@@ -136,12 +141,13 @@ int rp_get_signals(float ***s, int *sig_num, int *sig_len)
 /* Internal functions end */
 
 void UpdateSignals(void){
-    LOG_F(INFO, "Updating Signals");
+    LOG_F(INFO, "In UpdateSignals");
     OnNewSignals();
+    decoderList->CreateDecoderList();
 }
 
 void UpdateParams(void){
-    LOG_F(INFO, "Updating Paramters");
+    LOG_F(INFO, "In UpdateParams");
     OnNewParams();
 }
 
