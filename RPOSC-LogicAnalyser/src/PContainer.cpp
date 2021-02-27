@@ -7,9 +7,10 @@ PContainer::PContainer(std::string name, CBaseParameter::AccessMode am, std::str
 
 void PContainer::OnNew() {
     LOG_F(INFO, "In PContainer::OnNew");
+    VALUE->Update();
     if(VALUE->IsValueChanged())
     {
         OnNewInternal();
     }
-    
+
 }

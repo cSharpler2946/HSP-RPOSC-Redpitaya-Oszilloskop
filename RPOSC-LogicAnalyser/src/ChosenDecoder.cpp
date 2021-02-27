@@ -27,7 +27,8 @@ void ChosenDecoder::OnNewInternal() {
     if((err = ToErr srd_decoder_unload_all()) != SRD_OK) {
         LOG_F(ERROR, "Failed unloading old decoders! (srd_error_coder: %d)", err);
     }
-    nlohmann::json tmp = VALUE->Value();
+    string jsonString = VALUE->Value();
+    nlohmann::json tmp = nlohmann::json::parse(VALUE->Value().c_str());
     LOG_F(INFO, "Loading decoder with id \"%s\"...", tmp["id"]);
     if((err = ToErr srd_decoder_load(tmp["id"].dump().c_str())) != SRD_OK) {
         LOG_F(ERROR, "Failed loading decoder (srd_error_coder: %d). Please select new one", err);

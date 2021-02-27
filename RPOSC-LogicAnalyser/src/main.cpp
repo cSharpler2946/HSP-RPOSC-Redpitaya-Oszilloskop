@@ -77,9 +77,9 @@ int rp_app_init(void)
     //Initiaize all PContainers and SContainers
     decoderList = new SRDDecoderList("SRD_DECODER_LIST", 256, "");
     sContainerList.push_back(decoderList);
-    /*Startup * startup = new Startup("WEBSOCKET_OPENED", CBaseParameter::RW, "", false, decoderList);
+    Startup * startup = new Startup("WEBSOCKET_OPENED", CBaseParameter::RW, "", false, decoderList);
     pContainerList.push_back(startup);
-    /*
+
     SRDRequestedOptions *reqOptions = new SRDRequestedOptions("SRD_REQUESTED_OPTIONS", 127, "", srdDecoderInst);
     sContainerList.push_back(reqOptions);
     SRDChannels *srdChannels = new SRDChannels("SRD_CHANNELS", 16, "", srdDecoderInst);
@@ -88,7 +88,6 @@ int rp_app_init(void)
     pContainerList.push_back(allOptionsValid);
     ChosenDecoder *chosenDecoder = new ChosenDecoder("CHOSEN_DECODER", CBaseParameter::RW, "", false, reqOptions, srdChannels, srdSession, srdDecoderInst, allOptionsValid);
     pContainerList.push_back(chosenDecoder);
-    */
 
     // Dummy daten for ACQChosenOptions
     /*
@@ -110,7 +109,7 @@ int rp_app_init(void)
     sContainerList.push_back(measuredData);
     */
 
-    usleep(1000);
+    //usleep(1000);
 
     return 0;
 }
@@ -145,20 +144,19 @@ int rp_get_signals(float ***s, int *sig_num, int *sig_len)
 
 void UpdateSignals(void){
     LOG_F(INFO, "In UpdateSignals");
-    OnNewSignals();
-    decoderList->CreateDecoderList();
+    //OnNewSignals();
+    //decoderList->CreateDecoderList();
 }
 
 void UpdateParams(void){
     LOG_F(INFO, "In UpdateParams");
-    OnNewParams();
+    //OnNewParams();
 }
 
 /**
  * Callback function, which gets called when paramters changed.
  */
 void OnNewParams(void){
-  LOG_F(INFO, "GOT Parameter");
     for(PContainer *curr: pContainerList)
     {
         curr->OnNew();
@@ -169,7 +167,6 @@ void OnNewParams(void){
  * Callback function, which gets called when signals changed.
  */
 void OnNewSignals(void){
-  LOG_F(INFO, "GOT Signal");
     for(SContainer *curr: sContainerList)
     {
         curr->OnNew();
