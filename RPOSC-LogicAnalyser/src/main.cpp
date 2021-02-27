@@ -21,8 +21,8 @@
 
 //Signal size
 #define SIGNAL_SIZE_DEFAULT      1024
-#define SIGNAL_UPDATE_INTERVAL      100
-#define PARAMETER_UPDATE_INTERVAL      100
+#define SIGNAL_UPDATE_INTERVAL      1000
+#define PARAMETER_UPDATE_INTERVAL      1000
 
 static srd_session *srdSession;
 static srd_decoder_inst *srdDecoderInst;
@@ -113,23 +113,24 @@ int rp_get_signals(float ***s, int *sig_num, int *sig_len)
 
 void UpdateSignals(void){
     LOG_F(INFO, "In UpdateSignals");
-    OnNewSignals();
+    //OnNewSignals();
 }
 
 void UpdateParams(void){
     LOG_F(INFO, "In UpdateParams");
-    OnNewParams();
+    //OnNewParams();
 }
 
 /**
  * Callback function, which gets called when paramters changed.
  */
 void OnNewParams(void){
+    startup->Update();
     LOG_F(INFO, "In OnNewParams");
     if(startup->IsValueChanged()) {
         LOG_F(INFO, "Got WEBSOCKET_OPENED");
         startup->Update();
-  
+
         LOG_F(INFO, "Creating and sending decoder list");
         std::vector<std::string> decoders;
         decoders.push_back("{\"id\": \"I2C\",\"name\": \"I2C\",\"longname\": \"I squared C\",\"desc\": \"Synchronous open drain protocol with one controller and many peripherals.\"}");
