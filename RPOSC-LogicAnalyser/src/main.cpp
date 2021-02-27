@@ -21,8 +21,8 @@
 
 //Signal size
 #define SIGNAL_SIZE_DEFAULT      1024
-#define SIGNAL_UPDATE_INTERVAL      100000
-#define PARAMETER_UPDATE_INTERVAL      100000
+#define SIGNAL_UPDATE_INTERVAL      1000
+#define PARAMETER_UPDATE_INTERVAL      1000
 
 vector<PContainer*> pContainerList;
 vector<SContainer*> sContainerList;
@@ -91,13 +91,12 @@ int rp_app_init(void)
     ACQChoosenOptions *chosenOptions = new ACQChoosenOptions();
     chosenOptions->sampleRate = 1;
     chosenOptions->decimation = 1;
-    chosenOptions->sampleCount = 16852;
+    chosenOptions->sampleCount = 16384;
     chosenOptions->pinState = 1;
 
     //start acquisition
     activeAcquirer = new Acquirer(chosenOptions); //TODO: Get parameter (ACQChosenOption)
     bool result = activeAcquirer->startAcq();
-    LOG_F(INFO, "i bim result: %d", result);
     // get and send data
     vector<double> data = activeAcquirer->getData(0);
     LOG_F(INFO, "%f", data[0]);
@@ -106,7 +105,7 @@ int rp_app_init(void)
     LOG_F(INFO, "added data to measuredData");
     sContainerList.push_back(measuredData);
 
-    usleep(10000);
+    usleep(1000);
 
     return 0;
 }
@@ -154,6 +153,7 @@ void UpdateParams(void){
  * Callback function, which gets called when paramters changed.
  */
 void OnNewParams(void){
+  LOG_F(INFO, "GOT Parameter");
     for(PContainer *curr: pContainerList)
     {
         curr->OnNew();
@@ -164,6 +164,7 @@ void OnNewParams(void){
  * Callback function, which gets called when signals changed.
  */
 void OnNewSignals(void){
+  LOG_F(INFO, "GOT Signal");
     for(SContainer *curr: sContainerList)
     {
         curr->OnNew();
