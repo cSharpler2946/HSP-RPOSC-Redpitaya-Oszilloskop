@@ -1,6 +1,7 @@
 import $ from './libs/jquery-3.5.1.min.js';
 import pako from './libs/pako.js';
 
+
 class RedPitaya {
     constructor(app_id, app_url, socket_url, decoders, requestedOptions, decoderChannels) {
 
@@ -135,6 +136,7 @@ class RedPitaya {
     }
 
     sendSelectedDecoder(selectedDecoder) {
+        var util = require("util");
         var parameters = {};
         parameters["CHOSEN_DECODER"] = { value: JSON.stringify(selectedDecoder) };
         console.log("sending decoder");
