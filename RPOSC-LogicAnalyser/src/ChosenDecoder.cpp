@@ -31,9 +31,9 @@ void ChosenDecoder::OnNewInternal() {
     std::string jsonString = VALUE->Value();
     std::replace(jsonString.begin(), jsonString.end(), '\n', ' ');
     LOG_F(INFO, "%s", jsonString.c_str());
-    nlohmann::json tmp; 
-    //nlohmann::json tmp = nlohmann::json::parse(jsonString);
-    //nlohmann::json tmp = nlohmann::json::parse(VALUE->Value());
+    /*nlohmann::json tmp = nlohmann::json::parse(jsonString);
+    LOG_F(INFO, "%s", VALUE->Value().c_str());
+    nlohmann::json tmp = nlohmann::json::parse(VALUE->Value());*/
     LOG_F(INFO, "Loading decoder with id \"%s\"...", tmp["id"]);
     if((err = ToErr srd_decoder_load(tmp["id"].dump().c_str())) != SRD_OK) {
         LOG_F(ERROR, "Failed loading decoder (srd_error_coder: %d). Please select new one", err);
