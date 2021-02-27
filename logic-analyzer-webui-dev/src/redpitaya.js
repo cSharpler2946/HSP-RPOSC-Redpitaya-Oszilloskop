@@ -136,7 +136,7 @@ class RedPitaya {
 
     sendSelectedDecoder(selectedDecoder) {
         var parameters = {};
-        parameters["CHOSEN_DECODER"] = { value: JSON.stringify(selectedDecoder, null, 4) };
+        parameters["CHOSEN_DECODER"] = { value: JSON.stringify(selectedDecoder) };
         console.log("sending decoder");
         this.webSocket.send(JSON.stringify({ parameters: parameters }));
         var self = this;

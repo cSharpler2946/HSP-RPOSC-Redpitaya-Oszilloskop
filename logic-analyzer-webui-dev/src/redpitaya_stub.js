@@ -60,7 +60,10 @@ class RedPitayaStub {
                     if(receive.parameters) {
                         if(receive.parameters["ACQ_REQUESTED_OPTIONS"]) {
                             var acqReqOptions = JSON.parse(receive.parameters["ACQ_REQUESTED_OPTIONS"].value);
+                            console.log("received requested options");
+                            Object.assign(myself.acquirerOptions, acqReqOptions);
                             //myself.acquirerOptions = acqReqOptions;
+                            console.log(myself.acquirerOptions['samplerates']);
                         }
                     }
 

@@ -2,5 +2,8 @@ module.exports = {
     chainWebpack: config => {
         config.module.rules.delete('eslint');
     },
-    publicPath: ''
+    publicPath: '',
+    configureWebpack: {
+        devtool: 'source-map'
+    }
 };

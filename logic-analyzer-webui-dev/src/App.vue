@@ -70,7 +70,7 @@
           <DecodedData/>
         </div>
         <div class="tab-pane fade" id="nav-acquirer-parameters" role="tabpanel" aria-labelledby="nav-acquirer-parameters-tab">
-          <AcquirerParameters/>
+          <AcquirerParameters :requestedOptions="acquirerRequestedOptions"/>
         </div>
       </div>
     </div>
@@ -177,7 +177,7 @@ export default {
     Channel,
     Parameters,
     DecodedData,
-    //AcquirerParameters
+    AcquirerParameters,
   }
 }
 </script>
