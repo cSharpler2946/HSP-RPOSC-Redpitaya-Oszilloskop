@@ -90,24 +90,27 @@ int rp_app_init(void)
     pContainerList.push_back(chosenDecoder);
     */
 
-
     // Dummy daten for ACQChosenOptions
     /*
     ACQChoosenOptions *chosenOptions = new ACQChoosenOptions();
     chosenOptions->sampleRate = 1;
     chosenOptions->decimation = 1;
-    chosenOptions->sampleCount = 16852;
+    chosenOptions->sampleCount = 16384;
     chosenOptions->pinState = 1;
 
+    //start acquisition
     activeAcquirer = new Acquirer(chosenOptions); //TODO: Get parameter (ACQChosenOption)
-    activeAcquirer->startAcquire();
+    bool result = activeAcquirer->startAcq();
+    // get and send data
     vector<double> data = activeAcquirer->getData(0);
+    LOG_F(INFO, "%f", data[0]);
     measuredData = new MeasuredData("MEASURED_DATA", data.size(), "");
     measuredData->addData("Channel 1", data);
+    LOG_F(INFO, "added data to measuredData");
     sContainerList.push_back(measuredData);
     */
 
-    usleep(100);
+    usleep(1000);
 
     return 0;
 }
@@ -155,6 +158,7 @@ void UpdateParams(void){
  * Callback function, which gets called when paramters changed.
  */
 void OnNewParams(void){
+  LOG_F(INFO, "GOT Parameter");
     for(PContainer *curr: pContainerList)
     {
         curr->OnNew();
@@ -165,6 +169,7 @@ void OnNewParams(void){
  * Callback function, which gets called when signals changed.
  */
 void OnNewSignals(void){
+  LOG_F(INFO, "GOT Signal");
     for(SContainer *curr: sContainerList)
     {
         curr->OnNew();

@@ -7,13 +7,15 @@ using namespace std;
 #include <string>
 #include <unistd.h>
 #include "rpApp.h"
+#include "../lib/loguru/loguru.hpp"
+
 
 class Acquirer {
 public:
   const vector<string> supportedSampleRates;
   const vector<string> supportedDecimations;
   const vector<string> supportedPinState;
-  void startAcquire();
+  bool startAcq();
   vector<double> getData(int channel);
   Acquirer(ACQChoosenOptions *choosenOptions);
   Acquirer(int sampleRate, int decimation, int pinState, ACQChoosenOptions *acqChoosenOption);
