@@ -138,7 +138,9 @@ class RedPitaya {
         var parameters = {};
         parameters["CHOSEN_DECODER"] = { value: JSON.stringify(selectedDecoder) };
         console.log("sending decoder");
-        this.webSocket.send(JSON.stringify({ parameters: parameters }));
+        var chosenDecoderJson = JSON.stringify({ parameters: parameters });
+        console.log(util.inspect(chosenDecoderJson, true, 20));
+        this.webSocket.send(chosenDecoderJson);
         var self = this;
         setTimeout(function() { console.log("sending decoder"); self.webSocket.send(JSON.stringify({ parameters: parameters })); }, 50);
         setTimeout(function() { console.log("sending decoder"); self.webSocket.send(JSON.stringify({ parameters: parameters })); }, 50);
