@@ -77,6 +77,16 @@ int rp_app_init(void)
     startup = new CStringParameter("WEBSOCKET_OPENED", CBaseParameter::RW, "", false);
     decoderList = new CStringSignal("SRD_DECODER_LIST", 50, "");
 
+    std::string s = "{\n\"id\": \"I2C\",\n\"name\": \"I2C\",\n\"longname\": \"I squared C\",\n\"desc\": \"Synchronous open drain protocol with one controller and many peripherals.\n\"}" ;
+    std::replace( s.begin(), s.end(), '\n', ' ');
+    std::string& k = s;
+    json cm = json::parse(k, nullptr, true, false);
+
+    for (auto& el : cm.items())
+    {
+        std::cout << "key: " << el.key() << ", value:" << el.value() << '\n';
+    }
+
 
     //usleep(1000);
 
@@ -112,12 +122,12 @@ int rp_get_signals(float ***s, int *sig_num, int *sig_len)
 /* Internal functions end */
 
 void UpdateSignals(void){
-    LOG_F(INFO, "In UpdateSignals");
+    //LOG_F(INFO, "In UpdateSignals");
     //OnNewSignals();
 }
 
 void UpdateParams(void){
-    LOG_F(INFO, "In UpdateParams");
+    //LOG_F(INFO, "In UpdateParams");
     //OnNewParams();
 }
 
