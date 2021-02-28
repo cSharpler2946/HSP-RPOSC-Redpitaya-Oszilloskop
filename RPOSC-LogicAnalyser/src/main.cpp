@@ -84,7 +84,7 @@ int rp_app_init(void)
 
     for (auto& el : cm.items())
     {
-        LOG_F(INFO, "%s : %s", el.key(), el.value());
+        LOG_F(INFO, "%s : %s", el.key().c_str(), el.value().c_str());
     }
 
 
