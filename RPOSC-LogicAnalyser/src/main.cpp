@@ -80,11 +80,11 @@ int rp_app_init(void)
     std::string s = "{\n\"id\": \"I2C\",\n\"name\": \"I2C\",\n\"longname\": \"I squared C\",\n\"desc\": \"Synchronous open drain protocol with one controller and many peripherals.\n\"}" ;
     std::replace( s.begin(), s.end(), '\n', ' ');
     std::string& k = s;
-    json cm = json::parse(k, nullptr, true, false);
+    nlohmann::json cm = nlohmann::json::parse(k, nullptr, true, false);
 
     for (auto& el : cm.items())
     {
-        std::cout << "key: " << el.key() << ", value:" << el.value() << '\n';
+        LOG_F(INFO, "%s : %s", el.key(), el.value());
     }
 
 
