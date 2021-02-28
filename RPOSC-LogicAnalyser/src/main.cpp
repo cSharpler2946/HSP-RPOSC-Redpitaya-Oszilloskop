@@ -84,7 +84,10 @@ int rp_app_init(void)
 
     for (auto& el : cm.items())
     {
-        LOG_F(INFO, "%s : %s", el.key().c_str(), el.value().c_str());
+        std::string l, m;
+        l = el.key();
+        m = el.value();
+        LOG_F(INFO, "%s : %s", l.c_str(), m.c_str());
     }
 
 
