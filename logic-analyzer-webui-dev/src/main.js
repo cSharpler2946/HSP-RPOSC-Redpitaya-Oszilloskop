@@ -4,6 +4,7 @@ import App from './App.vue'
 // import bootstrap
 import './libs/bootstrap.min.css'
 import './libs/bootstrap.bundle.min.js'
+
 // import fontawesome
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faPlay, faCaretDown, faCog } from '@fortawesome/free-solid-svg-icons'
