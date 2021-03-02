@@ -25,7 +25,24 @@
 
         <div class="signal-box col-md-9 col-12">
             <apexchart width="100%" height="100px" type="line" :options="chartOptions" :series="series"></apexchart>
-            <input v-model="chartZoomValue" type="range" class="form-range" v-bind:id="'chart-scrollbar-' + channelId" min="0" max="100" step="1" @input="onChartScroll"/>
+
+            <div class="multi-range-slider-wrapper">
+                <div class="multi-range-slider">
+                
+                    <input type="range" v-model="chartZoomValue.left" class="slider-input-left" 
+                    v-bind:id="'slider-input-left-' + channelId" min="0" max="100" @input="onChartZoomLeft">
+
+                    <input type="range" v-model="chartZoomValue.right" class="slider-input-right" 
+                    v-bind:id="'slider-input-right-' + channelId" min="0" max="100" @input="onChartZoomRight">
+
+                    <div v-bind:id="'slider-' + channelId" class="slider">
+                        <div class="track"></div>
+                        <div class="range"></div>
+                        <div class="thumb left"></div>
+                        <div class="thumb right"></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
          
@@ -75,16 +92,33 @@ export default {
             decoderChannel: null,
             selected: null,
             edit: false,
-            chartZoomValue: 0,
+            chartZoomValue: {
+                left: 0,
+                right: 100,
+            },
             chartData: {
                 xmin: 0,
-                xmax: 0,
+                xmax: 1,
+                seriesLength: 0,
+                type: 'numeric',
+                labels: {
+                    show: false,
+                },
             },
             chartOptions: {
                 chart: {
                     id: "signal-channel-" + this.channelId,
                     toolbar: {
-                        enabled: true
+                        enabled: true,
+                        tools: {
+                            download: true,
+                            selection: true,
+                            zoom: true,
+                            zoomin: true,
+                            zoomout: true,
+                            pan: false,
+                            reset: true,
+                        },
                     },
                     background: '#fff',
                     offsetX: 0,
@@ -95,7 +129,7 @@ export default {
                     },
                     events: {
                         zoomed: (chartContext, { xaxis, yaxis}) => {
-                            this.test(xaxis.min, xaxis.max);
+                            this.onApexchartZoom(xaxis.min, xaxis.max);
                         }
                     },
                 },
@@ -121,9 +155,7 @@ export default {
                     type: 'numeric',
                     labels: {
                         show: false,
-                    },
-                    min: 1,
-                    max: 10,
+                    }
                 },
                 yaxis:{
                     type: 'numeric',
@@ -183,29 +215,149 @@ export default {
             }
             this.$emit("decoder-channel-changed", eventParams);
         },
-        onChartScroll: function(e){
-            if(this.chartData === null || this.chartData === undefined){
-                return;
+        onChartZoomLeft: function(e){
+            var right = parseInt(this.chartZoomValue.right);
+            var left = parseInt(this.chartZoomValue.left);
+
+            if(left >= right - 1){
+                left = right - 1;
+                this.chartZoomValue.left = left;
+            }
+            else if(left < 0){
+                left = 0;
+                this.chartZoomValue.left = left;
             }
 
-            this.chartData.xmax = this.chartData.xmax + 0.1;
-            this.chartData.xmin = this.chartData.xmin + 0.1;
-
+            this.chartData.xmin = this.chartData.seriesLength * (left / 100) + 1;
             this.chartOptions = {...this.chartOptions, ...{
                 xaxis: {
-                    max: this.chartData.xmax,
+                    type: this.chartData.type,
+                    labels: this.chartData.labels,
                     min: this.chartData.xmin,
+                    max: this.chartData.xmax,
+                }
+            }};
+
+            var thumbLeft = document.querySelector(`#slider-${this.channelId} > .thumb.left`);
+            var range = document.querySelector(`#slider-${this.channelId} > .range`);
+            thumbLeft.style.left = left + "%";
+            range.style.left = left + "%";
+        },
+        onChartZoomRight: function(e){
+
+            var right = parseInt(this.chartZoomValue.right);
+            var left = parseInt(this.chartZoomValue.left);
+
+            if(right <= left + 1){
+                right = left + 1;
+                this.chartZoomValue.right = right;
+            }
+            else if(right > 100){
+                right = 100;
+                this.chartZoomValue.right = right;
+            }
+
+            this.chartData.xmax = this.chartData.seriesLength * (right / 100);
+            this.chartOptions = {...this.chartOptions, ...{
+                xaxis: {
+                    type: this.chartData.type,
+                    labels: this.chartData.labels,
+                    min: this.chartData.xmin,
+                    max: this.chartData.xmax,
                 }
             }}
+
+            var thumbRight = document.querySelector(`#slider-${this.channelId} > .thumb.right`);
+            var range = document.querySelector(`#slider-${this.channelId} > .range`);
+            thumbRight.style.right = (100 - right) + "%";
+            range.style.right = (100 - right) + "%";
         },
-        test: function(xmin, xmax){
+        onApexchartZoom: function(xmin, xmax){
             this.chartData.xmin = xmin;
             this.chartData.xmax = xmax;
+
+            // Calculate the percentage of the zoom values
+            if(xmin === null || xmin === undefined || xmin < 0){
+                this.chartZoomValue.left = 0
+            }
+            else{
+                this.chartZoomValue.left = ((xmin - 1) / this.chartData.seriesLength) * 100;
+            }
+
+            if(xmax === null || xmax === undefined || xmax > 100){
+                this.chartZoomValue.right = 100
+            }
+            else{
+                this.chartZoomValue.right = (xmax / this.chartData.seriesLength) * 100;
+            }        
+
+            // Update the values of the range-slider inputs if the user uses the apexcharts default zoom functions
+            var inputLeft = document.getElementById(`slider-input-left-${this.channelId}`);
+            var inputRight = document.getElementById(`slider-input-right-${this.channelId}`);
+            inputLeft.value = this.chartZoomValue.left;
+            inputRight.value = this.chartZoomValue.right;
+
+            // Update the range slider
+            this.updateRangeSlider();
+        },
+        setupRangeSlider: function(){
+            var inputLeft = document.getElementById(`slider-input-left-${this.channelId}`);
+            var inputRight = document.getElementById(`slider-input-right-${this.channelId}`);
+
+            var thumbLeft = document.querySelector(`#slider-${this.channelId} > .thumb.left`);
+            var thumbRight = document.querySelector(`#slider-${this.channelId} > .thumb.right`);
+            
+            inputLeft.addEventListener("mouseover", function() {
+                thumbLeft.classList.add("hover");
+            });
+            inputLeft.addEventListener("mouseout", function() {
+                thumbLeft.classList.remove("hover");
+            });
+            inputLeft.addEventListener("mousedown", function() {
+                thumbLeft.classList.add("active");
+            });
+            inputLeft.addEventListener("mouseup", function() {
+                thumbLeft.classList.remove("active");
+            });
+
+            inputRight.addEventListener("mouseover", function() {
+                thumbRight.classList.add("hover");
+            });
+            inputRight.addEventListener("mouseout", function() {
+                thumbRight.classList.remove("hover");
+            });
+            inputRight.addEventListener("mousedown", function() {
+                thumbRight.classList.add("active");
+            });
+            inputRight.addEventListener("mouseup", function() {
+                thumbRight.classList.remove("active");
+            });
+        },
+        updateRangeSlider: function(){
+            this.onChartZoomLeft();
+            this.onChartZoomRight();
+        },
+        setupChartData: function(){
+            this.chartData.seriesLength = this.series[0].data.length;
         }
     },
     mounted() {
         if(this.channelId === 1){
             this.series[0].data = [1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1];
+        }
+
+        this.setupChartData();
+        if(parseInt(this.chartData.seriesLength) > 1){
+            this.setupRangeSlider();
+        }
+        else{
+            var inputLeft = document.getElementById(`slider-input-left-${this.channelId}`);
+            var inputRight = document.getElementById(`slider-input-right-${this.channelId}`);
+            var slider = document.getElementById(`slider-${this.channelId}`);
+
+            inputLeft.style.display = "none";
+            inputRight.style.display = "none";
+            slider.style.display = "none";
         }
     },
     components: {
@@ -250,5 +402,97 @@ export default {
     min-height: 100px;
     padding: 10px;
 }
+
+
+// Range-slider
+
+.multi-range-slider-wrapper {
+	position: relative;
+	width: 100%;
+	max-width: 100%;
+}
+
+.slider {
+	position: relative;
+	z-index: 1;
+	height: 5px;
+	margin: 0 15px;
+}
+.slider > .track {
+	position: absolute;
+	z-index: 1;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	border-radius: 5px;
+	background-color: $sliderTrackColor;
+    opacity: 50%;
+}
+.slider > .range {
+	position: absolute;
+	z-index: 2;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	border-radius: 5px;
+	background-color: $sliderRangeColor;
+}
+.slider > .thumb {
+	position: absolute;
+	z-index: 3;
+	width: 14px;
+	height: 14px;
+	background-color: $sliderThumbColor;
+	border-radius: 50%;
+	box-shadow: 0 0 0 0 rgba(98,0,238,.1);
+	transition: box-shadow .3s ease-in-out;
+}
+.slider > .thumb.left {
+	left: 0;
+	transform: translate(-5px, -5px);
+}
+.slider > .thumb.right {
+	right: 0;
+	transform: translate(5px, -5px);
+}
+.slider > .thumb.hover {
+	box-shadow: 0 0 0 10px $sliderThumbHoverColor;
+}
+.slider > .thumb.active {
+	box-shadow: 0 0 0 15px $sliderThumbHoverActiveColor;
+}
+
+input[type=range] {
+        position: absolute;
+        pointer-events: none;
+        -webkit-appearance: none;
+        z-index: 2;
+        height: 5px;
+        width: 98%;
+        opacity: 0;
+        left: 1%;
+}
+
+input[type=range]::-webkit-slider-thumb {
+	pointer-events: all;
+	width: 14px;
+	height: 14px;
+	border-radius: 0;
+	border: 0 none;
+	-webkit-appearance: none;
+}
+
+input[type=range]::-moz-range-thumb {
+    pointer-events: all;
+	width: 14px;
+	height: 14px;
+	border-radius: 0;
+	border: 0 none;
+	-webkit-appearance: none;
+}
+
+// - Range-slider
 
 </style>

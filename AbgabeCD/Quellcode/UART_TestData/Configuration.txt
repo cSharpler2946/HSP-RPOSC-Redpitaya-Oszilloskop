@@ -1,0 +1,7 @@
+baudate: 4800,
+data_bits: 8,
+parity: even,
+stop_bits: 1,
+bit_order: lsb-first,
+sample_rate: 1953125 / 128 Samples/second ≈ 15.258 kS/s
+Values are given as floating-point voltage values.
