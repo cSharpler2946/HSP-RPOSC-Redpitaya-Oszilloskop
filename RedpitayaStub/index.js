@@ -143,7 +143,7 @@ wsServer.on('request', function(request) {
             var receivedDecoded = JSON.parse(message.utf8Data);
             Object.assign(receivedData["parameters"], receivedDecoded["parameters"]);
             Object.assign(receivedData["signals"], receivedDecoded["signals"]);
-            if(receivedDecoded["parameters"]["CHOSEN_DECODER"]) {
+            if(receivedDecoded["parameters"] && receivedDecoded["parameters"]["CHOSEN_DECODER"]) {
                 chosenDecoderNew = true;
             }
             else {
