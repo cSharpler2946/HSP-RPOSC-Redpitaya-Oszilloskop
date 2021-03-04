@@ -1,0 +1,5 @@
+To stay under the 100MiB file size limit of GRIPS, we've had to aggressively compress the video.
+The file "HSP-Vorführung_h264_20" uses the h.264 codec.
+The h.264 encoder under Linux seems to yield quite poor results when it comes to how the text looks, but it is compatible with any playback device.
+The other file uses h.265 (HEVC) and looks much better, but compatibility is worse.
+The h.265 encoded file can be played back with VLC Media Player, but we can't guarantee compatibility with other playback software.
