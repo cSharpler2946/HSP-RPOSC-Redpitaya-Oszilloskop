@@ -1,2 +1,0 @@
-1. ws.app is null beim starten der Webapplication --> Name der App (Im javascript) muss der gleiche sein, wie der des Ordners
-2. cannot read fpga file --> maybe you modified the fpga.conf in windows. Converting it from DOS format occurs in newline and error
