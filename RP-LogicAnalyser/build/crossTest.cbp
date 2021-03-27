@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="crossTest"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="crossTest">
+				<Option output="/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug/crossTest" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/../externalRedpitaya/include"/>
+					<Add directory="/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/../externalRedpitaya/include/redpitaya"/>
+					<Add directory="/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/../externalRedpitaya/include/arm-glib-2.0-include"/>
+					<Add directory="/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/../externalRedpitaya/include/glib-2.0"/>
+					<Add directory="/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/../externalRedpitaya/include/libsigrokdecode"/>
+					<Add directory="/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/../externalRedpitaya/include/python3.5"/>
+					<Add directory="/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/../externalRedpitaya/include/nlohmann"/>
+					<Add directory="/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/../externalRedpitaya/include/loguru"/>
+					<Add directory="/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/include/c++/10.2.1"/>
+					<Add directory="/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/include/c++/10.2.1/arm-none-linux-gnueabihf"/>
+					<Add directory="/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/include/c++/10.2.1/backward"/>
+					<Add directory="/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/include"/>
+					<Add directory="/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/include-fixed"/>
+					<Add directory="/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/include"/>
+					<Add directory="/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 crossTest"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="crossTest/fast">
+				<Option output="/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug/crossTest" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/../externalRedpitaya/include"/>
+					<Add directory="/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/../externalRedpitaya/include/redpitaya"/>
+					<Add directory="/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/../externalRedpitaya/include/arm-glib-2.0-include"/>
+					<Add directory="/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/../externalRedpitaya/include/glib-2.0"/>
+					<Add directory="/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/../externalRedpitaya/include/libsigrokdecode"/>
+					<Add directory="/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/../externalRedpitaya/include/python3.5"/>
+					<Add directory="/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/../externalRedpitaya/include/nlohmann"/>
+					<Add directory="/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/../externalRedpitaya/include/loguru"/>
+					<Add directory="/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/include/c++/10.2.1"/>
+					<Add directory="/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/include/c++/10.2.1/arm-none-linux-gnueabihf"/>
+					<Add directory="/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/include/c++/10.2.1/backward"/>
+					<Add directory="/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/include"/>
+					<Add directory="/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/include-fixed"/>
+					<Add directory="/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/include"/>
+					<Add directory="/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 crossTest/fast"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/main.cpp">
+			<Option target="crossTest"/>
+		</Unit>
+		<Unit filename="/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
