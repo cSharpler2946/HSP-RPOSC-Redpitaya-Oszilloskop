@@ -89,7 +89,7 @@ import Parameters from './components/Parameters.vue'
 import DecodedData from './components/DecodedData.vue'
 import AcquirerParameters from './components/AcquirerParameters.vue'
 import RedPitaya from './redpitaya.js'
-import RedPitayaStub from './redpitaya_stub.ts'
+import RedPitayaStub from '../testing/redpitaya_stub.ts'
 
 export default {
   name: 'App',

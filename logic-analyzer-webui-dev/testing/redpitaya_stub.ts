@@ -1,6 +1,6 @@
-import $ from './libs/jquery-3.5.1.min.js'
-import pako from './libs/pako.js'
-import * as Model from './model/model'
+import $ from '../src/libs/jquery-3.5.1.min.js'
+import pako from '../src/libs/pako.js'
+import * as Model from '../src/models/model'
 
 class RedPitayaStub {
     decoders: Model.Decoder[]

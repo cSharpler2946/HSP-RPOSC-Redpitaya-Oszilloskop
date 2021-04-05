@@ -37,12 +37,17 @@
 
                     <div v-bind:id="'slider-' + channelId" class="slider">
                         <div class="track"></div>
-                        <div class="range"></div>
+                        <div v-bind:id="'range-'+channelId" class="range"></div>
                         <div class="thumb left"></div>
                         <div class="thumb right"></div>
                     </div>
                 </div>
             </div>
+
+            <!-- <div id="draggable2" class="draggable ui-widget-content">
+              <p>I can be dragged only horizontally</p>
+            </div> -->
+
         </div>
     </div>
 
@@ -81,6 +86,8 @@
 
 <script>
 import apexchart from 'vue3-apexcharts'
+import $ from 'jquery'
+import 'jquery-ui-dist/jquery-ui';
 
 export default {
   name: 'Channel',
@@ -358,6 +365,28 @@ export default {
       inputRight.style.display = 'none'
       slider.style.display = 'none'
     }
+
+    var id = this.channelId;
+    var self = this;
+      $( function() {
+        $("#range-"+id).draggable({ 
+          axis: "x",
+          containment: "parent",
+          drag: function(e, ui){
+            // console.log("position: " + ui.position.left);
+            // console.log("offset: " + ui.offset.left);
+            // console.log("original: " + ui.originalPosition.left);
+            var bla = ui.originalPosition.left - ui.position.left;
+            console.log("drag: " + bla);
+
+            var inputLeft = document.getElementById(`slider-input-left-${id}`);
+            var inputRight = document.getElementById(`slider-input-right-${id}`);
+            inputLeft.value = ui.position.left;
+            // inputRight.value = this.chartZoomValue.right
+            self.updateRangeSlider()
+          }
+          });
+      });
   },
   components: {
     apexchart

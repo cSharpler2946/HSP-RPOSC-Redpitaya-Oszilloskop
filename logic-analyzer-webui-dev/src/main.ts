@@ -1,6 +1,11 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 
+// import jquery
+// import $ from 'jquery';
+// window.jQuery = $
+// import 'jquery-ui';
+
 // import bootstrap
 import './libs/bootstrap.min.css'
 import './libs/bootstrap.bundle.min.js'

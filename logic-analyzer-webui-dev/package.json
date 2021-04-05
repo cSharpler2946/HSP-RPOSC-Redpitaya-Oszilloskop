@@ -13,11 +13,15 @@
     "@fortawesome/vue-fontawesome": "^3.0.0-1",
     "apexcharts": "^3.25.0",
     "core-js": "^3.6.5",
+    "jquery": "^3.6.0",
+    "jquery-ui": "^1.12.1",
+    "jquery-ui-dist": "^1.12.1",
     "vue": "^3.0.0",
     "vue-class-component": "^8.0.0-0",
     "vue3-apexcharts": "^1.2.1"
   },
   "devDependencies": {
+    "@types/jquery": "^3.5.5",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
     "@typescript-eslint/parser": "^2.33.0",
     "@vue/cli-plugin-babel": "~4.5.0",
