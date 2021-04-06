@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/crossTest.dir/main.cpp.o"
+  "CMakeFiles/crossTest.dir/src/main.cpp.o"
   "crossTest"
   "crossTest.pdb"
 )

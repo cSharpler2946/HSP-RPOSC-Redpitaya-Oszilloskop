@@ -1,4 +1,4 @@
-The system is: Linux - 5.10.18-1-MANJARO - x86_64
+The system is: Linux - 5.10.23-1-MANJARO - x86_64
 Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
 Compiler: /usr/bin/cc 
 Build flags: 
@@ -10,7 +10,7 @@ The output was:
 
 Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
 
-The C compiler identification is GNU, found in "/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug/CMakeFiles/3.19.7/CompilerIdC/a.out"
+The C compiler identification is GNU, found in "/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/build/CMakeFiles/3.19.7/CompilerIdC/a.out"
 
 Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
 Compiler: /usr/bin/c++ 
@@ -23,15 +23,15 @@ The output was:
 
 Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
 
-The CXX compiler identification is GNU, found in "/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug/CMakeFiles/3.19.7/CompilerIdCXX/a.out"
+The CXX compiler identification is GNU, found in "/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/build/CMakeFiles/3.19.7/CompilerIdCXX/a.out"
 
 Detecting C compiler ABI info compiled with the following output:
-Change Dir: /datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug/CMakeFiles/CMakeTmp
+Change Dir: /datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/build/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/make cmTC_47058/fast && /usr/bin/make  -f CMakeFiles/cmTC_47058.dir/build.make CMakeFiles/cmTC_47058.dir/build
-make[1]: Entering directory '/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_47058.dir/CMakeCCompilerABI.c.o
-/usr/bin/cc   -v -o CMakeFiles/cmTC_47058.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake-3.19/Modules/CMakeCCompilerABI.c
+Run Build Command(s):/usr/bin/make cmTC_a9bb8/fast && /usr/bin/make  -f CMakeFiles/cmTC_a9bb8.dir/build.make CMakeFiles/cmTC_a9bb8.dir/build
+make[1]: Entering directory '/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_a9bb8.dir/CMakeCCompilerABI.c.o
+/usr/bin/cc   -v -o CMakeFiles/cmTC_a9bb8.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake-3.19/Modules/CMakeCCompilerABI.c
 Using built-in specs.
 COLLECT_GCC=/usr/bin/cc
 Target: x86_64-pc-linux-gnu
@@ -39,8 +39,8 @@ Configured with: /build/gcc/src/gcc/configure --prefix=/usr --libdir=/usr/lib --
 Thread model: posix
 Supported LTO compression algorithms: zlib zstd
 gcc version 10.2.0 (GCC) 
-COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_47058.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64'
- /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/cc1 -quiet -v /usr/share/cmake-3.19/Modules/CMakeCCompilerABI.c -quiet -dumpbase CMakeCCompilerABI.c -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_47058.dir/CMakeCCompilerABI.c.o -version -o /tmp/ccnSZQxW.s
+COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_a9bb8.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64'
+ /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/cc1 -quiet -v /usr/share/cmake-3.19/Modules/CMakeCCompilerABI.c -quiet -dumpbase CMakeCCompilerABI.c -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_a9bb8.dir/CMakeCCompilerABI.c.o -version -o /tmp/ccV3gQIg.s
 GNU C17 (GCC) version 10.2.0 (x86_64-pc-linux-gnu)
 	compiled by GNU C version 10.2.0, GMP version 6.2.1, MPFR version 4.1.0, MPC version 1.2.1, isl version isl-0.21-GMP
 
@@ -58,15 +58,15 @@ GNU C17 (GCC) version 10.2.0 (x86_64-pc-linux-gnu)
 
 GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
 Compiler executable checksum: 1bfc39bab4733e0e3f89254efa5bbd30
-COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_47058.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64'
- as -v --64 -o CMakeFiles/cmTC_47058.dir/CMakeCCompilerABI.c.o /tmp/ccnSZQxW.s
-GNU assembler version 2.36.1 (x86_64-pc-linux-gnu) using BFD version (GNU Binutils) 2.36.1
+COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_a9bb8.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64'
+ as -v --64 -o CMakeFiles/cmTC_a9bb8.dir/CMakeCCompilerABI.c.o /tmp/ccV3gQIg.s
+GNU assembler version 2.35.1 (x86_64-pc-linux-gnu) using BFD version (GNU Binutils) 2.35.1
 COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/
 LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../:/lib/:/usr/lib/
-COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_47058.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64'
-Linking C executable cmTC_47058
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_47058.dir/link.txt --verbose=1
-/usr/bin/cc  -v CMakeFiles/cmTC_47058.dir/CMakeCCompilerABI.c.o -o cmTC_47058 
+COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_a9bb8.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64'
+Linking C executable cmTC_a9bb8
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a9bb8.dir/link.txt --verbose=1
+/usr/bin/cc  -v CMakeFiles/cmTC_a9bb8.dir/CMakeCCompilerABI.c.o -o cmTC_a9bb8 
 Using built-in specs.
 COLLECT_GCC=/usr/bin/cc
 COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/lto-wrapper
@@ -77,10 +77,10 @@ Supported LTO compression algorithms: zlib zstd
 gcc version 10.2.0 (GCC) 
 COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/
 LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../:/lib/:/usr/lib/
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_47058' '-mtune=generic' '-march=x86-64'
- /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/collect2 -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/cclZSRnq.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_47058 /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0 -L/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../.. CMakeFiles/cmTC_47058.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../lib/crtn.o
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_47058' '-mtune=generic' '-march=x86-64'
-make[1]: Leaving directory '/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug/CMakeFiles/CMakeTmp'
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_a9bb8' '-mtune=generic' '-march=x86-64'
+ /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/collect2 -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccZ6vtVR.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_a9bb8 /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0 -L/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../.. CMakeFiles/cmTC_a9bb8.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../lib/crtn.o
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_a9bb8' '-mtune=generic' '-march=x86-64'
+make[1]: Leaving directory '/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/build/CMakeFiles/CMakeTmp'
 
 
 
@@ -101,12 +101,12 @@ Parsed C implicit include dir info from above output: rv=done
 
 Parsed C implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
-  ignore line: [Change Dir: /datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug/CMakeFiles/CMakeTmp]
+  ignore line: [Change Dir: /datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/build/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command(s):/usr/bin/make cmTC_47058/fast && /usr/bin/make  -f CMakeFiles/cmTC_47058.dir/build.make CMakeFiles/cmTC_47058.dir/build]
-  ignore line: [make[1]: Entering directory '/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug/CMakeFiles/CMakeTmp']
-  ignore line: [Building C object CMakeFiles/cmTC_47058.dir/CMakeCCompilerABI.c.o]
-  ignore line: [/usr/bin/cc   -v -o CMakeFiles/cmTC_47058.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake-3.19/Modules/CMakeCCompilerABI.c]
+  ignore line: [Run Build Command(s):/usr/bin/make cmTC_a9bb8/fast && /usr/bin/make  -f CMakeFiles/cmTC_a9bb8.dir/build.make CMakeFiles/cmTC_a9bb8.dir/build]
+  ignore line: [make[1]: Entering directory '/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/build/CMakeFiles/CMakeTmp']
+  ignore line: [Building C object CMakeFiles/cmTC_a9bb8.dir/CMakeCCompilerABI.c.o]
+  ignore line: [/usr/bin/cc   -v -o CMakeFiles/cmTC_a9bb8.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake-3.19/Modules/CMakeCCompilerABI.c]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=/usr/bin/cc]
   ignore line: [Target: x86_64-pc-linux-gnu]
@@ -114,8 +114,8 @@ Parsed C implicit link information from above output:
   ignore line: [Thread model: posix]
   ignore line: [Supported LTO compression algorithms: zlib zstd]
   ignore line: [gcc version 10.2.0 (GCC) ]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_47058.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64']
-  ignore line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/cc1 -quiet -v /usr/share/cmake-3.19/Modules/CMakeCCompilerABI.c -quiet -dumpbase CMakeCCompilerABI.c -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_47058.dir/CMakeCCompilerABI.c.o -version -o /tmp/ccnSZQxW.s]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_a9bb8.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64']
+  ignore line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/cc1 -quiet -v /usr/share/cmake-3.19/Modules/CMakeCCompilerABI.c -quiet -dumpbase CMakeCCompilerABI.c -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_a9bb8.dir/CMakeCCompilerABI.c.o -version -o /tmp/ccV3gQIg.s]
   ignore line: [GNU C17 (GCC) version 10.2.0 (x86_64-pc-linux-gnu)]
   ignore line: [	compiled by GNU C version 10.2.0  GMP version 6.2.1  MPFR version 4.1.0  MPC version 1.2.1  isl version isl-0.21-GMP]
   ignore line: []
@@ -133,15 +133,15 @@ Parsed C implicit link information from above output:
   ignore line: []
   ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
   ignore line: [Compiler executable checksum: 1bfc39bab4733e0e3f89254efa5bbd30]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_47058.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64']
-  ignore line: [ as -v --64 -o CMakeFiles/cmTC_47058.dir/CMakeCCompilerABI.c.o /tmp/ccnSZQxW.s]
-  ignore line: [GNU assembler version 2.36.1 (x86_64-pc-linux-gnu) using BFD version (GNU Binutils) 2.36.1]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_a9bb8.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64']
+  ignore line: [ as -v --64 -o CMakeFiles/cmTC_a9bb8.dir/CMakeCCompilerABI.c.o /tmp/ccV3gQIg.s]
+  ignore line: [GNU assembler version 2.35.1 (x86_64-pc-linux-gnu) using BFD version (GNU Binutils) 2.35.1]
   ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/]
   ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../:/lib/:/usr/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_47058.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64']
-  ignore line: [Linking C executable cmTC_47058]
-  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_47058.dir/link.txt --verbose=1]
-  ignore line: [/usr/bin/cc  -v CMakeFiles/cmTC_47058.dir/CMakeCCompilerABI.c.o -o cmTC_47058 ]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_a9bb8.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64']
+  ignore line: [Linking C executable cmTC_a9bb8]
+  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a9bb8.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/cc  -v CMakeFiles/cmTC_a9bb8.dir/CMakeCCompilerABI.c.o -o cmTC_a9bb8 ]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=/usr/bin/cc]
   ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/lto-wrapper]
@@ -152,13 +152,13 @@ Parsed C implicit link information from above output:
   ignore line: [gcc version 10.2.0 (GCC) ]
   ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/]
   ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../:/lib/:/usr/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_47058' '-mtune=generic' '-march=x86-64']
-  link line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/collect2 -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/cclZSRnq.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_47058 /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0 -L/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../.. CMakeFiles/cmTC_47058.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../lib/crtn.o]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_a9bb8' '-mtune=generic' '-march=x86-64']
+  link line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/collect2 -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccZ6vtVR.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_a9bb8 /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0 -L/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../.. CMakeFiles/cmTC_a9bb8.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../lib/crtn.o]
     arg [/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/collect2] ==> ignore
     arg [-plugin] ==> ignore
     arg [/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/liblto_plugin.so] ==> ignore
     arg [-plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/lto-wrapper] ==> ignore
-    arg [-plugin-opt=-fresolution=/tmp/cclZSRnq.res] ==> ignore
+    arg [-plugin-opt=-fresolution=/tmp/ccZ6vtVR.res] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
     arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -173,7 +173,7 @@ Parsed C implicit link information from above output:
     arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
     arg [-pie] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTC_47058] ==> ignore
+    arg [cmTC_a9bb8] ==> ignore
     arg [/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../lib/Scrt1.o] ==> ignore
     arg [/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../lib/crti.o] ==> ignore
     arg [/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/crtbeginS.o] ==> ignore
@@ -182,7 +182,7 @@ Parsed C implicit link information from above output:
     arg [-L/lib/../lib] ==> dir [/lib/../lib]
     arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
     arg [-L/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../..] ==> dir [/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../..]
-    arg [CMakeFiles/cmTC_47058.dir/CMakeCCompilerABI.c.o] ==> ignore
+    arg [CMakeFiles/cmTC_a9bb8.dir/CMakeCCompilerABI.c.o] ==> ignore
     arg [-lgcc] ==> lib [gcc]
     arg [--push-state] ==> ignore
     arg [--as-needed] ==> ignore
@@ -206,428 +206,176 @@ Parsed C implicit link information from above output:
   implicit fwks: []
 
 
-The system is: Linux - 5.10.18-1-MANJARO - x86_64
-Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
-Compiler: /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/arm-none-linux-gnueabihf-gcc 
-Build flags: 
-Id flags:  
-
-The output was:
-0
-
-
-Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
-
-The C compiler identification is GNU, found in "/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug/CMakeFiles/3.17.5/CompilerIdC/a.out"
-
-Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
-Compiler: /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/arm-none-linux-gnueabihf-g++ 
-Build flags: 
-Id flags:  
-
-The output was:
-0
-
-
-Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
-
-The CXX compiler identification is GNU, found in "/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug/CMakeFiles/3.17.5/CompilerIdCXX/a.out"
-
-Determining if the C compiler works passed with the following output:
-Change Dir: /datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make cmTC_e921a/fast && /usr/bin/make  -f CMakeFiles/cmTC_e921a.dir/build.make CMakeFiles/cmTC_e921a.dir/build
-make[1]: Entering directory '/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_e921a.dir/testCCompiler.c.o
-/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/arm-none-linux-gnueabihf-gcc    -o CMakeFiles/cmTC_e921a.dir/testCCompiler.c.o   -c /datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug/CMakeFiles/CMakeTmp/testCCompiler.c
-Linking C executable cmTC_e921a
-/home/michael/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/203.7717.62/bin/cmake/linux/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e921a.dir/link.txt --verbose=1
-/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/arm-none-linux-gnueabihf-gcc      CMakeFiles/cmTC_e921a.dir/testCCompiler.c.o  -o cmTC_e921a 
-make[1]: Leaving directory '/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug/CMakeFiles/CMakeTmp'
-
-
-
-Detecting C compiler ABI info compiled with the following output:
-Change Dir: /datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make cmTC_5073d/fast && /usr/bin/make  -f CMakeFiles/cmTC_5073d.dir/build.make CMakeFiles/cmTC_5073d.dir/build
-make[1]: Entering directory '/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_5073d.dir/CMakeCCompilerABI.c.o
-/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/arm-none-linux-gnueabihf-gcc   -v -o CMakeFiles/cmTC_5073d.dir/CMakeCCompilerABI.c.o   -c /home/michael/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/203.7717.62/bin/cmake/linux/share/cmake-3.17/Modules/CMakeCCompilerABI.c
-Using built-in specs.
-COLLECT_GCC=/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/arm-none-linux-gnueabihf-gcc
-Target: arm-none-linux-gnueabihf
-Configured with: /tmp/dgboter/bbs/build03--cen7x86_64/buildbot/cen7x86_64--arm-none-linux-gnueabihf/build/src/gcc/configure --target=arm-none-linux-gnueabihf --prefix= --with-sysroot=/arm-none-linux-gnueabihf/libc --with-build-sysroot=/tmp/dgboter/bbs/build03--cen7x86_64/buildbot/cen7x86_64--arm-none-linux-gnueabihf/build/build-arm-none-linux-gnueabihf/install//arm-none-linux-gnueabihf/libc --with-bugurl=https://bugs.linaro.org/ --enable-gnu-indirect-function --enable-shared --disable-libssp --disable-libmudflap --enable-checking=release --enable-languages=c,c++,fortran --with-gmp=/tmp/dgboter/bbs/build03--cen7x86_64/buildbot/cen7x86_64--arm-none-linux-gnueabihf/build/build-arm-none-linux-gnueabihf/host-tools --with-mpfr=/tmp/dgboter/bbs/build03--cen7x86_64/buildbot/cen7x86_64--arm-none-linux-gnueabihf/build/build-arm-none-linux-gnueabihf/host-tools --with-mpc=/tmp/dgboter/bbs/build03--cen7x86_64/buildbot/cen7x86_64--arm-none-linux-gnueabihf/build/build-arm-none-linux-gnueabihf/host-tools --with-isl=/tmp/dgboter/bbs/build03--cen7x86_64/buildbot/cen7x86_64--arm-none-linux-gnueabihf/build/build-arm-none-linux-gnueabihf/host-tools --with-arch=armv7-a --with-fpu=neon --with-float=hard --with-mode=thumb --with-arch=armv7-a --with-pkgversion='GNU Toolchain for the A-profile Architecture 10.2-2020.11 (arm-10.16)'
-Thread model: posix
-Supported LTO compression algorithms: zlib
-gcc version 10.2.1 20201103 (GNU Toolchain for the A-profile Architecture 10.2-2020.11 (arm-10.16)) 
-COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_5073d.dir/CMakeCCompilerABI.c.o' '-c'  '-mfloat-abi=hard' '-mfpu=neon' '-mthumb' '-mtls-dialect=gnu' '-march=armv7-a+simd'
- /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../libexec/gcc/arm-none-linux-gnueabihf/10.2.1/cc1 -quiet -v -iprefix /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/ -isysroot /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc /home/michael/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/203.7717.62/bin/cmake/linux/share/cmake-3.17/Modules/CMakeCCompilerABI.c -quiet -dumpbase CMakeCCompilerABI.c -mfloat-abi=hard -mfpu=neon -mthumb -mtls-dialect=gnu -march=armv7-a+simd -auxbase-strip CMakeFiles/cmTC_5073d.dir/CMakeCCompilerABI.c.o -version -o /tmp/cc7mf92g.s
-GNU C17 (GNU Toolchain for the A-profile Architecture 10.2-2020.11 (arm-10.16)) version 10.2.1 20201103 (arm-none-linux-gnueabihf)
-	compiled by GNU C version 4.8.5 20150623 (Red Hat 4.8.5-39), GMP version 4.3.2, MPFR version 3.1.6, MPC version 1.0.3, isl version isl-0.15-1-g835ea3a-GMP
-
-GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
-ignoring duplicate directory "/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/../../lib/gcc/arm-none-linux-gnueabihf/10.2.1/include"
-ignoring nonexistent directory "/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/usr/local/include"
-ignoring duplicate directory "/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/../../lib/gcc/arm-none-linux-gnueabihf/10.2.1/include-fixed"
-ignoring duplicate directory "/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/../../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/include"
-#include "..." search starts here:
-#include <...> search starts here:
- /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/include
- /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/include-fixed
- /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/include
- /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/usr/include
-End of search list.
-GNU C17 (GNU Toolchain for the A-profile Architecture 10.2-2020.11 (arm-10.16)) version 10.2.1 20201103 (arm-none-linux-gnueabihf)
-	compiled by GNU C version 4.8.5 20150623 (Red Hat 4.8.5-39), GMP version 4.3.2, MPFR version 3.1.6, MPC version 1.0.3, isl version isl-0.15-1-g835ea3a-GMP
-
-GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
-Compiler executable checksum: d0d3d75a0e1e99e31899d4d83cf27b91
-COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_5073d.dir/CMakeCCompilerABI.c.o' '-c'  '-mfloat-abi=hard' '-mfpu=neon' '-mthumb' '-mtls-dialect=gnu' '-march=armv7-a+simd'
- /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/bin/as -v -march=armv7-a -mfloat-abi=hard -mfpu=neon -meabi=5 -o CMakeFiles/cmTC_5073d.dir/CMakeCCompilerABI.c.o /tmp/cc7mf92g.s
-GNU assembler version 2.35.1 (arm-none-linux-gnueabihf) using BFD version (GNU Toolchain for the A-profile Architecture 10.2-2020.11 (arm-10.16)) 2.35.1.20201028
-COMPILER_PATH=/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../libexec/gcc/arm-none-linux-gnueabihf/10.2.1/:/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../libexec/gcc/:/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/bin/
-LIBRARY_PATH=/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/:/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/:/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/lib/:/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/lib/:/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/usr/lib/
-COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_5073d.dir/CMakeCCompilerABI.c.o' '-c'  '-mfloat-abi=hard' '-mfpu=neon' '-mthumb' '-mtls-dialect=gnu' '-march=armv7-a+simd'
-Linking C executable cmTC_5073d
-/home/michael/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/203.7717.62/bin/cmake/linux/bin/cmake -E cmake_link_script CMakeFiles/cmTC_5073d.dir/link.txt --verbose=1
-/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/arm-none-linux-gnueabihf-gcc     -v CMakeFiles/cmTC_5073d.dir/CMakeCCompilerABI.c.o  -o cmTC_5073d 
-Using built-in specs.
-COLLECT_GCC=/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/arm-none-linux-gnueabihf-gcc
-COLLECT_LTO_WRAPPER=/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../libexec/gcc/arm-none-linux-gnueabihf/10.2.1/lto-wrapper
-Target: arm-none-linux-gnueabihf
-Configured with: /tmp/dgboter/bbs/build03--cen7x86_64/buildbot/cen7x86_64--arm-none-linux-gnueabihf/build/src/gcc/configure --target=arm-none-linux-gnueabihf --prefix= --with-sysroot=/arm-none-linux-gnueabihf/libc --with-build-sysroot=/tmp/dgboter/bbs/build03--cen7x86_64/buildbot/cen7x86_64--arm-none-linux-gnueabihf/build/build-arm-none-linux-gnueabihf/install//arm-none-linux-gnueabihf/libc --with-bugurl=https://bugs.linaro.org/ --enable-gnu-indirect-function --enable-shared --disable-libssp --disable-libmudflap --enable-checking=release --enable-languages=c,c++,fortran --with-gmp=/tmp/dgboter/bbs/build03--cen7x86_64/buildbot/cen7x86_64--arm-none-linux-gnueabihf/build/build-arm-none-linux-gnueabihf/host-tools --with-mpfr=/tmp/dgboter/bbs/build03--cen7x86_64/buildbot/cen7x86_64--arm-none-linux-gnueabihf/build/build-arm-none-linux-gnueabihf/host-tools --with-mpc=/tmp/dgboter/bbs/build03--cen7x86_64/buildbot/cen7x86_64--arm-none-linux-gnueabihf/build/build-arm-none-linux-gnueabihf/host-tools --with-isl=/tmp/dgboter/bbs/build03--cen7x86_64/buildbot/cen7x86_64--arm-none-linux-gnueabihf/build/build-arm-none-linux-gnueabihf/host-tools --with-arch=armv7-a --with-fpu=neon --with-float=hard --with-mode=thumb --with-arch=armv7-a --with-pkgversion='GNU Toolchain for the A-profile Architecture 10.2-2020.11 (arm-10.16)'
-Thread model: posix
-Supported LTO compression algorithms: zlib
-gcc version 10.2.1 20201103 (GNU Toolchain for the A-profile Architecture 10.2-2020.11 (arm-10.16)) 
-COMPILER_PATH=/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../libexec/gcc/arm-none-linux-gnueabihf/10.2.1/:/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../libexec/gcc/:/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/bin/
-LIBRARY_PATH=/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/:/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/:/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/lib/:/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/lib/:/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/usr/lib/
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_5073d'  '-mfloat-abi=hard' '-mfpu=neon' '-mthumb' '-mtls-dialect=gnu' '-march=armv7-a+simd'
- /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../libexec/gcc/arm-none-linux-gnueabihf/10.2.1/collect2 -plugin /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../libexec/gcc/arm-none-linux-gnueabihf/10.2.1/liblto_plugin.so -plugin-opt=/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../libexec/gcc/arm-none-linux-gnueabihf/10.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/ccEuI0JH.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --sysroot=/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc --eh-frame-hdr -dynamic-linker /lib/ld-linux-armhf.so.3 -X -m armelf_linux_eabi -o cmTC_5073d /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/usr/lib/crt1.o /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/usr/lib/crti.o /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/crtbegin.o -L/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1 -L/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc -L/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/lib -L/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/lib -L/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/usr/lib CMakeFiles/cmTC_5073d.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/crtend.o /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/usr/lib/crtn.o
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_5073d'  '-mfloat-abi=hard' '-mfpu=neon' '-mthumb' '-mtls-dialect=gnu' '-march=armv7-a+simd'
-make[1]: Leaving directory '/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug/CMakeFiles/CMakeTmp'
-
-
-
-Parsed C implicit include dir info from above output: rv=done
-  found start of include info
-  found start of implicit include info
-    add: [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/include]
-    add: [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/include-fixed]
-    add: [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/include]
-    add: [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/usr/include]
-  end of search list found
-  collapse include dir [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/include] ==> [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/lib/gcc/arm-none-linux-gnueabihf/10.2.1/include]
-  collapse include dir [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/include-fixed] ==> [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/lib/gcc/arm-none-linux-gnueabihf/10.2.1/include-fixed]
-  collapse include dir [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/include] ==> [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/arm-none-linux-gnueabihf/include]
-  collapse include dir [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/usr/include] ==> [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/arm-none-linux-gnueabihf/libc/usr/include]
-  implicit include dirs: [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/lib/gcc/arm-none-linux-gnueabihf/10.2.1/include;/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/lib/gcc/arm-none-linux-gnueabihf/10.2.1/include-fixed;/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/arm-none-linux-gnueabihf/include;/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/arm-none-linux-gnueabihf/libc/usr/include]
-
-
-Parsed C implicit link information from above output:
-  link line regex: [^( *|.*[/\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
-  ignore line: [Change Dir: /datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug/CMakeFiles/CMakeTmp]
-  ignore line: []
-  ignore line: [Run Build Command(s):/usr/bin/make cmTC_5073d/fast && /usr/bin/make  -f CMakeFiles/cmTC_5073d.dir/build.make CMakeFiles/cmTC_5073d.dir/build]
-  ignore line: [make[1]: Entering directory '/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug/CMakeFiles/CMakeTmp']
-  ignore line: [Building C object CMakeFiles/cmTC_5073d.dir/CMakeCCompilerABI.c.o]
-  ignore line: [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/arm-none-linux-gnueabihf-gcc   -v -o CMakeFiles/cmTC_5073d.dir/CMakeCCompilerABI.c.o   -c /home/michael/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/203.7717.62/bin/cmake/linux/share/cmake-3.17/Modules/CMakeCCompilerABI.c]
-  ignore line: [Using built-in specs.]
-  ignore line: [COLLECT_GCC=/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/arm-none-linux-gnueabihf-gcc]
-  ignore line: [Target: arm-none-linux-gnueabihf]
-  ignore line: [Configured with: /tmp/dgboter/bbs/build03--cen7x86_64/buildbot/cen7x86_64--arm-none-linux-gnueabihf/build/src/gcc/configure --target=arm-none-linux-gnueabihf --prefix= --with-sysroot=/arm-none-linux-gnueabihf/libc --with-build-sysroot=/tmp/dgboter/bbs/build03--cen7x86_64/buildbot/cen7x86_64--arm-none-linux-gnueabihf/build/build-arm-none-linux-gnueabihf/install//arm-none-linux-gnueabihf/libc --with-bugurl=https://bugs.linaro.org/ --enable-gnu-indirect-function --enable-shared --disable-libssp --disable-libmudflap --enable-checking=release --enable-languages=c c++ fortran --with-gmp=/tmp/dgboter/bbs/build03--cen7x86_64/buildbot/cen7x86_64--arm-none-linux-gnueabihf/build/build-arm-none-linux-gnueabihf/host-tools --with-mpfr=/tmp/dgboter/bbs/build03--cen7x86_64/buildbot/cen7x86_64--arm-none-linux-gnueabihf/build/build-arm-none-linux-gnueabihf/host-tools --with-mpc=/tmp/dgboter/bbs/build03--cen7x86_64/buildbot/cen7x86_64--arm-none-linux-gnueabihf/build/build-arm-none-linux-gnueabihf/host-tools --with-isl=/tmp/dgboter/bbs/build03--cen7x86_64/buildbot/cen7x86_64--arm-none-linux-gnueabihf/build/build-arm-none-linux-gnueabihf/host-tools --with-arch=armv7-a --with-fpu=neon --with-float=hard --with-mode=thumb --with-arch=armv7-a --with-pkgversion='GNU Toolchain for the A-profile Architecture 10.2-2020.11 (arm-10.16)']
-  ignore line: [Thread model: posix]
-  ignore line: [Supported LTO compression algorithms: zlib]
-  ignore line: [gcc version 10.2.1 20201103 (GNU Toolchain for the A-profile Architecture 10.2-2020.11 (arm-10.16)) ]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_5073d.dir/CMakeCCompilerABI.c.o' '-c'  '-mfloat-abi=hard' '-mfpu=neon' '-mthumb' '-mtls-dialect=gnu' '-march=armv7-a+simd']
-  ignore line: [ /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../libexec/gcc/arm-none-linux-gnueabihf/10.2.1/cc1 -quiet -v -iprefix /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/ -isysroot /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc /home/michael/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/203.7717.62/bin/cmake/linux/share/cmake-3.17/Modules/CMakeCCompilerABI.c -quiet -dumpbase CMakeCCompilerABI.c -mfloat-abi=hard -mfpu=neon -mthumb -mtls-dialect=gnu -march=armv7-a+simd -auxbase-strip CMakeFiles/cmTC_5073d.dir/CMakeCCompilerABI.c.o -version -o /tmp/cc7mf92g.s]
-  ignore line: [GNU C17 (GNU Toolchain for the A-profile Architecture 10.2-2020.11 (arm-10.16)) version 10.2.1 20201103 (arm-none-linux-gnueabihf)]
-  ignore line: [	compiled by GNU C version 4.8.5 20150623 (Red Hat 4.8.5-39)  GMP version 4.3.2  MPFR version 3.1.6  MPC version 1.0.3  isl version isl-0.15-1-g835ea3a-GMP]
-  ignore line: []
-  ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
-  ignore line: [ignoring duplicate directory "/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/../../lib/gcc/arm-none-linux-gnueabihf/10.2.1/include"]
-  ignore line: [ignoring nonexistent directory "/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/usr/local/include"]
-  ignore line: [ignoring duplicate directory "/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/../../lib/gcc/arm-none-linux-gnueabihf/10.2.1/include-fixed"]
-  ignore line: [ignoring duplicate directory "/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/../../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/include"]
-  ignore line: [#include "..." search starts here:]
-  ignore line: [#include <...> search starts here:]
-  ignore line: [ /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/include]
-  ignore line: [ /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/include-fixed]
-  ignore line: [ /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/include]
-  ignore line: [ /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/usr/include]
-  ignore line: [End of search list.]
-  ignore line: [GNU C17 (GNU Toolchain for the A-profile Architecture 10.2-2020.11 (arm-10.16)) version 10.2.1 20201103 (arm-none-linux-gnueabihf)]
-  ignore line: [	compiled by GNU C version 4.8.5 20150623 (Red Hat 4.8.5-39)  GMP version 4.3.2  MPFR version 3.1.6  MPC version 1.0.3  isl version isl-0.15-1-g835ea3a-GMP]
-  ignore line: []
-  ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
-  ignore line: [Compiler executable checksum: d0d3d75a0e1e99e31899d4d83cf27b91]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_5073d.dir/CMakeCCompilerABI.c.o' '-c'  '-mfloat-abi=hard' '-mfpu=neon' '-mthumb' '-mtls-dialect=gnu' '-march=armv7-a+simd']
-  ignore line: [ /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/bin/as -v -march=armv7-a -mfloat-abi=hard -mfpu=neon -meabi=5 -o CMakeFiles/cmTC_5073d.dir/CMakeCCompilerABI.c.o /tmp/cc7mf92g.s]
-  ignore line: [GNU assembler version 2.35.1 (arm-none-linux-gnueabihf) using BFD version (GNU Toolchain for the A-profile Architecture 10.2-2020.11 (arm-10.16)) 2.35.1.20201028]
-  ignore line: [COMPILER_PATH=/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../libexec/gcc/arm-none-linux-gnueabihf/10.2.1/:/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../libexec/gcc/:/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/bin/]
-  ignore line: [LIBRARY_PATH=/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/:/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/:/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/lib/:/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/lib/:/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/usr/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_5073d.dir/CMakeCCompilerABI.c.o' '-c'  '-mfloat-abi=hard' '-mfpu=neon' '-mthumb' '-mtls-dialect=gnu' '-march=armv7-a+simd']
-  ignore line: [Linking C executable cmTC_5073d]
-  ignore line: [/home/michael/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/203.7717.62/bin/cmake/linux/bin/cmake -E cmake_link_script CMakeFiles/cmTC_5073d.dir/link.txt --verbose=1]
-  ignore line: [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/arm-none-linux-gnueabihf-gcc     -v CMakeFiles/cmTC_5073d.dir/CMakeCCompilerABI.c.o  -o cmTC_5073d ]
-  ignore line: [Using built-in specs.]
-  ignore line: [COLLECT_GCC=/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/arm-none-linux-gnueabihf-gcc]
-  ignore line: [COLLECT_LTO_WRAPPER=/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../libexec/gcc/arm-none-linux-gnueabihf/10.2.1/lto-wrapper]
-  ignore line: [Target: arm-none-linux-gnueabihf]
-  ignore line: [Configured with: /tmp/dgboter/bbs/build03--cen7x86_64/buildbot/cen7x86_64--arm-none-linux-gnueabihf/build/src/gcc/configure --target=arm-none-linux-gnueabihf --prefix= --with-sysroot=/arm-none-linux-gnueabihf/libc --with-build-sysroot=/tmp/dgboter/bbs/build03--cen7x86_64/buildbot/cen7x86_64--arm-none-linux-gnueabihf/build/build-arm-none-linux-gnueabihf/install//arm-none-linux-gnueabihf/libc --with-bugurl=https://bugs.linaro.org/ --enable-gnu-indirect-function --enable-shared --disable-libssp --disable-libmudflap --enable-checking=release --enable-languages=c c++ fortran --with-gmp=/tmp/dgboter/bbs/build03--cen7x86_64/buildbot/cen7x86_64--arm-none-linux-gnueabihf/build/build-arm-none-linux-gnueabihf/host-tools --with-mpfr=/tmp/dgboter/bbs/build03--cen7x86_64/buildbot/cen7x86_64--arm-none-linux-gnueabihf/build/build-arm-none-linux-gnueabihf/host-tools --with-mpc=/tmp/dgboter/bbs/build03--cen7x86_64/buildbot/cen7x86_64--arm-none-linux-gnueabihf/build/build-arm-none-linux-gnueabihf/host-tools --with-isl=/tmp/dgboter/bbs/build03--cen7x86_64/buildbot/cen7x86_64--arm-none-linux-gnueabihf/build/build-arm-none-linux-gnueabihf/host-tools --with-arch=armv7-a --with-fpu=neon --with-float=hard --with-mode=thumb --with-arch=armv7-a --with-pkgversion='GNU Toolchain for the A-profile Architecture 10.2-2020.11 (arm-10.16)']
-  ignore line: [Thread model: posix]
-  ignore line: [Supported LTO compression algorithms: zlib]
-  ignore line: [gcc version 10.2.1 20201103 (GNU Toolchain for the A-profile Architecture 10.2-2020.11 (arm-10.16)) ]
-  ignore line: [COMPILER_PATH=/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../libexec/gcc/arm-none-linux-gnueabihf/10.2.1/:/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../libexec/gcc/:/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/bin/]
-  ignore line: [LIBRARY_PATH=/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/:/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/:/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/lib/:/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/lib/:/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/usr/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_5073d'  '-mfloat-abi=hard' '-mfpu=neon' '-mthumb' '-mtls-dialect=gnu' '-march=armv7-a+simd']
-  link line: [ /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../libexec/gcc/arm-none-linux-gnueabihf/10.2.1/collect2 -plugin /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../libexec/gcc/arm-none-linux-gnueabihf/10.2.1/liblto_plugin.so -plugin-opt=/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../libexec/gcc/arm-none-linux-gnueabihf/10.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/ccEuI0JH.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --sysroot=/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc --eh-frame-hdr -dynamic-linker /lib/ld-linux-armhf.so.3 -X -m armelf_linux_eabi -o cmTC_5073d /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/usr/lib/crt1.o /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/usr/lib/crti.o /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/crtbegin.o -L/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1 -L/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc -L/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/lib -L/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/lib -L/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/usr/lib CMakeFiles/cmTC_5073d.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/crtend.o /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/usr/lib/crtn.o]
-    arg [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../libexec/gcc/arm-none-linux-gnueabihf/10.2.1/collect2] ==> ignore
-    arg [-plugin] ==> ignore
-    arg [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../libexec/gcc/arm-none-linux-gnueabihf/10.2.1/liblto_plugin.so] ==> ignore
-    arg [-plugin-opt=/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../libexec/gcc/arm-none-linux-gnueabihf/10.2.1/lto-wrapper] ==> ignore
-    arg [-plugin-opt=-fresolution=/tmp/ccEuI0JH.res] ==> ignore
-    arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
-    arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
-    arg [-plugin-opt=-pass-through=-lc] ==> ignore
-    arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
-    arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
-    arg [--sysroot=/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc] ==> ignore
-    arg [--eh-frame-hdr] ==> ignore
-    arg [-dynamic-linker] ==> ignore
-    arg [/lib/ld-linux-armhf.so.3] ==> ignore
-    arg [-X] ==> ignore
-    arg [-m] ==> ignore
-    arg [armelf_linux_eabi] ==> ignore
-    arg [-o] ==> ignore
-    arg [cmTC_5073d] ==> ignore
-    arg [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/usr/lib/crt1.o] ==> ignore
-    arg [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/usr/lib/crti.o] ==> ignore
-    arg [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/crtbegin.o] ==> ignore
-    arg [-L/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1] ==> dir [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1]
-    arg [-L/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc] ==> dir [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc]
-    arg [-L/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/lib] ==> dir [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/lib]
-    arg [-L/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/lib] ==> dir [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/lib]
-    arg [-L/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/usr/lib] ==> dir [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/usr/lib]
-    arg [CMakeFiles/cmTC_5073d.dir/CMakeCCompilerABI.c.o] ==> ignore
-    arg [-lgcc] ==> lib [gcc]
-    arg [--push-state] ==> ignore
-    arg [--as-needed] ==> ignore
-    arg [-lgcc_s] ==> lib [gcc_s]
-    arg [--pop-state] ==> ignore
-    arg [-lc] ==> lib [c]
-    arg [-lgcc] ==> lib [gcc]
-    arg [--push-state] ==> ignore
-    arg [--as-needed] ==> ignore
-    arg [-lgcc_s] ==> lib [gcc_s]
-    arg [--pop-state] ==> ignore
-    arg [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/crtend.o] ==> ignore
-    arg [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/usr/lib/crtn.o] ==> ignore
-  collapse library dir [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1] ==> [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/lib/gcc/arm-none-linux-gnueabihf/10.2.1]
-  collapse library dir [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc] ==> [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/lib/gcc]
-  collapse library dir [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/lib] ==> [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/arm-none-linux-gnueabihf/lib]
-  collapse library dir [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/lib] ==> [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/arm-none-linux-gnueabihf/libc/lib]
-  collapse library dir [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/usr/lib] ==> [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/arm-none-linux-gnueabihf/libc/usr/lib]
-  implicit libs: [gcc;gcc_s;c;gcc;gcc_s]
-  implicit dirs: [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/lib/gcc/arm-none-linux-gnueabihf/10.2.1;/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/lib/gcc;/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/arm-none-linux-gnueabihf/lib;/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/arm-none-linux-gnueabihf/libc/lib;/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/arm-none-linux-gnueabihf/libc/usr/lib]
-  implicit fwks: []
-
-
-Determining if the CXX compiler works passed with the following output:
-Change Dir: /datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make cmTC_84042/fast && /usr/bin/make  -f CMakeFiles/cmTC_84042.dir/build.make CMakeFiles/cmTC_84042.dir/build
-make[1]: Entering directory '/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_84042.dir/testCXXCompiler.cxx.o
-/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/arm-none-linux-gnueabihf-g++     -o CMakeFiles/cmTC_84042.dir/testCXXCompiler.cxx.o -c /datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug/CMakeFiles/CMakeTmp/testCXXCompiler.cxx
-Linking CXX executable cmTC_84042
-/home/michael/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/203.7717.62/bin/cmake/linux/bin/cmake -E cmake_link_script CMakeFiles/cmTC_84042.dir/link.txt --verbose=1
-/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/arm-none-linux-gnueabihf-g++       CMakeFiles/cmTC_84042.dir/testCXXCompiler.cxx.o  -o cmTC_84042 
-make[1]: Leaving directory '/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug/CMakeFiles/CMakeTmp'
-
-
-
 Detecting CXX compiler ABI info compiled with the following output:
-Change Dir: /datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug/CMakeFiles/CMakeTmp
+Change Dir: /datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/build/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/make cmTC_7380b/fast && /usr/bin/make  -f CMakeFiles/cmTC_7380b.dir/build.make CMakeFiles/cmTC_7380b.dir/build
-make[1]: Entering directory '/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_7380b.dir/CMakeCXXCompilerABI.cpp.o
-/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/arm-none-linux-gnueabihf-g++    -v -o CMakeFiles/cmTC_7380b.dir/CMakeCXXCompilerABI.cpp.o -c /home/michael/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/203.7717.62/bin/cmake/linux/share/cmake-3.17/Modules/CMakeCXXCompilerABI.cpp
+Run Build Command(s):/usr/bin/make cmTC_106e4/fast && /usr/bin/make  -f CMakeFiles/cmTC_106e4.dir/build.make CMakeFiles/cmTC_106e4.dir/build
+make[1]: Entering directory '/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_106e4.dir/CMakeCXXCompilerABI.cpp.o
+/usr/bin/c++   -v -o CMakeFiles/cmTC_106e4.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.19/Modules/CMakeCXXCompilerABI.cpp
 Using built-in specs.
-COLLECT_GCC=/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/arm-none-linux-gnueabihf-g++
-Target: arm-none-linux-gnueabihf
-Configured with: /tmp/dgboter/bbs/build03--cen7x86_64/buildbot/cen7x86_64--arm-none-linux-gnueabihf/build/src/gcc/configure --target=arm-none-linux-gnueabihf --prefix= --with-sysroot=/arm-none-linux-gnueabihf/libc --with-build-sysroot=/tmp/dgboter/bbs/build03--cen7x86_64/buildbot/cen7x86_64--arm-none-linux-gnueabihf/build/build-arm-none-linux-gnueabihf/install//arm-none-linux-gnueabihf/libc --with-bugurl=https://bugs.linaro.org/ --enable-gnu-indirect-function --enable-shared --disable-libssp --disable-libmudflap --enable-checking=release --enable-languages=c,c++,fortran --with-gmp=/tmp/dgboter/bbs/build03--cen7x86_64/buildbot/cen7x86_64--arm-none-linux-gnueabihf/build/build-arm-none-linux-gnueabihf/host-tools --with-mpfr=/tmp/dgboter/bbs/build03--cen7x86_64/buildbot/cen7x86_64--arm-none-linux-gnueabihf/build/build-arm-none-linux-gnueabihf/host-tools --with-mpc=/tmp/dgboter/bbs/build03--cen7x86_64/buildbot/cen7x86_64--arm-none-linux-gnueabihf/build/build-arm-none-linux-gnueabihf/host-tools --with-isl=/tmp/dgboter/bbs/build03--cen7x86_64/buildbot/cen7x86_64--arm-none-linux-gnueabihf/build/build-arm-none-linux-gnueabihf/host-tools --with-arch=armv7-a --with-fpu=neon --with-float=hard --with-mode=thumb --with-arch=armv7-a --with-pkgversion='GNU Toolchain for the A-profile Architecture 10.2-2020.11 (arm-10.16)'
+COLLECT_GCC=/usr/bin/c++
+Target: x86_64-pc-linux-gnu
+Configured with: /build/gcc/src/gcc/configure --prefix=/usr --libdir=/usr/lib --libexecdir=/usr/lib --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=https://bugs.archlinux.org/ --enable-languages=c,c++,ada,fortran,go,lto,objc,obj-c++,d --with-isl --with-linker-hash-style=gnu --with-system-zlib --enable-__cxa_atexit --enable-cet=auto --enable-checking=release --enable-clocale=gnu --enable-default-pie --enable-default-ssp --enable-gnu-indirect-function --enable-gnu-unique-object --enable-install-libiberty --enable-linker-build-id --enable-lto --enable-multilib --enable-plugin --enable-shared --enable-threads=posix --disable-libssp --disable-libstdcxx-pch --disable-libunwind-exceptions --disable-werror gdc_include_dir=/usr/include/dlang/gdc
 Thread model: posix
-Supported LTO compression algorithms: zlib
-gcc version 10.2.1 20201103 (GNU Toolchain for the A-profile Architecture 10.2-2020.11 (arm-10.16)) 
-COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_7380b.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc'  '-mfloat-abi=hard' '-mfpu=neon' '-mthumb' '-mtls-dialect=gnu' '-march=armv7-a+simd'
- /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../libexec/gcc/arm-none-linux-gnueabihf/10.2.1/cc1plus -quiet -v -iprefix /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/ -isysroot /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc -D_GNU_SOURCE /home/michael/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/203.7717.62/bin/cmake/linux/share/cmake-3.17/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpbase CMakeCXXCompilerABI.cpp -mfloat-abi=hard -mfpu=neon -mthumb -mtls-dialect=gnu -march=armv7-a+simd -auxbase-strip CMakeFiles/cmTC_7380b.dir/CMakeCXXCompilerABI.cpp.o -version -o /tmp/cc4wOP4J.s
-GNU C++14 (GNU Toolchain for the A-profile Architecture 10.2-2020.11 (arm-10.16)) version 10.2.1 20201103 (arm-none-linux-gnueabihf)
-	compiled by GNU C version 4.8.5 20150623 (Red Hat 4.8.5-39), GMP version 4.3.2, MPFR version 3.1.6, MPC version 1.0.3, isl version isl-0.15-1-g835ea3a-GMP
+Supported LTO compression algorithms: zlib zstd
+gcc version 10.2.0 (GCC) 
+COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_106e4.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+ /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/cc1plus -quiet -v -D_GNU_SOURCE /usr/share/cmake-3.19/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpbase CMakeCXXCompilerABI.cpp -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_106e4.dir/CMakeCXXCompilerABI.cpp.o -version -o /tmp/ccXSPNPh.s
+GNU C++14 (GCC) version 10.2.0 (x86_64-pc-linux-gnu)
+	compiled by GNU C version 10.2.0, GMP version 6.2.1, MPFR version 4.1.0, MPC version 1.2.1, isl version isl-0.21-GMP
 
 GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
-ignoring duplicate directory "/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/../../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/include/c++/10.2.1"
-ignoring duplicate directory "/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/../../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/include/c++/10.2.1/arm-none-linux-gnueabihf"
-ignoring duplicate directory "/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/../../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/include/c++/10.2.1/backward"
-ignoring duplicate directory "/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/../../lib/gcc/arm-none-linux-gnueabihf/10.2.1/include"
-ignoring nonexistent directory "/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/usr/local/include"
-ignoring duplicate directory "/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/../../lib/gcc/arm-none-linux-gnueabihf/10.2.1/include-fixed"
-ignoring duplicate directory "/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/../../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/include"
+ignoring nonexistent directory "/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../x86_64-pc-linux-gnu/include"
 #include "..." search starts here:
 #include <...> search starts here:
- /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/include/c++/10.2.1
- /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/include/c++/10.2.1/arm-none-linux-gnueabihf
- /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/include/c++/10.2.1/backward
- /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/include
- /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/include-fixed
- /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/include
- /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/usr/include
+ /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../include/c++/10.2.0
+ /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../include/c++/10.2.0/x86_64-pc-linux-gnu
+ /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../include/c++/10.2.0/backward
+ /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include
+ /usr/local/include
+ /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include-fixed
+ /usr/include
 End of search list.
-GNU C++14 (GNU Toolchain for the A-profile Architecture 10.2-2020.11 (arm-10.16)) version 10.2.1 20201103 (arm-none-linux-gnueabihf)
-	compiled by GNU C version 4.8.5 20150623 (Red Hat 4.8.5-39), GMP version 4.3.2, MPFR version 3.1.6, MPC version 1.0.3, isl version isl-0.15-1-g835ea3a-GMP
+GNU C++14 (GCC) version 10.2.0 (x86_64-pc-linux-gnu)
+	compiled by GNU C version 10.2.0, GMP version 6.2.1, MPFR version 4.1.0, MPC version 1.2.1, isl version isl-0.21-GMP
 
 GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
-Compiler executable checksum: c5f02c228245ba51a1e9d6b4452ebf12
-COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_7380b.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc'  '-mfloat-abi=hard' '-mfpu=neon' '-mthumb' '-mtls-dialect=gnu' '-march=armv7-a+simd'
- /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/bin/as -v -march=armv7-a -mfloat-abi=hard -mfpu=neon -meabi=5 -o CMakeFiles/cmTC_7380b.dir/CMakeCXXCompilerABI.cpp.o /tmp/cc4wOP4J.s
-GNU assembler version 2.35.1 (arm-none-linux-gnueabihf) using BFD version (GNU Toolchain for the A-profile Architecture 10.2-2020.11 (arm-10.16)) 2.35.1.20201028
-COMPILER_PATH=/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../libexec/gcc/arm-none-linux-gnueabihf/10.2.1/:/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../libexec/gcc/:/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/bin/
-LIBRARY_PATH=/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/:/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/:/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/lib/:/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/lib/:/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/usr/lib/
-COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_7380b.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc'  '-mfloat-abi=hard' '-mfpu=neon' '-mthumb' '-mtls-dialect=gnu' '-march=armv7-a+simd'
-Linking CXX executable cmTC_7380b
-/home/michael/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/203.7717.62/bin/cmake/linux/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7380b.dir/link.txt --verbose=1
-/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/arm-none-linux-gnueabihf-g++      -v CMakeFiles/cmTC_7380b.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_7380b 
+Compiler executable checksum: f27fb68878a84470810fd2057eccecc9
+COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_106e4.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+ as -v --64 -o CMakeFiles/cmTC_106e4.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccXSPNPh.s
+GNU assembler version 2.35.1 (x86_64-pc-linux-gnu) using BFD version (GNU Binutils) 2.35.1
+COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/
+LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../:/lib/:/usr/lib/
+COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_106e4.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+Linking CXX executable cmTC_106e4
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_106e4.dir/link.txt --verbose=1
+/usr/bin/c++  -v CMakeFiles/cmTC_106e4.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_106e4 
 Using built-in specs.
-COLLECT_GCC=/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/arm-none-linux-gnueabihf-g++
-COLLECT_LTO_WRAPPER=/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../libexec/gcc/arm-none-linux-gnueabihf/10.2.1/lto-wrapper
-Target: arm-none-linux-gnueabihf
-Configured with: /tmp/dgboter/bbs/build03--cen7x86_64/buildbot/cen7x86_64--arm-none-linux-gnueabihf/build/src/gcc/configure --target=arm-none-linux-gnueabihf --prefix= --with-sysroot=/arm-none-linux-gnueabihf/libc --with-build-sysroot=/tmp/dgboter/bbs/build03--cen7x86_64/buildbot/cen7x86_64--arm-none-linux-gnueabihf/build/build-arm-none-linux-gnueabihf/install//arm-none-linux-gnueabihf/libc --with-bugurl=https://bugs.linaro.org/ --enable-gnu-indirect-function --enable-shared --disable-libssp --disable-libmudflap --enable-checking=release --enable-languages=c,c++,fortran --with-gmp=/tmp/dgboter/bbs/build03--cen7x86_64/buildbot/cen7x86_64--arm-none-linux-gnueabihf/build/build-arm-none-linux-gnueabihf/host-tools --with-mpfr=/tmp/dgboter/bbs/build03--cen7x86_64/buildbot/cen7x86_64--arm-none-linux-gnueabihf/build/build-arm-none-linux-gnueabihf/host-tools --with-mpc=/tmp/dgboter/bbs/build03--cen7x86_64/buildbot/cen7x86_64--arm-none-linux-gnueabihf/build/build-arm-none-linux-gnueabihf/host-tools --with-isl=/tmp/dgboter/bbs/build03--cen7x86_64/buildbot/cen7x86_64--arm-none-linux-gnueabihf/build/build-arm-none-linux-gnueabihf/host-tools --with-arch=armv7-a --with-fpu=neon --with-float=hard --with-mode=thumb --with-arch=armv7-a --with-pkgversion='GNU Toolchain for the A-profile Architecture 10.2-2020.11 (arm-10.16)'
+COLLECT_GCC=/usr/bin/c++
+COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/lto-wrapper
+Target: x86_64-pc-linux-gnu
+Configured with: /build/gcc/src/gcc/configure --prefix=/usr --libdir=/usr/lib --libexecdir=/usr/lib --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=https://bugs.archlinux.org/ --enable-languages=c,c++,ada,fortran,go,lto,objc,obj-c++,d --with-isl --with-linker-hash-style=gnu --with-system-zlib --enable-__cxa_atexit --enable-cet=auto --enable-checking=release --enable-clocale=gnu --enable-default-pie --enable-default-ssp --enable-gnu-indirect-function --enable-gnu-unique-object --enable-install-libiberty --enable-linker-build-id --enable-lto --enable-multilib --enable-plugin --enable-shared --enable-threads=posix --disable-libssp --disable-libstdcxx-pch --disable-libunwind-exceptions --disable-werror gdc_include_dir=/usr/include/dlang/gdc
 Thread model: posix
-Supported LTO compression algorithms: zlib
-gcc version 10.2.1 20201103 (GNU Toolchain for the A-profile Architecture 10.2-2020.11 (arm-10.16)) 
-COMPILER_PATH=/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../libexec/gcc/arm-none-linux-gnueabihf/10.2.1/:/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../libexec/gcc/:/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/bin/
-LIBRARY_PATH=/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/:/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/:/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/lib/:/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/lib/:/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/usr/lib/
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_7380b' '-shared-libgcc'  '-mfloat-abi=hard' '-mfpu=neon' '-mthumb' '-mtls-dialect=gnu' '-march=armv7-a+simd'
- /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../libexec/gcc/arm-none-linux-gnueabihf/10.2.1/collect2 -plugin /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../libexec/gcc/arm-none-linux-gnueabihf/10.2.1/liblto_plugin.so -plugin-opt=/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../libexec/gcc/arm-none-linux-gnueabihf/10.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/ccJWXpFB.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --sysroot=/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc --eh-frame-hdr -dynamic-linker /lib/ld-linux-armhf.so.3 -X -m armelf_linux_eabi -o cmTC_7380b /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/usr/lib/crt1.o /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/usr/lib/crti.o /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/crtbegin.o -L/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1 -L/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc -L/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/lib -L/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/lib -L/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/usr/lib CMakeFiles/cmTC_7380b.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/crtend.o /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/usr/lib/crtn.o
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_7380b' '-shared-libgcc'  '-mfloat-abi=hard' '-mfpu=neon' '-mthumb' '-mtls-dialect=gnu' '-march=armv7-a+simd'
-make[1]: Leaving directory '/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug/CMakeFiles/CMakeTmp'
+Supported LTO compression algorithms: zlib zstd
+gcc version 10.2.0 (GCC) 
+COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/
+LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../:/lib/:/usr/lib/
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_106e4' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+ /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/collect2 -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccDjIkgJ.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_106e4 /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0 -L/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../.. CMakeFiles/cmTC_106e4.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../lib/crtn.o
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_106e4' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+make[1]: Leaving directory '/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/build/CMakeFiles/CMakeTmp'
 
 
 
 Parsed CXX implicit include dir info from above output: rv=done
   found start of include info
   found start of implicit include info
-    add: [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/include/c++/10.2.1]
-    add: [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/include/c++/10.2.1/arm-none-linux-gnueabihf]
-    add: [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/include/c++/10.2.1/backward]
-    add: [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/include]
-    add: [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/include-fixed]
-    add: [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/include]
-    add: [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/usr/include]
+    add: [/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../include/c++/10.2.0]
+    add: [/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../include/c++/10.2.0/x86_64-pc-linux-gnu]
+    add: [/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../include/c++/10.2.0/backward]
+    add: [/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include]
+    add: [/usr/local/include]
+    add: [/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include-fixed]
+    add: [/usr/include]
   end of search list found
-  collapse include dir [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/include/c++/10.2.1] ==> [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/arm-none-linux-gnueabihf/include/c++/10.2.1]
-  collapse include dir [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/include/c++/10.2.1/arm-none-linux-gnueabihf] ==> [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/arm-none-linux-gnueabihf/include/c++/10.2.1/arm-none-linux-gnueabihf]
-  collapse include dir [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/include/c++/10.2.1/backward] ==> [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/arm-none-linux-gnueabihf/include/c++/10.2.1/backward]
-  collapse include dir [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/include] ==> [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/lib/gcc/arm-none-linux-gnueabihf/10.2.1/include]
-  collapse include dir [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/include-fixed] ==> [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/lib/gcc/arm-none-linux-gnueabihf/10.2.1/include-fixed]
-  collapse include dir [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/include] ==> [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/arm-none-linux-gnueabihf/include]
-  collapse include dir [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/usr/include] ==> [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/arm-none-linux-gnueabihf/libc/usr/include]
-  implicit include dirs: [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/arm-none-linux-gnueabihf/include/c++/10.2.1;/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/arm-none-linux-gnueabihf/include/c++/10.2.1/arm-none-linux-gnueabihf;/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/arm-none-linux-gnueabihf/include/c++/10.2.1/backward;/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/lib/gcc/arm-none-linux-gnueabihf/10.2.1/include;/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/lib/gcc/arm-none-linux-gnueabihf/10.2.1/include-fixed;/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/arm-none-linux-gnueabihf/include;/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/arm-none-linux-gnueabihf/libc/usr/include]
+  collapse include dir [/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../include/c++/10.2.0] ==> [/usr/include/c++/10.2.0]
+  collapse include dir [/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../include/c++/10.2.0/x86_64-pc-linux-gnu] ==> [/usr/include/c++/10.2.0/x86_64-pc-linux-gnu]
+  collapse include dir [/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../include/c++/10.2.0/backward] ==> [/usr/include/c++/10.2.0/backward]
+  collapse include dir [/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include] ==> [/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include]
+  collapse include dir [/usr/local/include] ==> [/usr/local/include]
+  collapse include dir [/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include-fixed] ==> [/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include-fixed]
+  collapse include dir [/usr/include] ==> [/usr/include]
+  implicit include dirs: [/usr/include/c++/10.2.0;/usr/include/c++/10.2.0/x86_64-pc-linux-gnu;/usr/include/c++/10.2.0/backward;/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include;/usr/local/include;/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include-fixed;/usr/include]
 
 
 Parsed CXX implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
-  ignore line: [Change Dir: /datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug/CMakeFiles/CMakeTmp]
+  ignore line: [Change Dir: /datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/build/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command(s):/usr/bin/make cmTC_7380b/fast && /usr/bin/make  -f CMakeFiles/cmTC_7380b.dir/build.make CMakeFiles/cmTC_7380b.dir/build]
-  ignore line: [make[1]: Entering directory '/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/cmake-build-debug/CMakeFiles/CMakeTmp']
-  ignore line: [Building CXX object CMakeFiles/cmTC_7380b.dir/CMakeCXXCompilerABI.cpp.o]
-  ignore line: [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/arm-none-linux-gnueabihf-g++    -v -o CMakeFiles/cmTC_7380b.dir/CMakeCXXCompilerABI.cpp.o -c /home/michael/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/203.7717.62/bin/cmake/linux/share/cmake-3.17/Modules/CMakeCXXCompilerABI.cpp]
+  ignore line: [Run Build Command(s):/usr/bin/make cmTC_106e4/fast && /usr/bin/make  -f CMakeFiles/cmTC_106e4.dir/build.make CMakeFiles/cmTC_106e4.dir/build]
+  ignore line: [make[1]: Entering directory '/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/build/CMakeFiles/CMakeTmp']
+  ignore line: [Building CXX object CMakeFiles/cmTC_106e4.dir/CMakeCXXCompilerABI.cpp.o]
+  ignore line: [/usr/bin/c++   -v -o CMakeFiles/cmTC_106e4.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.19/Modules/CMakeCXXCompilerABI.cpp]
   ignore line: [Using built-in specs.]
-  ignore line: [COLLECT_GCC=/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/arm-none-linux-gnueabihf-g++]
-  ignore line: [Target: arm-none-linux-gnueabihf]
-  ignore line: [Configured with: /tmp/dgboter/bbs/build03--cen7x86_64/buildbot/cen7x86_64--arm-none-linux-gnueabihf/build/src/gcc/configure --target=arm-none-linux-gnueabihf --prefix= --with-sysroot=/arm-none-linux-gnueabihf/libc --with-build-sysroot=/tmp/dgboter/bbs/build03--cen7x86_64/buildbot/cen7x86_64--arm-none-linux-gnueabihf/build/build-arm-none-linux-gnueabihf/install//arm-none-linux-gnueabihf/libc --with-bugurl=https://bugs.linaro.org/ --enable-gnu-indirect-function --enable-shared --disable-libssp --disable-libmudflap --enable-checking=release --enable-languages=c c++ fortran --with-gmp=/tmp/dgboter/bbs/build03--cen7x86_64/buildbot/cen7x86_64--arm-none-linux-gnueabihf/build/build-arm-none-linux-gnueabihf/host-tools --with-mpfr=/tmp/dgboter/bbs/build03--cen7x86_64/buildbot/cen7x86_64--arm-none-linux-gnueabihf/build/build-arm-none-linux-gnueabihf/host-tools --with-mpc=/tmp/dgboter/bbs/build03--cen7x86_64/buildbot/cen7x86_64--arm-none-linux-gnueabihf/build/build-arm-none-linux-gnueabihf/host-tools --with-isl=/tmp/dgboter/bbs/build03--cen7x86_64/buildbot/cen7x86_64--arm-none-linux-gnueabihf/build/build-arm-none-linux-gnueabihf/host-tools --with-arch=armv7-a --with-fpu=neon --with-float=hard --with-mode=thumb --with-arch=armv7-a --with-pkgversion='GNU Toolchain for the A-profile Architecture 10.2-2020.11 (arm-10.16)']
+  ignore line: [COLLECT_GCC=/usr/bin/c++]
+  ignore line: [Target: x86_64-pc-linux-gnu]
+  ignore line: [Configured with: /build/gcc/src/gcc/configure --prefix=/usr --libdir=/usr/lib --libexecdir=/usr/lib --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=https://bugs.archlinux.org/ --enable-languages=c c++ ada fortran go lto objc obj-c++ d --with-isl --with-linker-hash-style=gnu --with-system-zlib --enable-__cxa_atexit --enable-cet=auto --enable-checking=release --enable-clocale=gnu --enable-default-pie --enable-default-ssp --enable-gnu-indirect-function --enable-gnu-unique-object --enable-install-libiberty --enable-linker-build-id --enable-lto --enable-multilib --enable-plugin --enable-shared --enable-threads=posix --disable-libssp --disable-libstdcxx-pch --disable-libunwind-exceptions --disable-werror gdc_include_dir=/usr/include/dlang/gdc]
   ignore line: [Thread model: posix]
-  ignore line: [Supported LTO compression algorithms: zlib]
-  ignore line: [gcc version 10.2.1 20201103 (GNU Toolchain for the A-profile Architecture 10.2-2020.11 (arm-10.16)) ]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_7380b.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc'  '-mfloat-abi=hard' '-mfpu=neon' '-mthumb' '-mtls-dialect=gnu' '-march=armv7-a+simd']
-  ignore line: [ /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../libexec/gcc/arm-none-linux-gnueabihf/10.2.1/cc1plus -quiet -v -iprefix /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/ -isysroot /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc -D_GNU_SOURCE /home/michael/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/203.7717.62/bin/cmake/linux/share/cmake-3.17/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpbase CMakeCXXCompilerABI.cpp -mfloat-abi=hard -mfpu=neon -mthumb -mtls-dialect=gnu -march=armv7-a+simd -auxbase-strip CMakeFiles/cmTC_7380b.dir/CMakeCXXCompilerABI.cpp.o -version -o /tmp/cc4wOP4J.s]
-  ignore line: [GNU C++14 (GNU Toolchain for the A-profile Architecture 10.2-2020.11 (arm-10.16)) version 10.2.1 20201103 (arm-none-linux-gnueabihf)]
-  ignore line: [	compiled by GNU C version 4.8.5 20150623 (Red Hat 4.8.5-39)  GMP version 4.3.2  MPFR version 3.1.6  MPC version 1.0.3  isl version isl-0.15-1-g835ea3a-GMP]
+  ignore line: [Supported LTO compression algorithms: zlib zstd]
+  ignore line: [gcc version 10.2.0 (GCC) ]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_106e4.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
+  ignore line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/cc1plus -quiet -v -D_GNU_SOURCE /usr/share/cmake-3.19/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpbase CMakeCXXCompilerABI.cpp -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_106e4.dir/CMakeCXXCompilerABI.cpp.o -version -o /tmp/ccXSPNPh.s]
+  ignore line: [GNU C++14 (GCC) version 10.2.0 (x86_64-pc-linux-gnu)]
+  ignore line: [	compiled by GNU C version 10.2.0  GMP version 6.2.1  MPFR version 4.1.0  MPC version 1.2.1  isl version isl-0.21-GMP]
   ignore line: []
   ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
-  ignore line: [ignoring duplicate directory "/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/../../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/include/c++/10.2.1"]
-  ignore line: [ignoring duplicate directory "/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/../../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/include/c++/10.2.1/arm-none-linux-gnueabihf"]
-  ignore line: [ignoring duplicate directory "/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/../../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/include/c++/10.2.1/backward"]
-  ignore line: [ignoring duplicate directory "/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/../../lib/gcc/arm-none-linux-gnueabihf/10.2.1/include"]
-  ignore line: [ignoring nonexistent directory "/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/usr/local/include"]
-  ignore line: [ignoring duplicate directory "/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/../../lib/gcc/arm-none-linux-gnueabihf/10.2.1/include-fixed"]
-  ignore line: [ignoring duplicate directory "/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/../../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/include"]
+  ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../x86_64-pc-linux-gnu/include"]
   ignore line: [#include "..." search starts here:]
   ignore line: [#include <...> search starts here:]
-  ignore line: [ /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/include/c++/10.2.1]
-  ignore line: [ /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/include/c++/10.2.1/arm-none-linux-gnueabihf]
-  ignore line: [ /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/include/c++/10.2.1/backward]
-  ignore line: [ /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/include]
-  ignore line: [ /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/include-fixed]
-  ignore line: [ /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/include]
-  ignore line: [ /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/usr/include]
+  ignore line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../include/c++/10.2.0]
+  ignore line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../include/c++/10.2.0/x86_64-pc-linux-gnu]
+  ignore line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../include/c++/10.2.0/backward]
+  ignore line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include]
+  ignore line: [ /usr/local/include]
+  ignore line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include-fixed]
+  ignore line: [ /usr/include]
   ignore line: [End of search list.]
-  ignore line: [GNU C++14 (GNU Toolchain for the A-profile Architecture 10.2-2020.11 (arm-10.16)) version 10.2.1 20201103 (arm-none-linux-gnueabihf)]
-  ignore line: [	compiled by GNU C version 4.8.5 20150623 (Red Hat 4.8.5-39)  GMP version 4.3.2  MPFR version 3.1.6  MPC version 1.0.3  isl version isl-0.15-1-g835ea3a-GMP]
+  ignore line: [GNU C++14 (GCC) version 10.2.0 (x86_64-pc-linux-gnu)]
+  ignore line: [	compiled by GNU C version 10.2.0  GMP version 6.2.1  MPFR version 4.1.0  MPC version 1.2.1  isl version isl-0.21-GMP]
   ignore line: []
   ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
-  ignore line: [Compiler executable checksum: c5f02c228245ba51a1e9d6b4452ebf12]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_7380b.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc'  '-mfloat-abi=hard' '-mfpu=neon' '-mthumb' '-mtls-dialect=gnu' '-march=armv7-a+simd']
-  ignore line: [ /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/bin/as -v -march=armv7-a -mfloat-abi=hard -mfpu=neon -meabi=5 -o CMakeFiles/cmTC_7380b.dir/CMakeCXXCompilerABI.cpp.o /tmp/cc4wOP4J.s]
-  ignore line: [GNU assembler version 2.35.1 (arm-none-linux-gnueabihf) using BFD version (GNU Toolchain for the A-profile Architecture 10.2-2020.11 (arm-10.16)) 2.35.1.20201028]
-  ignore line: [COMPILER_PATH=/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../libexec/gcc/arm-none-linux-gnueabihf/10.2.1/:/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../libexec/gcc/:/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/bin/]
-  ignore line: [LIBRARY_PATH=/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/:/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/:/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/lib/:/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/lib/:/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/usr/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_7380b.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc'  '-mfloat-abi=hard' '-mfpu=neon' '-mthumb' '-mtls-dialect=gnu' '-march=armv7-a+simd']
-  ignore line: [Linking CXX executable cmTC_7380b]
-  ignore line: [/home/michael/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/203.7717.62/bin/cmake/linux/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7380b.dir/link.txt --verbose=1]
-  ignore line: [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/arm-none-linux-gnueabihf-g++      -v CMakeFiles/cmTC_7380b.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_7380b ]
+  ignore line: [Compiler executable checksum: f27fb68878a84470810fd2057eccecc9]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_106e4.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
+  ignore line: [ as -v --64 -o CMakeFiles/cmTC_106e4.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccXSPNPh.s]
+  ignore line: [GNU assembler version 2.35.1 (x86_64-pc-linux-gnu) using BFD version (GNU Binutils) 2.35.1]
+  ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/]
+  ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../:/lib/:/usr/lib/]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_106e4.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
+  ignore line: [Linking CXX executable cmTC_106e4]
+  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_106e4.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/c++  -v CMakeFiles/cmTC_106e4.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_106e4 ]
   ignore line: [Using built-in specs.]
-  ignore line: [COLLECT_GCC=/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/arm-none-linux-gnueabihf-g++]
-  ignore line: [COLLECT_LTO_WRAPPER=/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../libexec/gcc/arm-none-linux-gnueabihf/10.2.1/lto-wrapper]
-  ignore line: [Target: arm-none-linux-gnueabihf]
-  ignore line: [Configured with: /tmp/dgboter/bbs/build03--cen7x86_64/buildbot/cen7x86_64--arm-none-linux-gnueabihf/build/src/gcc/configure --target=arm-none-linux-gnueabihf --prefix= --with-sysroot=/arm-none-linux-gnueabihf/libc --with-build-sysroot=/tmp/dgboter/bbs/build03--cen7x86_64/buildbot/cen7x86_64--arm-none-linux-gnueabihf/build/build-arm-none-linux-gnueabihf/install//arm-none-linux-gnueabihf/libc --with-bugurl=https://bugs.linaro.org/ --enable-gnu-indirect-function --enable-shared --disable-libssp --disable-libmudflap --enable-checking=release --enable-languages=c c++ fortran --with-gmp=/tmp/dgboter/bbs/build03--cen7x86_64/buildbot/cen7x86_64--arm-none-linux-gnueabihf/build/build-arm-none-linux-gnueabihf/host-tools --with-mpfr=/tmp/dgboter/bbs/build03--cen7x86_64/buildbot/cen7x86_64--arm-none-linux-gnueabihf/build/build-arm-none-linux-gnueabihf/host-tools --with-mpc=/tmp/dgboter/bbs/build03--cen7x86_64/buildbot/cen7x86_64--arm-none-linux-gnueabihf/build/build-arm-none-linux-gnueabihf/host-tools --with-isl=/tmp/dgboter/bbs/build03--cen7x86_64/buildbot/cen7x86_64--arm-none-linux-gnueabihf/build/build-arm-none-linux-gnueabihf/host-tools --with-arch=armv7-a --with-fpu=neon --with-float=hard --with-mode=thumb --with-arch=armv7-a --with-pkgversion='GNU Toolchain for the A-profile Architecture 10.2-2020.11 (arm-10.16)']
+  ignore line: [COLLECT_GCC=/usr/bin/c++]
+  ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/lto-wrapper]
+  ignore line: [Target: x86_64-pc-linux-gnu]
+  ignore line: [Configured with: /build/gcc/src/gcc/configure --prefix=/usr --libdir=/usr/lib --libexecdir=/usr/lib --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=https://bugs.archlinux.org/ --enable-languages=c c++ ada fortran go lto objc obj-c++ d --with-isl --with-linker-hash-style=gnu --with-system-zlib --enable-__cxa_atexit --enable-cet=auto --enable-checking=release --enable-clocale=gnu --enable-default-pie --enable-default-ssp --enable-gnu-indirect-function --enable-gnu-unique-object --enable-install-libiberty --enable-linker-build-id --enable-lto --enable-multilib --enable-plugin --enable-shared --enable-threads=posix --disable-libssp --disable-libstdcxx-pch --disable-libunwind-exceptions --disable-werror gdc_include_dir=/usr/include/dlang/gdc]
   ignore line: [Thread model: posix]
-  ignore line: [Supported LTO compression algorithms: zlib]
-  ignore line: [gcc version 10.2.1 20201103 (GNU Toolchain for the A-profile Architecture 10.2-2020.11 (arm-10.16)) ]
-  ignore line: [COMPILER_PATH=/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../libexec/gcc/arm-none-linux-gnueabihf/10.2.1/:/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../libexec/gcc/:/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/bin/]
-  ignore line: [LIBRARY_PATH=/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/:/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/:/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/lib/:/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/lib/:/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/usr/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_7380b' '-shared-libgcc'  '-mfloat-abi=hard' '-mfpu=neon' '-mthumb' '-mtls-dialect=gnu' '-march=armv7-a+simd']
-  link line: [ /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../libexec/gcc/arm-none-linux-gnueabihf/10.2.1/collect2 -plugin /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../libexec/gcc/arm-none-linux-gnueabihf/10.2.1/liblto_plugin.so -plugin-opt=/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../libexec/gcc/arm-none-linux-gnueabihf/10.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/ccJWXpFB.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --sysroot=/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc --eh-frame-hdr -dynamic-linker /lib/ld-linux-armhf.so.3 -X -m armelf_linux_eabi -o cmTC_7380b /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/usr/lib/crt1.o /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/usr/lib/crti.o /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/crtbegin.o -L/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1 -L/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc -L/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/lib -L/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/lib -L/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/usr/lib CMakeFiles/cmTC_7380b.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/crtend.o /home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/usr/lib/crtn.o]
-    arg [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../libexec/gcc/arm-none-linux-gnueabihf/10.2.1/collect2] ==> ignore
+  ignore line: [Supported LTO compression algorithms: zlib zstd]
+  ignore line: [gcc version 10.2.0 (GCC) ]
+  ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/]
+  ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../:/lib/:/usr/lib/]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_106e4' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
+  link line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/collect2 -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccDjIkgJ.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_106e4 /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0 -L/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../.. CMakeFiles/cmTC_106e4.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../lib/crtn.o]
+    arg [/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/collect2] ==> ignore
     arg [-plugin] ==> ignore
-    arg [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../libexec/gcc/arm-none-linux-gnueabihf/10.2.1/liblto_plugin.so] ==> ignore
-    arg [-plugin-opt=/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../libexec/gcc/arm-none-linux-gnueabihf/10.2.1/lto-wrapper] ==> ignore
-    arg [-plugin-opt=-fresolution=/tmp/ccJWXpFB.res] ==> ignore
+    arg [/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/liblto_plugin.so] ==> ignore
+    arg [-plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/lto-wrapper] ==> ignore
+    arg [-plugin-opt=-fresolution=/tmp/ccDjIkgJ.res] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
     arg [-plugin-opt=-pass-through=-lc] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
-    arg [--sysroot=/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc] ==> ignore
+    arg [--build-id] ==> ignore
     arg [--eh-frame-hdr] ==> ignore
-    arg [-dynamic-linker] ==> ignore
-    arg [/lib/ld-linux-armhf.so.3] ==> ignore
-    arg [-X] ==> ignore
+    arg [--hash-style=gnu] ==> ignore
     arg [-m] ==> ignore
-    arg [armelf_linux_eabi] ==> ignore
+    arg [elf_x86_64] ==> ignore
+    arg [-dynamic-linker] ==> ignore
+    arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
+    arg [-pie] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTC_7380b] ==> ignore
-    arg [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/usr/lib/crt1.o] ==> ignore
-    arg [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/usr/lib/crti.o] ==> ignore
-    arg [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/crtbegin.o] ==> ignore
-    arg [-L/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1] ==> dir [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1]
-    arg [-L/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc] ==> dir [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc]
-    arg [-L/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/lib] ==> dir [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/lib]
-    arg [-L/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/lib] ==> dir [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/lib]
-    arg [-L/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/usr/lib] ==> dir [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/usr/lib]
-    arg [CMakeFiles/cmTC_7380b.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+    arg [cmTC_106e4] ==> ignore
+    arg [/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../lib/Scrt1.o] ==> ignore
+    arg [/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../lib/crti.o] ==> ignore
+    arg [/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/crtbeginS.o] ==> ignore
+    arg [-L/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0] ==> dir [/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0]
+    arg [-L/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../lib] ==> dir [/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../lib]
+    arg [-L/lib/../lib] ==> dir [/lib/../lib]
+    arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
+    arg [-L/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../..] ==> dir [/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../..]
+    arg [CMakeFiles/cmTC_106e4.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
     arg [-lstdc++] ==> lib [stdc++]
     arg [-lm] ==> lib [m]
     arg [-lgcc_s] ==> lib [gcc_s]
@@ -635,15 +383,15 @@ Parsed CXX implicit link information from above output:
     arg [-lc] ==> lib [c]
     arg [-lgcc_s] ==> lib [gcc_s]
     arg [-lgcc] ==> lib [gcc]
-    arg [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/crtend.o] ==> ignore
-    arg [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/usr/lib/crtn.o] ==> ignore
-  collapse library dir [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1] ==> [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/lib/gcc/arm-none-linux-gnueabihf/10.2.1]
-  collapse library dir [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc] ==> [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/lib/gcc]
-  collapse library dir [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../lib/gcc/arm-none-linux-gnueabihf/10.2.1/../../../../arm-none-linux-gnueabihf/lib] ==> [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/arm-none-linux-gnueabihf/lib]
-  collapse library dir [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/lib] ==> [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/arm-none-linux-gnueabihf/libc/lib]
-  collapse library dir [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/../arm-none-linux-gnueabihf/libc/usr/lib] ==> [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/arm-none-linux-gnueabihf/libc/usr/lib]
+    arg [/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/crtendS.o] ==> ignore
+    arg [/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../lib/crtn.o] ==> ignore
+  collapse library dir [/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0] ==> [/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0]
+  collapse library dir [/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../lib] ==> [/usr/lib]
+  collapse library dir [/lib/../lib] ==> [/lib]
+  collapse library dir [/usr/lib/../lib] ==> [/usr/lib]
+  collapse library dir [/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../..] ==> [/usr/lib]
   implicit libs: [stdc++;m;gcc_s;gcc;c;gcc_s;gcc]
-  implicit dirs: [/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/lib/gcc/arm-none-linux-gnueabihf/10.2.1;/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/lib/gcc;/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/arm-none-linux-gnueabihf/lib;/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/arm-none-linux-gnueabihf/libc/lib;/home/michael/Downloads/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/arm-none-linux-gnueabihf/libc/usr/lib]
+  implicit dirs: [/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0;/usr/lib;/lib]
   implicit fwks: []
 
 
