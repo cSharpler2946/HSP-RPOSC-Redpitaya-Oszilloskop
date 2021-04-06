@@ -1,15 +1,15 @@
-var WebSocketServer = require('websocket').server;
-var http = require('http');
-var pako = require('pako');
+var WebSocketServer = require("websocket").server;
+var http = require("http");
+var pako = require("pako");
 const util = require("util");
 
 var server = http.createServer(function(request, response) {
-    console.log((new Date()) + ' Received request for ' + request.url);
+    console.log((new Date()) + " Received request for " + request.url);
     response.writeHead(404);
     response.end();
 });
 server.listen(9200, function() {
-    console.log((new Date()) + ' Server is listening on port 9200');
+    console.log((new Date()) + " Server is listening on port 9200");
 });
 
 wsServer = new WebSocketServer({
@@ -17,7 +17,7 @@ wsServer = new WebSocketServer({
     // You should not use autoAcceptConnections for production
     // applications, as it defeats all standard cross-origin protection
     // facilities built into the protocol and the browser.  You should
-    // *always* verify the connection's origin and decide whether or not
+    // *always* verify the connection"s origin and decide whether or not
     // to accept it.
     autoAcceptConnections: false
 });
@@ -70,39 +70,39 @@ const decoder_options =
     ],
     "UART":
     [
-        {'id': 'baudrate', 'desc': 'Baud rate', 'default': 115200},
-        {'id': 'data_bits', 'desc': 'Data bits', 'default': 8,
-            'values': [5, 6, 7, 8, 9]},
-        {'id': 'parity', 'desc': 'Parity', 'default': 'none',
-            'values': ['none', 'odd', 'even', 'zero', 'one', 'ignore']},
-        {'id': 'stop_bits', 'desc': 'Stop bits', 'default': 1.0,
-            'values': [0.0, 0.5, 1.0, 1.5]},
-        {'id': 'bit_order', 'desc': 'Bit order', 'default': 'lsb-first',
-            'values': ['lsb-first', 'msb-first']},
-        {'id': 'format', 'desc': 'Data format', 'default': 'hex',
-            'values': ['ascii', 'dec', 'hex', 'oct', 'bin']},
-        {'id': 'invert_rx', 'desc': 'Invert RX', 'default': 'no',
-            'values': ['yes', 'no']},
-        {'id': 'invert_tx', 'desc': 'Invert TX', 'default': 'no',
-            'values': ['yes', 'no']},
-        {'id': 'sample_point', 'desc': 'Sample point (%)', 'default': 50},
-        {'id': 'rx_packet_delim', 'desc': 'RX packet delimiter (decimal)',
-            'default': -1},
-        {'id': 'tx_packet_delim', 'desc': 'TX packet delimiter (decimal)',
-            'default': -1},
-        {'id': 'rx_packet_len', 'desc': 'RX packet length', 'default': -1},
-        {'id': 'tx_packet_len', 'desc': 'TX packet length', 'default': -1},
+        {"id": "baudrate", "desc": "Baud rate", "default": 115200},
+        {"id": "data_bits", "desc": "Data bits", "default": 8,
+            "values": [5, 6, 7, 8, 9]},
+        {"id": "parity", "desc": "Parity", "default": "none",
+            "values": ["none", "odd", "even", "zero", "one", "ignore"]},
+        {"id": "stop_bits", "desc": "Stop bits", "default": 1.0,
+            "values": [0.0, 0.5, 1.0, 1.5]},
+        {"id": "bit_order", "desc": "Bit order", "default": "lsb-first",
+            "values": ["lsb-first", "msb-first"]},
+        {"id": "format", "desc": "Data format", "default": "hex",
+            "values": ["ascii", "dec", "hex", "oct", "bin"]},
+        {"id": "invert_rx", "desc": "Invert RX", "default": "no",
+            "values": ["yes", "no"]},
+        {"id": "invert_tx", "desc": "Invert TX", "default": "no",
+            "values": ["yes", "no"]},
+        {"id": "sample_point", "desc": "Sample point (%)", "default": 50},
+        {"id": "rx_packet_delim", "desc": "RX packet delimiter (decimal)",
+            "default": -1},
+        {"id": "tx_packet_delim", "desc": "TX packet delimiter (decimal)",
+            "default": -1},
+        {"id": "rx_packet_len", "desc": "RX packet length", "default": -1},
+        {"id": "tx_packet_len", "desc": "TX packet length", "default": -1},
     ]
 }
 
 const decoder_channels = {
     "I2C": [
-        {'id': 'scl', 'name': 'SCL', 'desc': 'Serial clock line', 'isOptional': false},
-        {'id': 'sda', 'name': 'SDA', 'desc': 'Serial data line', 'isOptional': false},
+        {"id": "scl", "name": "SCL", "desc": "Serial clock line", "isOptional": false},
+        {"id": "sda", "name": "SDA", "desc": "Serial data line", "isOptional": false},
     ],
     "UART": [
-        {'id': 'rx', 'name': 'RX', 'desc': 'UART receive line', 'isOptional': true},
-        {'id': 'tx', 'name': 'TX', 'desc': 'UART transmit line', 'isOptional': true},
+        {"id": "rx", "name": "RX", "desc": "UART receive line", "isOptional": true},
+        {"id": "tx", "name": "TX", "desc": "UART transmit line", "isOptional": true},
     ]
 }
 
@@ -126,20 +126,20 @@ const acquirer_options = {
     ]
 }
 
-wsServer.on('request', function(request) {
+wsServer.on("request", function(request) {
     if (!originIsAllowed(request.origin)) {
       // Make sure we only accept requests from an allowed origin
       request.reject();
-      console.log((new Date()) + ' Connection from origin ' + request.origin + ' rejected.');
+      console.log((new Date()) + " Connection from origin " + request.origin + " rejected.");
       return;
     }
     
     connection = request.accept(null, request.origin);
     state = "Initial";
-    console.log((new Date()) + ' Connection accepted.');
+    console.log((new Date()) + " Connection accepted.");
     stm_doStep();
-    connection.on('message', function(message) {
-        if (message.type === 'utf8') {
+    connection.on("message", function(message) {
+        if (message.type === "utf8") {
             var receivedDecoded = JSON.parse(message.utf8Data);
             Object.assign(receivedData["parameters"], receivedDecoded["parameters"]);
             Object.assign(receivedData["signals"], receivedDecoded["signals"]);
@@ -153,12 +153,12 @@ wsServer.on('request', function(request) {
             console.log(util.inspect(receivedData, true, 10));
             stm_doStep();
         }
-        else if (message.type === 'binary') {
-            console.log('Received Binary Message of ' + message.binaryData.length + ' bytes');
+        else if (message.type === "binary") {
+            console.log("Received Binary Message of " + message.binaryData.length + " bytes");
         }
     });
-    connection.on('close', function(reasonCode, description) {
-        console.log((new Date()) + ' Peer ' + connection.remoteAddress + ' disconnected.');
+    connection.on("close", function(reasonCode, description) {
+        console.log((new Date()) + " Peer " + connection.remoteAddress + " disconnected.");
     });
 });
 

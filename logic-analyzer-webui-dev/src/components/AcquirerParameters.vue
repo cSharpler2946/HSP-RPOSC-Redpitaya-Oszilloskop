@@ -18,29 +18,29 @@
 
 <script>
 export default {
-    name: "AcquirerParameters",
-    props: {
-        requestedOptions: Object
-    },
-    data () {
-        return {
-            chosenOptions: "Hello!"
-        }
-    },
-    methods: {
-        log(message) {
-            console.log(message);
-        }
-    },
-    watch: {
-        'requestedOptions': {
-            handler: function (currentOptions, old) {
-                console.log("current requested acq options:");
-                console.log(currentOptions);
-            },
-            deep: true
-        },
+  name: 'AcquirerParameters',
+  props: {
+    requestedOptions: Object
+  },
+  data () {
+    return {
+      chosenOptions: 'Hello!'
     }
+  },
+  methods: {
+    log (message) {
+      console.log(message)
+    }
+  },
+  watch: {
+    requestedOptions: {
+      handler: function (currentOptions, old) {
+        console.log('current requested acq options:')
+        console.log(currentOptions)
+      },
+      deep: true
+    }
+  }
 }
 </script>
 

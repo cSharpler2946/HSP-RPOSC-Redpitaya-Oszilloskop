@@ -12,7 +12,6 @@
 
         <hr/>
 
-
         <div style="margin-bottom: 15px;"></div>
 
         <div class="parameter-wrapper" v-for="option in requestedOptions" v-bind:key="option" v-bind:value="option">
@@ -34,7 +33,7 @@
 
             <label for="sampleParam" class="col-sm-2 col-form-label">Sample Parameter:</label>
             <input type="text" class="form-control form-control-sm" placeholder="Sample param..." id="sampleParam">
-        
+
             <div style="margin-bottom: 15px;"></div>
 
             <label>Data Polarity:</label>
@@ -49,7 +48,7 @@
                 </div>
             </div>
         </div>
-    
+
         <br/>
         <hr/>
 
@@ -69,39 +68,45 @@
     </form>
 </template>
 
-<script>
-export default {
-    name: "Parameters",
-    props: {
-        decoders: Array,
-        requestedOptions: Array
-    },
-    data () {
-        return {
-            selectedDecoder: null,
-            chosenOptions: {}
-        }
-    },
-    watch: {
-        'chosenOptions': {
-            handler: function (currentOptions, old) {
-                console.log("current options:");
-                console.log(currentOptions);
-            },
-            deep: true
-        },
-        'requestedOptions': {
-            handler: function (currentRequestedOptions) {
-                console.log("setting default options");
-                var _this = this;
-                this.chosenOptions = {};
-                currentRequestedOptions.forEach(function(requestedOption) {
-                    _this.chosenOptions[requestedOption.id] = requestedOption.default;
-                })
-            },
-            deep: true
-        }
+<script lang="ts">
+import { Options, Vue } from 'vue-class-component'
+
+@Options({
+  name: 'Parameters',
+  props: {
+    decoders: Array,
+    requestedOptions: Array
+  },
+  data () {
+    return {
+      selectedDecoder: null,
+      chosenOptions: {}
     }
+  },
+  watch: {
+    chosenOptions: {
+      handler: function (currentOptions, old) {
+        console.log('current options:')
+        console.log(currentOptions)
+      },
+      deep: true
+    },
+    requestedOptions: {
+      handler: function (currentRequestedOptions) {
+        console.log('setting default options')
+        var _this = this
+        this.chosenOptions = {}
+        currentRequestedOptions.forEach(function (requestedOption: any) {
+          _this.chosenOptions[requestedOption.id] = requestedOption.default
+        })
+      },
+      deep: true
+    }
+  }
+})
+
+export default class Parameters extends Vue {
+
 }
 </script>
 
