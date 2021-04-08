@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.17)
+set(CMAKE_TRY_COMPILE_TARGET_TYPE "STATIC_LIBRARY")  # added so vscode doesnt try to run test compilition dont know why but without build process fails
 project(crossTest)
 
 set(CMAKE_CXX_STANDARD 14)

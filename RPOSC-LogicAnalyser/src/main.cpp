@@ -8,12 +8,12 @@
 #include <vector>
 
 #include <gmodule.h>
-#include <libsigrokdecode/libsigrokdecode.h>
+#include <libsigrokdecode.h>
 
 #define PY_SSIZE_T_CLEAN
 #include <Python.h>
 
-#include "../lib/loguru/loguru.hpp"
+#include <loguru.hpp>
 
 #include "../lib/nlohmann/jsonWrapper.hpp"
 

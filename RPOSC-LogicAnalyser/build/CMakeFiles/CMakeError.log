@@ -1,0 +1,14 @@
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/bin/arm-linux-gnueabihf-gcc-10.2.0 
+Build flags: 
+Id flags:  
+
+The output was:
+1
+/usr/bin/arm-linux-gnueabihf-ld: cannot find Scrt1.o: No such file or directory
+/usr/bin/arm-linux-gnueabihf-ld: cannot find crti.o: No such file or directory
+/usr/bin/arm-linux-gnueabihf-ld: cannot find -lc
+/usr/bin/arm-linux-gnueabihf-ld: cannot find crtn.o: No such file or directory
+collect2: error: ld returned 1 exit status
+
+

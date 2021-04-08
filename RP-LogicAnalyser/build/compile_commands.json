@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/build",
+  "command": "/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/arm-none-linux-gnueabihf-g++ -I../externalRedpitaya/include -I../externalRedpitaya/include/redpitaya -I../externalRedpitaya/include/arm-glib-2.0-include -I../externalRedpitaya/include/glib-2.0 -I../externalRedpitaya/include/libsigrokdecode -I../externalRedpitaya/include/python3.5 -I../externalRedpitaya/include/nlohmann -I../externalRedpitaya/include/loguru -g -std=gnu++14 -o CMakeFiles/crossTest.dir/src/main.cpp.o -c /datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/main.cpp",
+  "file": "/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/src/main.cpp"
+}
+]
