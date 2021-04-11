@@ -12,24 +12,44 @@
                 </option>
             </select>
             <br/>
+            <label class="form-label">
+                Samples to measure
+            </label>
+            <input type="number" class="form-control form-control-sm" v-model="samplecount"/>
+            <br/>
+            <label class="form-label">
+                Time to measure
+            </label>
+            <input type="number" class="form-control form-control-sm" v-model="sampletime"/>
+            <br/>
+            <div class="row">
+                <div class="col-auto">
+                    <label class="form-label">
+                        One
+                    </label>
+                </div>
+                <div class="col-auto">
+                    <label class="form-label">
+                        Two
+                    </label>
+                </div>
+            </div>
         </div>
     </form>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+
+import { AcquirerRequestedOptions, AcquirerChosenOptions } from '../models/model'
+import { PropType } from 'vue';
+import { Options, Vue } from 'vue-class-component'
+
+@Options({
   name: 'AcquirerParameters',
   props: {
-    requestedOptions: Object
-  },
-  data () {
-    return {
-      chosenOptions: 'Hello!'
-    }
-  },
-  methods: {
-    log (message) {
-      console.log(message)
+    requestedOptions: {
+        type: Object as PropType<AcquirerRequestedOptions>,
+        required: true
     }
   },
   watch: {
@@ -39,8 +59,33 @@ export default {
         console.log(currentOptions)
       },
       deep: true
+    },
+    chosenOptions: {
+      handler: function (currentOptions, old) {
+        console.log('current chosen acq options:')
+        console.log(currentOptions)
+      },
+      deep: true
     }
   }
+})
+
+export default class AcquirerParameters extends Vue {
+    samplerate: string = "";
+    samplecount: string = "";
+    sampletime: string = "";
+    gainPerChannel: { channel: string, gain: string }[] = [];
+    probeAttenuationPerChannel: { channel: string, attenuation: string }[] = [];
+
+    get chosenOptions(): AcquirerChosenOptions {
+        return {
+            samplerate: this.samplerate,
+            samplecount: this.samplecount,
+            sampletime: this.sampletime,
+            gainPerChannel: this.gainPerChannel,
+            probeAttenuationPerChannel: this.probeAttenuationPerChannel
+        }
+    }
 }
 </script>
 

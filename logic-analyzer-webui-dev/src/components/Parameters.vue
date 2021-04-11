@@ -99,6 +99,7 @@ import { Options, Vue } from 'vue-class-component'
         currentRequestedOptions.forEach(function (requestedOption: any) {
           _this.chosenOptions[requestedOption.id] = requestedOption.default
         })
+        this.$emit('chosenOptionsChanged', this.chosenOptions);
       },
       deep: true
     }
