@@ -1,6 +1,6 @@
 #include "SRDDecoderList.hpp"
 #include <libsigrokdecode/libsigrokdecode.h>
-#include "../lib/loguru/loguru.hpp"
+#include <loguru.hpp>
 
 SRDDecoderList::SRDDecoderList(std::string _name, int _size, std::string _def_value):
 SContainer(_name, _size, _def_value) {

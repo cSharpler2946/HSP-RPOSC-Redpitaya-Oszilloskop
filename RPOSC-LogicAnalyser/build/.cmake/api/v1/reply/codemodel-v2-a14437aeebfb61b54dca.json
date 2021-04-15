@@ -1,0 +1,59 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.17"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "controllerhf",
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "controllerhf::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-controllerhf-Debug-b33a2c6a9ba8df13d133.json",
+					"name" : "controllerhf",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RPOSC-LogicAnalyser/build",
+		"source" : "/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RPOSC-LogicAnalyser"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 2
+	}
+}

@@ -2,8 +2,6 @@ using namespace std;
 #include<string>
 #include<vector>
 #include "ACQChoosenOptions.hpp"
-#include "Acquirer.hpp"
-#include <bits/stdc++.h>
 
 // TODO: TranslateFunction um strings auf richtigen Typen zu ändern.
 // Macht es sinn den Typen aus rp.h zu inkludieren
@@ -18,7 +16,7 @@ string probeAttenuation;
 ACQChoosenOptions::ACQChoosenOptions(){}
 
 // Translate the userfriendly string into the fitting index
-int ACQChoosenOptions::TranslateSampleRate(string sampleRate){
+/*int ACQChoosenOptions::TranslateSampleRate(string sampleRate){
   int index = -1;
   Acquirer *acquirer = new Acquirer();
   auto found = find(acquirer->supportedSampleRates.begin(), acquirer->supportedSampleRates.begin(), sampleRate);
@@ -84,3 +82,4 @@ uint32_t ACQChoosenOptions::TranslateSampleCount(string count)
     return -1;
   }
 }
+*/

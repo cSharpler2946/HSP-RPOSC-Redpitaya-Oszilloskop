@@ -2,7 +2,7 @@
 #include <libsigrokdecode/libsigrokdecode.h>
 #include <gmodule.h>
 #include "../lib/nlohmann/jsonWrapper.hpp"
-#include "../lib/loguru/loguru.hpp"
+#include <loguru.hpp>
 #include <string>
 #include <vector>
 

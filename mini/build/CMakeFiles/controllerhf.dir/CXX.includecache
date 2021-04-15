@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/mini/src/ACQChoosenOptions.cpp
+string
+-
+ACQChoosenOptions.hpp
+/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/mini/src/ACQChoosenOptions.hpp
+
+/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/mini/src/ACQChoosenOptions.hpp
+vector
+-
+string
+-
+

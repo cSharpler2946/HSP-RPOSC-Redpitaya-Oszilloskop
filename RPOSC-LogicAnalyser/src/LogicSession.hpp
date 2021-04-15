@@ -2,6 +2,7 @@
 
 #include "PContainer.hpp"
 #include "Acquirer.hpp"
+#include "SRDChannelMap.hpp"
 #include <libsigrokdecode/libsigrokdecode.h>
 #include "MeasuredData.hpp"
 #define ToErr (srd_error_code)

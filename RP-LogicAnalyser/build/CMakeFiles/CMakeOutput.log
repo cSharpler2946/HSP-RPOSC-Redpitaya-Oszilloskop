@@ -1,16 +1,16 @@
 The system is: Linux - 5.10.23-1-MANJARO - x86_64
 Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
-Compiler: /usr/bin/arm-linux-gnueabihf-gcc-10.2.0 
+Compiler: /usr/bin/cc 
 Build flags: 
-Id flags: -c 
+Id flags:  
 
 The output was:
 0
 
 
-Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CMakeCCompilerId.o"
+Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
 
-The C compiler identification is GNU, found in "/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/build/CMakeFiles/3.19.7/CompilerIdC/CMakeCCompilerId.o"
+The C compiler identification is GNU, found in "/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/build/CMakeFiles/3.19.7/CompilerIdC/a.out"
 
 Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
 Compiler: /usr/bin/c++ 
@@ -28,94 +28,112 @@ The CXX compiler identification is GNU, found in "/datahdd/Michi/OTH/GIT/HSP-RPO
 Detecting C compiler ABI info compiled with the following output:
 Change Dir: /datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/build/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/ninja cmTC_4e3e3 && [1/2] Building C object CMakeFiles/cmTC_4e3e3.dir/CMakeCCompilerABI.c.o
+Run Build Command(s):/usr/bin/make cmTC_680fa/fast && /usr/bin/make  -f CMakeFiles/cmTC_680fa.dir/build.make CMakeFiles/cmTC_680fa.dir/build
+make[1]: Entering directory '/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_680fa.dir/CMakeCCompilerABI.c.o
+/usr/bin/cc   -v -o CMakeFiles/cmTC_680fa.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake-3.19/Modules/CMakeCCompilerABI.c
 Using built-in specs.
-COLLECT_GCC=/usr/bin/arm-linux-gnueabihf-gcc-10.2.0
-Target: arm-linux-gnueabihf
-Configured with: /var/tmp/pamac-build-michael/arm-linux-gnueabihf-gcc-stage1/src/gcc/configure --prefix=/usr --program-prefix=arm-linux-gnueabihf- --with-local-prefix=/usr/arm-linux-gnueabihf --with-sysroot=/usr/arm-linux-gnueabihf --with-build-sysroot=/usr/arm-linux-gnueabihf --with-as=/usr/bin/arm-linux-gnueabihf-as --with-ld=/usr/bin/arm-linux-gnueabihf-ld --libdir=/usr/lib --libexecdir=/usr/lib --disable-nls --with-newlib --enable-languages=c,c++ --with-isl --with-linker-hash-style=gnu --with-system-zlib --enable-__cxa_atexit --enable-checking=release --enable-clocale=gnu --enable-default-pie --enable-default-ssp --enable-gnu-indirect-function --enable-gnu-unique-object --enable-install-libiberty --enable-linker-build-id --disable-lto --disable-plugin --disable-shared --disable-threads --disable-libssp --disable-libstdcxx-pch --disable-libunwind-exceptions --disable-multilib --disable-werror --target=arm-linux-gnueabihf --host=x86_64-pc-linux-gnu --build=x86_64-pc-linux-gnu --with-arch=armv6 --with-float=hard --with-fpu=vfp
-Thread model: single
+COLLECT_GCC=/usr/bin/cc
+Target: x86_64-pc-linux-gnu
+Configured with: /build/gcc/src/gcc/configure --prefix=/usr --libdir=/usr/lib --libexecdir=/usr/lib --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=https://bugs.archlinux.org/ --enable-languages=c,c++,ada,fortran,go,lto,objc,obj-c++,d --with-isl --with-linker-hash-style=gnu --with-system-zlib --enable-__cxa_atexit --enable-cet=auto --enable-checking=release --enable-clocale=gnu --enable-default-pie --enable-default-ssp --enable-gnu-indirect-function --enable-gnu-unique-object --enable-install-libiberty --enable-linker-build-id --enable-lto --enable-multilib --enable-plugin --enable-shared --enable-threads=posix --disable-libssp --disable-libstdcxx-pch --disable-libunwind-exceptions --disable-werror gdc_include_dir=/usr/include/dlang/gdc
+Thread model: posix
 Supported LTO compression algorithms: zlib zstd
 gcc version 10.2.0 (GCC) 
-COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_4e3e3.dir/CMakeCCompilerABI.c.o' '-c'  '-mfloat-abi=hard' '-mfpu=vfp' '-mtls-dialect=gnu' '-marm' '-march=armv6+fp'
- /usr/lib/gcc/arm-linux-gnueabihf/10.2.0/cc1 -quiet -v /usr/share/cmake-3.19/Modules/CMakeCCompilerABI.c -quiet -dumpbase CMakeCCompilerABI.c -mfloat-abi=hard -mfpu=vfp -mtls-dialect=gnu -marm -march=armv6+fp -auxbase-strip CMakeFiles/cmTC_4e3e3.dir/CMakeCCompilerABI.c.o -version -o /tmp/ccpDgzZu.s
-GNU C17 (GCC) version 10.2.0 (arm-linux-gnueabihf)
+COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_680fa.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64'
+ /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/cc1 -quiet -v /usr/share/cmake-3.19/Modules/CMakeCCompilerABI.c -quiet -dumpbase CMakeCCompilerABI.c -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_680fa.dir/CMakeCCompilerABI.c.o -version -o /tmp/cc3NuTiX.s
+GNU C17 (GCC) version 10.2.0 (x86_64-pc-linux-gnu)
 	compiled by GNU C version 10.2.0, GMP version 6.2.1, MPFR version 4.1.0, MPC version 1.2.1, isl version isl-0.21-GMP
 
 GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
-ignoring nonexistent directory "/usr/arm-linux-gnueabihf/usr/arm-linux-gnueabihf/include"
-ignoring nonexistent directory "/usr/arm-linux-gnueabihf/usr/include"
+ignoring nonexistent directory "/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../x86_64-pc-linux-gnu/include"
 #include "..." search starts here:
 #include <...> search starts here:
- /usr/lib/gcc/arm-linux-gnueabihf/10.2.0/include
- /usr/lib/gcc/arm-linux-gnueabihf/10.2.0/include-fixed
- /usr/lib/gcc/arm-linux-gnueabihf/10.2.0/../../../../arm-linux-gnueabihf/include
+ /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include
+ /usr/local/include
+ /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include-fixed
+ /usr/include
 End of search list.
-GNU C17 (GCC) version 10.2.0 (arm-linux-gnueabihf)
+GNU C17 (GCC) version 10.2.0 (x86_64-pc-linux-gnu)
 	compiled by GNU C version 10.2.0, GMP version 6.2.1, MPFR version 4.1.0, MPC version 1.2.1, isl version isl-0.21-GMP
 
 GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
-Compiler executable checksum: bac3aa4354ab3a70385f8acbbdc87b72
-COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_4e3e3.dir/CMakeCCompilerABI.c.o' '-c'  '-mfloat-abi=hard' '-mfpu=vfp' '-mtls-dialect=gnu' '-marm' '-march=armv6+fp'
- /usr/bin/arm-linux-gnueabihf-as -v -march=armv6 -mfloat-abi=hard -mfpu=vfp -meabi=5 -o CMakeFiles/cmTC_4e3e3.dir/CMakeCCompilerABI.c.o /tmp/ccpDgzZu.s
-GNU assembler version 2.35.1 (arm-linux-gnueabihf) using BFD version (GNU Binutils) 2.35.1
-COMPILER_PATH=/usr/lib/gcc/arm-linux-gnueabihf/10.2.0/:/usr/lib/gcc/arm-linux-gnueabihf/10.2.0/:/usr/lib/gcc/arm-linux-gnueabihf/:/usr/lib/gcc/arm-linux-gnueabihf/10.2.0/:/usr/lib/gcc/arm-linux-gnueabihf/:/usr/lib/gcc/arm-linux-gnueabihf/10.2.0/../../../../arm-linux-gnueabihf/bin/
-LIBRARY_PATH=/usr/lib/gcc/arm-linux-gnueabihf/10.2.0/:/usr/lib/gcc/arm-linux-gnueabihf/10.2.0/../../../../arm-linux-gnueabihf/lib/:/usr/arm-linux-gnueabihf/lib/
-COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_4e3e3.dir/CMakeCCompilerABI.c.o' '-c'  '-mfloat-abi=hard' '-mfpu=vfp' '-mtls-dialect=gnu' '-marm' '-march=armv6+fp'
-[2/2] Linking C static library libcmTC_4e3e3.a
+Compiler executable checksum: 1bfc39bab4733e0e3f89254efa5bbd30
+COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_680fa.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64'
+ as -v --64 -o CMakeFiles/cmTC_680fa.dir/CMakeCCompilerABI.c.o /tmp/cc3NuTiX.s
+GNU assembler version 2.35.1 (x86_64-pc-linux-gnu) using BFD version (GNU Binutils) 2.35.1
+COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/
+LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../:/lib/:/usr/lib/
+COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_680fa.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64'
+Linking C static library libcmTC_680fa.a
+/usr/bin/cmake -P CMakeFiles/cmTC_680fa.dir/cmake_clean_target.cmake
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_680fa.dir/link.txt --verbose=1
+/usr/bin/ar qc libcmTC_680fa.a CMakeFiles/cmTC_680fa.dir/CMakeCCompilerABI.c.o
+/usr/bin/ranlib libcmTC_680fa.a
+make[1]: Leaving directory '/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/build/CMakeFiles/CMakeTmp'
 
 
 
 Parsed C implicit include dir info from above output: rv=done
   found start of include info
   found start of implicit include info
-    add: [/usr/lib/gcc/arm-linux-gnueabihf/10.2.0/include]
-    add: [/usr/lib/gcc/arm-linux-gnueabihf/10.2.0/include-fixed]
-    add: [/usr/lib/gcc/arm-linux-gnueabihf/10.2.0/../../../../arm-linux-gnueabihf/include]
+    add: [/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include]
+    add: [/usr/local/include]
+    add: [/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include-fixed]
+    add: [/usr/include]
   end of search list found
-  collapse include dir [/usr/lib/gcc/arm-linux-gnueabihf/10.2.0/include] ==> [/usr/lib/gcc/arm-linux-gnueabihf/10.2.0/include]
-  collapse include dir [/usr/lib/gcc/arm-linux-gnueabihf/10.2.0/include-fixed] ==> [/usr/lib/gcc/arm-linux-gnueabihf/10.2.0/include-fixed]
-  collapse include dir [/usr/lib/gcc/arm-linux-gnueabihf/10.2.0/../../../../arm-linux-gnueabihf/include] ==> [/usr/arm-linux-gnueabihf/include]
-  implicit include dirs: [/usr/lib/gcc/arm-linux-gnueabihf/10.2.0/include;/usr/lib/gcc/arm-linux-gnueabihf/10.2.0/include-fixed;/usr/arm-linux-gnueabihf/include]
+  collapse include dir [/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include] ==> [/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include]
+  collapse include dir [/usr/local/include] ==> [/usr/local/include]
+  collapse include dir [/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include-fixed] ==> [/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include-fixed]
+  collapse include dir [/usr/include] ==> [/usr/include]
+  implicit include dirs: [/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include;/usr/local/include;/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include-fixed;/usr/include]
 
 
 Parsed C implicit link information from above output:
-  link line regex: [^( *|.*[/\])(arm-linux-gnueabihf-ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
+  link line regex: [^( *|.*[/\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
   ignore line: [Change Dir: /datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/build/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command(s):/usr/bin/ninja cmTC_4e3e3 && [1/2] Building C object CMakeFiles/cmTC_4e3e3.dir/CMakeCCompilerABI.c.o]
+  ignore line: [Run Build Command(s):/usr/bin/make cmTC_680fa/fast && /usr/bin/make  -f CMakeFiles/cmTC_680fa.dir/build.make CMakeFiles/cmTC_680fa.dir/build]
+  ignore line: [make[1]: Entering directory '/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/build/CMakeFiles/CMakeTmp']
+  ignore line: [Building C object CMakeFiles/cmTC_680fa.dir/CMakeCCompilerABI.c.o]
+  ignore line: [/usr/bin/cc   -v -o CMakeFiles/cmTC_680fa.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake-3.19/Modules/CMakeCCompilerABI.c]
   ignore line: [Using built-in specs.]
-  ignore line: [COLLECT_GCC=/usr/bin/arm-linux-gnueabihf-gcc-10.2.0]
-  ignore line: [Target: arm-linux-gnueabihf]
-  ignore line: [Configured with: /var/tmp/pamac-build-michael/arm-linux-gnueabihf-gcc-stage1/src/gcc/configure --prefix=/usr --program-prefix=arm-linux-gnueabihf- --with-local-prefix=/usr/arm-linux-gnueabihf --with-sysroot=/usr/arm-linux-gnueabihf --with-build-sysroot=/usr/arm-linux-gnueabihf --with-as=/usr/bin/arm-linux-gnueabihf-as --with-ld=/usr/bin/arm-linux-gnueabihf-ld --libdir=/usr/lib --libexecdir=/usr/lib --disable-nls --with-newlib --enable-languages=c,c++ --with-isl --with-linker-hash-style=gnu --with-system-zlib --enable-__cxa_atexit --enable-checking=release --enable-clocale=gnu --enable-default-pie --enable-default-ssp --enable-gnu-indirect-function --enable-gnu-unique-object --enable-install-libiberty --enable-linker-build-id --disable-lto --disable-plugin --disable-shared --disable-threads --disable-libssp --disable-libstdcxx-pch --disable-libunwind-exceptions --disable-multilib --disable-werror --target=arm-linux-gnueabihf --host=x86_64-pc-linux-gnu --build=x86_64-pc-linux-gnu --with-arch=armv6 --with-float=hard --with-fpu=vfp]
-  ignore line: [Thread model: single]
+  ignore line: [COLLECT_GCC=/usr/bin/cc]
+  ignore line: [Target: x86_64-pc-linux-gnu]
+  ignore line: [Configured with: /build/gcc/src/gcc/configure --prefix=/usr --libdir=/usr/lib --libexecdir=/usr/lib --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=https://bugs.archlinux.org/ --enable-languages=c c++ ada fortran go lto objc obj-c++ d --with-isl --with-linker-hash-style=gnu --with-system-zlib --enable-__cxa_atexit --enable-cet=auto --enable-checking=release --enable-clocale=gnu --enable-default-pie --enable-default-ssp --enable-gnu-indirect-function --enable-gnu-unique-object --enable-install-libiberty --enable-linker-build-id --enable-lto --enable-multilib --enable-plugin --enable-shared --enable-threads=posix --disable-libssp --disable-libstdcxx-pch --disable-libunwind-exceptions --disable-werror gdc_include_dir=/usr/include/dlang/gdc]
+  ignore line: [Thread model: posix]
   ignore line: [Supported LTO compression algorithms: zlib zstd]
   ignore line: [gcc version 10.2.0 (GCC) ]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_4e3e3.dir/CMakeCCompilerABI.c.o' '-c'  '-mfloat-abi=hard' '-mfpu=vfp' '-mtls-dialect=gnu' '-marm' '-march=armv6+fp']
-  ignore line: [ /usr/lib/gcc/arm-linux-gnueabihf/10.2.0/cc1 -quiet -v /usr/share/cmake-3.19/Modules/CMakeCCompilerABI.c -quiet -dumpbase CMakeCCompilerABI.c -mfloat-abi=hard -mfpu=vfp -mtls-dialect=gnu -marm -march=armv6+fp -auxbase-strip CMakeFiles/cmTC_4e3e3.dir/CMakeCCompilerABI.c.o -version -o /tmp/ccpDgzZu.s]
-  ignore line: [GNU C17 (GCC) version 10.2.0 (arm-linux-gnueabihf)]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_680fa.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64']
+  ignore line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/cc1 -quiet -v /usr/share/cmake-3.19/Modules/CMakeCCompilerABI.c -quiet -dumpbase CMakeCCompilerABI.c -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_680fa.dir/CMakeCCompilerABI.c.o -version -o /tmp/cc3NuTiX.s]
+  ignore line: [GNU C17 (GCC) version 10.2.0 (x86_64-pc-linux-gnu)]
   ignore line: [	compiled by GNU C version 10.2.0  GMP version 6.2.1  MPFR version 4.1.0  MPC version 1.2.1  isl version isl-0.21-GMP]
   ignore line: []
   ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
-  ignore line: [ignoring nonexistent directory "/usr/arm-linux-gnueabihf/usr/arm-linux-gnueabihf/include"]
-  ignore line: [ignoring nonexistent directory "/usr/arm-linux-gnueabihf/usr/include"]
+  ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../x86_64-pc-linux-gnu/include"]
   ignore line: [#include "..." search starts here:]
   ignore line: [#include <...> search starts here:]
-  ignore line: [ /usr/lib/gcc/arm-linux-gnueabihf/10.2.0/include]
-  ignore line: [ /usr/lib/gcc/arm-linux-gnueabihf/10.2.0/include-fixed]
-  ignore line: [ /usr/lib/gcc/arm-linux-gnueabihf/10.2.0/../../../../arm-linux-gnueabihf/include]
+  ignore line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include]
+  ignore line: [ /usr/local/include]
+  ignore line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include-fixed]
+  ignore line: [ /usr/include]
   ignore line: [End of search list.]
-  ignore line: [GNU C17 (GCC) version 10.2.0 (arm-linux-gnueabihf)]
+  ignore line: [GNU C17 (GCC) version 10.2.0 (x86_64-pc-linux-gnu)]
   ignore line: [	compiled by GNU C version 10.2.0  GMP version 6.2.1  MPFR version 4.1.0  MPC version 1.2.1  isl version isl-0.21-GMP]
   ignore line: []
   ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
-  ignore line: [Compiler executable checksum: bac3aa4354ab3a70385f8acbbdc87b72]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_4e3e3.dir/CMakeCCompilerABI.c.o' '-c'  '-mfloat-abi=hard' '-mfpu=vfp' '-mtls-dialect=gnu' '-marm' '-march=armv6+fp']
-  ignore line: [ /usr/bin/arm-linux-gnueabihf-as -v -march=armv6 -mfloat-abi=hard -mfpu=vfp -meabi=5 -o CMakeFiles/cmTC_4e3e3.dir/CMakeCCompilerABI.c.o /tmp/ccpDgzZu.s]
-  ignore line: [GNU assembler version 2.35.1 (arm-linux-gnueabihf) using BFD version (GNU Binutils) 2.35.1]
-  ignore line: [COMPILER_PATH=/usr/lib/gcc/arm-linux-gnueabihf/10.2.0/:/usr/lib/gcc/arm-linux-gnueabihf/10.2.0/:/usr/lib/gcc/arm-linux-gnueabihf/:/usr/lib/gcc/arm-linux-gnueabihf/10.2.0/:/usr/lib/gcc/arm-linux-gnueabihf/:/usr/lib/gcc/arm-linux-gnueabihf/10.2.0/../../../../arm-linux-gnueabihf/bin/]
-  ignore line: [LIBRARY_PATH=/usr/lib/gcc/arm-linux-gnueabihf/10.2.0/:/usr/lib/gcc/arm-linux-gnueabihf/10.2.0/../../../../arm-linux-gnueabihf/lib/:/usr/arm-linux-gnueabihf/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_4e3e3.dir/CMakeCCompilerABI.c.o' '-c'  '-mfloat-abi=hard' '-mfpu=vfp' '-mtls-dialect=gnu' '-marm' '-march=armv6+fp']
-  ignore line: [[2/2] Linking C static library libcmTC_4e3e3.a]
+  ignore line: [Compiler executable checksum: 1bfc39bab4733e0e3f89254efa5bbd30]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_680fa.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64']
+  ignore line: [ as -v --64 -o CMakeFiles/cmTC_680fa.dir/CMakeCCompilerABI.c.o /tmp/cc3NuTiX.s]
+  ignore line: [GNU assembler version 2.35.1 (x86_64-pc-linux-gnu) using BFD version (GNU Binutils) 2.35.1]
+  ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/]
+  ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../:/lib/:/usr/lib/]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_680fa.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64']
+  ignore line: [Linking C static library libcmTC_680fa.a]
+  ignore line: [/usr/bin/cmake -P CMakeFiles/cmTC_680fa.dir/cmake_clean_target.cmake]
+  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_680fa.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/ar qc libcmTC_680fa.a CMakeFiles/cmTC_680fa.dir/CMakeCCompilerABI.c.o]
+  ignore line: [/usr/bin/ranlib libcmTC_680fa.a]
+  ignore line: [make[1]: Leaving directory '/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/build/CMakeFiles/CMakeTmp']
   ignore line: []
   ignore line: []
   implicit libs: []
@@ -126,7 +144,10 @@ Parsed C implicit link information from above output:
 Detecting CXX compiler ABI info compiled with the following output:
 Change Dir: /datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/build/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/ninja cmTC_0ae5e && [1/2] Building CXX object CMakeFiles/cmTC_0ae5e.dir/CMakeCXXCompilerABI.cpp.o
+Run Build Command(s):/usr/bin/make cmTC_11461/fast && /usr/bin/make  -f CMakeFiles/cmTC_11461.dir/build.make CMakeFiles/cmTC_11461.dir/build
+make[1]: Entering directory '/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_11461.dir/CMakeCXXCompilerABI.cpp.o
+/usr/bin/c++   -v -o CMakeFiles/cmTC_11461.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.19/Modules/CMakeCXXCompilerABI.cpp
 Using built-in specs.
 COLLECT_GCC=/usr/bin/c++
 Target: x86_64-pc-linux-gnu
@@ -134,8 +155,8 @@ Configured with: /build/gcc/src/gcc/configure --prefix=/usr --libdir=/usr/lib --
 Thread model: posix
 Supported LTO compression algorithms: zlib zstd
 gcc version 10.2.0 (GCC) 
-COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_0ae5e.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
- /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/cc1plus -quiet -v -D_GNU_SOURCE /usr/share/cmake-3.19/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpbase CMakeCXXCompilerABI.cpp -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_0ae5e.dir/CMakeCXXCompilerABI.cpp.o -version -o /tmp/ccaJ18bM.s
+COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_11461.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+ /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/cc1plus -quiet -v -D_GNU_SOURCE /usr/share/cmake-3.19/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpbase CMakeCXXCompilerABI.cpp -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_11461.dir/CMakeCXXCompilerABI.cpp.o -version -o /tmp/ccMYerse.s
 GNU C++14 (GCC) version 10.2.0 (x86_64-pc-linux-gnu)
 	compiled by GNU C version 10.2.0, GMP version 6.2.1, MPFR version 4.1.0, MPC version 1.2.1, isl version isl-0.21-GMP
 
@@ -156,13 +177,18 @@ GNU C++14 (GCC) version 10.2.0 (x86_64-pc-linux-gnu)
 
 GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
 Compiler executable checksum: f27fb68878a84470810fd2057eccecc9
-COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_0ae5e.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
- as -v --64 -o CMakeFiles/cmTC_0ae5e.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccaJ18bM.s
+COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_11461.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+ as -v --64 -o CMakeFiles/cmTC_11461.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccMYerse.s
 GNU assembler version 2.35.1 (x86_64-pc-linux-gnu) using BFD version (GNU Binutils) 2.35.1
 COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/
 LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../:/lib/:/usr/lib/
-COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_0ae5e.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
-[2/2] Linking CXX static library libcmTC_0ae5e.a
+COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_11461.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+Linking CXX static library libcmTC_11461.a
+/usr/bin/cmake -P CMakeFiles/cmTC_11461.dir/cmake_clean_target.cmake
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_11461.dir/link.txt --verbose=1
+/usr/bin/ar qc libcmTC_11461.a CMakeFiles/cmTC_11461.dir/CMakeCXXCompilerABI.cpp.o
+/usr/bin/ranlib libcmTC_11461.a
+make[1]: Leaving directory '/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/build/CMakeFiles/CMakeTmp'
 
 
 
@@ -188,10 +214,13 @@ Parsed CXX implicit include dir info from above output: rv=done
 
 
 Parsed CXX implicit link information from above output:
-  link line regex: [^( *|.*[/\])(arm-linux-gnueabihf-ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
+  link line regex: [^( *|.*[/\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
   ignore line: [Change Dir: /datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/build/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command(s):/usr/bin/ninja cmTC_0ae5e && [1/2] Building CXX object CMakeFiles/cmTC_0ae5e.dir/CMakeCXXCompilerABI.cpp.o]
+  ignore line: [Run Build Command(s):/usr/bin/make cmTC_11461/fast && /usr/bin/make  -f CMakeFiles/cmTC_11461.dir/build.make CMakeFiles/cmTC_11461.dir/build]
+  ignore line: [make[1]: Entering directory '/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/build/CMakeFiles/CMakeTmp']
+  ignore line: [Building CXX object CMakeFiles/cmTC_11461.dir/CMakeCXXCompilerABI.cpp.o]
+  ignore line: [/usr/bin/c++   -v -o CMakeFiles/cmTC_11461.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.19/Modules/CMakeCXXCompilerABI.cpp]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=/usr/bin/c++]
   ignore line: [Target: x86_64-pc-linux-gnu]
@@ -199,8 +228,8 @@ Parsed CXX implicit link information from above output:
   ignore line: [Thread model: posix]
   ignore line: [Supported LTO compression algorithms: zlib zstd]
   ignore line: [gcc version 10.2.0 (GCC) ]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_0ae5e.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
-  ignore line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/cc1plus -quiet -v -D_GNU_SOURCE /usr/share/cmake-3.19/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpbase CMakeCXXCompilerABI.cpp -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_0ae5e.dir/CMakeCXXCompilerABI.cpp.o -version -o /tmp/ccaJ18bM.s]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_11461.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
+  ignore line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/cc1plus -quiet -v -D_GNU_SOURCE /usr/share/cmake-3.19/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpbase CMakeCXXCompilerABI.cpp -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_11461.dir/CMakeCXXCompilerABI.cpp.o -version -o /tmp/ccMYerse.s]
   ignore line: [GNU C++14 (GCC) version 10.2.0 (x86_64-pc-linux-gnu)]
   ignore line: [	compiled by GNU C version 10.2.0  GMP version 6.2.1  MPFR version 4.1.0  MPC version 1.2.1  isl version isl-0.21-GMP]
   ignore line: []
@@ -221,13 +250,18 @@ Parsed CXX implicit link information from above output:
   ignore line: []
   ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
   ignore line: [Compiler executable checksum: f27fb68878a84470810fd2057eccecc9]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_0ae5e.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
-  ignore line: [ as -v --64 -o CMakeFiles/cmTC_0ae5e.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccaJ18bM.s]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_11461.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
+  ignore line: [ as -v --64 -o CMakeFiles/cmTC_11461.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccMYerse.s]
   ignore line: [GNU assembler version 2.35.1 (x86_64-pc-linux-gnu) using BFD version (GNU Binutils) 2.35.1]
   ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/]
   ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/../../../:/lib/:/usr/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_0ae5e.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
-  ignore line: [[2/2] Linking CXX static library libcmTC_0ae5e.a]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_11461.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
+  ignore line: [Linking CXX static library libcmTC_11461.a]
+  ignore line: [/usr/bin/cmake -P CMakeFiles/cmTC_11461.dir/cmake_clean_target.cmake]
+  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_11461.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/ar qc libcmTC_11461.a CMakeFiles/cmTC_11461.dir/CMakeCXXCompilerABI.cpp.o]
+  ignore line: [/usr/bin/ranlib libcmTC_11461.a]
+  ignore line: [make[1]: Leaving directory '/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/build/CMakeFiles/CMakeTmp']
   ignore line: []
   ignore line: []
   implicit libs: []
