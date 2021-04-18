@@ -1,0 +1,15 @@
+prefix=/usr
+exec_prefix=${prefix}
+libdir=${prefix}/lib/arm-linux-gnueabihf
+includedir=${prefix}/include
+
+Name: libsigrokdecode
+Description: Protocol decoder library of the sigrok logic analyzer software
+URL: http://www.sigrok.org
+Requires:
+Requires.private: glib-2.0
+Version: 0.3.0
+Libs: -L${libdir} -lsigrokdecode
+Libs.private:  -lpython3.5m 
+Cflags: -I${includedir}  -I/usr/include/python3.5m -I/usr/include/arm-linux-gnueabihf/python3.5m 
+

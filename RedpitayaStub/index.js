@@ -214,6 +214,7 @@ function stm_doStep() {
 }
 
 function send_data() {
+    console.log("Sending message:")
     console.log(util.inspect(dataToSend, true, 10));
     var compressed = pako.deflate(JSON.stringify(dataToSend));
     connection.sendBytes(Buffer.from(compressed));

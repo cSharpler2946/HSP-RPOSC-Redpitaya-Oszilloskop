@@ -19,9 +19,17 @@ export interface DecoderChannel {
     isOptional: boolean;
 }
 
-export interface AcquirerOptions {
+export interface AcquirerRequestedOptions {
     samplerates: string[];
     gains: string[];
     maxSampleCount: string;
     availableChannels: string[];
+}
+
+export interface AcquirerChosenOptions {
+    samplerate: string,
+    samplecount: string,
+    sampletime: string,
+    gainPerChannel: Record<string, string>,
+    probeAttenuationPerChannel: Record<string, string>,
 }

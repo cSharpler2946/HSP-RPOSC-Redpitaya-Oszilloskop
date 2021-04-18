@@ -2,7 +2,6 @@
   <Navbar/>
   <router-view/>
   <Footer/>
-
 </template>
 
 <script>
@@ -15,12 +14,9 @@ export default {
     return {
     }
   },
-  components:{
+  components: {
     Navbar,
     Footer
-  },
-  mounted(){
-    // this.$router.go();
   }
 }
 </script>

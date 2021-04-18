@@ -153,6 +153,11 @@ export default {
         console.log("Decoder channel changed:");
         console.log(eventParams.channelName);
         console.log(eventParams.decoderChannel);
+    },
+    onChosenAcquirerOptionsChanged: function(chosenAcquirerOptions) {
+        console.log("current acquirer options from callback:");
+        console.log(chosenAcquirerOptions);
+        this.redpitaya.sendAcquirerOptions(chosenAcquirerOptions);
     }
   },
   mounted () {

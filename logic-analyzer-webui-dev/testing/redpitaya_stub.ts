@@ -6,11 +6,11 @@ class RedPitayaStub {
     decoders: Model.Decoder[]
     requestedOptions: Model.DecoderOption[]
     decoderChannels: Model.DecoderChannel[]
-    acquirerOptions: Model.AcquirerOptions
+    acquirerOptions: Model.AcquirerRequestedOptions
     webSocket: WebSocket
 
     constructor(decoders: Model.Decoder[], requestedOptions: Model.DecoderOption[],
-        decoderChannels: Model.DecoderChannel[], acquirerOptions: Model.AcquirerOptions) {
+        decoderChannels: Model.DecoderChannel[], acquirerOptions: Model.AcquirerRequestedOptions) {
         this.decoders = decoders
         this.requestedOptions = requestedOptions
         this.decoderChannels = decoderChannels
@@ -89,8 +89,8 @@ class RedPitayaStub {
         this.webSocket.send(JSON.stringify({ parameters: parameters }))
         console.log('sending decoder')
         var self = this
-        setTimeout(function () { console.log('sending decoder'); self.webSocket.send(JSON.stringify({ parameters: parameters })) }, 50)
-        setTimeout(function () { console.log('sending decoder'); self.webSocket.send(JSON.stringify({ parameters: parameters })) }, 50)
+        /*setTimeout(function () { console.log('sending decoder'); self.webSocket.send(JSON.stringify({ parameters: parameters })) }, 50)
+        setTimeout(function () { console.log('sending decoder'); self.webSocket.send(JSON.stringify({ parameters: parameters })) }, 50)*/
     }
 
     sendChosenOptions(currentChosenOptions: { [id: string]: string }) {
@@ -107,6 +107,14 @@ class RedPitayaStub {
         var option_list_json = option_list.map(option => JSON.stringify(option))
         signals.SRD_CHOSEN_OPTIONS = { value: option_list_json }
         this.webSocket.send(JSON.stringify({ signals: signals }))
+    }
+
+    sendAcquirerOptions(chosenAcquirerOptions: Model.AcquirerChosenOptions) {
+        console.log("Sending acquirer options");
+        var innerJson = JSON.stringify(chosenAcquirerOptions);
+        var parameters: any = {};
+        parameters.ACQ_CHOSEN_OPTIONS = { value: innerJson };
+        this.webSocket.send(JSON.stringify({ parameters: parameters }));
     }
 }
 
