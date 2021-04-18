@@ -6,7 +6,7 @@
             <label class="form-label">
                 Sample Rate
             </label>
-            <select class="form-select">
+            <select class="form-select" v-model="samplerate">
                 <option v-for="possibleSampleRate in requestedOptions['samplerates']" v-bind:key="possibleSampleRate">
                     {{ possibleSampleRate }}
                 </option>
@@ -22,16 +22,34 @@
             </label>
             <input type="number" class="form-control form-control-sm" v-model="sampletime"/>
             <br/>
-            <div class="row">
+            <label class="form-label">
+                Gain
+            </label>
+            <div class="row" v-for="channel in requestedOptions['availableChannels']" v-bind:key="channel">
                 <div class="col-auto">
-                    <label class="form-label">
-                        One
-                    </label>
+                    <label class="form-label">{{ channel }}</label>
                 </div>
                 <div class="col-auto">
-                    <label class="form-label">
-                        Two
-                    </label>
+                    <select class="form-select" v-model="gainPerChannel[channel]">
+                        <option v-for="possibleGain in requestedOptions['gains']" v-bind:key="possibleGain">
+                            {{ possibleGain }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <br/>
+            <label class="form-label">
+                Probe Attenuation
+            </label>
+            <div class="row" v-for="channel in requestedOptions['availableChannels']" v-bind:key="channel">
+                <div class="col-auto">
+                    <label class="form-label">{{ channel }}</label>
+                </div>
+                <div class="col-auto">
+                    <select class="form-select" v-model="probeAttenuationPerChannel[channel]">
+                        <option>1x</option>
+                        <option>10x</option>
+                    </select>
                 </div>
             </div>
         </div>
@@ -64,6 +82,7 @@ import { Options, Vue } from 'vue-class-component'
       handler: function (currentOptions, old) {
         console.log('current chosen acq options:')
         console.log(currentOptions)
+        this.$emit('chosenAcquirerOptionsChanged', currentOptions)
       },
       deep: true
     }
@@ -74,8 +93,8 @@ export default class AcquirerParameters extends Vue {
     samplerate: string = "";
     samplecount: string = "";
     sampletime: string = "";
-    gainPerChannel: { channel: string, gain: string }[] = [];
-    probeAttenuationPerChannel: { channel: string, attenuation: string }[] = [];
+    gainPerChannel: Record<string, string> = {};
+    probeAttenuationPerChannel: Record<string, string> = {};
 
     get chosenOptions(): AcquirerChosenOptions {
         return {

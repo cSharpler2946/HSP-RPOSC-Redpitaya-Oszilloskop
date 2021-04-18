@@ -30,6 +30,6 @@ export interface AcquirerChosenOptions {
     samplerate: string,
     samplecount: string,
     sampletime: string,
-    gainPerChannel: { channel: string, gain: string }[],
-    probeAttenuationPerChannel: { channel: string, attenuation: string }[],
+    gainPerChannel: Record<string, string>,
+    probeAttenuationPerChannel: Record<string, string>,
 }

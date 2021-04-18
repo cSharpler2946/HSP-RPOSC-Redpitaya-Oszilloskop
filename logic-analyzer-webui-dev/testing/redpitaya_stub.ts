@@ -108,6 +108,14 @@ class RedPitayaStub {
         signals.SRD_CHOSEN_OPTIONS = { value: option_list_json }
         this.webSocket.send(JSON.stringify({ signals: signals }))
     }
+
+    sendAcquirerOptions(chosenAcquirerOptions: Model.AcquirerChosenOptions) {
+        console.log("Sending acquirer options");
+        var innerJson = JSON.stringify(chosenAcquirerOptions);
+        var parameters: any = {};
+        parameters.ACQ_CHOSEN_OPTIONS = { value: innerJson };
+        this.webSocket.send(JSON.stringify({ parameters: parameters }));
+    }
 }
 
 export default RedPitayaStub
