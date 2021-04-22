@@ -1,5 +1,5 @@
 #include "LogicSession.hpp"
-#include "../lib/loguru/loguru.hpp"
+#include <loguru.hpp>
 #include <map>
 #include <string>
 #include <vector>

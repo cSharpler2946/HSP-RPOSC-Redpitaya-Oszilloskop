@@ -1,5 +1,5 @@
 #include "Acquirer.hpp"
-#include <sstream>
+//#include <sstream>
 /* TODO: Hier ACQChoosenOptions object das im Konstruktor übergeben wird nehmen und entsprechen in startAcquire auf fpga image setzen
 * Vor Starten die SetSrdMetadata starten, die von Florian geschrieben wurde..
 * Dann das acquirieren starten und wenn fertig boolean mit true zurück geben, wenn irgendein Fehler, dann false
@@ -10,23 +10,9 @@
 * möglichen Werte aus header aussuchen und reinschreiben (z.B. supportedSampleRates)
 */
 
-   //constant values which are given by the rp.h
-   const vector<string> supportedSampleRates = {
-     "125Msps",
-     "15.625Msps",
-     "1.953Msps",
-     "122.070Ksps",
-     "15.258Ksps",
-     "1.907Ksps"};
-   const vector<int> availableChannels = {"A", "B"};
-   const vector<string> supportedDecimations = {
-     "1", "8", "64", "1024", "8192", "65536"
-   };
-   const vector<string> supportedPinState = {"LOW", "HIGH"};
-
    // the choosen options and vectors to write the samples in
-   vector<float> acquiredDataChannelA;
-   vector<float> acquiredDataChannelB;
+   std::vector<float> acquiredDataChannelA;
+   std::vector<float> acquiredDataChannelB;
    ACQChoosenOptions *choosenOptions;
 
    //internal values to check if the acquisition is successfully finished
@@ -97,9 +83,9 @@
       rp_AcqGetOldestDataV(rp_channel_t(0), &choosenOptions->sampleCount, buffA);
       rp_AcqGetOldestDataV(rp_channel_t(1), &choosenOptions->sampleCount, buffB);
       //write data into the vectors
-      std::vector<float> a(buffA, buffA+sizeof buffA / sizeof buffA[0]);
+      vector<float> a(buffA, buffA+sizeof buffA / sizeof buffA[0]);
       acquiredDataChannelA = a;
-      std::vector<float> b(buffB, buffB+sizeof buffB / sizeof buffB[0]);
+      vector<float> b(buffB, buffB+sizeof buffB / sizeof buffB[0]);
       acquiredDataChannelB = b;
     }
 

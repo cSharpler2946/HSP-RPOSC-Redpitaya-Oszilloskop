@@ -13,7 +13,7 @@
 #define PY_SSIZE_T_CLEAN
 #include <Python.h>
 
-#include "../lib/loguru/loguru.hpp"
+#include <loguru.hpp>
 
 #include "../lib/nlohmann/jsonWrapper.hpp"
 
@@ -96,7 +96,6 @@ int rp_app_init(void)
     chosenOptions->decimation = 1;
     chosenOptions->sampleCount = 16384;
     chosenOptions->pinState = 1;
-
     //start acquisition
     activeAcquirer = new Acquirer(chosenOptions); //TODO: Get parameter (ACQChosenOption)
     bool result = activeAcquirer->startAcq();
