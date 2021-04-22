@@ -1,6 +1,6 @@
 #include "AnnotationData.hpp"
 #include "../lib/nlohmann/jsonWrapper.hpp"
-#include "../lib/loguru/loguru.hpp"
+#include <loguru.hpp>
 
 AnnotationData::AnnotationData(std::string _name, int _size, std::string _def_value, srd_decoder_inst *_decoderInst):
 SContainer(_name, _size, _def_value) {

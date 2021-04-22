@@ -1,7 +1,7 @@
 #include "SRDChosenOptions.hpp"
 #include <string>
 #include <vector>
-#include "../lib/loguru/loguru.hpp"
+#include <loguru.hpp>
 #include "../lib/nlohmann/jsonWrapper.hpp"
 #include <gmodule.h> //I think there are the glib functions
 

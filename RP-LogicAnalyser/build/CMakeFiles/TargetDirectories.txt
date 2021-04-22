@@ -1,3 +1,0 @@
-/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/build/CMakeFiles/rebuild_cache.dir
-/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/build/CMakeFiles/edit_cache.dir
-/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RP-LogicAnalyser/build/CMakeFiles/crossTest.dir

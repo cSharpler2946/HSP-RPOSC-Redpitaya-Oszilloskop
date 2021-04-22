@@ -1,7 +1,7 @@
 #include "SRDRequestedOptions.hpp"
 #include <string>
 #include <vector>
-#include "../lib/loguru/loguru.hpp"
+#include <loguru.hpp>
 #include "../lib/nlohmann/jsonWrapper.hpp"
 
 SRDRequestedOptions::SRDRequestedOptions(std::string _name, int _size, std::string _def_value, srd_decoder_inst *decoderInst):

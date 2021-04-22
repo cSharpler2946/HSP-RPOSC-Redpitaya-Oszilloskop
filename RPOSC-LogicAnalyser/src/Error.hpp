@@ -1,7 +1,7 @@
 #pragma once
 
 #include "SContainer.hpp"
-#include "../lib/loguru/loguru.hpp"
+#include <loguru.hpp>
 #include <string>
 #include <list>
 

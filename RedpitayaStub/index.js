@@ -133,7 +133,7 @@ wsServer.on("request", function(request) {
       console.log((new Date()) + " Connection from origin " + request.origin + " rejected.");
       return;
     }
-    
+
     connection = request.accept(null, request.origin);
     state = "Initial";
     console.log((new Date()) + " Connection accepted.");

@@ -343,7 +343,7 @@ export default {
       var id = this.channelId;
       var self = this;
       $(function() {
-        $("#range-"+id).draggable({ 
+        $("#range-"+id).draggable({
           axis: "x",
           containment: "parent",
           snap: '.thumb',
