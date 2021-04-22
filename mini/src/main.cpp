@@ -1,3 +1,4 @@
+using namespace std;
 #include <limits.h>
 #include <math.h>
 #include <stdio.h>
@@ -5,9 +6,10 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/sysinfo.h>
+#include <vector>
+
 
 #include "main.h"
-
 
 const char *rp_app_desc(void)
 {

@@ -1,7 +1,0 @@
-[
-{
-  "directory": "/home/michael/eclipse-workspace/RP-LogicAnalyzer/build/default",
-  "command": "/home/michael/eclipse-workspace/RP-LogicAnalyzer/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/arm-none-linux-gnueabihf-g++  -I/home/michael/eclipse-workspace/RP-LogicAnalyzer/externalRedpitaya/include -I/home/michael/eclipse-workspace/RP-LogicAnalyzer/externalRedpitaya/include/redpitaya -I/home/michael/eclipse-workspace/RP-LogicAnalyzer/externalRedpitaya/include/arm-glib-2.0-include -I/home/michael/eclipse-workspace/RP-LogicAnalyzer/externalRedpitaya/include/glib-2.0 -I/home/michael/eclipse-workspace/RP-LogicAnalyzer/externalRedpitaya/include/libsigrokdecode -I/home/michael/eclipse-workspace/RP-LogicAnalyzer/externalRedpitaya/include/python3.5 -I/home/michael/eclipse-workspace/RP-LogicAnalyzer/externalRedpitaya/include/nlohmann -I/home/michael/eclipse-workspace/RP-LogicAnalyzer/externalRedpitaya/include/loguru -std=gnu++14 -o CMakeFiles/crossTest.dir/src/main.cpp.o -c /home/michael/eclipse-workspace/RP-LogicAnalyzer/src/main.cpp",
-  "file": "/home/michael/eclipse-workspace/RP-LogicAnalyzer/src/main.cpp"
-}
-]

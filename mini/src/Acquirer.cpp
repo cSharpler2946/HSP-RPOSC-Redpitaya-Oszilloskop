@@ -11,15 +11,15 @@
 */
 
    //constant values which are given by the rp.h
-   const std::vector<string> supportedSampleRates = {
+   /*const std::vector<string> supportedSampleRates = {
      "125Msps",
      "15.625Msps",
      "1.953Msps",
      "122.070Ksps",
      "15.258Ksps",
-     "1.907Ksps"};
-   const std::vector<int> availableChannels = {"A", "B"};
-   const std::vector<std::string> supportedDecimations = {
+     "1.907Ksps"};*/
+   const std::vector<string> availableChannels = {"A", "B"};
+   const std::vector<string> supportedDecimations = {
      "1", "8", "64", "1024", "8192", "65536"
    };
    const std::vector<std::string> supportedPinState = {"LOW", "HIGH"};
@@ -40,11 +40,11 @@
   Acquirer::Acquirer(){}
   Acquirer::Acquirer(ACQChoosenOptions *_choosenOptions)
   {
-    choosenOptions = _choosenOptions;
+    //choosenOptions = _choosenOptions;
   }
 
   // sets all the needed parameters and starts the acquisition
-  bool Acquirer::startAcq()
+  /*bool Acquirer::startAcq()
   {
 
     /*LOOB BACK FROM OUTPUT of channel 1 - ONLY FOR TESTING
@@ -53,7 +53,7 @@
     rp_GenFreq(RP_CH_1, 20000.0);
     rp_GenAmp(RP_CH_1, 1.0);
     rp_GenWaveform(RP_CH_1, RP_WAVEFORM_SINE);
-    rp_GenOutEnable(RP_CH_1);*/
+    rp_GenOutEnable(RP_CH_1);
 
     // needed variables
     uint32_t writePointer;
@@ -112,9 +112,9 @@
     else{
       return false;
     }
-  }
+  }*/
 
-  vector<double> Acquirer::getData(int channel)
+  /*vector<double> Acquirer::getData(int channel)
   {
     // get data from specified channel. The acquiredDataChannel vectors contain as much valued as defined in choosenOptions.sampleCount
     vector<double> a(acquiredDataChannelA.begin(), acquiredDataChannelA.end());
@@ -124,4 +124,4 @@
       case 1: return b;
       default: return vector<double>();
     }
-  }
+  }*/
