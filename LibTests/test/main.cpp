@@ -6,6 +6,8 @@
 #include <libsigrokdecode/libsigrokdecode.h>
 #include <stdint.h>
 #include <map>
+#include <nlohmann/json.hpp>
+#include <fstream>
 
 #include "uartTestData.h"
 
@@ -16,15 +18,27 @@
 
 using namespace std;
 
+nlohmann::json allAnnotations;
 void callbackAnnotation(struct srd_proto_data *pdata, void *cb_data)
 {
     srd_proto_data_annotation *data = (srd_proto_data_annotation *)pdata->data;
     char **annString = (gchar **)g_slist_nth_data(pdata->pdo->di->decoder->annotations, data->ann_class); //double pointer!!
     //printf("CB: %d-%d: %d: %s: %s\n", pdata->start_sample, pdata->end_sample, data->ann_class, *annString, *data->ann_text);
+    /*
     string s = *annString;
     if(s == "rx-data") {
         printf("%s", *data->ann_text);
     }
+     */
+    nlohmann::json currentAnn;
+    currentAnn["start"]=pdata->start_sample;
+    currentAnn["end"]=pdata->end_sample;
+    currentAnn["annotationClass"]=*annString;
+    currentAnn["annotationText"]=*data->ann_text;
+
+    //printf("%s\n", currentAnn.dump().c_str());
+
+    allAnnotations.push_back(currentAnn);
 }
 
 void callbackBinary(struct srd_proto_data *pdata, void *cb_data)
@@ -259,7 +273,13 @@ int main() {
     //Send prepared test data to decoder
     err = ToErr srd_session_send(sess, 0, arrsize-1, inbuf, arrsize, 1);
 
-    //this_thread::sleep_for(chrono::milliseconds(10000));
+    this_thread::sleep_for(chrono::milliseconds(5000));
+
+    printf("%s\n", allAnnotations.dump().c_str());
+    fstream file;
+    file.open("annotationData.txt", ios::out);
+    file << allAnnotations.dump();
+    file.close();
 
     return 0;
 }
