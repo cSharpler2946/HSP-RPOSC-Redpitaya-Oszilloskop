@@ -11,6 +11,11 @@
 },
 {
   "directory": "/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RPOSC-LogicAnalyser/build",
+  "command": "/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RPOSC-LogicAnalyser/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/arm-none-linux-gnueabihf-g++ -Dcontrollerhf_EXPORTS -I../externalRedpitaya/include -I../externalRedpitaya/include/redpitaya -I../externalRedpitaya/include/rp_sdk -I../externalRedpitaya/include/rp_sdk/libjson -I../externalRedpitaya/include/arm-glib-2.0-include -I../externalRedpitaya/include/glib-2.0 -I../externalRedpitaya/include/libsigrokdecode -I../externalRedpitaya/include/python3.5 -I../externalRedpitaya/include/nlohmann -I../externalRedpitaya/include/loguru -I../src -fPIC -Os -s -g -fPIC -std=gnu++14 -o CMakeFiles/controllerhf.dir/src/AcquirerConstants.cpp.o -c /datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RPOSC-LogicAnalyser/src/AcquirerConstants.cpp",
+  "file": "/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RPOSC-LogicAnalyser/src/AcquirerConstants.cpp"
+},
+{
+  "directory": "/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RPOSC-LogicAnalyser/build",
   "command": "/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RPOSC-LogicAnalyser/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/arm-none-linux-gnueabihf-g++ -Dcontrollerhf_EXPORTS -I../externalRedpitaya/include -I../externalRedpitaya/include/redpitaya -I../externalRedpitaya/include/rp_sdk -I../externalRedpitaya/include/rp_sdk/libjson -I../externalRedpitaya/include/arm-glib-2.0-include -I../externalRedpitaya/include/glib-2.0 -I../externalRedpitaya/include/libsigrokdecode -I../externalRedpitaya/include/python3.5 -I../externalRedpitaya/include/nlohmann -I../externalRedpitaya/include/loguru -I../src -fPIC -Os -s -g -fPIC -std=gnu++14 -o CMakeFiles/controllerhf.dir/src/AllOptionsValid.cpp.o -c /datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RPOSC-LogicAnalyser/src/AllOptionsValid.cpp",
   "file": "/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/RPOSC-LogicAnalyser/src/AllOptionsValid.cpp"
 },

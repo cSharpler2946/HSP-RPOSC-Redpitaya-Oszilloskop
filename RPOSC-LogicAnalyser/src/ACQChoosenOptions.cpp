@@ -1,7 +1,9 @@
 using namespace std;
 #include<string>
 #include<vector>
+#include<algorithm>
 #include "ACQChoosenOptions.hpp"
+#include "AcquirerConstants.hpp"
 
 // TODO: TranslateFunction um strings auf richtigen Typen zu ändern.
 // Macht es sinn den Typen aus rp.h zu inkludieren
@@ -16,15 +18,14 @@ string probeAttenuation;
 ACQChoosenOptions::ACQChoosenOptions(){}
 
 // Translate the userfriendly string into the fitting index
-/*int ACQChoosenOptions::TranslateSampleRate(string sampleRate){
+int ACQChoosenOptions::TranslateSampleRate(string sampleRate){
   int index = -1;
-  Acquirer *acquirer = new Acquirer();
-  auto found = find(acquirer->supportedSampleRates.begin(), acquirer->supportedSampleRates.begin(), sampleRate);
+  auto found = find(AcquirerConstants::supportedSampleRates.begin(), AcquirerConstants::supportedSampleRates.end(), sampleRate);
 
   // if element found, we need the index because setting the sampleRate is done by an integer number
-  if(found != acquirer->supportedSampleRates.end())
+  if(found != AcquirerConstants::supportedSampleRates.end())
   {
-    index = found - acquirer->supportedSampleRates.begin();
+    index = found - AcquirerConstants::supportedSampleRates.begin();
   }
   // if element is not found return -1 as an error
   else{
@@ -37,13 +38,12 @@ ACQChoosenOptions::ACQChoosenOptions(){}
 int ACQChoosenOptions::TranslateDecimation(string decimation)
 {
   int index = -1;
-  Acquirer *acquirer = new Acquirer();
-  auto found = find(acquirer->supportedSampleRates.begin(), acquirer->supportedSampleRates.end(), decimation);
+  auto found = find(AcquirerConstants::supportedSampleRates.begin(), AcquirerConstants::supportedSampleRates.end(), decimation);
 
   // again check in the vector for the string and use the index later for initialisation
-  if(found != acquirer->supportedSampleRates.end())
+  if(found != AcquirerConstants::supportedSampleRates.end())
   {
-    index = found - acquirer->supportedSampleRates.begin();
+    index = found - AcquirerConstants::supportedSampleRates.begin();
   }
   else{
     index = -1;
@@ -55,11 +55,10 @@ int ACQChoosenOptions::TranslateDecimation(string decimation)
 int ACQChoosenOptions::TranslatePinState(string pinState)
 {
   int index = -1;
-  Acquirer *acquirer = new Acquirer();
-  auto found = find(acquirer->supportedSampleRates.begin(), acquirer->supportedSampleRates.end(), pinState);
-  if(found != acquirer->supportedSampleRates.end())
+  auto found = find(AcquirerConstants::supportedSampleRates.begin(), AcquirerConstants::supportedSampleRates.end(), pinState);
+  if(found != AcquirerConstants::supportedSampleRates.end())
   {
-    index = found - acquirer->supportedSampleRates.begin();
+    index = found - AcquirerConstants::supportedSampleRates.begin();
   }
   else{
     index = -1;
@@ -82,4 +81,3 @@ uint32_t ACQChoosenOptions::TranslateSampleCount(string count)
     return -1;
   }
 }
-*/

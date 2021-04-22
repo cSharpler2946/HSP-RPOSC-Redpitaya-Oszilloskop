@@ -10,20 +10,6 @@
 * möglichen Werte aus header aussuchen und reinschreiben (z.B. supportedSampleRates)
 */
 
-   //constant values which are given by the rp.h
-   const std::vector<string> supportedSampleRates = {
-     "125Msps",
-     "15.625Msps",
-     "1.953Msps",
-     "122.070Ksps",
-     "15.258Ksps",
-     "1.907Ksps"};
-   const std::vector<int> availableChannels = {"A", "B"};
-   const std::vector<std::string> supportedDecimations = {
-     "1", "8", "64", "1024", "8192", "65536"
-   };
-   const std::vector<std::string> supportedPinState = {"LOW", "HIGH"};
-
    // the choosen options and vectors to write the samples in
    std::vector<float> acquiredDataChannelA;
    std::vector<float> acquiredDataChannelB;

@@ -7,6 +7,16 @@
 #include <CustomParameters.h>
 #include "rpApp.h"
 
+#include "CStringSignal.h"
+
+#include "Acquirer.hpp"
+#include "SRDDecoderList.hpp"
+#include "ChosenDecoder.hpp"
+#include "SRDRequestedOptions.hpp"
+#include "SRDChannels.hpp"
+#include "Startup.hpp"
+#include "MeasuredData.hpp"
+
 #ifdef __cplusplus
 extern "C" {
 #endif

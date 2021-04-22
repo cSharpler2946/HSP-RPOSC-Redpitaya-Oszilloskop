@@ -12,9 +12,6 @@ using namespace std;
 
 class Acquirer {
 public:
-  const vector<string> supportedSampleRates;
-  const vector<string> supportedDecimations;
-  const vector<string> supportedPinState;
   bool startAcq();
   vector<double> getData(int channel);
   Acquirer(ACQChoosenOptions *choosenOptions);
