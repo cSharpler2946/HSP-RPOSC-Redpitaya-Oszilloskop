@@ -1,13 +1,16 @@
 cmake_minimum_required(VERSION 3.17)
+set(CMAKE_TRY_COMPILE_TARGET_TYPE "STATIC_LIBRARY") #Needed for checking if compiler works 
+set(CMAKE_VERBOSE_MAKEFILE ON) 
 set(CMAKE_SYSTEM_NAME Linux)
 set(CMAKE_SYSTEM_PROCESSOR arm)
-project(controllerhf)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_C_COMPILER ${CMAKE_CURRENT_SOURCE_DIR}/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/arm-none-linux-gnueabihf-gcc)
 set(CMAKE_CXX_COMPILER ${CMAKE_CURRENT_SOURCE_DIR}/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin/arm-none-linux-gnueabihf-g++)
 set(CMAKE_CXX_FLAGS "-fPIC -Os -s")
 set(LDFLAGS "-Wl,--whole-archive,--no-as-needed")
+
+project(controllerhf)
 file(GLOB analyser_src "src/*.cpp")
 
 # Search libraries only under *target* paths.
