@@ -1,3 +1,0 @@
-/home/henne/usertmp/mbranch/RPOSC-LogicAnalyser/build/CMakeFiles/rebuild_cache.dir
-/home/henne/usertmp/mbranch/RPOSC-LogicAnalyser/build/CMakeFiles/edit_cache.dir
-/home/henne/usertmp/mbranch/RPOSC-LogicAnalyser/build/CMakeFiles/controllerhf.dir
