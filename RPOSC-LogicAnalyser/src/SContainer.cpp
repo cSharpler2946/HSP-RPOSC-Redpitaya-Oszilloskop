@@ -6,7 +6,7 @@ SContainer::SContainer(std::string _name, int _size, std::string _def_value) {
 }
 
 void SContainer::OnNew() {
-    LOG_F(INFO, "In SContainer::OnNew");
+    //LOG_F(INFO, "In SContainer::OnNew");
     VALUE->Update();
     if(VALUE->IsValueChanged())
     {

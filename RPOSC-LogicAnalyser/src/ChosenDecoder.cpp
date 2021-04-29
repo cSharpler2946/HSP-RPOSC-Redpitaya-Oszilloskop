@@ -32,15 +32,16 @@ void ChosenDecoder::OnNewInternal() {
     std::replace(jsonString.begin(), jsonString.end(), '\n', ' ');
     LOG_F(INFO, "%s", jsonString.c_str());
     
-    /*nlohmann::json tmp = nlohmann::json::parse(jsonString); // BUG: This call creates a std::bad_alloc fault. Even when enough memory is available...
-    LOG_F(INFO, "%s", VALUE->Value().c_str());
-    nlohmann::json tmp = nlohmann::json::parse(VALUE->Value());
-    LOG_F(INFO, "Loading decoder with id \"%s\"...", tmp["id"]);
-    if((err = ToErr srd_decoder_load(tmp["id"].dump().c_str())) != SRD_OK) {
+    nlohmann::json tmp = nlohmann::json::parse(jsonString);
+    std::string id = tmp["id"];
+    //LOG_F(INFO, "%s", VALUE->Value().c_str());
+    //nlohmann::json tmp = nlohmann::json::parse(VALUE->Value());
+    LOG_F(INFO, "Loading decoder with id \"%s\"...", id.c_str());
+    if((err = ToErr srd_decoder_load(id.c_str())) != SRD_OK) {
         LOG_F(ERROR, "Failed loading decoder (srd_error_coder: %d). Please select new one", err);
         return;
     }
-    decoderInstance = srd_inst_new(srdSession, tmp["id"].dump().c_str(), nullptr); //Set decoder instance*/
+    decoderInstance = srd_inst_new(srdSession, id.c_str(), nullptr); //Set decoder instance
     allOptionsValid->setDecoderValidity(false); //After a new decoder is loaded srd_set_options must be called at least once
     LOG_F(INFO, "Deocder successfully loaded");
 

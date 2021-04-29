@@ -66,6 +66,8 @@ int rp_app_init(void)
     else
     {
         LOG_F(INFO, "LibSigrokDecode init success: Using version: %s\n", srd_lib_version_string_get());
+        LOG_F(INFO, "Creating srd_session object");
+        srd_session_new(&srdSession);
     }
     //End: Tests
 
@@ -142,13 +144,13 @@ int rp_get_signals(float ***s, int *sig_num, int *sig_len)
 /* Internal functions end */
 
 void UpdateSignals(void){
-    LOG_F(INFO, "In UpdateSignals");
+    //LOG_F(INFO, "In UpdateSignals");
     //OnNewSignals();
     //decoderList->CreateDecoderList();
 }
 
 void UpdateParams(void){
-    LOG_F(INFO, "In UpdateParams");
+    //LOG_F(INFO, "In UpdateParams");
     //OnNewParams();
 }
 
