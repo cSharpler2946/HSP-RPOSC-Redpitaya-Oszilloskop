@@ -13,7 +13,7 @@
 #define PY_SSIZE_T_CLEAN
 #include <Python.h>
 
-#include "../lib/loguru/loguru.hpp"
+#include <loguru.hpp>
 
 #include "../lib/nlohmann/jsonWrapper.hpp"
 
@@ -66,6 +66,8 @@ int rp_app_init(void)
     else
     {
         LOG_F(INFO, "LibSigrokDecode init success: Using version: %s\n", srd_lib_version_string_get());
+        LOG_F(INFO, "Creating srd_session object");
+        srd_session_new(&srdSession);
     }
     //End: Tests
 
@@ -96,7 +98,6 @@ int rp_app_init(void)
     chosenOptions->decimation = 1;
     chosenOptions->sampleCount = 16384;
     chosenOptions->pinState = 1;
-
     //start acquisition
     activeAcquirer = new Acquirer(chosenOptions); //TODO: Get parameter (ACQChosenOption)
     bool result = activeAcquirer->startAcq();
@@ -143,13 +144,13 @@ int rp_get_signals(float ***s, int *sig_num, int *sig_len)
 /* Internal functions end */
 
 void UpdateSignals(void){
-    LOG_F(INFO, "In UpdateSignals");
+    //LOG_F(INFO, "In UpdateSignals");
     //OnNewSignals();
     //decoderList->CreateDecoderList();
 }
 
 void UpdateParams(void){
-    LOG_F(INFO, "In UpdateParams");
+    //LOG_F(INFO, "In UpdateParams");
     //OnNewParams();
 }
 

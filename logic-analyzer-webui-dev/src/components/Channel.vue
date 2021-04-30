@@ -37,12 +37,17 @@
 
                     <div v-bind:id="'slider-' + channelId" class="slider">
                         <div class="track"></div>
-                        <div class="range"></div>
+                        <div v-bind:id="'range-'+channelId" class="range"></div>
                         <div class="thumb left"></div>
                         <div class="thumb right"></div>
                     </div>
                 </div>
             </div>
+
+            <!-- <div id="draggable2" class="draggable ui-widget-content">
+              <p>I can be dragged only horizontally</p>
+            </div> -->
+
         </div>
     </div>
 
@@ -81,6 +86,8 @@
 
 <script>
 import apexchart from 'vue3-apexcharts'
+import $ from 'jquery'
+import 'jquery-ui-dist/jquery-ui';
 
 export default {
   name: 'Channel',
@@ -332,6 +339,44 @@ export default {
       inputRight.addEventListener('mouseup', function () {
         thumbRight.classList.remove('active')
       })
+
+      var id = this.channelId;
+      var self = this;
+      $(function() {
+        $("#range-"+id).draggable({
+          axis: "x",
+          containment: "parent",
+          snap: '.thumb',
+          snapTolerance: 1,
+          snapMode: "both",
+          addClasses: false,
+          start: function(e, ui){
+            this.classList.add('active');
+          },
+          drag: function(e, ui){
+            var left = (100 * parseFloat($(this).position().left / parseFloat($(this).parent().width())));
+            var right = (self.chartZoomValue.right - self.chartZoomValue.left) + left;
+
+            self.chartZoomValue.left = left;
+            self.chartZoomValue.right = right;
+
+            self.updateRangeSlider();
+          },
+          stop: function(e, ui){
+            this.classList.remove('active');
+            self.updateRangeSlider();
+          }
+        });
+      });
+
+      var draggableRange = document.getElementById(`range-${this.channelId}`)
+      draggableRange.addEventListener('mouseover', function () {
+        draggableRange.classList.add('hover');
+      });
+      draggableRange.addEventListener('mouseout', function () {
+        draggableRange.classList.remove('hover');
+      });
+
     },
     updateRangeSlider: function () {
       this.onChartZoomLeft()
@@ -460,6 +505,14 @@ export default {
 }
 .slider > .thumb.active {
 	box-shadow: 0 0 0 15px $sliderThumbHoverActiveColor;
+}
+
+.slider > .range.hover{
+	box-shadow: 0 0 0 5px $sliderThumbHoverColor;
+}
+
+.slider > .range.active{
+	box-shadow: 0 0 0 7px $sliderThumbHoverActiveColor;
 }
 
 input[type=range] {

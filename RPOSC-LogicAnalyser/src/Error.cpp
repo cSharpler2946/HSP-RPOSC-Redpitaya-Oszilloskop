@@ -1,5 +1,5 @@
 #include "Error.hpp"
-#include "../lib/loguru/loguru.hpp"
+#include <loguru.hpp>
 #include <vector>
 
 void callbackError(void* user_data, const loguru::Message& message) {

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include "../lib/loguru/loguru.hpp"
+#include <loguru.hpp>
 
 class SPContainer {
     public:

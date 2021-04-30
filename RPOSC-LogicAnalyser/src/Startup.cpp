@@ -1,5 +1,5 @@
 #include "Startup.hpp"
-#include "../lib/loguru/loguru.hpp"
+#include <loguru.hpp>
 
 Startup::Startup(std::string name, CBaseParameter::AccessMode am, std::string defaultVal, int fpga_update, SRDDecoderList * _decoderList):
 PContainer(name, am, defaultVal, fpga_update) {

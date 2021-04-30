@@ -2,6 +2,7 @@
 
 @mixin link() {
   color: $linkColor;
+  text-decoration: none;
   &:link {
     color: $linkColor;
   }

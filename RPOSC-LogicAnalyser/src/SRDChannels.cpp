@@ -2,7 +2,7 @@
 #include <libsigrokdecode/libsigrokdecode.h>
 #include <gmodule.h>
 #include "../lib/nlohmann/jsonWrapper.hpp"
-#include "../lib/loguru/loguru.hpp"
+#include <loguru.hpp>
 #include <string>
 #include <vector>
 
@@ -13,7 +13,7 @@ SContainer(_name, _size, _def_value) {
 }
 
 void SRDChannels::Update() {
-    LOG_F(INFO, "Updating SRDChannels");
+    LOG_F(INFO, "Updating SRDChannels"); //TODO: This function generates segementation fault
     std::vector<std::string> channelV;
 
     GSList * i;

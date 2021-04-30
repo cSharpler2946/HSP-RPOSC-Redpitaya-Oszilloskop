@@ -34,7 +34,7 @@
     "src/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx"
-  ],
+, "testing/redpitaya_stub.ts"  ],
   "exclude": [
     "node_modules"
   ]
