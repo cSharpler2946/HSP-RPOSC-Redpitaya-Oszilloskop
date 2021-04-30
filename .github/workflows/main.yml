@@ -18,12 +18,14 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+      - uses: jwlawson/actions-setup-cmake@v1.8
       - uses: bahmutov/npm-install@v1
         with:
           working-directory: ./logic-analyzer-webui-dev
       
       - name: Install requirements
-        run: sudo apt install npm make cmake
+        run: sudo apt install make
 
       - name: Run a multi-line script
         run: ./buildDeploy.sh
