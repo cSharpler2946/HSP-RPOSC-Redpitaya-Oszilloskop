@@ -20,7 +20,7 @@ jobs:
       - uses: actions/checkout@v2
       
       - name: Install requirements
-        run: apt install npm make cmake
+        run: sudo apt install npm make cmake
 
       - name: Run a multi-line script
         run: ./buildDeploy.sh
