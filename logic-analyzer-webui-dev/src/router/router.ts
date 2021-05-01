@@ -1,9 +1,6 @@
 import { createWebHistory, createWebHashHistory, createRouter } from "vue-router";
 import LogicAnalyzer from '../views/LogicAnalyzer.vue';
 
-// const Documentation = import('@/views/Documentation.vue')
-
-// const history = createWebHistory();
 const routes = [
     {
         path: '/',

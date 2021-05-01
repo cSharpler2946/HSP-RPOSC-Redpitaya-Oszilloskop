@@ -371,27 +371,43 @@ export default {
     }
 
     var id = this.channelId;
-    var self = this;
-      $( function() {
+      var self = this;
+      $(function() {
         $("#range-"+id).draggable({ 
           axis: "x",
           containment: "parent",
+          snap: '.thumb',
+          snapTolerance: 1,
+          snapMode: "both",
+          addClasses: false,
+          start: function(e, ui){
+            this.classList.add('active');
+          },
           drag: function(e, ui){
-            // console.log("position: " + ui.position.left);
-            // console.log("offset: " + ui.offset.left);
-            // console.log("original: " + ui.originalPosition.left);
-            var bla = ui.originalPosition.left - ui.position.left;
-            console.log("drag: " + bla);
+            var left = (100 * parseFloat($(this).position().left / parseFloat($(this).parent().width())));
+            var right = (self.chartZoomValue.right - self.chartZoomValue.left) + left;
 
-            var inputLeft = document.getElementById(`slider-input-left-${id}`);
-            var inputRight = document.getElementById(`slider-input-right-${id}`);
-            inputLeft.value = ui.position.left;
-            // inputRight.value = this.chartZoomValue.right
-            self.updateRangeSlider()
+            self.chartZoomValue.left = left;
+            self.chartZoomValue.right = right;
+
+            self.updateRangeSlider();
+          },
+          stop: function(e, ui){
+            this.classList.remove('active');
+            self.updateRangeSlider();
           }
-          });
+        });
       });
-  },
+
+      var draggableRange = document.getElementById(`range-${this.channelId}`)
+      draggableRange.addEventListener('mouseover', function () {
+        draggableRange.classList.add('hover');
+      });
+      draggableRange.addEventListener('mouseout', function () {
+        draggableRange.classList.remove('hover');
+      });
+
+    },
   components: {
     apexchart
   }
