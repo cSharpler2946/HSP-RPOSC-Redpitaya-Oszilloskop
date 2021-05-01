@@ -26,15 +26,13 @@
                 Gain
             </label>
             <div class="row" v-for="channel in requestedOptions['availableChannels']" v-bind:key="channel">
-                <div class="col-auto">
-                    <label class="form-label">{{ channel }}</label>
-                </div>
-                <div class="col-auto">
-                    <select class="form-select" v-model="gainPerChannel[channel]">
-                        <option v-for="possibleGain in requestedOptions['gains']" v-bind:key="possibleGain">
-                            {{ possibleGain }}
-                        </option>
-                    </select>
+                <label v-bind:for="'gain-'+channel" class="col col-form-label">{{ channel }}</label>
+                <div class="col-sm-10">
+                    <select v-bind:id="'gain-'+channel" class="form-select" v-model="gainPerChannel[channel]">
+                    <option v-for="possibleGain in requestedOptions['gains']" v-bind:key="possibleGain">
+                        {{ possibleGain }}
+                    </option>
+                </select>
                 </div>
             </div>
             <br/>
@@ -42,11 +40,9 @@
                 Probe Attenuation
             </label>
             <div class="row" v-for="channel in requestedOptions['availableChannels']" v-bind:key="channel">
-                <div class="col-auto">
-                    <label class="form-label">{{ channel }}</label>
-                </div>
-                <div class="col-auto">
-                    <select class="form-select" v-model="probeAttenuationPerChannel[channel]">
+                <label v-bind:for="'gain-'+channel" class="col col-form-label">{{ channel }}</label>
+                <div class="col-sm-10">
+                    <select v-bind:id="'gain-'+channel" class="form-select" v-model="probeAttenuationPerChannel[channel]">
                         <option>1x</option>
                         <option>10x</option>
                     </select>

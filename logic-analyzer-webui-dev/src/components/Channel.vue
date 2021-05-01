@@ -85,9 +85,13 @@
 </template>
 
 <script>
-import apexchart from 'vue3-apexcharts'
-import $ from 'jquery'
+import apexchart from 'vue3-apexcharts';
+import $ from 'jquery';
 import 'jquery-ui-dist/jquery-ui';
+
+window.$ = window.jQuery = require('jquery');
+window.$ = $.extend(require('jquery-ui'));
+require('jquery-ui-touch-punch');
 
 export default {
   name: 'Channel',
@@ -442,7 +446,7 @@ export default {
 .slider {
 	position: relative;
 	z-index: 1;
-	height: 5px;
+	height: 20px;
 	margin: 0 15px;
 }
 .slider > .track {
@@ -469,20 +473,20 @@ export default {
 .slider > .thumb {
 	position: absolute;
 	z-index: 3;
-	width: 14px;
-	height: 14px;
+	width: 20px;
+	height: 20px;
 	background-color: $sliderThumbColor;
-	border-radius: 50%;
+	border-radius: 5px;
 	box-shadow: 0 0 0 0 rgba(98,0,238,.1);
 	transition: box-shadow .3s ease-in-out;
 }
 .slider > .thumb.left {
 	left: 0;
-	transform: translate(-5px, -5px);
+	transform: translate(0px, 0px);
 }
 .slider > .thumb.right {
 	right: 0;
-	transform: translate(5px, -5px);
+	transform: translate(0px, 0px);
 }
 .slider > .thumb.hover {
 	box-shadow: 0 0 0 10px $sliderThumbHoverColor;
@@ -492,29 +496,29 @@ export default {
 }
 
 input[type=range] {
-        position: absolute;
-        pointer-events: none;
-        -webkit-appearance: none;
-        z-index: 2;
-        height: 5px;
-        width: 98%;
-        opacity: 0;
-        left: 1%;
+  position: absolute;
+  pointer-events: none;
+  -webkit-appearance: none;
+  z-index: 2;
+  height: 20px;
+  width: 98%;
+  opacity: 0;
+  left: 1%;
 }
 
 input[type=range]::-webkit-slider-thumb {
 	pointer-events: all;
-	width: 14px;
-	height: 14px;
+	width: 20px;
+	height: 20px;
 	border-radius: 0;
 	border: 0 none;
 	-webkit-appearance: none;
 }
 
 input[type=range]::-moz-range-thumb {
-    pointer-events: all;
-	width: 14px;
-	height: 14px;
+  pointer-events: all;
+	width: 20px;
+	height: 20px;
 	border-radius: 0;
 	border: 0 none;
 	-webkit-appearance: none;
