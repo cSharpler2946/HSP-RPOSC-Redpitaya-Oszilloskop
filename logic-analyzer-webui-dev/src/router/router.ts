@@ -1,23 +1,26 @@
-import { createWebHistory, createRouter } from "vue-router";
+import { createWebHistory, createWebHashHistory, createRouter } from "vue-router";
+import LogicAnalyzer from '../views/LogicAnalyzer.vue';
 
-const LogicAnalyzer = import('@/views/LogicAnalyzer.vue')
-const Documentation = import('@/views/Documentation.vue')
+// const Documentation = import('@/views/Documentation.vue')
 
-const history = createWebHistory();
+// const history = createWebHistory();
+const routes = [
+    {
+        path: '/',
+        name: "LogicAnalyzer",
+        component: LogicAnalyzer
+    },
+    {
+        path: '/documentation',
+        name: "Documentation",
+        component: () => import('../views/Documentation.vue')
+    }
+]
+
 const router = createRouter({
-    history, 
-    routes: [
-        {
-            path: '/',
-            name: "LogicAnalyzer",
-            component: LogicAnalyzer
-        },
-        {
-            path: '/documentation',
-            name: "Documentation",
-            component: Documentation
-        }
-    ]
+    history: createWebHashHistory(process.env.BASE_URL),
+    routes
 })
+
 
 export default router;
