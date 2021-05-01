@@ -13,13 +13,10 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="#">Home</a>
+          <router-link :to="{name: 'LogicAnalyzer'}">Home</router-link>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Documentation</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">About</a>
+          <router-link :to="{name: 'Documentation'}">Documentation</router-link>
         </li>
       </ul>
     </div>
@@ -31,22 +28,33 @@
 export default {
   name: 'Navbar',
   props: {
-    title: String,
-    brand: String
   }
 }
 </script>
 
 <style lang="scss" scoped>
 @import './../styles/_variables';
+@import './../styles/_mixins';
 
 .navbar{
-    border-bottom: 1px solid $primaryColor;
-    background-color: white;
+  border-bottom: 1px solid $primaryColor;
+  background-color: white;
 }
 
 .navbar-brand > img{
-    height: 40px;
+  height: 40px;
+}
+
+nav a{
+  @include link();
+}
+
+.nav-item{
+  margin-left: 15px;
+}
+
+nav a.router-link-exact-active{
+  color: $linkColorActive;
 }
 
 </style>
