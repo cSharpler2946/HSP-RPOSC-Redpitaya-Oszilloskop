@@ -1,3 +1,0 @@
-/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/mini/build/CMakeFiles/rebuild_cache.dir
-/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/mini/build/CMakeFiles/edit_cache.dir
-/datahdd/Michi/OTH/GIT/HSP-RPOSC-Redpitaya-Oszilloskop/mini/build/CMakeFiles/controllerhf.dir

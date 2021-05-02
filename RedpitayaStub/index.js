@@ -133,7 +133,7 @@ wsServer.on("request", function(request) {
       console.log((new Date()) + " Connection from origin " + request.origin + " rejected.");
       return;
     }
-    
+
     connection = request.accept(null, request.origin);
     state = "Initial";
     console.log((new Date()) + " Connection accepted.");
@@ -214,6 +214,7 @@ function stm_doStep() {
 }
 
 function send_data() {
+    console.log("Sending message:")
     console.log(util.inspect(dataToSend, true, 10));
     var compressed = pako.deflate(JSON.stringify(dataToSend));
     connection.sendBytes(Buffer.from(compressed));
