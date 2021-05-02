@@ -1,7 +1,7 @@
-import { RouteRecordRaw, createWebHistory, createWebHashHistory, createRouter } from "vue-router";
+import { createWebHistory, createWebHashHistory, createRouter } from "vue-router";
 import LogicAnalyzer from '../views/LogicAnalyzer.vue';
 
-const routes: Array<RouteRecordRaw> = [
+const routes = [
     {
         path: '/',
         name: "LogicAnalyzer",
