@@ -13,7 +13,7 @@
       <div id="logic-analyzer-header" class="row">
 
         <div class="channels-header col-md-3">
-            <button id="startAnalyzing" type="button" class="btn">
+            <button id="startAnalyzing" type="button" class="btn" v-on:click="onStartAnalyzing();">
               <span>Start Analyzing </span>
               <font-awesome-icon icon="play" style="vertical-align: middle; margin-left: 10px;" />
             </button>
@@ -27,7 +27,7 @@
         
       </div>
 
-      <Channel v-for="n in 10" :key="n" :channelId="n" :channelName="`Channel ${n}`" :decoderChannels="decoderChannels"
+      <Channel v-for="n in (decoderChannels.length)" :key="n" :channelId="n" :channelName="`Channel ${n}`" :decoderChannels="decoderChannels"
         v-on:decoder-channel-changed="onDecoderChannelChanged"/>
 
       <!-- final border in case the right-panels height is bigger than the left-panels height -->
@@ -105,16 +105,10 @@ export default {
       ],
       requestedOptions: [],
       decoderChannels: [],
-      selectedDecoderChannels: [],
-      acquirerRequestedOptions: {}
+      acquirerRequestedOptions: {},
+      decodedData: null,
     }
   },
-  // props: {
-  //   rightPanelCollapsed: {
-  //     type: Boolean,
-  //     default: false
-  //   }
-  // },
   computed: {
     // Make calculations/computations in here
     get_app_url(){
@@ -128,9 +122,13 @@ export default {
     },
   },
   methods:{
+    onStartAnalyzing(){
+      this.getData();
+      console.log(this.decoderChannels);
+    },
     getData: function(){
-      var data = this.redpitaya.receiveData(arg1, arg2);
-      this.decodedData = data;
+      // this.decodedData = this.redpitaya.receiveData(arg1, arg2);
+      this.decodedData = this.redpitaya.receiveData();
     },
     toggleRightPanel(){
       if(this.rightPanelToggler.collapsed){
@@ -150,10 +148,10 @@ export default {
     onChosenOptionsChanged: function(currentChosenOptions) {
         this.redpitaya.sendChosenOptions(currentChosenOptions);
     },
-    onDecoderChannelChanged: function(eventParams) {
+    onDecoderChannelChanged: function(e) {
         console.log("Decoder channel changed:");
-        console.log(eventParams.channelName);
-        console.log(eventParams.decoderChannel);
+        console.log(e.channelName);
+        console.log(e.decoderChannel);
     },
     onChosenAcquirerOptionsChanged: function(chosenAcquirerOptions) {
         console.log("current acquirer options from callback:");
@@ -163,8 +161,9 @@ export default {
   },
   mounted () {
     // Build up WebSocket-Connection with RedPitaya in here.
-    //this.redpitaya = new RedPitaya(this.app_id, this.get_app_url, this.get_socket_url, this.decoders, this.requestedOptions, this.decoderChannels);
+    // this.redpitaya = new RedPitaya(this.app_id, this.get_app_url, this.get_socket_url, this.decoders, this.requestedOptions, this.decoderChannels);
     this.redpitaya = new RedPitayaStub(this.decoders, this.requestedOptions, this.decoderChannels, this.acquirerRequestedOptions);
+    this.redpitaya.start();
   },
   components: {
     Channel,
