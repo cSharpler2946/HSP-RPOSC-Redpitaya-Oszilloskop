@@ -20,16 +20,16 @@ export interface DecoderChannel {
 }
 
 export interface AcquirerRequestedOptions {
-    samplerates: string[];
+    samplerates_Hz: number[];
     gains: string[];
-    maxSampleCount: string;
+    maxSampleCount: number;
     availableChannels: string[];
 }
 
 export interface AcquirerChosenOptions {
-    samplerate: string,
-    samplecount: string,
-    sampletime: string,
+    samplerate_Hz: number,
+    samplecount: number,
+    sampletime_us: number,
     gainPerChannel: Record<string, string>,
     probeAttenuationPerChannel: Record<string, string>,
 }

@@ -107,19 +107,19 @@ const decoder_channels = {
 }
 
 const acquirer_options = {
-    "samplerates": [
-        "125 MS/s",
-        "15.6 MS/s",
-        "1.953 MS/s",
-        "122.07 kS/s",
-        "15.258 kS/s",
-        "1.907 kS/s"
+    "samplerates_Hz": [
+        125000000,
+        15625000,
+        1953125,
+        122070.3125,
+        15258.7890625,
+        1907.3486328125
     ],
     "gains": [
         "low",
         "high"
     ],
-    "maxSampleCount": "16384",
+    "maxSampleCount": 16384,
     "availableChannels": [
         "IN1",
         "IN2"

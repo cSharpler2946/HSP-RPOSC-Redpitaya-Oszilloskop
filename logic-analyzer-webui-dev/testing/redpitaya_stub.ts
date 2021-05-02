@@ -68,7 +68,7 @@ class RedPitayaStub {
                             console.log('received requested options')
                             Object.assign(myself.acquirerOptions, acqReqOptions)
                             // myself.acquirerOptions = acqReqOptions;
-                            console.log(myself.acquirerOptions.samplerates)
+                            console.log(myself.acquirerOptions.samplerates_Hz)
                         }
                     }
 

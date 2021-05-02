@@ -66,7 +66,8 @@
           <DecodedData/>
         </div>
         <div class="tab-pane fade" id="nav-acquirer-parameters" role="tabpanel" aria-labelledby="nav-acquirer-parameters-tab">
-          <AcquirerParameters :requestedOptions="acquirerRequestedOptions"/>
+          <AcquirerParameters :requestedOptions="acquirerRequestedOptions"
+            v-on:chosenAcquirerOptionsChanged="onChosenAcquirerOptionsChanged"/>
         </div>
       </div>
     </div>
