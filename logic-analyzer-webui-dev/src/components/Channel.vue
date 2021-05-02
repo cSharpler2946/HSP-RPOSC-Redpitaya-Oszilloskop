@@ -11,6 +11,7 @@
                 <div @dblclick="edit = true" class="col-8 channel d-flex align-items-center">
                     <div v-show="edit == false">
                         <label> {{ channelName }}</label>
+                        <div class="selected-decoder-channel"><strong>selected:</strong> {{ decoderChannel ?? '-' }}</div>
                     </div>
                     <input class="form-control" v-show="edit == true" v-model="channelName" :maxlength="maxCharacters"
                     v-on:blur="edit=false; $emit('update')" @keyup.enter="edit=false; $emit('update')">
@@ -43,10 +44,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- <div id="draggable2" class="draggable ui-widget-content">
-              <p>I can be dragged only horizontally</p>
-            </div> -->
 
         </div>
     </div>
@@ -193,7 +190,8 @@ export default {
       required: true
     },
     channelName: String,
-    decoderChannels: []
+    decoderChannels: [],
+    channelData: [],
   },
   methods: {
     editChannelName: function (channel) {
@@ -353,9 +351,9 @@ export default {
     }
   },
   mounted () {
-    if (this.channelId === 1) {
-      this.series[0].data = [1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1]
-    }
+    // if (this.channelId === 1) {
+    //   this.series[0].data = [1.2, 0.6, 0.8, 0.3, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 0.5, 0.8, 0.7]
+    // }
 
     this.setupChartData()
     if (parseInt(this.chartData.seriesLength) > 1) {
@@ -449,6 +447,10 @@ export default {
     background-color: $signalBackgroundColor;
     min-height: 100px;
     padding: 10px;
+}
+
+.selected-decoder-channel{
+  font-size: 0.7em;
 }
 
 // Range-slider
