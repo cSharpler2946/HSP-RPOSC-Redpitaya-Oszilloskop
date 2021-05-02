@@ -2,6 +2,8 @@ import $ from '../src/libs/jquery-3.5.1.min.js'
 import pako from '../src/libs/pako.js'
 import * as Model from '../src/models/model'
 
+const testData = require("./test-data.json");
+
 class RedPitayaStub {
     decoders: Model.Decoder[]
     requestedOptions: Model.DecoderOption[]
@@ -115,6 +117,11 @@ class RedPitayaStub {
         var parameters: any = {};
         parameters.ACQ_CHOSEN_OPTIONS = { value: innerJson };
         this.webSocket.send(JSON.stringify({ parameters: parameters }));
+    }
+
+    receiveData () {
+        console.log("data received.");
+        return testData;
     }
 }
 
