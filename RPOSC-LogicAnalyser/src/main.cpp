@@ -82,13 +82,13 @@ int rp_app_init(void)
     Startup * startup = new Startup("WEBSOCKET_OPENED", CBaseParameter::RW, "", false, decoderList);
     pContainerList.push_back(startup);
 
-    SRDRequestedOptions *reqOptions = new SRDRequestedOptions("SRD_REQUESTED_OPTIONS", 127, "", srdDecoderInst);
+    SRDRequestedOptions *reqOptions = new SRDRequestedOptions("SRD_REQUESTED_OPTIONS", 127, "", &srdDecoderInst);
     sContainerList.push_back(reqOptions);
-    SRDChannels *srdChannels = new SRDChannels("SRD_CHANNELS", 16, "", srdDecoderInst);
+    SRDChannels *srdChannels = new SRDChannels("SRD_CHANNELS", 16, "", &srdDecoderInst);
     sContainerList.push_back(srdChannels);
     AllOptionsValid *allOptionsValid = new AllOptionsValid("ALL_OPTIONS_VALID", CBaseParameter::RW, "", false);
     pContainerList.push_back(allOptionsValid);
-    ChosenDecoder *chosenDecoder = new ChosenDecoder("CHOSEN_DECODER", CBaseParameter::RW, "", false, reqOptions, srdChannels, srdSession, srdDecoderInst, allOptionsValid);
+    ChosenDecoder *chosenDecoder = new ChosenDecoder("CHOSEN_DECODER", CBaseParameter::RW, "", false, reqOptions, srdChannels, srdSession, &srdDecoderInst, allOptionsValid);
     pContainerList.push_back(chosenDecoder);
 
     // Dummy daten for ACQChosenOptions
