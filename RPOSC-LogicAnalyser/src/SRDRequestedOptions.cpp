@@ -23,20 +23,28 @@ void SRDRequestedOptions::Update() { //TODO: Segmentation fault on second decode
         tmp["id"]=p->id;
         tmp["desc"]=p->desc;
         if(g_variant_is_of_type(p->def, G_VARIANT_TYPE_INT64)) {
-            tmp["default"]=g_variant_get_uint64(p->def);
-            std::vector<uint64_t> values;
-            g_list_foreach(reinterpret_cast<GList *>(p->values), [](gpointer data, gpointer user_data){ ((std::vector<uint64_t>*)user_data)->push_back(g_variant_get_int64((GVariant*)data)); }, (gpointer)&values);
-            tmp["values"]=values;
-        } else if (g_variant_is_of_type(p->def, G_VARIANT_TYPE_STRING)) {
+            tmp["default"]=g_variant_get_int64(p->def);
+            std::vector<int64_t> values;
+            g_list_foreach(reinterpret_cast<GList *>(p->values), [](gpointer data, gpointer user_data){ ((std::vector<int64_t>*)user_data)->push_back(g_variant_get_int64((GVariant*)data)); }, (gpointer)&values);
+            if (!values.empty()) {
+                tmp["values"]=values;
+            }
+        } 
+        else if (g_variant_is_of_type(p->def, G_VARIANT_TYPE_STRING)) {
             tmp["default"]=g_variant_get_string(p->def, nullptr);
             std::vector<std::string> values;
             g_list_foreach(reinterpret_cast<GList *>(p->values), [](gpointer data, gpointer user_data){ ((std::vector<std::string>*)user_data)->push_back(g_variant_get_string((GVariant*)data, nullptr)); }, (gpointer)&values);
-            tmp["values"]=values;
-        } else if (g_variant_is_of_type(p->def, G_VARIANT_TYPE_DOUBLE)) {
+            if (!values.empty()) {
+                tmp["values"]=values;
+            }
+        } 
+        else if (g_variant_is_of_type(p->def, G_VARIANT_TYPE_DOUBLE)) {
             tmp["default"]=g_variant_get_double(p->def);
             std::vector<double> values;
             g_list_foreach(reinterpret_cast<GList *>(p->values), [](gpointer data, gpointer user_data){ ((std::vector<double>*)user_data)->push_back(g_variant_get_double((GVariant*)data)); }, (gpointer)&values);
+            if (!values.empty()) {
             tmp["values"]=values;
+            }
         }
         options.push_back(tmp.dump());
     }
