@@ -1,5 +1,5 @@
 <template>
-    <form method="post">
+    <div>
         <div style="margin-bottom: 15px;"></div>
 
         <div class="parameter-wrapper">
@@ -49,7 +49,7 @@
                 </div>
             </div>
         </div>
-    </form>
+    </div>
 </template>
 
 <script lang="ts">
