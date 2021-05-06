@@ -2,6 +2,7 @@
 
 using namespace std;
 #include <string>
+#include "PContainer.hpp"
 
 class ACQChoosenOptions{
   public:
@@ -16,4 +17,5 @@ class ACQChoosenOptions{
     int TranslateSampleRate(string sampleRate);
     int TranslatePinState(string pinState);
     uint32_t TranslateSampleCount(string count);
+    void OnNewInternal();
 };

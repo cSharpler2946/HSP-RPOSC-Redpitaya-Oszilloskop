@@ -10,6 +10,8 @@
 #include "CStringSignal.h"
 
 #include "Acquirer.hpp"
+#include "ACQRequestedOptions.hpp"
+
 #include "SRDDecoderList.hpp"
 #include "ChosenDecoder.hpp"
 #include "SRDRequestedOptions.hpp"

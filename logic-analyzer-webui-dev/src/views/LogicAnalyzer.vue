@@ -161,8 +161,8 @@ export default {
   },
   mounted () {
     // Build up WebSocket-Connection with RedPitaya in here.
-    // this.redpitaya = new RedPitaya(this.app_id, this.get_app_url, this.get_socket_url, this.decoders, this.requestedOptions, this.decoderChannels);
-    this.redpitaya = new RedPitayaStub(this.decoders, this.requestedOptions, this.decoderChannels, this.acquirerRequestedOptions);
+    this.redpitaya = new RedPitaya(this.app_id, this.get_app_url, this.get_socket_url, this.decoders, this.requestedOptions, this.decoderChannels);
+    //this.redpitaya = new RedPitayaStub(this.decoders, this.requestedOptions, this.decoderChannels, this.acquirerRequestedOptions);
     this.redpitaya.start();
   },
   components: {
