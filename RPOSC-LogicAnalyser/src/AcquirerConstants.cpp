@@ -1,16 +1,16 @@
 #include "AcquirerConstants.hpp"
 
 //constant values which are given by the rp.h
-   std::vector<string> AcquirerConstants::supportedSampleRates = {
-     "125Msps",
-     "15.625Msps",
-     "1.953Msps",
-     "122.070Ksps",
-     "15.258Ksps",
-     "1.907Ksps"};
-   std::vector<string> AcquirerConstants::availableChannels = {"A", "B"};
-   std::vector<std::string> AcquirerConstants::supportedDecimations = {
-     "1", "8", "64", "1024", "8192", "65536"
+   std::vector<double> AcquirerConstants::supportedSampleRates = {
+     125000000,
+     15625000,
+     1953125,
+     122070.3125,
+     15258.7890625,
+     1907.3486328125};
+   std::vector<string> AcquirerConstants::availableChannels = {"IN1", "IN2"};
+   std::vector<int> AcquirerConstants::supportedDecimations = {
+     1, 8, 64, 1024, 8192, 65536
    };
    std::vector<std::string> AcquirerConstants::supportedPinState = {"LOW", "HIGH"};
-  std::vector<std::string> AcquirerConstants::maxSamples = {"16384"};
+  std::vector<int> AcquirerConstants::maxSamples = {16384};

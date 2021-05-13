@@ -7,10 +7,10 @@ void ACQRequestedOptions::Update()
 {
     LOG_F(INFO, "Initialized the aquirer options");
     nlohmann::json tmp;
-    tmp["sampleRates"]=AcquirerConstants::supportedSampleRates;
-    tmp["channels"]=AcquirerConstants::availableChannels;
+    tmp["samplerates_Hz"]=AcquirerConstants::supportedSampleRates;
+    tmp["availableChannels"]=AcquirerConstants::availableChannels;
     tmp["decimations"]=AcquirerConstants::supportedDecimations;
-    tmp["state"]=AcquirerConstants::supportedPinState;
-    tmp["sampleLimit"]=AcquirerConstants::maxSamples;
+    tmp["gains"]=AcquirerConstants::supportedPinState;
+    tmp["maxSampleCount"]=AcquirerConstants::maxSamples;
     VALUE->Set(tmp.dump());
 }

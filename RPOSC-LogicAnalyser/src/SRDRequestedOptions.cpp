@@ -58,5 +58,5 @@ void SRDRequestedOptions::Update() { //TODO: Segmentation fault on second decode
     options.push_back("{\"id\": \"stop_bits\", \"desc\": \"Stop bits\", \"default\": 1.0,\"values\": [0.0, 0.5, 1.0, 1.5]}");
     */
 
-    VALUE->Set(options);
+    //VALUE->Set(options);
 }

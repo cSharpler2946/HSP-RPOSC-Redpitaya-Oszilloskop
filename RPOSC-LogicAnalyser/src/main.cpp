@@ -80,7 +80,7 @@ int rp_app_init(void)
     decoderList = new SRDDecoderList("SRD_DECODER_LIST", 256, "");
     sContainerList.push_back(decoderList);
 
-    ACQRequestedOptions *acqOptions = new ACQRequestedOptions("Requested_AcquirerOptions", CBaseParameter::RW, "", false);
+    ACQRequestedOptions *acqOptions = new ACQRequestedOptions("ACQ_REQUESTED_OPTIONS", CBaseParameter::RW, "", false);
     pContainerList.push_back(acqOptions);
 
     Startup * startup = new Startup("WEBSOCKET_OPENED", CBaseParameter::RW, "", false, decoderList, acqOptions);
