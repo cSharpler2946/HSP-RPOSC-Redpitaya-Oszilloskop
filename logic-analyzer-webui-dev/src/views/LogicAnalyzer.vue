@@ -80,7 +80,7 @@ import Channel from './../components/Channel.vue'
 import Parameters from './../components/Parameters.vue'
 import DecodedData from './../components/DecodedData.vue'
 import AcquirerParameters from './../components/AcquirerParameters.vue'
-import RedPitaya from './../redpitaya.js'
+import RedPitaya from './../redpitaya.ts'
 import RedPitayaStub from './../../testing/redpitaya_stub.ts'
 
 export default {

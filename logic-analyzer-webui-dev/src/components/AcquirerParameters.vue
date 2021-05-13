@@ -6,9 +6,9 @@
             <label class="form-label">
                 Sample Rate
             </label>
-            <select class="form-select" v-model="samplerate_Hz">
-                <option v-for="possibleSampleRate in requestedOptions.samplerates_Hz" v-bind:key="possibleSampleRate">
-                    {{ possibleSampleRate }}
+            <select class="form-select" v-model="samplerate_formatted">
+                <option v-for="possibleSampleRate in possibleSampleRatesWithUnit" v-bind:key="possibleSampleRate" v-bind:value="possibleSampleRate">
+                    {{ possibleSampleRate.format({ precision: 4 }) }}
                 </option>
             </select>
             <br/>
@@ -54,9 +54,10 @@
 
 <script lang="ts">
 
-import { AcquirerRequestedOptions, AcquirerChosenOptions } from '../models/model'
+import { AcquirerRequestedOptions, AcquirerChosenOptions } from '../models/model';
 import { PropType } from 'vue';
-import { Options, Vue } from 'vue-class-component'
+import { Options, Vue } from 'vue-class-component';
+import * as Math from 'mathjs';
 
 @Options({
   name: 'AcquirerParameters',
@@ -87,27 +88,26 @@ import { Options, Vue } from 'vue-class-component'
 export default class AcquirerParameters extends Vue {
 
     samplerate_Hz: number = 0;
-    _samplecount: number = 0;
-    _sampletime_us: number = 0;
+    samplecount: number = 0;
     gainPerChannel: Record<string, string> = {};
     probeAttenuationPerChannel: Record<string, string> = {};
 
-    get samplecount(): number {
-        return this._samplecount;
+    possibleSampleRatesWithUnit: Math.Unit[] = [];
+
+    set samplerate_formatted(newSamplerate: Math.Unit) {
+        this.samplerate_Hz = newSamplerate.toNumber("Hz");
     }
 
-    set samplecount(newValue: number) {
-        this._samplecount = newValue;
-        this._sampletime_us = newValue / this.samplerate_Hz;
+    get samplerate_formatted(): Math.Unit {
+        return Math.unit(this.samplerate_Hz, "Hz");
     }
 
     get sampletime_us(): number {
-        return this._sampletime_us;
+        return 1e6 * this.samplecount / this.samplerate_Hz;
     }
 
     set sampletime_us(newValue: number) {
-        this._sampletime_us = newValue;
-        this._samplecount = newValue * this.samplerate_Hz;
+        this.samplecount = newValue * this.samplerate_Hz / 1e6;
     }
 
     get chosenOptions(): AcquirerChosenOptions {
@@ -121,9 +121,13 @@ export default class AcquirerParameters extends Vue {
     }
 
     setDefaultOptions(requestedOptions: AcquirerRequestedOptions): void {
+        var _this = this;
+        requestedOptions.samplerates_Hz.forEach(function(samplerate) {
+            _this.possibleSampleRatesWithUnit.push(Math.unit(samplerate, "Hz"));
+        });
         this.samplerate_Hz = requestedOptions.samplerates_Hz[0];
         this.samplecount = requestedOptions.maxSampleCount;
-        var _this = this;
+        
         requestedOptions.availableChannels.forEach(function(channelName) {
             _this.gainPerChannel[channelName] = requestedOptions.gains[0];
             _this.probeAttenuationPerChannel[channelName] = "10x";

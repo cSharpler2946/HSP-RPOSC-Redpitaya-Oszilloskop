@@ -10,14 +10,13 @@
 #include "CStringSignal.h"
 
 #include "Acquirer.hpp"
-#include "ACQRequestedOptions.hpp"
-
 #include "SRDDecoderList.hpp"
 #include "ChosenDecoder.hpp"
 #include "SRDRequestedOptions.hpp"
 #include "SRDChannels.hpp"
 #include "Startup.hpp"
 #include "MeasuredData.hpp"
+#include "ACQRequestedOptions.hpp"
 
 #ifdef __cplusplus
 extern "C" {

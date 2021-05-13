@@ -1,6 +1,5 @@
 using namespace std;
 
-
 #include "ACQChoosenOptions.hpp"
 
 // TODO: TranslateFunction um strings auf richtigen Typen zu ändern.
@@ -58,7 +57,7 @@ uint ACQChoosenOptions::TranslateSampleRate(double sampleRate){
 }
 
 // Translate the userfriendly string into the fitting index
-uint ACQChoosenOptions::TranslateDecimation(string decimation)
+uint ACQChoosenOptions::TranslateDecimation(int decimation)
 {
   int index = -1;
   auto found = find(AcquirerConstants::supportedDecimations.begin(), AcquirerConstants::supportedDecimations.end(), decimation);

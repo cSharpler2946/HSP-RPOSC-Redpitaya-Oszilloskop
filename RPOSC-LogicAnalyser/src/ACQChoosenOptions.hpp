@@ -21,7 +21,7 @@ class ACQChoosenOptions : public PContainer{
     string probeAttenuation;
     AllOptionsValid *allOptionsValid;
     ACQChoosenOptions(std::string name, CBaseParameter::AccessMode am, std::string defaultVal, int fpga_update, AllOptionsValid *_allOptionsValid);
-    uint TranslateDecimation(string decimation);
+    uint TranslateDecimation(int decimation);
     uint TranslateSampleRate(double sampleRate);
     uint8_t TranslatePinState(string pinState);
     uint TranslateSampleTime(string sampleTime);
