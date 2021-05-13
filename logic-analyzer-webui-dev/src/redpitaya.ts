@@ -1,13 +1,26 @@
-import $ from './libs/jquery-3.5.1.min.js'
+import * as $ from "jquery";
 import pako from './libs/pako.js'
+import * as Model from '../src/models/model'
 
 class RedPitaya {
-  constructor (app_id, app_url, socket_url, decoders, requestedOptions, decoderChannels) {
+  decoders: Model.Decoder[]
+  requestedOptions: Model.DecoderOption[]
+  decoderChannels: Model.DecoderChannel[]
+  acquirerOptions: Model.AcquirerRequestedOptions
+  webSocket?: WebSocket;
+  app_id: string
+  app_url: string
+  socket_url: string
+
+  constructor (app_id: string, app_url: string, socket_url: string,
+    decoders: Model.Decoder[], requestedOptions: Model.DecoderOption[],
+    decoderChannels: Model.DecoderChannel[], acquirerOptions: Model.AcquirerRequestedOptions) {
     this.app_id = app_id
     this.app_url = app_url
     this.socket_url = socket_url
 
-    this.webSocket = null
+    this.webSocket = undefined
+    this.acquirerOptions = acquirerOptions
 
     this.decoders = decoders
     this.requestedOptions = requestedOptions
@@ -25,7 +38,7 @@ class RedPitaya {
     var self = this
 
     $.get(this.app_url)
-      .done(function (dresult) {
+      .done(function (dresult: any) {
         if (dresult.status == 'OK') {
           self.connectWebSocket()
         } else if (dresult.status == 'ERROR') {
@@ -64,7 +77,7 @@ class RedPitaya {
         )
         console.log('sending startup:')
         console.log(toSend)
-        myself.webSocket.send(toSend)
+        myself.webSocket?.send(toSend)
       }
       this.webSocket.onclose = function () {
         console.log('Socket closed')
@@ -81,14 +94,9 @@ class RedPitaya {
           console.log(text)
           var receive = JSON.parse(text)
           if (receive.signals) {
-            if (Object.keys(receive.signals).length !== 0) {
-
-            }
 
             if (receive.signals.SRD_DECODER_LIST) {
               var decoders_json_repr = receive.signals.SRD_DECODER_LIST.value
-              console.log('decoders in json:')
-              decoders_json_repr.forEach(decoder_json => console.log(decoder_json))
               var new_decoder_list = decoders_json_repr.map(JSON.parse)
               myself.decoders.splice(0)
               myself.decoders.push(...new_decoder_list)
@@ -120,8 +128,15 @@ class RedPitaya {
               )
               console.log('sending startup:')
               console.log(toSend)
-              myself.webSocket.send(toSend)
+              myself.webSocket?.send(toSend)
             }
+            if (receive.parameters.ACQ_REQUESTED_OPTIONS) {
+              var acqReqOptions = JSON.parse(receive.parameters.ACQ_REQUESTED_OPTIONS.value)
+              console.log('received requested options')
+              Object.assign(myself.acquirerOptions, acqReqOptions)
+              // myself.acquirerOptions = acqReqOptions;
+              console.log(myself.acquirerOptions.samplerates_Hz)
+          }
           }
         } catch (e) {
           console.log(e)
@@ -132,36 +147,41 @@ class RedPitaya {
     }
   }
 
-  sendSelectedDecoder (selectedDecoder) {
-    var util = require('util')
-    var parameters = {}
-    parameters.CHOSEN_DECODER = { value: JSON.stringify(selectedDecoder) }
+  sendSelectedDecoder(selectedDecoder: Model.Decoder) {
+    var parameters: any = {}
+    parameters["CHOSEN_DECODER"] = { value: JSON.stringify(selectedDecoder, null, 4) }
+    this.webSocket?.send(JSON.stringify({ parameters: parameters }))
     console.log('sending decoder')
-    var chosenDecoderJson = JSON.stringify({ parameters: parameters })
-    console.log(util.inspect(chosenDecoderJson, true, 20))
-    this.webSocket.send(chosenDecoderJson)
     var self = this
-    setTimeout(function () { console.log('sending decoder'); self.webSocket.send(JSON.stringify({ parameters: parameters })) }, 50)
-    setTimeout(function () { console.log('sending decoder'); self.webSocket.send(JSON.stringify({ parameters: parameters })) }, 50)
+    /*setTimeout(function () { console.log('sending decoder'); self.webSocket.send(JSON.stringify({ parameters: parameters })) }, 50)
+    setTimeout(function () { console.log('sending decoder'); self.webSocket.send(JSON.stringify({ parameters: parameters })) }, 50)*/
   }
 
-  sendChosenOptions (currentChosenOptions) {
-    var signals = {}
+  sendChosenOptions(currentChosenOptions: { [id: string]: string }) {
+    var signals: any = {}
     var option_list = []
     for (var option_id in currentChosenOptions) {
-      option_list.push(
-        {
-          id: option_id,
-          value: currentChosenOptions[option_id]
-        }
-      )
+        option_list.push(
+            {
+                id: option_id,
+                value: currentChosenOptions[option_id]
+            }
+        )
     }
-    var option_list_json = option_list.map(JSON.stringify)
+    var option_list_json = option_list.map(option => JSON.stringify(option))
     signals.SRD_CHOSEN_OPTIONS = { value: option_list_json }
-    this.webSocket.send(JSON.stringify({ signals: signals }))
+    this.webSocket?.send(JSON.stringify({ signals: signals }))
   }
 
-  receiveData (arg1, arg2) {
+  sendAcquirerOptions(chosenAcquirerOptions: Model.AcquirerChosenOptions) {
+    console.log("Sending acquirer options");
+    var innerJson = JSON.stringify(chosenAcquirerOptions);
+    var parameters: any = {};
+    parameters.ACQ_CHOSEN_OPTIONS = { value: innerJson };
+    this.webSocket?.send(JSON.stringify({ parameters: parameters }));
+  }
+
+  /*receiveData (arg1, arg2) {
     // Holst daten
     // return data;
   }
@@ -177,7 +197,7 @@ class RedPitaya {
         $('#output_data').text(signals.VOLTAGE.value)
       }
     }
-  }
+  }*/
 }
 
 // Required to import the RedPitaya prototype in other files
