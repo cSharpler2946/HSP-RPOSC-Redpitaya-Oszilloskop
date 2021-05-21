@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.17)
+cmake_minimum_required(VERSION 3.16)
 set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_TRY_COMPILE_TARGET_TYPE "STATIC_LIBRARY") #Needed for checking if compiler works 
 set(CMAKE_SYSTEM_NAME Linux)

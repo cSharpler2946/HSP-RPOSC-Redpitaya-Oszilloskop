@@ -43,7 +43,7 @@ void SRDRequestedOptions::Update() { //TODO: Segmentation fault on second decode
             std::vector<double> values;
             g_list_foreach(reinterpret_cast<GList *>(p->values), [](gpointer data, gpointer user_data){ ((std::vector<double>*)user_data)->push_back(g_variant_get_double((GVariant*)data)); }, (gpointer)&values);
             if (!values.empty()) {
-            tmp["values"]=values;
+                tmp["values"]=values;
             }
         }
         options.push_back(tmp.dump());
