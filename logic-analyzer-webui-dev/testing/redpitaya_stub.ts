@@ -1,4 +1,4 @@
-import $ from '../src/libs/jquery-3.5.1.min.js'
+import * as $ from "jquery";
 import pako from '../src/libs/pako.js'
 import * as Model from '../src/models/model'
 
@@ -25,6 +25,40 @@ class RedPitayaStub {
     start() {
         var myself = this
 
+
+        /*$.get("localhost")
+            .done(function (dresult: any) {
+                if (dresult.status == 'OK') {
+                    myself.connectWebSocket()
+                } else if (dresult.status == 'ERROR') {
+                    console.error(dresult.reason ? dresult.reason : `Could not start the application.`)
+                } else {
+                    console.error(`Unknown error: Could not start the application.`)
+                }
+            })
+            .fail(function () {
+                console.error(`Failed to make a request.`)
+            })*/
+
+        console.log("start().");
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'localhost');
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                console.log("start is good.")
+                myself.connectWebSocket();
+            }
+            else {
+                console.log("start is not good.")
+                console.error(`Unknown error: Could not start the application.`)
+            }
+        };
+        xhr.send();
+        console.log("end start().");
+    }
+
+    connectWebSocket() {
+        var myself = this
         if (this.webSocket) {
             this.webSocket.onopen = function () {
                 console.log('Socket opened')
@@ -119,7 +153,7 @@ class RedPitayaStub {
         this.webSocket.send(JSON.stringify({ parameters: parameters }));
     }
 
-    receiveData () {
+    receiveData() {
         console.log("data received.");
         return testData;
     }

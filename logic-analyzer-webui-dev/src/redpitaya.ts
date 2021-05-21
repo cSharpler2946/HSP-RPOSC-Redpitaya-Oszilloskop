@@ -37,19 +37,18 @@ class RedPitaya {
   start () {
     var self = this
 
-    $.get(this.app_url)
-      .done(function (dresult: any) {
-        if (dresult.status == 'OK') {
-          self.connectWebSocket()
-        } else if (dresult.status == 'ERROR') {
-          console.error(dresult.reason ? dresult.reason : `Could not start the application ${self.app_id}.`)
-        } else {
-          console.error(`Unknown error: Could not start the application [${self.app_id}].`)
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'localhost');
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            console.log("Application should start now.")
+            self.connectWebSocket();
         }
-      })
-      .fail(function () {
-        console.error(`Failed to make a request to ${self.app_url}`)
-      })
+        else {
+            console.error(`Unknown error: Could not start the application.`)
+        }
+    };
+    xhr.send();
   }
 
   connectWebSocket () {

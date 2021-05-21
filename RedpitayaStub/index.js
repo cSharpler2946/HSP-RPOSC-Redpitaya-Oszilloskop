@@ -3,17 +3,27 @@ var http = require("http");
 var pako = require("pako");
 const util = require("util");
 
-var server = http.createServer(function(request, response) {
+var serverWebSocket = http.createServer(function(request, response) {
     console.log((new Date()) + " Received request for " + request.url);
     response.writeHead(404);
     response.end();
 });
-server.listen(9200, function() {
+serverWebSocket.listen(9200, function() {
     console.log((new Date()) + " Server is listening on port 9200");
 });
 
+var serverHttp = http.createServer(function(request, response) {
+    console.log((new Date()) + " Received request for " + request.url);
+    response.writeHead(200);
+    response.end();
+});
+
+serverHttp.listen(8080, function() {
+    console.log((new Date()) + " Server is listening on port 8080");
+})
+
 wsServer = new WebSocketServer({
-    httpServer: server,
+    httpServer: serverWebSocket,
     // You should not use autoAcceptConnections for production
     // applications, as it defeats all standard cross-origin protection
     // facilities built into the protocol and the browser.  You should
