@@ -2,7 +2,7 @@ import $ from './libs/jquery-3.5.1.min.js'
 import pako from './libs/pako.js'
 
 class RedPitaya {
-  constructor (app_id, app_url, socket_url, decoders, requestedOptions, decoderChannels) {
+  constructor (app_id, app_url, socket_url, decoders, requestedOptions, decoderChannels, acquirerOptions) {
     this.app_id = app_id
     this.app_url = app_url
     this.socket_url = socket_url
@@ -12,6 +12,7 @@ class RedPitaya {
     this.decoders = decoders
     this.requestedOptions = requestedOptions
     this.decoderChannels = decoderChannels
+    this.acquirerOptions = acquirerOptions
   }
 
   test () {
@@ -122,6 +123,13 @@ class RedPitaya {
               console.log(toSend)
               myself.webSocket.send(toSend)
             }
+            if (receive.parameters.ACQ_REQUESTED_OPTIONS) {
+              var acqReqOptions = JSON.parse(receive.parameters.ACQ_REQUESTED_OPTIONS.value)
+              console.log('received requested options')
+              Object.assign(myself.acquirerOptions, acqReqOptions)
+              // myself.acquirerOptions = acqReqOptions;
+              console.log(myself.acquirerOptions.samplerates_Hz)
+            }
           }
         } catch (e) {
           console.log(e)
@@ -159,6 +167,14 @@ class RedPitaya {
     var option_list_json = option_list.map(JSON.stringify)
     signals.SRD_CHOSEN_OPTIONS = { value: option_list_json }
     this.webSocket.send(JSON.stringify({ signals: signals }))
+  }
+
+  sendAcquirerOptions(chosenAcquirerOptions) {
+    console.log("Sending acquirer options");
+    var innerJson = JSON.stringify(chosenAcquirerOptions);
+    var parameters = {};
+    parameters.ACQ_CHOSEN_OPTIONS = { value: innerJson };
+    this.webSocket.send(JSON.stringify({ parameters: parameters }));
   }
 
   receiveData (arg1, arg2) {
