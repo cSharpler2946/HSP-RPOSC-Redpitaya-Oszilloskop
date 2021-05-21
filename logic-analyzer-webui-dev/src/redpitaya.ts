@@ -38,7 +38,7 @@ class RedPitaya {
     var self = this
 
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'localhost');
+    xhr.open('GET', this.app_url);
     xhr.onload = function() {
         if (xhr.status === 200) {
             console.log("Application should start now.")
