@@ -94,6 +94,8 @@ int rp_app_init(void)
     pContainerList.push_back(allOptionsValid);
     ChosenDecoder *chosenDecoder = new ChosenDecoder("CHOSEN_DECODER", CBaseParameter::RW, "", false, reqOptions, srdChannels, srdSession, &srdDecoderInst, allOptionsValid);
     pContainerList.push_back(chosenDecoder);
+    SRDChosenOptions *chosenOptions = new SRDChosenOptions("SRD_CHOSEN_OPTIONS", CBaseParameter::RW, "", false, &srdDecoderInst, allOptionsValid);
+    pContainerList.push_back(chosenOptions);
 
     // Dummy daten for ACQChosenOptions
     /*
@@ -172,10 +174,12 @@ void OnNewParams(void){
  * Callback function, which gets called when signals changed.
  */
 void OnNewSignals(void){
+    /* //No need to call this function, as it does not work to receive signals
     for(SContainer *curr: sContainerList)
     {
         curr->OnNew();
     }
+    */
 }
 
 void PostUpdateSignals(void){}
