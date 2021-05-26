@@ -1,6 +1,7 @@
 #include "SRDChannelMap.hpp"
 
-SRDChannelMap::SRDChannelMap(std::string name, CBaseParameter::AccessMode am, std::string defaultVal, int fpga_update, AllOptionsValid *_allOptionsValid, srd_decoder_inst *_decoderInst, Acquirer *_currentAcquirer):
+//TODO: For what is aquirer used? remove?
+SRDChannelMap::SRDChannelMap(std::string name, CBaseParameter::AccessMode am, std::string defaultVal, int fpga_update, AllOptionsValid *_allOptionsValid, srd_decoder_inst **_decoderInst, Acquirer *_currentAcquirer):
 PContainer(name, am, defaultVal, fpga_update) {
     allOptionsValid = _allOptionsValid;
     decoderInst = _decoderInst;
@@ -14,31 +15,31 @@ void SRDChannelMap::OnNewInternal() {
     * Check if srdChannel and acqChannel exists
     * convert to map<string, string> where first string is srdChannel and second is acqChannel
     */
+    LOG_F(INFO, "SRDChannelMap new data received");
 
-    /* TODO: Untested
-    nlohmann::json cm = nlohmann::json::parse(VALUE->GetData());
-        channelMap.clear();
-        for (auto& el : cm.items())
-        {
-            LOG_F(INFO, "Inserting into channelMap: %s - %s", el.key(), el.value());
-            channelMap.insert(std::pair<std::string, std::string>(el.key(), el.value())); //Test if this really returns strings
-        }
+    //TODO: Untested, Frontend does not send this information
+    nlohmann::json cm = nlohmann::json::parse(VALUE->Value());
+    channelMap.clear();
+    for (auto& el : cm.items())
+    {
+        LOG_F(INFO, "Inserting into channelMap: %s - %s", el.key(), el.value());
+        channelMap.insert(std::pair<std::string, std::string>(el.key(), el.value())); //Test if this really returns strings
+    }
 
-        bool valid = false;
-        GSList * i;
-        for (i = decoderInst->decoder->channels; i; i = i->next)
+    bool valid = false;
+    GSList * i;
+    for (i = (*decoderInst)->decoder->channels; i; i = i->next)
+    {
+        srd_channel * ch = static_cast<srd_channel *>(i->data);
+        if(channelMap.count(ch->id)==0) //Returns the number of occurences of key in map, so 1 or 0
         {
-            srd_channel * ch = static_cast<srd_channel *>(i->data);
-            if(channelMap.count(ch->id)==0) //Returns the number of accurences of key in map, so 1 or 0
-            {
-                valid = false;
-                break;
-            } else {
-                valid = true;
-            }
+            valid = false;
+            break;
+        } else {
+            valid = true;
         }
-        allOptionsValid->setChannelMapValidity(valid);
-    */
+    }
+    allOptionsValid->setChannelMapValidity(valid);
 }
 
 void SRDChannelMap::resetChannelMap() {

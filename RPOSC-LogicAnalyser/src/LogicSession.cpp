@@ -42,14 +42,14 @@ void LogicSession::OnNewInternal() {
        * - set measurementState=stopped and call Update()
        */
 
-      /* TODO: Completly untested and not implemented completely
-      if (allOptionsValid->areAllOptionsValid() == false)
-        {
-            LOG_F(ERROR, "Tried to start aquisition, but not all options were valid");
-            measurementState = stopped;
-            Update();
-            break;
-        }
+        /* //TODO: Completly untested and not implemented completely
+        if (allOptionsValid->areAllOptionsValid() == false)
+            {
+                LOG_F(ERROR, "Tried to start aquisition, but not all options were valid");
+                measurementState = stopped;
+                Update();
+                return;
+            }
 
         measuredData->resetData();
         annotationData->resetData();

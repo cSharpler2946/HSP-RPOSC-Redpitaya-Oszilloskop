@@ -96,6 +96,7 @@ int rp_app_init(void)
     pContainerList.push_back(chosenDecoder);
     SRDChosenOptions *chosenOptions = new SRDChosenOptions("SRD_CHOSEN_OPTIONS", CBaseParameter::RW, "", false, &srdDecoderInst, allOptionsValid);
     pContainerList.push_back(chosenOptions);
+    SRDChannelMap *srdChannelMap = new SRDChannelMap("SRD_CHANNEL_MAP", CBaseParameter::RW, "", false, allOptionsValid, &srdDecoderInst, nullptr);
 
     // Dummy daten for ACQChosenOptions
     /*
