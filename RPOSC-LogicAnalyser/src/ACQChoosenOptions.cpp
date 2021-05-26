@@ -1,6 +1,7 @@
 using namespace std;
 
 #include "ACQChoosenOptions.hpp"
+#include <loguru.hpp>
 
 // TODO: TranslateFunction um strings auf richtigen Typen zu ändern.
 // Macht es sinn den Typen aus rp.h zu inkludieren
@@ -31,12 +32,13 @@ void ACQChoosenOptions::OnNewInternal()
 
 bool ACQChoosenOptions::ResetParameters(nlohmann::json jsonString)
 {
-  sampleRate = TranslateSampleRate(jsonString["samplerates_Hz"]);
-  sampleCount = TranslateSampleCount(jsonString["sampleCount"]);
-  sampleTime = TranslateSampleTime(jsonString["sampleTime"]);
-  pinState = TranslatePinState(jsonString["gain"]);
-  probeAttenuation = jsonString["probeAttenuation"];
-  decimation = jsonString["decimation"];
+  //sampleRate = TranslateSampleRate(jsonString["samplerates_Hz"]);
+  //sampleCount = TranslateSampleCount(jsonString["samplecount"]);
+  //sampleTime = TranslateSampleTime(jsonString["sampletime_us"]);
+  //pinState = TranslatePinState(jsonString["gain"]);
+  //probeAttenuation = jsonString["probeAttenuation"];
+  //decimation = jsonString["decimation"];
+  return true;
 }
 
 // Translate the userfriendly string into the fitting index
