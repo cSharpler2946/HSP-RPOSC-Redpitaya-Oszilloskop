@@ -164,8 +164,10 @@ class RedPitaya {
         }
       )
     }
-    var option_list_json = option_list.map(JSON.stringify)
-    signals.SRD_CHOSEN_OPTIONS = { value: option_list_json }
+    //var option_list_json = option_list.map(JSON.stringify)
+    signals.SRD_CHOSEN_OPTIONS = { value: JSON.stringify(option_list) }
+    console.log("chosen options to send:");
+    console.log(JSON.stringify({ signals: signals }));
     this.webSocket.send(JSON.stringify({ signals: signals }))
   }
 
