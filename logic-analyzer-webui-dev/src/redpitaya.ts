@@ -157,7 +157,7 @@ class RedPitaya {
   }
 
   sendChosenOptions(currentChosenOptions: { [id: string]: string }) {
-    var signals: any = {}
+    var parameters: any = {}
     var option_list = []
     for (var option_id in currentChosenOptions) {
         option_list.push(
@@ -167,9 +167,9 @@ class RedPitaya {
             }
         )
     }
-    var option_list_json = option_list.map(option => JSON.stringify(option))
-    signals.SRD_CHOSEN_OPTIONS = { value: option_list_json }
-    this.webSocket?.send(JSON.stringify({ signals: signals }))
+    //var option_list_json = option_list.map(option => JSON.stringify(option))
+    parameters.SRD_CHOSEN_OPTIONS = { value: JSON.stringify(option_list) }
+    this.webSocket?.send(JSON.stringify({ parameters: parameters }))
   }
 
   sendAcquirerOptions(chosenAcquirerOptions: Model.AcquirerChosenOptions) {

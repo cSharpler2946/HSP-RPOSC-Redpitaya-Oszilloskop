@@ -25,21 +25,6 @@ class RedPitayaStub {
     start() {
         var myself = this
 
-
-        /*$.get("localhost")
-            .done(function (dresult: any) {
-                if (dresult.status == 'OK') {
-                    myself.connectWebSocket()
-                } else if (dresult.status == 'ERROR') {
-                    console.error(dresult.reason ? dresult.reason : `Could not start the application.`)
-                } else {
-                    console.error(`Unknown error: Could not start the application.`)
-                }
-            })
-            .fail(function () {
-                console.error(`Failed to make a request.`)
-            })*/
-
         console.log("start().");
         var xhr = new XMLHttpRequest();
         xhr.open('GET', 'localhost');
@@ -130,7 +115,7 @@ class RedPitayaStub {
     }
 
     sendChosenOptions(currentChosenOptions: { [id: string]: string }) {
-        var signals: any = {}
+        var parameters: any = {}
         var option_list = []
         for (var option_id in currentChosenOptions) {
             option_list.push(
@@ -140,9 +125,9 @@ class RedPitayaStub {
                 }
             )
         }
-        var option_list_json = option_list.map(option => JSON.stringify(option))
-        signals.SRD_CHOSEN_OPTIONS = { value: option_list_json }
-        this.webSocket.send(JSON.stringify({ signals: signals }))
+        //var option_list_json = option_list.map(option => JSON.stringify(option))
+        parameters.SRD_CHOSEN_OPTIONS = { value: JSON.stringify(option_list) }
+        this.webSocket.send( JSON.stringify({ parameters: parameters }))
     }
 
     sendAcquirerOptions(chosenAcquirerOptions: Model.AcquirerChosenOptions) {
