@@ -79,18 +79,25 @@ int rp_app_init(void)
     //Initiaize all PContainers and SContainers
     decoderList = new SRDDecoderList("SRD_DECODER_LIST", 256, "");
     sContainerList.push_back(decoderList);
-    Startup * startup = new Startup("WEBSOCKET_OPENED", CBaseParameter::RW, "", false, decoderList);
+
+    ACQRequestedOptions *acqOptions = new ACQRequestedOptions("ACQ_REQUESTED_OPTIONS", CBaseParameter::RW, "", false);
+    pContainerList.push_back(acqOptions);
+
+    Startup * startup = new Startup("WEBSOCKET_OPENED", CBaseParameter::RW, "", false, decoderList, acqOptions);
     pContainerList.push_back(startup);
 
-    SRDRequestedOptions *reqOptions = new SRDRequestedOptions("SRD_REQUESTED_OPTIONS", 127, "", srdDecoderInst);
+    SRDRequestedOptions *reqOptions = new SRDRequestedOptions("SRD_REQUESTED_OPTIONS", 127, "", &srdDecoderInst);
     sContainerList.push_back(reqOptions);
-    SRDChannels *srdChannels = new SRDChannels("SRD_CHANNELS", 16, "", srdDecoderInst);
+    SRDChannels *srdChannels = new SRDChannels("SRD_CHANNELS", 16, "", &srdDecoderInst);
     sContainerList.push_back(srdChannels);
     AllOptionsValid *allOptionsValid = new AllOptionsValid("ALL_OPTIONS_VALID", CBaseParameter::RW, "", false);
     pContainerList.push_back(allOptionsValid);
-    ChosenDecoder *chosenDecoder = new ChosenDecoder("CHOSEN_DECODER", CBaseParameter::RW, "", false, reqOptions, srdChannels, srdSession, srdDecoderInst, allOptionsValid);
+    ChosenDecoder *chosenDecoder = new ChosenDecoder("CHOSEN_DECODER", CBaseParameter::RW, "", false, reqOptions, srdChannels, srdSession, &srdDecoderInst, allOptionsValid);
     pContainerList.push_back(chosenDecoder);
-
+    SRDChosenOptions *chosenOptions = new SRDChosenOptions("SRD_CHOSEN_OPTIONS", CBaseParameter::RW, "", false, &srdDecoderInst, allOptionsValid);
+    pContainerList.push_back(chosenOptions);
+    ACQChoosenOptions *acquirerChosenOptions = new ACQChoosenOptions("ACQ_CHOSEN_OPTIONS", CBaseParameter::RW, "", false, allOptionsValid);
+    pContainerList.push_back(acquirerChosenOptions);
     // Dummy daten for ACQChosenOptions
     /*
     ACQChoosenOptions *chosenOptions = new ACQChoosenOptions();
@@ -168,10 +175,12 @@ void OnNewParams(void){
  * Callback function, which gets called when signals changed.
  */
 void OnNewSignals(void){
+    /* //No need to call this function, as it does not work to receive signals
     for(SContainer *curr: sContainerList)
     {
         curr->OnNew();
     }
+    */
 }
 
 void PostUpdateSignals(void){}

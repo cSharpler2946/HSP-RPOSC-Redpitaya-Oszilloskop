@@ -6,40 +6,46 @@
 #include <string>
 #include <vector>
 
-SRDChannels::SRDChannels(std::string _name, int _size, std::string _def_value, srd_decoder_inst *_decoderInst):
+SRDChannels::SRDChannels(std::string _name, int _size, std::string _def_value, srd_decoder_inst **_decoderInst):
 SContainer(_name, _size, _def_value) {
     LOG_F(INFO, "SRDChannels instantiated");
     decoderInst = _decoderInst;
 }
 
 void SRDChannels::Update() {
-    LOG_F(INFO, "Updating SRDChannels"); //TODO: This function generates segementation fault
+    LOG_F(INFO, "Updating SRDChannels");
     std::vector<std::string> channelV;
 
-    GSList * i;
-    for (i = decoderInst->decoder->channels; i; i = i->next)
+    GSList * i = (*decoderInst)->decoder->channels;
+    if(i != nullptr)
     {
-        srd_channel * ch = static_cast<srd_channel *>(i->data);
-        nlohmann::json tmp;
-        tmp["id"]=ch->id;
-        tmp["name"]=ch->name;
-        tmp["desc"]=ch->desc;
-        tmp["isOptional"]=false;
+        for (; i; i = i->next)
+        {
+            srd_channel * ch = static_cast<srd_channel *>(i->data);
+            nlohmann::json tmp;
+            tmp["id"]=ch->id;
+            tmp["name"]=ch->name;
+            tmp["desc"]=ch->desc;
+            tmp["isOptional"]=false;
 
-        channelV.push_back(tmp.dump());
+            channelV.push_back(tmp.dump());
+        }
     }
 
-    GSList * j;
-    for (j = decoderInst->decoder->opt_channels; j; j = j->next)
+    GSList * j = (*decoderInst)->decoder->opt_channels;
+    if(j != nullptr)
     {
-        srd_channel * ch = static_cast<srd_channel *>(i->data);
-        nlohmann::json tmp;
-        tmp["id"]=ch->id;
-        tmp["name"]=ch->name;
-        tmp["desc"]=ch->desc;
-        tmp["isOptional"]=true;
+        for (; j; j = j->next)
+        {
+            srd_channel * ch = static_cast<srd_channel *>(j->data);
+            nlohmann::json tmp;
+            tmp["id"]=ch->id;
+            tmp["name"]=ch->name;
+            tmp["desc"]=ch->desc;
+            tmp["isOptional"]=true;
 
-        channelV.push_back(tmp.dump());
+            channelV.push_back(tmp.dump());
+        }
     }
 
     VALUE->Set(channelV);

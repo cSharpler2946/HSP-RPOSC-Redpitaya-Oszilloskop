@@ -22,7 +22,7 @@
    //CBooleanParameter startAcquisition("START_ACQUISITION", CBaseParameter::AccessMode::RW, false, false);
 
   // base constructor with default parameters
-  Acquirer::Acquirer(int sampleRate = 1, int decimation = 1, int pinState = 1, ACQChoosenOptions *choosenOptions = new ACQChoosenOptions()){}
+  //Acquirer::Acquirer(int sampleRate = 1, int decimation = 1, int pinState = 1, ACQChoosenOptions *choosenOptions = new ACQChoosenOptions()){}
   Acquirer::Acquirer(){}
   Acquirer::Acquirer(ACQChoosenOptions *_choosenOptions)
   {
@@ -38,7 +38,7 @@
     rp_GenReset();
     rp_GenFreq(RP_CH_1, 20000.0);
     rp_GenAmp(RP_CH_1, 1.0);
-    rp_GenWaveform(RP_CH_1, RP_WAVEFORM_SINE);
+    rp_GenWaveform(RP_CH_1, RP_WAVEFORM_SIN);
     rp_GenOutEnable(RP_CH_1);*/
 
     // needed variables

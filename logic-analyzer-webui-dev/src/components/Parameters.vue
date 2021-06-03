@@ -1,5 +1,5 @@
 <template>
-    <form method="post">
+  <div>
         <div class="parameter-wrapper">
         <label>Protocol decoder:</label>
         <select class="form-select" aria-label="Choose a protocol." v-model="selectedDecoder" v-on:change="$emit('selectedDecoderChanged', selectedDecoder)">
@@ -64,8 +64,7 @@
             </div>
             </div>
         </div-->
-
-    </form>
+  </div>
 </template>
 
 <script lang="ts">

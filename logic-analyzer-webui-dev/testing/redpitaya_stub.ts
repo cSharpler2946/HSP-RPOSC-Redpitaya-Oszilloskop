@@ -1,4 +1,4 @@
-import $ from '../src/libs/jquery-3.5.1.min.js'
+import * as $ from "jquery";
 import pako from '../src/libs/pako.js'
 import * as Model from '../src/models/model'
 
@@ -25,6 +25,25 @@ class RedPitayaStub {
     start() {
         var myself = this
 
+        console.log("start().");
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'localhost');
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                console.log("start is good.")
+                myself.connectWebSocket();
+            }
+            else {
+                console.log("start is not good.")
+                console.error(`Unknown error: Could not start the application.`)
+            }
+        };
+        xhr.send();
+        console.log("end start().");
+    }
+
+    connectWebSocket() {
+        var myself = this
         if (this.webSocket) {
             this.webSocket.onopen = function () {
                 console.log('Socket opened')
@@ -70,7 +89,7 @@ class RedPitayaStub {
                             console.log('received requested options')
                             Object.assign(myself.acquirerOptions, acqReqOptions)
                             // myself.acquirerOptions = acqReqOptions;
-                            console.log(myself.acquirerOptions.samplerates)
+                            console.log(myself.acquirerOptions.samplerates_Hz)
                         }
                     }
 
@@ -96,7 +115,7 @@ class RedPitayaStub {
     }
 
     sendChosenOptions(currentChosenOptions: { [id: string]: string }) {
-        var signals: any = {}
+        var parameters: any = {}
         var option_list = []
         for (var option_id in currentChosenOptions) {
             option_list.push(
@@ -106,9 +125,9 @@ class RedPitayaStub {
                 }
             )
         }
-        var option_list_json = option_list.map(option => JSON.stringify(option))
-        signals.SRD_CHOSEN_OPTIONS = { value: option_list_json }
-        this.webSocket.send(JSON.stringify({ signals: signals }))
+        //var option_list_json = option_list.map(option => JSON.stringify(option))
+        parameters.SRD_CHOSEN_OPTIONS = { value: JSON.stringify(option_list) }
+        this.webSocket.send( JSON.stringify({ parameters: parameters }))
     }
 
     sendAcquirerOptions(chosenAcquirerOptions: Model.AcquirerChosenOptions) {
@@ -119,7 +138,7 @@ class RedPitayaStub {
         this.webSocket.send(JSON.stringify({ parameters: parameters }));
     }
 
-    receiveData () {
+    receiveData() {
         console.log("data received.");
 
         testData.data = testData.data.slice(0, 32)

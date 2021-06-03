@@ -76,7 +76,8 @@
           <DecodedData/>
         </div>
         <div class="tab-pane fade" id="nav-acquirer-parameters" role="tabpanel" aria-labelledby="nav-acquirer-parameters-tab">
-          <AcquirerParameters :requestedOptions="acquirerRequestedOptions"/>
+          <AcquirerParameters :requestedOptions="acquirerRequestedOptions"
+            v-on:chosenAcquirerOptionsChanged="onChosenAcquirerOptionsChanged"/>
         </div>
       </div>
     </div>
@@ -90,7 +91,7 @@ import ChartScroller from './../components/ChartScroller.vue'
 import Parameters from './../components/Parameters.vue'
 import DecodedData from './../components/DecodedData.vue'
 import AcquirerParameters from './../components/AcquirerParameters.vue'
-import RedPitaya from './../redpitaya.js'
+import RedPitaya from './../redpitaya.ts'
 import RedPitayaStub from './../../testing/redpitaya_stub.ts'
 
 export default {
@@ -176,8 +177,8 @@ export default {
   },
   mounted () {
     // Build up WebSocket-Connection with RedPitaya in here.
-    // this.redpitaya = new RedPitaya(this.app_id, this.get_app_url, this.get_socket_url, this.decoders, this.requestedOptions, this.decoderChannels);
-    this.redpitaya = new RedPitayaStub(this.decoders, this.requestedOptions, this.decoderChannels, this.acquirerRequestedOptions);
+    this.redpitaya = new RedPitaya(this.app_id, this.get_app_url, this.get_socket_url, this.decoders, this.requestedOptions, this.decoderChannels, this.acquirerRequestedOptions);
+    //this.redpitaya = new RedPitayaStub(this.decoders, this.requestedOptions, this.decoderChannels, this.acquirerRequestedOptions);
     this.redpitaya.start();
   },
   components: {

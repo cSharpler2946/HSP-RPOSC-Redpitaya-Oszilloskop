@@ -1,9 +1,7 @@
 using namespace std;
-#include<string>
-#include<vector>
-#include<algorithm>
+
 #include "ACQChoosenOptions.hpp"
-#include "AcquirerConstants.hpp"
+#include <loguru.hpp>
 
 // TODO: TranslateFunction um strings auf richtigen Typen zu ändern.
 // Macht es sinn den Typen aus rp.h zu inkludieren
@@ -15,10 +13,41 @@ int pinState;   // needed to set the gain together with the channel
 string probeAttenuation;
 
 
-ACQChoosenOptions::ACQChoosenOptions(){}
+ACQChoosenOptions::ACQChoosenOptions(std::string name, CBaseParameter::AccessMode am, std::string defaultVal, int fpga_update, AllOptionsValid *_allOptionsValid) : PContainer(name, am, defaultVal, fpga_update)
+{
+  allOptionsValid = _allOptionsValid;
+}
+
+void ACQChoosenOptions::OnNewInternal()
+{
+  LOG_F(INFO, "update parameters for acquisition!");
+
+  nlohmann::json tmp = nlohmann::json::parse(VALUE->Value());
+  if(ResetParameters(tmp))
+  {
+    LOG_F(INFO, "Successfully updated parameter values for Aquirer!");
+    LOG_F(INFO, "SampleRate: ", sampleRate);
+  }
+}
+
+bool ACQChoosenOptions::ResetParameters(nlohmann::json jsonString)
+{
+  double tmp = jsonString["samplerate_Hz"];
+  LOG_F(INFO, "samplerate: %f", tmp);
+  //std:string test = jsonString["samplerate_Hz"];
+  //LOG_F(INFO, "%s", test);
+  //sampleRate = TranslateSampleRate(jsonString["samplerate_Hz"]);
+  //LOG_F(INFO, "hallo"jsonString["samplerate_Hz"]);
+  //sampleCount = TranslateSampleCount(jsonString["samplecount"]);
+  //sampleTime = TranslateSampleTime(jsonString["sampletime_us"]);
+  //pinState = TranslatePinState(jsonString["gain"]);
+  //probeAttenuation = jsonString["probeAttenuation"];
+  //decimation = jsonString["decimation"];
+  return true;
+}
 
 // Translate the userfriendly string into the fitting index
-int ACQChoosenOptions::TranslateSampleRate(string sampleRate){
+uint ACQChoosenOptions::TranslateSampleRate(double sampleRate){
   int index = -1;
   auto found = find(AcquirerConstants::supportedSampleRates.begin(), AcquirerConstants::supportedSampleRates.end(), sampleRate);
 
@@ -35,15 +64,15 @@ int ACQChoosenOptions::TranslateSampleRate(string sampleRate){
 }
 
 // Translate the userfriendly string into the fitting index
-int ACQChoosenOptions::TranslateDecimation(string decimation)
+uint ACQChoosenOptions::TranslateDecimation(int decimation)
 {
   int index = -1;
-  auto found = find(AcquirerConstants::supportedSampleRates.begin(), AcquirerConstants::supportedSampleRates.end(), decimation);
+  auto found = find(AcquirerConstants::supportedDecimations.begin(), AcquirerConstants::supportedDecimations.end(), decimation);
 
   // again check in the vector for the string and use the index later for initialisation
-  if(found != AcquirerConstants::supportedSampleRates.end())
+  if(found != AcquirerConstants::supportedDecimations.end())
   {
-    index = found - AcquirerConstants::supportedSampleRates.begin();
+    index = found - AcquirerConstants::supportedDecimations.begin();
   }
   else{
     index = -1;
@@ -52,13 +81,13 @@ int ACQChoosenOptions::TranslateDecimation(string decimation)
 }
 
 // Translate the userfriendly string into the fitting index
-int ACQChoosenOptions::TranslatePinState(string pinState)
+uint8_t ACQChoosenOptions::TranslatePinState(string pinState)
 {
   int index = -1;
-  auto found = find(AcquirerConstants::supportedSampleRates.begin(), AcquirerConstants::supportedSampleRates.end(), pinState);
-  if(found != AcquirerConstants::supportedSampleRates.end())
+  auto found = find(AcquirerConstants::supportedPinState.begin(), AcquirerConstants::supportedPinState.end(), pinState);
+  if(found != AcquirerConstants::supportedPinState.end())
   {
-    index = found - AcquirerConstants::supportedSampleRates.begin();
+    index = found - AcquirerConstants::supportedPinState.begin();
   }
   else{
     index = -1;
@@ -68,11 +97,11 @@ int ACQChoosenOptions::TranslatePinState(string pinState)
 }
 
 // convert counter string to int and check if its in the range of the possible buffersize
-uint32_t ACQChoosenOptions::TranslateSampleCount(string count)
+uint32_t ACQChoosenOptions::TranslateSampleCount(int count)
 {
   uint32_t index = -1;
   // convert the string into an integer and check if it's in the range
-  index = std::stoi(count);
+  index = count;
   if(index > 0 && index < 16 *1024)
   {
     return index;
@@ -80,4 +109,14 @@ uint32_t ACQChoosenOptions::TranslateSampleCount(string count)
   else{
     return -1;
   }
+}
+
+// convert time string to int and check if its in the range.
+uint ACQChoosenOptions::TranslateSampleTime(string time)
+{
+  uint32_t index = -1;
+  // convert the string into an integer and check if it's in the range
+  index = std::stoi(time);
+  // TODO: calculation how long we can sample with the defined sampleRate and the defined buffersize
+    return index;
 }

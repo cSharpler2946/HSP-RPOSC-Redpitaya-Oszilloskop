@@ -8,8 +8,9 @@ using namespace std;
 class AcquirerConstants
 {
     public:
-    static vector<string> supportedSampleRates;
+    static vector<double> supportedSampleRates;
     static vector<string> availableChannels;
-    static vector<string> supportedDecimations;
+    static vector<int> supportedDecimations;
     static vector<string> supportedPinState;
+    static int maxSamples;
 };
