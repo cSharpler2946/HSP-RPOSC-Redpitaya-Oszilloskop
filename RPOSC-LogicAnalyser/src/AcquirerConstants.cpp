@@ -13,4 +13,4 @@
      1, 8, 64, 1024, 8192, 65536
    };
    std::vector<std::string> AcquirerConstants::supportedPinState = {"LOW", "HIGH"};
-  std::vector<int> AcquirerConstants::maxSamples = {16384};
+   int AcquirerConstants::maxSamples = 16384;

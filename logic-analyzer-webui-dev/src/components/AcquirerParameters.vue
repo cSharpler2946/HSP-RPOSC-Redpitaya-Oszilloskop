@@ -94,11 +94,6 @@ export default class AcquirerParameters extends Vue {
 
     possibleSampleRatesWithUnit: Math.Unit[] = [];
 
-    constructor() {
-        super();
-        Math.createUnit("Samples", {prefixes: })
-    }
-
     set samplerate_formatted(newSamplerate: Math.Unit) {
         this.samplerate_Hz = newSamplerate.toNumber("Hz");
     }

@@ -12,5 +12,5 @@ class AcquirerConstants
     static vector<string> availableChannels;
     static vector<int> supportedDecimations;
     static vector<string> supportedPinState;
-    static vector<int> maxSamples;
+    static int maxSamples;
 };

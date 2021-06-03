@@ -32,7 +32,12 @@ void ACQChoosenOptions::OnNewInternal()
 
 bool ACQChoosenOptions::ResetParameters(nlohmann::json jsonString)
 {
-  //sampleRate = TranslateSampleRate(jsonString["samplerates_Hz"]);
+  double tmp = jsonString["samplerate_Hz"];
+  LOG_F(INFO, "samplerate: %f", tmp);
+  //std:string test = jsonString["samplerate_Hz"];
+  //LOG_F(INFO, "%s", test);
+  //sampleRate = TranslateSampleRate(jsonString["samplerate_Hz"]);
+  //LOG_F(INFO, "hallo"jsonString["samplerate_Hz"]);
   //sampleCount = TranslateSampleCount(jsonString["samplecount"]);
   //sampleTime = TranslateSampleTime(jsonString["sampletime_us"]);
   //pinState = TranslatePinState(jsonString["gain"]);
