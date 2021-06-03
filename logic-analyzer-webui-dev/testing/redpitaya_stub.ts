@@ -79,7 +79,7 @@ class RedPitayaStub {
                 } catch (e) {
                     console.log(e)
                 } finally {
-                    console.log('')
+                    console.log('------------------------------------------')
                 }
             }
         }
@@ -121,6 +121,9 @@ class RedPitayaStub {
 
     receiveData () {
         console.log("data received.");
+
+        testData.data = testData.data.slice(0, 32)
+        testData.name = testData.acqChannel;
         return testData;
     }
 }
