@@ -24,22 +24,7 @@ class RedPitayaStub {
 
     start() {
         var myself = this
-
-        console.log("start().");
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'localhost');
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                console.log("start is good.")
-                myself.connectWebSocket();
-            }
-            else {
-                console.log("start is not good.")
-                console.error(`Unknown error: Could not start the application.`)
-            }
-        };
-        xhr.send();
-        console.log("end start().");
+        myself.connectWebSocket();
     }
 
     connectWebSocket() {
@@ -68,6 +53,7 @@ class RedPitayaStub {
                             var new_decoder_list = decoders_json_repr.map(JSON.parse)
                             myself.decoders.splice(0)
                             myself.decoders.push(...new_decoder_list)
+                            console.log(myself.decoders);
                         }
 
                         if (receive.signals.SRD_REQUESTED_OPTIONS) {
