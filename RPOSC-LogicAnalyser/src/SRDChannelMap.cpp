@@ -9,7 +9,7 @@ PContainer(name, am, defaultVal, fpga_update) {
 }
 
 void SRDChannelMap::OnNewInternal() {
-    /* TODO: Implement OnNewInternal for SRDChannelMap
+    /*
     * Read the new data from VALUE
     * Interpret json
     * Check if srdChannel and acqChannel exists
