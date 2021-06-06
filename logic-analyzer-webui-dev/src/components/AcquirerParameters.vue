@@ -15,12 +15,12 @@
             <label class="form-label">
                 Samples to measure
             </label>
-            <input type="number" class="form-control form-control-sm" v-model="samplecount"/>
+            <input class="form-control form-control-sm" v-model.lazy="samplecount_formatted"/>
             <br/>
             <label class="form-label">
                 Time to measure
             </label>
-            <input type="number" class="form-control form-control-sm" v-model="sampletime_us"/>
+            <input class="form-control form-control-sm" v-model.lazy="sampletime_formatted"/>
             <br/>
             <label class="form-label">
                 Gain
@@ -67,6 +67,9 @@ import * as Math from 'mathjs';
         required: true
     }
   },
+  beforeCreate () {
+    var samples = Math.createUnit("Samples", {prefixes: "binary_short"});
+  },
   watch: {
     requestedOptions: {
       handler: function (currentOptions, old) {
@@ -102,8 +105,25 @@ export default class AcquirerParameters extends Vue {
         return Math.unit(this.samplerate_Hz, "Hz");
     }
 
-    set samplecount_formatted(newSamplecount: Math.Unit) {
-        this.samplecount = newSamplecount.toNumber("")
+    set samplecount_formatted(newSamplecount: string) {
+        try {
+            this.samplecount = Math.unit(newSamplecount).toNumber("Samples");
+        }
+        catch (e) {
+            this.samplecount = Math.unit(parseFloat(newSamplecount), "Samples").toNumber("Samples");
+        }
+    }
+
+    get samplecount_formatted(): string {
+        return Math.unit(this.samplecount, "Samples").format({});
+    }
+
+    set sampletime_formatted(newSampletime: string) {
+        this.sampletime_us = Math.unit(newSampletime).toNumber("us");
+    }
+
+    get sampletime_formatted(): string {
+        return Math.unit(this.sampletime_us, "us").format({});
     }
 
     get sampletime_us(): number {
@@ -111,7 +131,7 @@ export default class AcquirerParameters extends Vue {
     }
 
     set sampletime_us(newValue: number) {
-        this.samplecount = newValue * this.samplerate_Hz / 1e6;
+        this.samplecount = Math.round(newValue * this.samplerate_Hz / 1e6);
     }
 
     get chosenOptions(): AcquirerChosenOptions {

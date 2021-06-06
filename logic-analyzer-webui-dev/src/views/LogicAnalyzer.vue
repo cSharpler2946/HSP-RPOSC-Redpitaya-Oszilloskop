@@ -170,8 +170,9 @@ export default {
         // console.log(e.decoderChannel);
     },
     onChosenAcquirerOptionsChanged: function(chosenAcquirerOptions) {
-        // console.log("current acquirer options from callback:");
-        // console.log(chosenAcquirerOptions);
+        console.log("current acquirer options from callback:");
+        console.log(chosenAcquirerOptions);
+        console.log(typeof(chosenAcquirerOptions.samplecount))
         this.redpitaya.sendAcquirerOptions(chosenAcquirerOptions);
     }
   },
