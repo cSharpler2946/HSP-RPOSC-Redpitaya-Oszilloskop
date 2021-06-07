@@ -62,7 +62,13 @@ export default {
         return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
             (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
         );
-      }
+      },
+       getSize: function(){
+         return {
+           width: document.getElementById(this.get_id).offsetWidth,
+           height: document.getElementById(this.get_id).offsetHeight
+         }
+       },
   },
   props: ['options', 'data'],
   methods: {
@@ -99,8 +105,8 @@ export default {
       var paths = this.paths;
 
       let opts = {
-					width: 600,
-					height: 400,
+					width: this.getSize.width,
+					height: this.getSize.height,
 					cursor: {
 						points: {
 							size:   (u, seriesIdx)       => u.series[seriesIdx].points.size * 1.5,
@@ -168,8 +174,8 @@ export default {
   },
   mounted () {
 
-    var width = document.getElementById(this.get_id).offsetWidth;
-    this.options.width = width;
+    // var width = document.getElementById(this.get_id).offsetWidth;
+    // this.options.width = width;
 
     const { linear, stepped, bars, spline } = uPlot.paths;
 
