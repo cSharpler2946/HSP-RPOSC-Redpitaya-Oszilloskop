@@ -40,8 +40,8 @@ class RedPitayaStub {
                 console.log('Websocket error: ', ev)
             }
             this.webSocket.onmessage = function (ev) {
-                console.log('Myself:')
-                console.log(myself)
+                // console.log('Myself:')
+                // console.log(myself)
                 try {
                     var data = new Uint8Array(ev.data)
                     var inflate = pako.inflate(data)
@@ -79,8 +79,8 @@ class RedPitayaStub {
                         }
                     }
 
-                    console.log('received:')
-                    console.log(receive)
+                    // console.log('received:')
+                    // console.log(receive)
                 } catch (e) {
                     console.log(e)
                 } finally {

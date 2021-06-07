@@ -27,7 +27,7 @@
         
       </div>
 
-      <Channel v-for="n in (decoderChannels.length)" :key="n" 
+      <Channel v-for="n in (decoderChannels.length + 1)" :key="n" 
       :channelId="n" :channelName="`Channel ${n}`" 
       :decoderChannels="decoderChannels"
       :channelData="decodedData"
