@@ -27,16 +27,18 @@
         
       </div>
 
-      <Channel v-for="n in (decoderChannels.length + 1)" :key="n" 
+      <Channel v-for="n in (decoderChannels.length)" :key="n" 
       :channelId="n" :channelName="`Channel ${n}`" 
       :decoderChannels="decoderChannels"
       :channelData="decodedData"
-      v-on:decoder-channel-changed="onDecoderChannelChanged"/>
+      v-on:decoder-channel-changed="onDecoderChannelChanged"
+      @uplot="persistChart"/>
 
       <div class="chart-scroller row">
         <div class="chart-scroller-offset col-md-3 col-12"></div>
         <div class="chart col-md-9 col-12">          
-          <ChartScroller v-if="decoderChannels.length > 0" />
+          <!-- <ChartScroller v-if="decoderChannels.length > 0" /> -->
+            <UplotRangerGrip v-if="decoderChannels.length > 0" :id="generate_uid" :uPlotCharts="uPlotCharts" />
         </div>
       </div>
 
@@ -88,6 +90,7 @@
 <script>
 import Channel from './../components/Channel.vue'
 import ChartScroller from './../components/ChartScroller.vue'
+import UplotRangerGrip from './../components/UplotRangerGrip.vue'
 import Parameters from './../components/Parameters.vue'
 import DecodedData from './../components/DecodedData.vue'
 import AcquirerParameters from './../components/AcquirerParameters.vue'
@@ -121,6 +124,7 @@ export default {
         name: "empty",
         data: []
       }],
+      uPlotCharts: [],
     }
   },
   computed: {
@@ -134,6 +138,9 @@ export default {
     toggleRightPanelIcon() {
       return { transform: 'rotate(' + this.rightPanelToggler.iconTransform + 'turn)' };
     },
+    generate_uid(){
+      return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c => (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16));
+    }
   },
   methods:{
     onStartAnalyzing(){
@@ -174,6 +181,9 @@ export default {
         console.log(chosenAcquirerOptions);
         console.log(typeof(chosenAcquirerOptions.samplecount))
         this.redpitaya.sendAcquirerOptions(chosenAcquirerOptions);
+    },
+    persistChart: function(e){
+      this.uPlotCharts.push(e);
     }
   },
   mounted () {
@@ -185,6 +195,7 @@ export default {
   components: {
     Channel,
     ChartScroller,
+    UplotRangerGrip,
     Parameters,
     DecodedData,
     AcquirerParameters,

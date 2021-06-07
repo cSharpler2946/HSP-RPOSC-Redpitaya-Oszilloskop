@@ -26,7 +26,7 @@
 
         <div class="signal-box col-md-9 col-12">
           
-          <UplotChart :options="chartOptions" :data="testData"></UplotChart>
+          <UplotChart :options="chartOptions" :data="testData" :id="channelId" @uplot="returnUplotToParent"></UplotChart>
 
         </div>
     </div>
@@ -152,6 +152,9 @@ export default {
         decoderChannel: this.decoderChannel
       }
       this.$emit('decoder-channel-changed', eventParams)
+    },
+    returnUplotToParent: function(e){
+        this.$emit("uplot", e);
     }
   },
   beforeMount () {

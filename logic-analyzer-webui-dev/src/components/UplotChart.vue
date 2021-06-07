@@ -1,5 +1,5 @@
 <template>
-    <div v-bind:id="get_id">
+    <div v-bind:id="'uplotChart-'+id">
 
     </div>
 </template>
@@ -57,20 +57,7 @@ export default {
       _spline: null,
     }
   },
-  computed: {
-      get_id(){
-        return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
-            (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
-        );
-      },
-       getSize: function(){
-         return {
-           width: document.getElementById(this.get_id).offsetWidth,
-           height: document.getElementById(this.get_id).offsetHeight
-         }
-       },
-  },
-  props: ['options', 'data'],
+  props: ['options', 'data', 'id'],
   methods: {
     paths: function (u, seriesIdx, idx0, idx1, extendGap, buildClip){
           let s = u.series[seriesIdx];
@@ -105,8 +92,8 @@ export default {
       var paths = this.paths;
 
       let opts = {
-					width: this.getSize.width,
-					height: this.getSize.height,
+					width: this.getSize().width,
+					height: this.getSize().height,
 					cursor: {
 						points: {
 							size:   (u, seriesIdx)       => u.series[seriesIdx].points.size * 1.5,
@@ -121,7 +108,7 @@ export default {
 					scales: {
 						x: {
 							time: false,
-						},
+						}
 					},
 					axes: [
 						{
@@ -168,14 +155,18 @@ export default {
 
         const finalOptions = { ...opts, ...this.options };
 
-				return new uPlot(finalOptions, this.data, document.getElementById(this.get_id));
+				return new uPlot(finalOptions, this.data, document.getElementById('uplotChart-'+this.id));
     },
+    getSize: function(){
+           console.log(this.id);
 
+         return {
+           width: document.getElementById('uplotChart-'+this.id).offsetWidth,
+           height: 100
+        }
+    },
   },
   mounted () {
-
-    // var width = document.getElementById(this.get_id).offsetWidth;
-    // this.options.width = width;
 
     const { linear, stepped, bars, spline } = uPlot.paths;
 
@@ -195,6 +186,12 @@ export default {
     };
     
     this.uplot = this.makeChart(cfg);
+
+    window.addEventListener("resize", e => {
+      this.uplot.setSize(this.getSize());
+    });
+
+    this.$emit('uplot', this.uplot);
   },
   components: {
     uPlot
@@ -203,18 +200,17 @@ export default {
 </script>
 
 <style lang="scss">
+@import './../styles/_variables';
 
 .u-legend .u-marker{
   border-radius: 3px;
   border-width: 1px !important;
 }
 
-.uplot{
-  width: 100%;
-}
-
-.u-wrap{
-  width: 100% !important;
+.u-select {
+  background: rgba(0,0,0,0.25);
+  pointer-events: all;
+  cursor: move;
 }
 
 </style>
