@@ -109,10 +109,7 @@ export default {
 					],
 
       },
-      testData: [
-        Array.from(Array(16000).keys()),
-        measureData.data
-      ]   
+      testData: null,
     }
   },
   props: {
@@ -157,8 +154,44 @@ export default {
       this.$emit('decoder-channel-changed', eventParams)
     }
   },
-  mounted () {
+  beforeMount () {
 
+    // FOR TESTING
+    if(this.channelId == '1'){
+      this.testData = [
+        Array.from(Array(16000).keys()),
+        measureData.data
+      ]   
+    }
+    else if(this.channelId == '2'){
+      this.testData = [
+        Array.from(Array(16000).keys()),
+        new Array(16000).fill(0).map(function(val, i){
+          if(i % 2 != 0){
+            return 1;
+          }
+          else{
+            return 0;
+          }
+        })
+      ]
+    }
+    else if(this.channelId == '3'){
+      this.testData = [
+        Array.from(Array(16000).keys()),
+        new Array(16000).fill(0)
+      ]
+    }
+    // - FOR TESTING
+  },
+  mounted(){
+    if(this.channelId == '3'){
+      var canvas = document.getElementsByTagName('canvas')[2];
+      var c = canvas.getContext('2d');
+      c.fillStyle = "black";
+      c.fillRect(10, 10, 100, 100);
+
+    }
   },
   components: {
     UplotChart
