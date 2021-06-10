@@ -48,6 +48,12 @@
                     </select>
                 </div>
             </div>
+            <br/>
+            <label class="form-label" style="color:red" v-show="samplecountInvalid">
+                Error: The Samples to measure/time to sample is invalid.<br/>
+                The maximum sample count is {{ maxSamplecount }}.<br/>
+                At the current sample rate this translates to a maximum sample time of {{ maxSampletime_formatted }}.<br/>
+            </label>
         </div>
     </div>
 </template>
@@ -81,7 +87,9 @@ import * as Math from 'mathjs';
     },
     chosenOptions: {
       handler: function (currentOptions, old) {
-        this.$emit('chosenAcquirerOptionsChanged', currentOptions)
+        if(!this.samplecountInvalid) {
+            this.$emit('chosenAcquirerOptionsChanged', currentOptions);
+        }
       },
       deep: true
     },
@@ -92,6 +100,7 @@ export default class AcquirerParameters extends Vue {
 
     samplerate_Hz: number = 0;
     samplecount: number = 0;
+    maxSamplecount: number = 0;
     gainPerChannel: Record<string, string> = {};
     probeAttenuationPerChannel: Record<string, string> = {};
 
@@ -127,11 +136,15 @@ export default class AcquirerParameters extends Vue {
     }
 
     get sampletime_us(): number {
-        return 1e6 * this.samplecount / this.samplerate_Hz;
+        return this.samplecount_to_sampletime_us(this.samplecount);
     }
 
     set sampletime_us(newValue: number) {
         this.samplecount = Math.round(newValue * this.samplerate_Hz / 1e6);
+    }
+
+    samplecount_to_sampletime_us(samplecount: number): number {
+        return 1e6 * samplecount / this.samplerate_Hz;
     }
 
     get chosenOptions(): AcquirerChosenOptions {
@@ -144,13 +157,26 @@ export default class AcquirerParameters extends Vue {
         }
     }
 
+    get samplecountInvalid(): boolean {
+        return this.samplecount <= 0
+            || this.samplecount > this.maxSamplecount;
+    }
+
+    get maxSampletime_us(): number {
+        return this.samplecount_to_sampletime_us(this.maxSamplecount);
+    }
+
+    get maxSampletime_formatted(): string {
+        return Math.unit(this.maxSampletime_us, "us").format({});
+    }
+
     setDefaultOptions(requestedOptions: AcquirerRequestedOptions): void {
         var _this = this;
         requestedOptions.samplerates_Hz.forEach(function(samplerate) {
             _this.possibleSampleRatesWithUnit.push(Math.unit(samplerate, "Hz"));
         });
         this.samplerate_Hz = requestedOptions.samplerates_Hz[0];
-        this.samplecount = requestedOptions.maxSampleCount;
+        this.samplecount = this.maxSamplecount = requestedOptions.maxSampleCount;
         
         requestedOptions.availableChannels.forEach(function(channelName) {
             _this.gainPerChannel[channelName] = requestedOptions.gains[0];
