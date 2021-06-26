@@ -5,7 +5,7 @@ using namespace std;
 
 // TODO: TranslateFunction um strings auf richtigen Typen zu ändern.
 // Macht es sinn den Typen aus rp.h zu inkludieren
-int sampleRate; //index to set sampleCount in rp.h
+double sampleRate; //index to set sampleCount in rp.h
 int decimation; //index to set decimation in rp.h
 uint32_t sampleCount; // index to set buffer size to read the data into
 string sampleTime; // time to sample (used to calculate if sampleCount and decimation/rate are fitting)
@@ -32,12 +32,7 @@ void ACQChoosenOptions::OnNewInternal()
 
 bool ACQChoosenOptions::ResetParameters(nlohmann::json jsonString)
 {
-  double tmp = jsonString["samplerate_Hz"];
-  LOG_F(INFO, "samplerate: %f", tmp);
-  //std:string test = jsonString["samplerate_Hz"];
-  //LOG_F(INFO, "%s", test);
-  //sampleRate = TranslateSampleRate(jsonString["samplerate_Hz"]);
-  //LOG_F(INFO, "hallo"jsonString["samplerate_Hz"]);
+  sampleRate = jsonString["samplerate_Hz"];
   //sampleCount = TranslateSampleCount(jsonString["samplecount"]);
   //sampleTime = TranslateSampleTime(jsonString["sampletime_us"]);
   //pinState = TranslatePinState(jsonString["gain"]);
