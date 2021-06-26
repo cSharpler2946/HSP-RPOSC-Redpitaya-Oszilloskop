@@ -33,3 +33,8 @@ export interface AcquirerChosenOptions {
     gainPerChannel: Record<string, string>,
     probeAttenuationPerChannel: Record<string, string>,
 }
+
+export interface DecoderChannelTuple {
+    acqChannel: string,
+    srdChannel: string
+}

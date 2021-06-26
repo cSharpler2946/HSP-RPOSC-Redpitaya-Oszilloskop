@@ -74,7 +74,12 @@ import * as Math from 'mathjs';
     }
   },
   beforeCreate () {
-    var samples = Math.createUnit("Samples", {prefixes: "binary_short"});
+    try {
+        Math.createUnit("Samples", {prefixes: "binary_short"});
+    }
+    catch {
+        
+    }
   },
   watch: {
     requestedOptions: {

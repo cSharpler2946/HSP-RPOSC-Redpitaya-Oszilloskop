@@ -12,6 +12,8 @@ class RedPitaya {
   app_url: string
   socket_url: string
 
+  channelMap: Record<string, string> = {}
+
   constructor (app_id: string, app_url: string, socket_url: string,
     decoders: Model.Decoder[], requestedOptions: Model.DecoderOption[],
     decoderChannels: Model.DecoderChannel[], acquirerOptions: Model.AcquirerRequestedOptions) {
@@ -179,6 +181,20 @@ class RedPitaya {
     parameters.ACQ_CHOSEN_OPTIONS = { value: innerJson };
     this.webSocket?.send(JSON.stringify({ parameters: parameters }));
   }
+
+  sendDecoderChannel(acquirerChannel: string, decoderChannel: string)
+    {
+        this.channelMap[acquirerChannel] = decoderChannel;
+        var tupleList: Model.DecoderChannelTuple[] = []
+        for(var acqChannel in this.channelMap) {
+            tupleList.push({acqChannel: acqChannel, srdChannel: this.channelMap[acqChannel]});
+        }
+
+        var srdChannelMap = JSON.stringify(tupleList);
+        var parameters: any = {};
+        parameters.SRD_CHANNEL_MAP = {value: srdChannelMap};
+        this.webSocket?.send(JSON.stringify({parameters: parameters}));
+    }
 
   /*receiveData (arg1, arg2) {
     // Holst daten

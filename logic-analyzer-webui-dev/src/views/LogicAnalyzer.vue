@@ -165,9 +165,10 @@ export default {
         this.redpitaya.sendChosenOptions(currentChosenOptions);
     },
     onDecoderChannelChanged: function(e) {
-        // console.log("Decoder channel changed:");
-        // console.log(e.channelName);
-        // console.log(e.decoderChannel);
+        console.log("Decoder channel changed:");
+        console.log(e.channelName);
+        console.log(e.decoderChannel);
+        this.redpitaya.sendDecoderChannel(e.channelName, e.decoderChannel);
     },
     onChosenAcquirerOptionsChanged: function(chosenAcquirerOptions) {
         console.log("current acquirer options from callback:");

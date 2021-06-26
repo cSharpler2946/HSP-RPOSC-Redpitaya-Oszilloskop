@@ -11,6 +11,8 @@ class RedPitayaStub {
     acquirerOptions: Model.AcquirerRequestedOptions
     webSocket: WebSocket
 
+    channelMap: Record<string, string> = {}
+
     constructor(decoders: Model.Decoder[], requestedOptions: Model.DecoderOption[],
         decoderChannels: Model.DecoderChannel[], acquirerOptions: Model.AcquirerRequestedOptions) {
         this.decoders = decoders
@@ -122,6 +124,20 @@ class RedPitayaStub {
         var parameters: any = {};
         parameters.ACQ_CHOSEN_OPTIONS = { value: innerJson };
         this.webSocket.send(JSON.stringify({ parameters: parameters }));
+    }
+
+    sendDecoderChannel(acquirerChannel: string, decoderChannel: string)
+    {
+        this.channelMap[acquirerChannel] = decoderChannel;
+        var tupleList: Model.DecoderChannelTuple[] = []
+        for(var acqChannel in this.channelMap) {
+            tupleList.push({acqChannel: acqChannel, srdChannel: this.channelMap[acqChannel]});
+        }
+
+        var srdChannelMap = JSON.stringify(tupleList);
+        var parameters: any = {};
+        parameters.SRD_CHANNEL_MAP = {value: srdChannelMap};
+        this.webSocket.send(JSON.stringify({parameters: parameters}));
     }
 
     receiveData() {
