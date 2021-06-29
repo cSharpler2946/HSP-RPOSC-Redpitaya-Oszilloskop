@@ -27,8 +27,18 @@
         
       </div>
 
-      <Channel v-for="n in (decoderChannels.length)" :key="n" :channelId="n" :channelName="`Channel ${n}`" :decoderChannels="decoderChannels"
-        v-on:decoder-channel-changed="onDecoderChannelChanged"/>
+      <Channel v-for="n in (decoderChannels.length + 1)" :key="n" 
+      :channelId="n" :channelName="`Channel ${n}`" 
+      :decoderChannels="decoderChannels"
+      :channelData="decodedData"
+      v-on:decoder-channel-changed="onDecoderChannelChanged"/>
+
+      <div class="chart-scroller row">
+        <div class="chart-scroller-offset col-md-3 col-12"></div>
+        <div class="chart col-md-9 col-12">          
+          <ChartScroller v-if="decoderChannels.length > 0" />
+        </div>
+      </div>
 
       <!-- final border in case the right-panels height is bigger than the left-panels height -->
     </div>
@@ -77,6 +87,7 @@
 
 <script>
 import Channel from './../components/Channel.vue'
+import ChartScroller from './../components/ChartScroller.vue'
 import Parameters from './../components/Parameters.vue'
 import DecodedData from './../components/DecodedData.vue'
 import AcquirerParameters from './../components/AcquirerParameters.vue'
@@ -106,7 +117,10 @@ export default {
       requestedOptions: [],
       decoderChannels: [],
       acquirerRequestedOptions: {},
-      decodedData: null,
+      decodedData: [{
+        name: "empty",
+        data: []
+      }],
     }
   },
   computed: {
@@ -124,11 +138,13 @@ export default {
   methods:{
     onStartAnalyzing(){
       this.getData();
-      console.log(this.decoderChannels);
+      console.log(this.decodedData);
     },
     getData: function(){
       // this.decodedData = this.redpitaya.receiveData(arg1, arg2);
-      this.decodedData = this.redpitaya.receiveData();
+      this.decodedData[0] = this.redpitaya.receiveData()
+
+      // pass data to the corresponding channel
     },
     toggleRightPanel(){
       if(this.rightPanelToggler.collapsed){
@@ -152,10 +168,12 @@ export default {
         console.log("Decoder channel changed:");
         console.log(e.channelName);
         console.log(e.decoderChannel);
+        this.redpitaya.sendDecoderChannel(e.channelName, e.decoderChannel);
     },
     onChosenAcquirerOptionsChanged: function(chosenAcquirerOptions) {
         console.log("current acquirer options from callback:");
         console.log(chosenAcquirerOptions);
+        console.log(typeof(chosenAcquirerOptions.samplecount))
         this.redpitaya.sendAcquirerOptions(chosenAcquirerOptions);
     }
   },
@@ -167,6 +185,7 @@ export default {
   },
   components: {
     Channel,
+    ChartScroller,
     Parameters,
     DecodedData,
     AcquirerParameters,
@@ -230,4 +249,23 @@ export default {
         padding-bottom: 25px;
   }
 }
+
+.chart-scroller {
+  border-bottom: 1px solid $primaryColor;
+}
+
+.chart-scroller .chart{
+  padding: 7px 0 7px 0;
+  background-color: $signalBackgroundColor;
+}
+
+.chart-scroller-offset{
+    text-align: left;
+    border-right: 1px solid $primaryColor;
+    @media (max-width: 768px) {
+        border-right: none;
+        border-bottom: 1px solid gray;
+    }
+}
+
 </style>

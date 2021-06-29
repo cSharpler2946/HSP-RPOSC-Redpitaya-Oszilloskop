@@ -1,15 +1,16 @@
 using namespace std;
 
 #include "ACQChoosenOptions.hpp"
+#include <loguru.hpp>
 
 // TODO: TranslateFunction um strings auf richtigen Typen zu ändern.
 // Macht es sinn den Typen aus rp.h zu inkludieren
-int sampleRate; //index to set sampleCount in rp.h
-int decimation; //index to set decimation in rp.h
-uint32_t sampleCount; // index to set buffer size to read the data into
-string sampleTime; // time to sample (used to calculate if sampleCount and decimation/rate are fitting)
-int pinState;   // needed to set the gain together with the channel
-string probeAttenuation;
+//double sampleRate; //index to set sampleCount in rp.h
+//int decimation; //index to set decimation in rp.h
+//uint32_t sampleCount; // index to set buffer size to read the data into
+//double sampleTime; // time to sample (used to calculate if sampleCount and decimation/rate are fitting)
+//int pinState;   // needed to set the gain together with the channel
+//std::vector<std::string> probeAttenuation;
 
 
 ACQChoosenOptions::ACQChoosenOptions(std::string name, CBaseParameter::AccessMode am, std::string defaultVal, int fpga_update, AllOptionsValid *_allOptionsValid) : PContainer(name, am, defaultVal, fpga_update)
@@ -25,18 +26,32 @@ void ACQChoosenOptions::OnNewInternal()
   if(ResetParameters(tmp))
   {
     LOG_F(INFO, "Successfully updated parameter values for Aquirer!");
-    LOG_F(INFO, "SampleRate: ", sampleRate);
+    LOG_F(INFO, "SampleRate: %f", sampleRate);
+    LOG_F(INFO, "SampleCount: %d", sampleCount);
+    LOG_F(INFO, "SampleTime: %f", sampleTime);
+    LOG_F(INFO, "gain for Channel 1: %s", gainPerChannel[0].c_str());
+    LOG_F(INFO, "gain for Channel 2: %s", gainPerChannel[1].c_str());
+    LOG_F(INFO, "attenuation for Channel 1: %s", probeAttenuation[0].c_str());
+    LOG_F(INFO, "attenuation for Channel 2: %s", probeAttenuation[1].c_str());
   }
 }
 
 bool ACQChoosenOptions::ResetParameters(nlohmann::json jsonString)
 {
-  sampleRate = TranslateSampleRate(jsonString["samplerates_Hz"]);
-  sampleCount = TranslateSampleCount(jsonString["sampleCount"]);
-  sampleTime = TranslateSampleTime(jsonString["sampleTime"]);
-  pinState = TranslatePinState(jsonString["gain"]);
-  probeAttenuation = jsonString["probeAttenuation"];
-  decimation = jsonString["decimation"];
+  sampleRate = jsonString["samplerate_Hz"];
+  sampleCount = jsonString["samplecount"];
+  sampleTime = jsonString["sampletime_us"];
+  string tmp = (string)(jsonString["gainPerChannel"]["IN1"]);
+  gainPerChannel.push_back(tmp.c_str());
+  tmp = (string)(jsonString["gainPerChannel"]["IN2"]);
+  gainPerChannel.push_back(tmp.c_str());
+
+  tmp = (string)(jsonString["probeAttenuationPerChannel"]["IN1"]);
+  gainPerChannel.push_back(tmp.c_str());
+  tmp = (string)(jsonString["probeAttenuationPerChannel"]["IN2"]);
+  gainPerChannel.push_back(tmp.c_str());
+  
+  return true;
 }
 
 // Translate the userfriendly string into the fitting index

@@ -13,12 +13,12 @@ using namespace std;
 
 class ACQChoosenOptions : public PContainer{
   public:
-    uint sampleRate; //index to set sampleCount in rp.h
+    double sampleRate; //index to set sampleCount in rp.h
     uint decimation; //index to set decimation in rp.h
     uint32_t sampleCount; // index to set buffer size to read the data into
-    uint sampleTime; // time to sample (used to calculate if sampleCount and decimation/rate are fitting)
-    uint8_t pinState;   // needed to set the gain together with the channel
-    string probeAttenuation;
+    double sampleTime; // time to sample (used to calculate if sampleCount and decimation/rate are fitting)
+    vector<string> gainPerChannel;
+    vector<string> probeAttenuation;
     AllOptionsValid *allOptionsValid;
     ACQChoosenOptions(std::string name, CBaseParameter::AccessMode am, std::string defaultVal, int fpga_update, AllOptionsValid *_allOptionsValid);
     uint TranslateDecimation(int decimation);

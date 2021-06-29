@@ -11,6 +11,8 @@ class RedPitayaStub {
     acquirerOptions: Model.AcquirerRequestedOptions
     webSocket: WebSocket
 
+    channelMap: Record<string, string> = {}
+
     constructor(decoders: Model.Decoder[], requestedOptions: Model.DecoderOption[],
         decoderChannels: Model.DecoderChannel[], acquirerOptions: Model.AcquirerRequestedOptions) {
         this.decoders = decoders
@@ -24,37 +26,7 @@ class RedPitayaStub {
 
     start() {
         var myself = this
-
-
-        /*$.get("localhost")
-            .done(function (dresult: any) {
-                if (dresult.status == 'OK') {
-                    myself.connectWebSocket()
-                } else if (dresult.status == 'ERROR') {
-                    console.error(dresult.reason ? dresult.reason : `Could not start the application.`)
-                } else {
-                    console.error(`Unknown error: Could not start the application.`)
-                }
-            })
-            .fail(function () {
-                console.error(`Failed to make a request.`)
-            })*/
-
-        console.log("start().");
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'localhost');
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                console.log("start is good.")
-                myself.connectWebSocket();
-            }
-            else {
-                console.log("start is not good.")
-                console.error(`Unknown error: Could not start the application.`)
-            }
-        };
-        xhr.send();
-        console.log("end start().");
+        myself.connectWebSocket();
     }
 
     connectWebSocket() {
@@ -70,8 +42,8 @@ class RedPitayaStub {
                 console.log('Websocket error: ', ev)
             }
             this.webSocket.onmessage = function (ev) {
-                console.log('Myself:')
-                console.log(myself)
+                // console.log('Myself:')
+                // console.log(myself)
                 try {
                     var data = new Uint8Array(ev.data)
                     var inflate = pako.inflate(data)
@@ -83,6 +55,7 @@ class RedPitayaStub {
                             var new_decoder_list = decoders_json_repr.map(JSON.parse)
                             myself.decoders.splice(0)
                             myself.decoders.push(...new_decoder_list)
+                            console.log(myself.decoders);
                         }
 
                         if (receive.signals.SRD_REQUESTED_OPTIONS) {
@@ -108,12 +81,12 @@ class RedPitayaStub {
                         }
                     }
 
-                    console.log('received:')
-                    console.log(receive)
+                    // console.log('received:')
+                    // console.log(receive)
                 } catch (e) {
                     console.log(e)
                 } finally {
-                    console.log('')
+                    console.log('------------------------------------------')
                 }
             }
         }
@@ -130,7 +103,7 @@ class RedPitayaStub {
     }
 
     sendChosenOptions(currentChosenOptions: { [id: string]: string }) {
-        var signals: any = {}
+        var parameters: any = {}
         var option_list = []
         for (var option_id in currentChosenOptions) {
             option_list.push(
@@ -140,9 +113,9 @@ class RedPitayaStub {
                 }
             )
         }
-        var option_list_json = option_list.map(option => JSON.stringify(option))
-        signals.SRD_CHOSEN_OPTIONS = { value: option_list_json }
-        this.webSocket.send(JSON.stringify({ signals: signals }))
+        //var option_list_json = option_list.map(option => JSON.stringify(option))
+        parameters.SRD_CHOSEN_OPTIONS = { value: JSON.stringify(option_list) }
+        this.webSocket.send( JSON.stringify({ parameters: parameters }))
     }
 
     sendAcquirerOptions(chosenAcquirerOptions: Model.AcquirerChosenOptions) {
@@ -153,8 +126,25 @@ class RedPitayaStub {
         this.webSocket.send(JSON.stringify({ parameters: parameters }));
     }
 
+    sendDecoderChannel(acquirerChannel: string, decoderChannel: string)
+    {
+        this.channelMap[acquirerChannel] = decoderChannel;
+        var tupleList: Model.DecoderChannelTuple[] = []
+        for(var acqChannel in this.channelMap) {
+            tupleList.push({acqChannel: acqChannel, srdChannel: this.channelMap[acqChannel]});
+        }
+
+        var srdChannelMap = JSON.stringify(tupleList);
+        var parameters: any = {};
+        parameters.SRD_CHANNEL_MAP = {value: srdChannelMap};
+        this.webSocket.send(JSON.stringify({parameters: parameters}));
+    }
+
     receiveData() {
         console.log("data received.");
+
+        testData.data = testData.data.slice(0, 32)
+        testData.name = testData.acqChannel;
         return testData;
     }
 }
