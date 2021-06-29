@@ -99,8 +99,8 @@ int rp_app_init(void)
     SRDChannelMap *srdChannelMap = new SRDChannelMap("SRD_CHANNEL_MAP", CBaseParameter::RW, "", false, allOptionsValid, &srdDecoderInst, nullptr);
     pContainerList.push_back(srdChannelMap);
 
-    ACQChoosenOptions *acquirerChosenOptions = new ACQChoosenOptions("ACQ_CHOSEN_OPTIONS", CBaseParameter::RW, "", false, allOptionsValid);
-    pContainerList.push_back(acquirerChosenOptions);
+    //ACQChoosenOptions *acquirerChosenOptions = new ACQChoosenOptions("ACQ_CHOSEN_OPTIONS", CBaseParameter::RW, "", false, allOptionsValid);
+    //pContainerList.push_back(acquirerChosenOptions);
     // Dummy daten for ACQChosenOptions
     /*
     ACQChoosenOptions *chosenOptions = new ACQChoosenOptions();

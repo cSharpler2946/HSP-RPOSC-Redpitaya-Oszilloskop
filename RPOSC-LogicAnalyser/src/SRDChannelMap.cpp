@@ -16,14 +16,15 @@ void SRDChannelMap::OnNewInternal() {
     * convert to map<string, string> where first string is srdChannel and second is acqChannel
     */
     LOG_F(INFO, "SRDChannelMap new data received");
-
-    //TODO: Untested, Frontend does not send this information
+    
     nlohmann::json cm = nlohmann::json::parse(VALUE->Value());
     channelMap.clear();
     for (auto& el : cm.items())
     {
-        LOG_F(INFO, "Inserting into channelMap: %s - %s", el.key(), el.value());
-        channelMap.insert(std::pair<std::string, std::string>(el.key(), el.value())); //Test if this really returns strings
+        std::string acqC=el.value()["acqChannel"];
+        std::string srdC=el.value()["srdChannel"];
+        LOG_F(INFO, "Inserting into channelMap: %s - %s", srdC.c_str(), acqC.c_str());
+        channelMap.insert(std::pair<std::string, std::string>(srdC, acqC)); //Test if this really returns strings
     }
 
     bool valid = false;
@@ -39,6 +40,19 @@ void SRDChannelMap::OnNewInternal() {
             valid = true;
         }
     }
+    for (i = (*decoderInst)->decoder->opt_channels; i; i = i->next)
+    {
+        srd_channel * ch = static_cast<srd_channel *>(i->data);
+        LOG_F(INFO, "Checking occurance: %s, %d", ch->id, channelMap.count(ch->id));
+        if(channelMap.count(ch->id)==0) //Returns the number of occurences of key in map, so 1 or 0
+        {
+            valid = false;
+            break;
+        } else {
+            valid = true;
+        }
+    }
+    LOG_F(INFO, "Setting channelMapValidty to %d", valid);
     allOptionsValid->setChannelMapValidity(valid);
 }
 
