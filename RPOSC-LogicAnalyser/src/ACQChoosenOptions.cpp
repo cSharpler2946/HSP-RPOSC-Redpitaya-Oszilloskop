@@ -29,32 +29,39 @@ void ACQChoosenOptions::OnNewInternal()
     LOG_F(INFO, "SampleRate: %f", sampleRate);
     LOG_F(INFO, "SampleCount: %d", sampleCount);
     LOG_F(INFO, "SampleTime: %f", sampleTime);
-    LOG_F(INFO, "gain for Channel 1: %s", gainPerChannel[0].c_str());
-    LOG_F(INFO, "gain for Channel 2: %s", gainPerChannel[1].c_str());
+    LOG_F(INFO, "gain for Channel 1: %d", gainPerChannel[0]);
+    LOG_F(INFO, "gain for Channel 2: %d", gainPerChannel[1]);
     LOG_F(INFO, "attenuation for Channel 1: %s", probeAttenuation[0].c_str());
     LOG_F(INFO, "attenuation for Channel 2: %s", probeAttenuation[1].c_str());
   }
+  decimation = CalculateDecimation(sampleRate);
+  LOG_F(INFO, "decimation is calculated and set to: %d", decimation);
 }
 
 bool ACQChoosenOptions::ResetParameters(nlohmann::json jsonString)
 {
+  gainPerChannel.clear();
+  probeAttenuation.clear();
   sampleRate = jsonString["samplerate_Hz"];
   sampleCount = jsonString["samplecount"];
   sampleTime = jsonString["sampletime_us"];
   string tmp = (string)(jsonString["gainPerChannel"]["IN1"]);
-  gainPerChannel.push_back(tmp.c_str());
+  uint8_t gain0 = TranslatePinState(tmp.c_str());
+  gainPerChannel.push_back(gain0);
   tmp = (string)(jsonString["gainPerChannel"]["IN2"]);
-  gainPerChannel.push_back(tmp.c_str());
+  uint8_t gain1 = TranslatePinState(tmp.c_str());
+  gainPerChannel.push_back(gain1);
 
   tmp = (string)(jsonString["probeAttenuationPerChannel"]["IN1"]);
-  gainPerChannel.push_back(tmp.c_str());
+  probeAttenuation.push_back(tmp.c_str());
   tmp = (string)(jsonString["probeAttenuationPerChannel"]["IN2"]);
-  gainPerChannel.push_back(tmp.c_str());
+  probeAttenuation.push_back(tmp.c_str());
   
   return true;
 }
 
 // Translate the userfriendly string into the fitting index
+// NOt necessary anymore because rate is already deliverd as double
 uint ACQChoosenOptions::TranslateSampleRate(double sampleRate){
   int index = -1;
   auto found = find(AcquirerConstants::supportedSampleRates.begin(), AcquirerConstants::supportedSampleRates.end(), sampleRate);
@@ -72,20 +79,20 @@ uint ACQChoosenOptions::TranslateSampleRate(double sampleRate){
 }
 
 // Translate the userfriendly string into the fitting index
-uint ACQChoosenOptions::TranslateDecimation(int decimation)
+uint ACQChoosenOptions::CalculateDecimation(double sampleRate)
 {
   int index = -1;
-  auto found = find(AcquirerConstants::supportedDecimations.begin(), AcquirerConstants::supportedDecimations.end(), decimation);
+  auto found = find(AcquirerConstants::supportedSampleRates.begin(), AcquirerConstants::supportedSampleRates.end(), sampleRate);
 
   // again check in the vector for the string and use the index later for initialisation
-  if(found != AcquirerConstants::supportedDecimations.end())
+  if(found != AcquirerConstants::supportedSampleRates.end())
   {
-    index = found - AcquirerConstants::supportedDecimations.begin();
+    index = found - AcquirerConstants::supportedSampleRates.begin();
   }
   else{
     index = -1;
   }
-  return index;
+  return AcquirerConstants::supportedDecimations[index];
 }
 
 // Translate the userfriendly string into the fitting index

@@ -14,14 +14,14 @@ using namespace std;
 class ACQChoosenOptions : public PContainer{
   public:
     double sampleRate; //index to set sampleCount in rp.h
-    uint decimation; //index to set decimation in rp.h
     uint32_t sampleCount; // index to set buffer size to read the data into
     double sampleTime; // time to sample (used to calculate if sampleCount and decimation/rate are fitting)
-    vector<string> gainPerChannel;
+    uint decimation; // needed to set up acquirer. Calculated with sampleRate
+    vector<int> gainPerChannel;
     vector<string> probeAttenuation;
     AllOptionsValid *allOptionsValid;
     ACQChoosenOptions(std::string name, CBaseParameter::AccessMode am, std::string defaultVal, int fpga_update, AllOptionsValid *_allOptionsValid);
-    uint TranslateDecimation(int decimation);
+    uint CalculateDecimation(double sampleRate);
     uint TranslateSampleRate(double sampleRate);
     uint8_t TranslatePinState(string pinState);
     uint TranslateSampleTime(string sampleTime);
