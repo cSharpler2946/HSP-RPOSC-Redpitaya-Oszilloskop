@@ -14,7 +14,7 @@ void callbackError(void* user_data, const loguru::Message& message) {
 }
 
 Error::Error(std::string _name, int _size, std::string _def_value):
-SContainer(_name, _size, _def_value) {
+SContainer(_name, _size, _def_value) { //TODO: Change the error class to a pcontainer
     LOG_F(INFO, "Loaded Error object");
     maxSize=_size;
     loguru::add_callback("network_logger", callbackError, this, loguru::Verbosity_INFO);

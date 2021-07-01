@@ -1,6 +1,12 @@
 #include "AcquirerConstants.hpp"
 
 //constant values which are given by the rp.h
+
+
+// ATTENTIONE!!!!
+// It's very important that the indexes of the decimations match the indexes of the sampleRates
+// the calculation of the decimation is simply done by maping with the indexes
+
    std::vector<double> AcquirerConstants::supportedSampleRates = {
      125000000,
      15625000,

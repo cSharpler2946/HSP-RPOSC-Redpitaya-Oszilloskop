@@ -15,22 +15,12 @@ PContainer(name, am, defaultVal, fpga_update) {
     allOptionsValid = _allOptionsValid;
 }
 
-void ChosenDecoder::loadChosenDecoder() {
-    // TODO: Remove function. Functionality already in OnNewInternal()
-    //Load the chosen decoder
-    //Set AllOptionsValid::decoderValid=false;
-}
-
 void ChosenDecoder::OnNewInternal() {
     LOG_F(INFO, "Unloading all old decoders");
     srd_error_code err;
     if((err = ToErr srd_decoder_unload_all()) != SRD_OK) {
         LOG_F(ERROR, "Failed unloading old decoders! (srd_error_coder: %d)", err);
     }
-    // make sure to delete all the \n
-    /*std::string jsonString = VALUE->Value();
-    std::replace(jsonString.begin(), jsonString.end(), '\n', ' ');
-    LOG_F(INFO, "%s", jsonString.c_str());*/
     
     nlohmann::json tmp = nlohmann::json::parse(VALUE->Value());
     std::string id = tmp["id"];

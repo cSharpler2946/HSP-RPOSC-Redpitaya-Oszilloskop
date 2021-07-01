@@ -5,12 +5,12 @@ using namespace std;
 
 // TODO: TranslateFunction um strings auf richtigen Typen zu ändern.
 // Macht es sinn den Typen aus rp.h zu inkludieren
-int sampleRate; //index to set sampleCount in rp.h
-int decimation; //index to set decimation in rp.h
-uint32_t sampleCount; // index to set buffer size to read the data into
-string sampleTime; // time to sample (used to calculate if sampleCount and decimation/rate are fitting)
-int pinState;   // needed to set the gain together with the channel
-string probeAttenuation;
+//double sampleRate; //index to set sampleCount in rp.h
+//int decimation; //index to set decimation in rp.h
+//uint32_t sampleCount; // index to set buffer size to read the data into
+//double sampleTime; // time to sample (used to calculate if sampleCount and decimation/rate are fitting)
+//int pinState;   // needed to set the gain together with the channel
+//std::vector<std::string> probeAttenuation;
 
 
 ACQChoosenOptions::ACQChoosenOptions(std::string name, CBaseParameter::AccessMode am, std::string defaultVal, int fpga_update, AllOptionsValid *_allOptionsValid) : PContainer(name, am, defaultVal, fpga_update)
@@ -26,27 +26,42 @@ void ACQChoosenOptions::OnNewInternal()
   if(ResetParameters(tmp))
   {
     LOG_F(INFO, "Successfully updated parameter values for Aquirer!");
-    LOG_F(INFO, "SampleRate: ", sampleRate);
+    LOG_F(INFO, "SampleRate: %f", sampleRate);
+    LOG_F(INFO, "SampleCount: %d", sampleCount);
+    LOG_F(INFO, "SampleTime: %f", sampleTime);
+    LOG_F(INFO, "gain for Channel 1: %d", gainPerChannel[0]);
+    LOG_F(INFO, "gain for Channel 2: %d", gainPerChannel[1]);
+    LOG_F(INFO, "attenuation for Channel 1: %s", probeAttenuation[0].c_str());
+    LOG_F(INFO, "attenuation for Channel 2: %s", probeAttenuation[1].c_str());
   }
+  decimation = CalculateDecimation(sampleRate);
+  LOG_F(INFO, "decimation is calculated and set to: %d", decimation);
 }
 
 bool ACQChoosenOptions::ResetParameters(nlohmann::json jsonString)
 {
-  double tmp = jsonString["samplerate_Hz"];
-  LOG_F(INFO, "samplerate: %f", tmp);
-  //std:string test = jsonString["samplerate_Hz"];
-  //LOG_F(INFO, "%s", test);
-  //sampleRate = TranslateSampleRate(jsonString["samplerate_Hz"]);
-  //LOG_F(INFO, "hallo"jsonString["samplerate_Hz"]);
-  //sampleCount = TranslateSampleCount(jsonString["samplecount"]);
-  //sampleTime = TranslateSampleTime(jsonString["sampletime_us"]);
-  //pinState = TranslatePinState(jsonString["gain"]);
-  //probeAttenuation = jsonString["probeAttenuation"];
-  //decimation = jsonString["decimation"];
+  gainPerChannel.clear();
+  probeAttenuation.clear();
+  sampleRate = jsonString["samplerate_Hz"];
+  sampleCount = jsonString["samplecount"];
+  sampleTime = jsonString["sampletime_us"];
+  string tmp = (string)(jsonString["gainPerChannel"]["IN1"]);
+  uint8_t gain0 = TranslatePinState(tmp.c_str());
+  gainPerChannel.push_back(gain0);
+  tmp = (string)(jsonString["gainPerChannel"]["IN2"]);
+  uint8_t gain1 = TranslatePinState(tmp.c_str());
+  gainPerChannel.push_back(gain1);
+
+  tmp = (string)(jsonString["probeAttenuationPerChannel"]["IN1"]);
+  probeAttenuation.push_back(tmp.c_str());
+  tmp = (string)(jsonString["probeAttenuationPerChannel"]["IN2"]);
+  probeAttenuation.push_back(tmp.c_str());
+  
   return true;
 }
 
 // Translate the userfriendly string into the fitting index
+// NOt necessary anymore because rate is already deliverd as double
 uint ACQChoosenOptions::TranslateSampleRate(double sampleRate){
   int index = -1;
   auto found = find(AcquirerConstants::supportedSampleRates.begin(), AcquirerConstants::supportedSampleRates.end(), sampleRate);
@@ -64,20 +79,20 @@ uint ACQChoosenOptions::TranslateSampleRate(double sampleRate){
 }
 
 // Translate the userfriendly string into the fitting index
-uint ACQChoosenOptions::TranslateDecimation(int decimation)
+uint ACQChoosenOptions::CalculateDecimation(double sampleRate)
 {
   int index = -1;
-  auto found = find(AcquirerConstants::supportedDecimations.begin(), AcquirerConstants::supportedDecimations.end(), decimation);
+  auto found = find(AcquirerConstants::supportedSampleRates.begin(), AcquirerConstants::supportedSampleRates.end(), sampleRate);
 
   // again check in the vector for the string and use the index later for initialisation
-  if(found != AcquirerConstants::supportedDecimations.end())
+  if(found != AcquirerConstants::supportedSampleRates.end())
   {
-    index = found - AcquirerConstants::supportedDecimations.begin();
+    index = found - AcquirerConstants::supportedSampleRates.begin();
   }
   else{
     index = -1;
   }
-  return index;
+  return AcquirerConstants::supportedDecimations[index];
 }
 
 // Translate the userfriendly string into the fitting index

@@ -18,6 +18,7 @@
 #include "MeasuredData.hpp"
 #include "ACQRequestedOptions.hpp"
 #include "SRDChosenOptions.hpp"
+#include "SRDChannelMap.hpp"
 
 #ifdef __cplusplus
 extern "C" {

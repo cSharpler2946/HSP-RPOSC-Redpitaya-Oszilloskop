@@ -25,7 +25,7 @@ NLOHMANN_JSON_SERIALIZE_ENUM(MeasurementState, {
 
 class LogicSession: public PContainer {
     public:
-        LogicSession(std::string name, CBaseParameter::AccessMode am, std::string defaultVal, int fpga_update, srd_session *_srdSession, Acquirer *_acquirer, AllOptionsValid *_allOptionsValid, SRDChannelMap *_channelMap, MeasuredData *_measuredData, AnnotationData *_annotationData);
+        LogicSession(std::string name, CBaseParameter::AccessMode am, std::string defaultVal, int fpga_update, srd_session *_srdSession, srd_decoder_inst **_decoderInst, Acquirer *_acquirer, AllOptionsValid *_allOptionsValid, SRDChannelMap *_channelMap, MeasuredData *_measuredData, AnnotationData *_annotationData);
         void Update();
         void OnNewInternal();
         void runMeasurement();
@@ -34,6 +34,7 @@ class LogicSession: public PContainer {
         AllOptionsValid *allOptionsValid;
         SRDChannelMap *channelMap;
         srd_session *srdSession;
+        srd_decoder_inst **decoderInst;
         MeasuredData *measuredData;
         AnnotationData *annotationData;
 };
