@@ -13,7 +13,6 @@ export default {
     return {
       uRanger: null,
       testData: null,
-      zoomFactor: 10,
       initX: {
         min: 0,
         max: 16000
@@ -246,10 +245,13 @@ export default {
 										min: nxMin,
 										max: nxMax,
 									});
-                  
-                  for(var i = 0; i < this.uPlotCharts.length; i++){
-                    this.uPlotCharts[i].setScale('x', {min: nxMin, max: nxMax});
-                  }
+
+									this.initX.min = nxMin;
+									this.initX.max = nxMax;
+
+									for(var i = 0; i < this.uPlotCharts.length; i++){
+										this.uPlotCharts[i].setScale('x', {min: nxMin, max: nxMax});
+									}
 								});
 							});
 						}
@@ -267,12 +269,7 @@ export default {
     this.testData = [
         Array.from(Array(16000).keys()),
         new Array(16000).fill(0).map(function(val, i){
-          if(i % 2 != 0){
-            return 1;
-          }
-          else{
-            return 0;
-          }
+          return 0;
         })
       ]
 
@@ -285,6 +282,10 @@ export default {
 
       window.addEventListener("resize", e => {
         this.uRanger.setSize(this.getSize());
+        let left = Math.round(this.uRanger.valToPos(this.initX.min, 'x'));
+		let width = Math.round(this.uRanger.valToPos(this.initX.max, 'x')) - left;
+		// this.uRanger.setSelect({left, width}, false);
+		this.update(left, width);
       });
     })
   },

@@ -158,8 +158,6 @@ export default {
 				return new uPlot(finalOptions, this.data, document.getElementById('uplotChart-'+this.id));
     },
     getSize: function(){
-           console.log(this.id);
-
          return {
            width: document.getElementById('uplotChart-'+this.id).offsetWidth,
            height: 100
