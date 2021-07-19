@@ -191,6 +191,7 @@ export default {
           data: [],
         },
       ],
+      uPlotCharts: [],
     };
   },
   computed: {
@@ -255,6 +256,12 @@ export default {
       console.log(typeof chosenAcquirerOptions.samplecount);
       this.redpitaya.sendAcquirerOptions(chosenAcquirerOptions);
     },
+    generate_uid(){
+      return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c => (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16));
+    },
+    persistChart: function(e){
+      this.uPlotCharts.push(e);
+    }
   },
   mounted() {
     // Build up WebSocket-Connection with RedPitaya in here.
