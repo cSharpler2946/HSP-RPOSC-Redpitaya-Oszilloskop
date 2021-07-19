@@ -46,6 +46,14 @@
           <div class="chart-scroller-offset col-md-3 col-12"></div>
           <div class="chart col-md-9 col-12">
             <!-- <ChartScroller v-if="decoderChannels.length > 0" /> -->
+            <DataAnnotations/>
+          </div>
+        </div>
+
+        <div class="chart-scroller row">
+          <div class="chart-scroller-offset col-md-3 col-12"></div>
+          <div class="chart col-md-9 col-12">
+            <!-- <ChartScroller v-if="decoderChannels.length > 0" /> -->
             <UplotRangerGrip
               v-if="decoderChannels.length > 0"
               :id="generate_uid"
@@ -156,6 +164,7 @@
 import Channel from "./../components/Channel.vue";
 import ChartScroller from "./../components/ChartScroller.vue";
 import UplotRangerGrip from "./../components/UplotRangerGrip.vue";
+import DataAnnotations from "./../components/DataAnnotations.vue";
 import Parameters from "./../components/Parameters.vue";
 import DecodedData from "./../components/DecodedData.vue";
 import AcquirerParameters from "./../components/AcquirerParameters.vue";
@@ -284,6 +293,7 @@ export default {
     Parameters,
     DecodedData,
     AcquirerParameters,
+    DataAnnotations,
   },
 };
 </script>
