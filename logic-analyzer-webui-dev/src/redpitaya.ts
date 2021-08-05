@@ -183,7 +183,7 @@ class RedPitaya {
   }
 
   sendDecoderChannel(acquirerChannel: string, decoderChannel: string)
-    {
+  {
         this.channelMap[acquirerChannel] = decoderChannel;
         var tupleList: Model.DecoderChannelTuple[] = []
         for(var acqChannel in this.channelMap) {
@@ -194,7 +194,17 @@ class RedPitaya {
         var parameters: any = {};
         parameters.SRD_CHANNEL_MAP = {value: srdChannelMap};
         this.webSocket?.send(JSON.stringify({parameters: parameters}));
-    }
+  }
+
+    startAnalyzing() {
+      console.log("Starting to capture.");
+
+      var logicSession: Model.LogicSession = { measurementState: "starting" };
+      var logicSessionJSON = JSON.stringify(logicSession);
+      var parameters: any = {};
+      parameters.LOGIC_SESSION = { value: logicSessionJSON };
+      this.webSocket?.send(JSON.stringify({ parameters: parameters }));
+  }
 
   /*receiveData (arg1, arg2) {
     // Holst daten
