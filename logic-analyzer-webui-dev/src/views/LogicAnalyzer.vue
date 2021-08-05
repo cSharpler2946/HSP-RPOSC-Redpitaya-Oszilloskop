@@ -16,7 +16,7 @@
               class="btn"
               v-on:click="onStartAnalyzing()"
             >
-              <span>Start Analyzing </span>
+              <span>Start Analyzing</span>
               <font-awesome-icon
                 icon="play"
                 style="vertical-align: middle; margin-left: 10px"
@@ -46,7 +46,9 @@
           <div class="chart-scroller-offset col-md-3 col-12"></div>
           <div class="chart col-md-9 col-12">
             <!-- <ChartScroller v-if="decoderChannels.length > 0" /> -->
-            <DataAnnotations/>
+            <DataAnnotations
+               @uplot="persistChart"
+            />
           </div>
         </div>
 

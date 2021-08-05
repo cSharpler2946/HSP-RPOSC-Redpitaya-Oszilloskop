@@ -13,20 +13,20 @@ export default {
       uRanger: null,
       testData: null,
       initX: {
-        min: 0,
-        max: 16000,
+        min: null,
+        max: null,
       },
       lftWid: {
         left: null,
-        widgth: null,
+        width: null,
       },
       minMax: {
         min: null,
         max: null,
       },
-      x0: null,
-      lft0: null,
-      wid0: null,
+      x0: 0,
+      lft0: 0,
+      wid0: 80,
       rangerOpts: {
         width: 600,
         height: 100,
@@ -50,7 +50,7 @@ export default {
         scales: {
           x: {
             time: false,
-          },
+          }
         },
         series: [
           {},
@@ -62,8 +62,7 @@ export default {
           ready: [
             (uRanger) => {
               let left = Math.round(uRanger.valToPos(this.initX.min, "x"));
-              let width =
-                Math.round(uRanger.valToPos(this.initX.max, "x")) - left;
+              let width = Math.round(uRanger.valToPos(this.initX.max, "x")) - left;
               let height = uRanger.bbox.height / devicePixelRatio;
               uRanger.setSelect({ left, width, height }, false);
 
@@ -161,107 +160,136 @@ export default {
       e.stopPropagation();
     },
     wheelZoomPlugin: function (opts) {
-      let factor = opts.factor || 0.75;
 
-      let xMin, xMax, xRange;
-
-      function clamp(nRange, nMin, nMax, fRange, fMin, fMax) {
-        if (nRange > fRange) {
-          nMin = fMin;
-          nMax = fMax;
-        } else if (nMin < fMin) {
-          nMin = fMin;
-          nMax = fMin + nRange;
-        } else if (nMax > fMax) {
-          nMax = fMax;
-          nMin = fMax - nRange;
-        }
-
-        return [nMin, nMax];
-      }
+      var self = this;
 
       return {
         hooks: {
           ready: (u) => {
-            xMin = u.scales.x.min;
-            xMax = u.scales.x.max;
-
-            xRange = xMax - xMin;
-
+          
             let over = u.over;
-            let rect = over.getBoundingClientRect();
-
-            // wheel drag pan
-            over.addEventListener("mousedown", (e) => {
-              if (e.button == 1) {
-                //	plot.style.cursor = "move";
-                e.preventDefault();
-
-                let left0 = e.clientX;
-                //	let top0 = e.clientY;
-
-                let scXMin0 = u.scales.x.min;
-                let scXMax0 = u.scales.x.max;
-
-                let xUnitsPerPx = u.posToVal(1, "x") - u.posToVal(0, "x");
-
-                function onmove(e) {
-                  e.preventDefault();
-
-                  let left1 = e.clientX;
-                  //	let top1 = e.clientY;
-
-                  let dx = xUnitsPerPx * (left1 - left0);
-
-                  u.setScale("x", {
-                    min: scXMin0 - dx,
-                    max: scXMax0 - dx,
-                  });
-                }
-
-                function onup(e) {
-                  document.removeEventListener("mousemove", onmove);
-                  document.removeEventListener("mouseup", onup);
-                }
-
-                document.addEventListener("mousemove", onmove);
-                document.addEventListener("mouseup", onup);
-              }
-            });
 
             // wheel scroll zoom
             over.addEventListener("wheel", (e) => {
               e.preventDefault();
 
-              let { left, top } = u.cursor;
+              let scrollSpeed = 10; 
+              if(e.wheelDelta < 0){
+                scrollSpeed = -10;
+              }
 
-              let leftPct = left / rect.width;
-              let xVal = u.posToVal(left, "x");
-              let oxRange = u.scales.x.max - u.scales.x.min;
+              let newLeft = u.select.left + scrollSpeed;
+              let newWidth = u.select.width;
 
-              let nxRange = e.deltaY < 0 ? oxRange * factor : oxRange / factor;
-              let nxMin = xVal - leftPct * nxRange;
-              let nxMax = nxMin + nxRange;
-              [nxMin, nxMax] = clamp(nxRange, nxMin, nxMax, xRange, xMin, xMax);
-
-              u.batch(() => {
-                u.setScale("x", {
-                  min: nxMin,
-                  max: nxMax,
-                });
-
-                this.initX.min = nxMin;
-                this.initX.max = nxMax;
-
-                for (var i = 0; i < this.uPlotCharts.length; i++) {
-                  this.uPlotCharts[i].setScale("x", { min: nxMin, max: nxMax });
-                }
-              });
+              self.update(newLeft, newWidth);
+              
             });
           },
         },
       };
     },
+    // wheelZoomPlugin: function (opts) {
+    //   let factor = opts.factor || 0.75;
+
+    //   let xMin, xMax, xRange;
+
+    //   function clamp(nRange, nMin, nMax, fRange, fMin, fMax) {
+    //     if (nRange > fRange) {
+    //       nMin = fMin;
+    //       nMax = fMax;
+    //     } else if (nMin < fMin) {
+    //       nMin = fMin;
+    //       nMax = fMin + nRange;
+    //     } else if (nMax > fMax) {
+    //       nMax = fMax;
+    //       nMin = fMax - nRange;
+    //     }
+
+    //     return [nMin, nMax];
+    //   }
+
+    //   return {
+    //     hooks: {
+    //       ready: (u) => {
+    //         xMin = u.scales.x.min;
+    //         xMax = u.scales.x.max;
+
+    //         xRange = xMax - xMin;
+
+    //         let over = u.over;
+    //         let rect = over.getBoundingClientRect();
+
+    //         // wheel drag pan
+    //         over.addEventListener("mousedown", (e) => {
+    //           if (e.button == 1) {
+    //             //	plot.style.cursor = "move";
+    //             e.preventDefault();
+
+    //             let left0 = e.clientX;
+    //             //	let top0 = e.clientY;
+
+    //             let scXMin0 = u.scales.x.min;
+    //             let scXMax0 = u.scales.x.max;
+
+    //             let xUnitsPerPx = u.posToVal(1, "x") - u.posToVal(0, "x");
+
+    //             function onmove(e) {
+    //               e.preventDefault();
+
+    //               let left1 = e.clientX;
+    //               //	let top1 = e.clientY;
+
+    //               let dx = xUnitsPerPx * (left1 - left0);
+
+    //               u.setScale("x", {
+    //                 min: scXMin0 - dx,
+    //                 max: scXMax0 - dx,
+    //               });
+    //             }
+
+    //             function onup(e) {
+    //               document.removeEventListener("mousemove", onmove);
+    //               document.removeEventListener("mouseup", onup);
+    //             }
+
+    //             document.addEventListener("mousemove", onmove);
+    //             document.addEventListener("mouseup", onup);
+    //           }
+    //         });
+
+    //         // wheel scroll zoom
+    //         over.addEventListener("wheel", (e) => {
+    //           e.preventDefault();
+
+    //           let { left, top } = u.cursor;
+
+    //           let leftPct = left / rect.width;
+    //           let xVal = u.posToVal(left, "x");
+    //           let oxRange = u.scales.x.max - u.scales.x.min;
+
+    //           let nxRange = e.deltaY < 0 ? oxRange * factor : oxRange / factor;
+    //           let nxMin = xVal - leftPct * nxRange;
+    //           let nxMax = nxMin + nxRange;
+    //           [nxMin, nxMax] = clamp(nxRange, nxMin, nxMax, xRange, xMin, xMax);
+
+    //           u.batch(() => {
+    //             u.setScale("x", {
+    //               min: nxMin,
+    //               max: nxMax,
+    //             });
+
+    //             this.initX.min = nxMin;
+    //             this.initX.max = nxMax;
+
+    //             for (var i = 0; i < this.uPlotCharts.length; i++) {
+    //               this.uPlotCharts[i].setScale("x", { min: nxMin, max: nxMax });
+    //             }
+    //           });
+    //         });
+    //       },
+    //     },
+    //   };
+    // },
     getSize: function () {
       return {
         width: document.getElementById(this.id).offsetWidth,
@@ -269,10 +297,13 @@ export default {
       };
     },
   },
-  beforeMount() {
+  beforeMount() {   
+    console.log(this.uPlotCharts[0].series);
+    var dataPoints = 16000;
+
     this.testData = [
-      Array.from(Array(16000).keys()),
-      new Array(16000).fill(0).map(function (val, i) {
+      Array.from(Array(dataPoints).keys()),
+      new Array(dataPoints).fill(0).map(function (val, i) {
         return 0;
       }),
     ];
@@ -291,9 +322,8 @@ export default {
       window.addEventListener("resize", (e) => {
         this.uRanger.setSize(this.getSize());
         let left = Math.round(this.uRanger.valToPos(this.initX.min, "x"));
-        let width =
-          Math.round(this.uRanger.valToPos(this.initX.max, "x")) - left;
-        // this.uRanger.setSelect({left, width}, false);
+        let width = Math.round(this.uRanger.valToPos(this.initX.max, "x")) - left;
+
         this.update(left, width);
       });
     });
