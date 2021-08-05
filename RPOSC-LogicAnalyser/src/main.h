@@ -9,7 +9,7 @@
 
 #include "CStringSignal.h"
 
-#include "Acquirer.hpp"
+#include "AnalogAcquirer.hpp"
 #include "SRDDecoderList.hpp"
 #include "ChosenDecoder.hpp"
 #include "SRDRequestedOptions.hpp"

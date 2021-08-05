@@ -61,24 +61,6 @@ bool ACQChoosenOptions::ResetParameters(nlohmann::json jsonString)
 }
 
 // Translate the userfriendly string into the fitting index
-// NOt necessary anymore because rate is already deliverd as double
-uint ACQChoosenOptions::TranslateSampleRate(double sampleRate){
-  int index = -1;
-  auto found = find(AcquirerConstants::supportedSampleRates.begin(), AcquirerConstants::supportedSampleRates.end(), sampleRate);
-
-  // if element found, we need the index because setting the sampleRate is done by an integer number
-  if(found != AcquirerConstants::supportedSampleRates.end())
-  {
-    index = found - AcquirerConstants::supportedSampleRates.begin();
-  }
-  // if element is not found return -1 as an error
-  else{
-    index = -1;
-  }
-  return index;
-}
-
-// Translate the userfriendly string into the fitting index
 uint ACQChoosenOptions::CalculateDecimation(double sampleRate)
 {
   int index = -1;
@@ -124,14 +106,4 @@ uint32_t ACQChoosenOptions::TranslateSampleCount(int count)
   else{
     return -1;
   }
-}
-
-// convert time string to int and check if its in the range.
-uint ACQChoosenOptions::TranslateSampleTime(string time)
-{
-  uint32_t index = -1;
-  // convert the string into an integer and check if it's in the range
-  index = std::stoi(time);
-  // TODO: calculation how long we can sample with the defined sampleRate and the defined buffersize
-    return index;
 }

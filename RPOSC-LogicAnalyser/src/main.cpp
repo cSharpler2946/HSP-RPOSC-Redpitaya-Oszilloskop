@@ -108,9 +108,11 @@ int rp_app_init(void)
     chosenOptions->sampleRate = 1;
     chosenOptions->decimation = 1;
     chosenOptions->sampleCount = 16384;
-    chosenOptions->pinState = 1;
+    chosenOptions->pinState = 1; */
+
+    
     //start acquisition
-    activeAcquirer = new Acquirer(chosenOptions); //TODO: Get parameter (ACQChosenOption)
+    activeAcquirer = new AnalogAcquirer(acquirerChosenOptions); //TODO: Get parameter (ACQChosenOption)
     bool result = activeAcquirer->startAcq();
     // get and send data
     vector<double> data = activeAcquirer->getData(0);
@@ -119,7 +121,7 @@ int rp_app_init(void)
     measuredData->addData("Channel 1", data);
     LOG_F(INFO, "added data to measuredData");
     sContainerList.push_back(measuredData);
-    */
+    
 
     //usleep(1000);
 
