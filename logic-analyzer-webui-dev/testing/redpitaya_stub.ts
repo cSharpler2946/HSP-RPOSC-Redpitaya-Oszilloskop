@@ -9,9 +9,9 @@ class RedPitayaStub {
     requestedOptions: Model.DecoderOption[]
     decoderChannels: Model.DecoderChannel[]
     acquirerOptions: Model.AcquirerRequestedOptions
-    webSocket: WebSocket
-
     channelMap: Record<string, string> = {}
+
+    webSocket: WebSocket
 
     constructor(decoders: Model.Decoder[], requestedOptions: Model.DecoderOption[],
         decoderChannels: Model.DecoderChannel[], acquirerOptions: Model.AcquirerRequestedOptions) {
@@ -146,6 +146,16 @@ class RedPitayaStub {
         testData.data = testData.data.slice(0, 32)
         testData.name = testData.acqChannel;
         return testData;
+    }
+
+    startAnalyzing() {
+        console.log("Starting to capture.");
+
+        var logicSession: Model.LogicSession = { measurementState: "starting" };
+        var logicSessionJSON = JSON.stringify(logicSession);
+        var parameters: any = {};
+        parameters.LOGIC_SESSION = { value: logicSessionJSON };
+        this.webSocket.send(JSON.stringify({ parameters: parameters }));
     }
 }
 
