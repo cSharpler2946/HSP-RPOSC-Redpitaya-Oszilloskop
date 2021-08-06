@@ -16,6 +16,7 @@ SContainer(_name, _size, _def_value) {
 
 void AnnotationData::Update() {
     LOG_F(INFO, "Update in AnnotationData");
+    LOG_F(INFO, "Current annotationData vector size: %d", annotationData.size());
     VALUE->Set(annotationData);
 }
 
