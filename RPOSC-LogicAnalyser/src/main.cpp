@@ -101,6 +101,16 @@ int rp_app_init(void)
 
     ACQChoosenOptions *acquirerChosenOptions = new ACQChoosenOptions("ACQ_CHOSEN_OPTIONS", CBaseParameter::RW, "", false, allOptionsValid);
     pContainerList.push_back(acquirerChosenOptions);
+
+    AnalogAcquirer *analogAcquirer = new AnalogAcquirer(acquirerChosenOptions);
+
+    MeasuredData *measuredData = new MeasuredData("MEASURED_DATA", 512, "");
+    sContainerList.push_back(measuredData);
+    AnnotationData *annotationData = new AnnotationData("ANNOTATION_DATA", 512, "", srdSession);
+    sContainerList.push_back(annotationData);
+
+    LogicSession *logicSession = new LogicSession("LOGIC_SESSION", CBaseParameter::RW, "", false, srdSession, &srdDecoderInst, analogAcquirer, allOptionsValid, srdChannelMap, measuredData, annotationData, acquirerChosenOptions);
+    pContainerList.push_back(logicSession);
     
     // Dummy daten for ACQChosenOptions
     /*

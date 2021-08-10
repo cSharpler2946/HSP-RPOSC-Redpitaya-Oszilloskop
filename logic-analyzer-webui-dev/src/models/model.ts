@@ -38,3 +38,7 @@ export interface DecoderChannelTuple {
     acqChannel: string,
     srdChannel: string
 }
+
+export interface LogicSession {
+    measurementState: string
+}

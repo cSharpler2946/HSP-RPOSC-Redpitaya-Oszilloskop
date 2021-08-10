@@ -15,7 +15,7 @@ using namespace std;
 
 ACQChoosenOptions::ACQChoosenOptions(std::string name, CBaseParameter::AccessMode am, std::string defaultVal, int fpga_update, AllOptionsValid *_allOptionsValid) : PContainer(name, am, defaultVal, fpga_update)
 {
-  allOptionsValid = _allOptionsValid;
+  allOptionsValid = _allOptionsValid; //TODO: Set the options valid, when they are (currently hotfixed with default value = true in AllOptionsValid.hpp)
 }
 
 void ACQChoosenOptions::OnNewInternal()
@@ -45,16 +45,16 @@ bool ACQChoosenOptions::ResetParameters(nlohmann::json jsonString)
   sampleRate = jsonString["samplerate_Hz"];
   sampleCount = jsonString["samplecount"];
   sampleTime = jsonString["sampletime_us"];
-  string tmp = (string)(jsonString["gainPerChannel"]["IN1"]);
+  string tmp = (string)(jsonString["gainPerChannel"]["Channel 1"]); //TODO: Make dependent on constants
   uint8_t gain0 = TranslatePinState(tmp.c_str());
   gainPerChannel.push_back(gain0);
-  tmp = (string)(jsonString["gainPerChannel"]["IN2"]);
+  tmp = (string)(jsonString["gainPerChannel"]["Channel 2"]);
   uint8_t gain1 = TranslatePinState(tmp.c_str());
   gainPerChannel.push_back(gain1);
 
-  tmp = (string)(jsonString["probeAttenuationPerChannel"]["IN1"]);
+  tmp = (string)(jsonString["probeAttenuationPerChannel"]["Channel 1"]);
   probeAttenuation.push_back(tmp.c_str());
-  tmp = (string)(jsonString["probeAttenuationPerChannel"]["IN2"]);
+  tmp = (string)(jsonString["probeAttenuationPerChannel"]["Channel 2"]);
   probeAttenuation.push_back(tmp.c_str());
   
   return true;

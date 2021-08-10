@@ -227,8 +227,9 @@ export default {
   },
   methods: {
     onStartAnalyzing() {
-      this.getData();
-      console.log(this.decodedData);
+      /*this.getData();
+      console.log(this.decodedData);*/
+      this.redpitaya.startAnalyzing();
     },
     getData: function () {
       // this.decodedData = this.redpitaya.receiveData(arg1, arg2);
