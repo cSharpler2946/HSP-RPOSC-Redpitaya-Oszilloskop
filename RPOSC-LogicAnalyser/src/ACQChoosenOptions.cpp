@@ -3,8 +3,6 @@ using namespace std;
 #include "ACQChoosenOptions.hpp"
 #include <loguru.hpp>
 
-// TODO: TranslateFunction um strings auf richtigen Typen zu ändern.
-// Macht es sinn den Typen aus rp.h zu inkludieren
 //double sampleRate; //index to set sampleCount in rp.h
 //int decimation; //index to set decimation in rp.h
 //uint32_t sampleCount; // index to set buffer size to read the data into
@@ -21,10 +19,18 @@ ACQChoosenOptions::ACQChoosenOptions(std::string name, CBaseParameter::AccessMod
 void ACQChoosenOptions::OnNewInternal()
 {
   LOG_F(INFO, "update parameters for acquisition!");
-
   nlohmann::json tmp = nlohmann::json::parse(VALUE->Value());
-  if(ResetParameters(tmp))
+
+  if(ParseParameters(tmp))
   {
+    if(ValidateOptions())
+    {
+      allOptionsValid->setAcquirerValidity(true);
+    }
+    else{
+      allOptionsValid->setAcquirerValidity(false);
+      return;
+    }
     LOG_F(INFO, "Successfully updated parameter values for Aquirer!");
     LOG_F(INFO, "SampleRate: %f", sampleRate);
     LOG_F(INFO, "SampleCount: %d", sampleCount);
@@ -33,12 +39,17 @@ void ACQChoosenOptions::OnNewInternal()
     LOG_F(INFO, "gain for Channel 2: %d", gainPerChannel[1]);
     LOG_F(INFO, "attenuation for Channel 1: %s", probeAttenuation[0].c_str());
     LOG_F(INFO, "attenuation for Channel 2: %s", probeAttenuation[1].c_str());
+    LOG_F(INFO, "decimation is calculated and set to: %d", decimation);
   }
-  decimation = CalculateDecimation(sampleRate);
-  LOG_F(INFO, "decimation is calculated and set to: %d", decimation);
+  else
+  {
+    LOG_F(INFO, "Something went wrong by parsing the options!!");
+    allOptionsValid->setAcquirerValidity(false);
+  }
 }
 
-bool ACQChoosenOptions::ResetParameters(nlohmann::json jsonString)
+// Parse the Json into the Variables
+bool ACQChoosenOptions::ParseParameters(nlohmann::json jsonString)
 {
   gainPerChannel.clear();
   probeAttenuation.clear();
@@ -57,6 +68,46 @@ bool ACQChoosenOptions::ResetParameters(nlohmann::json jsonString)
   tmp = (string)(jsonString["probeAttenuationPerChannel"]["Channel 2"]);
   probeAttenuation.push_back(tmp.c_str());
   
+  decimation = CalculateDecimation(sampleRate);
+
+  return true;
+}
+
+// checks the variables for validity (if one of the variables is unvalid false is returned)
+bool ACQChoosenOptions::ValidateOptions()
+{
+  auto foundRate = find(AcquirerConstants::supportedSampleRates.begin(), AcquirerConstants::supportedSampleRates.end(), sampleRate);
+  if(foundRate == AcquirerConstants::supportedSampleRates.end())
+  {
+    return false;
+  }
+  if(sampleRate > AcquirerConstants::maxSamples)
+  {
+    return false;
+  }
+  auto foundGain0 = find(AcquirerConstants::supportedPinStateInt.begin(), AcquirerConstants::supportedPinStateInt.end(), gainPerChannel[0]);
+  auto foundGain1 = find(AcquirerConstants::supportedPinStateInt.begin(), AcquirerConstants::supportedPinStateInt.end(), gainPerChannel[1]);
+  if(foundGain0 == AcquirerConstants::supportedPinStateInt.end() || foundGain1 == AcquirerConstants::supportedPinStateInt.end())
+  {
+    return false;
+  }
+  auto foundAttenuation0 = find(AcquirerConstants::supportedAttenuation.begin(), AcquirerConstants::supportedAttenuation.end(), probeAttenuation[0]);
+  auto foundAttenuation1 = find(AcquirerConstants::supportedAttenuation.begin(), AcquirerConstants::supportedAttenuation.end(), probeAttenuation[1]);
+  if(foundAttenuation0 == AcquirerConstants::supportedAttenuation.end() || foundAttenuation1 == AcquirerConstants::supportedAttenuation.end())
+  {
+    return false;
+  }
+  auto foundDecimation = find(AcquirerConstants::supportedDecimations.begin(), AcquirerConstants::supportedDecimations.end(), decimation);
+  if(foundDecimation == AcquirerConstants::supportedDecimations.end())
+  {
+    return false;
+  }
+  // calculate the SampleTime for the given SampleRate(if not valid already aborted above) and the sampleCount(max 16384 if bigger, already aborted above)
+  // sampleRate * sampleTime <= maxSamples
+  if(sampleRate*sampleTime <= AcquirerConstants::maxSamples)
+  {
+    return false;
+  }
   return true;
 }
 

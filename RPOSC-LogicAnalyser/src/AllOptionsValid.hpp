@@ -13,6 +13,6 @@ class AllOptionsValid: public PContainer {
 
     private:
         bool channelMapValid = false;
-        bool acquirerValid = true;
+        bool acquirerValid = false;
         bool decoderValid = false;
 };
