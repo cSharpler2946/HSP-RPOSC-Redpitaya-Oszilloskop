@@ -35,11 +35,11 @@
 
     // LOOB BACK FROM OUTPUT of channel 1 - ONLY FOR TESTING
     // Delete if it works!!
-    //rp_GenReset();
-    //rp_GenFreq(RP_CH_1, 20000.0);
-    //rp_GenAmp(RP_CH_1, 1.0);
-    //rp_GenWaveform(RP_CH_1, RP_WAVEFORM_SINE);
-    //rp_GenOutEnable(RP_CH_1);
+    rp_GenReset();
+    rp_GenFreq(RP_CH_1, 20000.0);
+    rp_GenAmp(RP_CH_1, 1.0);
+    rp_GenWaveform(RP_CH_1, RP_WAVEFORM_SINE);
+    rp_GenOutEnable(RP_CH_1);
 
     // needed variables
     uint32_t writePointer;
@@ -55,6 +55,8 @@
     rp_AcqReset();
     LOG_F(INFO, "reset acquiring");
     rp_AcqSetDecimation(rp_acq_decimation_t(choosenOptions->decimation));
+    rp_AcqSetTriggerLevel(rp_channel_trigger_t(0),0.1);
+    rp_AcqSetTriggerLevel(rp_channel_trigger_t(1),0.1);
     rp_AcqSetTriggerDelay(choosenOptions->decimation); // TODO: Calculate the needed time to get sampleCount with defined sampleRate
     rp_AcqSetGain(rp_channel_t(0),rp_pinState_t(choosenOptions->gainPerChannel[0]));
     rp_AcqSetGain(rp_channel_t(1),rp_pinState_t(choosenOptions->gainPerChannel[1]));
