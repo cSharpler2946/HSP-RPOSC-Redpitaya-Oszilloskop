@@ -2,6 +2,7 @@
 #include <loguru.hpp>
 
 SContainer::SContainer(std::string _name, int _size, std::string _def_value) {
+    LOG_F(INFO, "Instantiating SContainer \"%s\"", _name.c_str());
     VALUE = new CStringSignal(_name, CBaseParameter::RW, _size, _def_value);
 }
 

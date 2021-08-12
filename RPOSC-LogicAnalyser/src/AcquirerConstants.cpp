@@ -14,9 +14,12 @@
      122070.3125,
      15258.7890625,
      1907.3486328125};
-   std::vector<string> AcquirerConstants::availableChannels = {"IN1", "IN2"};
+   //std::vector<string> AcquirerConstants::availableChannels = {"IN1", "IN2"};
+   std::vector<string> AcquirerConstants::availableChannels = {"Channel 1", "Channel 2"}; //Just for debugging as frontend currently does not get channel names from backend
    std::vector<int> AcquirerConstants::supportedDecimations = {
      1, 8, 64, 1024, 8192, 65536
    };
    std::vector<std::string> AcquirerConstants::supportedPinState = {"LOW", "HIGH"};
+   std::vector<int> AcquirerConstants::supportedPinStateInt = {0,1};
    int AcquirerConstants::maxSamples = 16384;
+   std::vector<string> AcquirerConstants::supportedAttenuation = {"1x", "10x"};
