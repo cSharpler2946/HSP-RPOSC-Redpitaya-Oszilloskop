@@ -40,5 +40,11 @@ export interface DecoderChannelTuple {
 }
 
 export interface LogicSession {
-    measurementState: string
+    measurementState: MeasurementState
+}
+
+export enum MeasurementState {
+    Stopped = "stopped",
+    Starting = "starting",
+    Running = "running"
 }

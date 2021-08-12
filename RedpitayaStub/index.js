@@ -206,9 +206,19 @@ function stm_doStep() {
                 var chosen_decoder_channels_json_repr = chosen_decoder_channels.map(JSON.stringify);
                 dataToSend.parameters = {};
                 dataToSend.signals = {};
-                dataToSend.signals["SRD_REQUESTED_OPTIONS"] = {value: chosen_decoder_options_json_repr};
+                dataToSend.signals["SRD_REQUESTED_OPTIONS"] = { value: chosen_decoder_options_json_repr };
                 dataToSend.signals["SRD_CHANNELS"] = { value: chosen_decoder_channels_json_repr };
                 send_data();
+            }
+            if(receivedData.parameters["LOGIC_SESSION"]) {
+                var logicSession = JSON.parse(receivedData.parameters["LOGIC_SESSION"].value);
+                if(logicSession.measurementState === "starting") {
+                    dataToSend.parameters = {};
+                    dataToSend.signals = {};
+                    dataToSend.parameters["LOGIC_SESSION"] = { value: JSON.stringify({ "measurementState": "running" }) };
+                    send_data();
+                    state = "Acquiring";
+                }
             }
     }
 }

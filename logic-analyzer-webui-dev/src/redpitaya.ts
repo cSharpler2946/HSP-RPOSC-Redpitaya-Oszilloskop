@@ -7,6 +7,7 @@ class RedPitaya {
   requestedOptions: Model.DecoderOption[]
   decoderChannels: Model.DecoderChannel[]
   acquirerOptions: Model.AcquirerRequestedOptions
+  logicSession: Model.LogicSession
   webSocket?: WebSocket;
   app_id: string
   app_url: string
@@ -16,17 +17,17 @@ class RedPitaya {
 
   constructor (app_id: string, app_url: string, socket_url: string,
     decoders: Model.Decoder[], requestedOptions: Model.DecoderOption[],
-    decoderChannels: Model.DecoderChannel[], acquirerOptions: Model.AcquirerRequestedOptions) {
+    decoderChannels: Model.DecoderChannel[], acquirerOptions: Model.AcquirerRequestedOptions,
+    logicSession: Model.LogicSession) {
     this.app_id = app_id
     this.app_url = app_url
     this.socket_url = socket_url
-
     this.webSocket = undefined
     this.acquirerOptions = acquirerOptions
-
     this.decoders = decoders
     this.requestedOptions = requestedOptions
     this.decoderChannels = decoderChannels
+    this.logicSession = logicSession
   }
 
   test () {
@@ -196,10 +197,10 @@ class RedPitaya {
         this.webSocket?.send(JSON.stringify({parameters: parameters}));
   }
 
-    startAnalyzing() {
+  startAnalyzing() {
       console.log("Starting to capture.");
 
-      var logicSession: Model.LogicSession = { measurementState: "starting" };
+      var logicSession: Model.LogicSession = { measurementState: Model.MeasurementState.Starting };
       var logicSessionJSON = JSON.stringify(logicSession);
       var parameters: any = {};
       parameters.LOGIC_SESSION = { value: logicSessionJSON };

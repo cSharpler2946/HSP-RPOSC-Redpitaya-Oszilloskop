@@ -32,10 +32,10 @@
         </div>
 
         <Channel
-          v-for="n in decoderChannels.length"
-          :key="n"
-          :channelId="n"
-          :channelName="`Channel ${n}`"
+          v-for="(channelName, index) in acquirerRequestedOptions.availableChannels"
+          :key="index"
+          :channelId="index"
+          :channelName="channelName"
           :decoderChannels="decoderChannels"
           :channelData="decodedData"
           v-on:decoder-channel-changed="onDecoderChannelChanged"
@@ -200,6 +200,7 @@ export default {
           data: [],
         },
       ],
+      logicSession: {},
       uPlotCharts: [],
     };
   },
@@ -284,7 +285,7 @@ export default {
        this.decoderChannels,
        this.acquirerRequestedOptions
      );*/
-    this.redpitaya = new RedPitayaStub(this.decoders, this.requestedOptions, this.decoderChannels, this.acquirerRequestedOptions);
+    this.redpitaya = new RedPitayaStub(this.decoders, this.requestedOptions, this.decoderChannels, this.acquirerRequestedOptions, this.logicSession);
     this.redpitaya.start();
   },
   components: {
