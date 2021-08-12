@@ -35,11 +35,11 @@
 
     // LOOB BACK FROM OUTPUT of channel 1 - ONLY FOR TESTING
     // Delete if it works!!
-    rp_GenReset();
-    rp_GenFreq(RP_CH_1, 20000.0);
-    rp_GenAmp(RP_CH_1, 1.0);
-    rp_GenWaveform(RP_CH_1, RP_WAVEFORM_SINE);
-    rp_GenOutEnable(RP_CH_1);
+    //rp_GenReset();
+    //rp_GenFreq(RP_CH_1, 20000.0);
+    //rp_GenAmp(RP_CH_1, 1.0);
+    //rp_GenWaveform(RP_CH_1, RP_WAVEFORM_SINE);
+    //rp_GenOutEnable(RP_CH_1);
 
     // needed variables
     uint32_t writePointer;
@@ -60,7 +60,7 @@
     rp_AcqSetGain(rp_channel_t(1),rp_pinState_t(choosenOptions->gainPerChannel[1]));
     LOG_F(INFO, "set data, start acquisition now!!");
     rp_AcqStart();
-    usleep(100);   //TODO: replace this by proper method like timer
+    usleep(choosenOptions->sampleTime);   //TODO: replace this by proper method like timer
 
     // set the triggersrc to now so trigger is triggered now!!
     rp_AcqSetTriggerSrc(RP_TRIG_SRC_NOW);

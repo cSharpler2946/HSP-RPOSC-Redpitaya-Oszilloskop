@@ -25,9 +25,11 @@ void ACQChoosenOptions::OnNewInternal()
   {
     if(ValidateOptions())
     {
+      LOG_F(INFO, "Options are validated successfully!");
       allOptionsValid->setAcquirerValidity(true);
     }
     else{
+      LOG_F(INFO, "Options are invalid!");
       allOptionsValid->setAcquirerValidity(false);
       return;
     }
@@ -79,27 +81,32 @@ bool ACQChoosenOptions::ValidateOptions()
   auto foundRate = find(AcquirerConstants::supportedSampleRates.begin(), AcquirerConstants::supportedSampleRates.end(), sampleRate);
   if(foundRate == AcquirerConstants::supportedSampleRates.end())
   {
+    LOG_F(INFO, "Sample Rate is not supported!!");
     return false;
   }
-  if(sampleRate > AcquirerConstants::maxSamples)
+  if(sampleCount > AcquirerConstants::maxSamples)
   {
+    LOG_F(INFO, "Sample count is bigger than buffer!!");
     return false;
   }
   auto foundGain0 = find(AcquirerConstants::supportedPinStateInt.begin(), AcquirerConstants::supportedPinStateInt.end(), gainPerChannel[0]);
   auto foundGain1 = find(AcquirerConstants::supportedPinStateInt.begin(), AcquirerConstants::supportedPinStateInt.end(), gainPerChannel[1]);
   if(foundGain0 == AcquirerConstants::supportedPinStateInt.end() || foundGain1 == AcquirerConstants::supportedPinStateInt.end())
   {
+    LOG_F(INFO, "only gain high and low are supported!!");
     return false;
   }
   auto foundAttenuation0 = find(AcquirerConstants::supportedAttenuation.begin(), AcquirerConstants::supportedAttenuation.end(), probeAttenuation[0]);
   auto foundAttenuation1 = find(AcquirerConstants::supportedAttenuation.begin(), AcquirerConstants::supportedAttenuation.end(), probeAttenuation[1]);
   if(foundAttenuation0 == AcquirerConstants::supportedAttenuation.end() || foundAttenuation1 == AcquirerConstants::supportedAttenuation.end())
   {
+    LOG_F(INFO, "Only attenuation 1 and 10 are supported!!");
     return false;
   }
   auto foundDecimation = find(AcquirerConstants::supportedDecimations.begin(), AcquirerConstants::supportedDecimations.end(), decimation);
   if(foundDecimation == AcquirerConstants::supportedDecimations.end())
   {
+    LOG_F(INFO, "The decimation is not supported!!");
     return false;
   }
   // calculate the SampleTime for the given SampleRate(if not valid already aborted above) and the sampleCount(max 16384 if bigger, already aborted above)
