@@ -22,4 +22,4 @@
    std::vector<std::string> AcquirerConstants::supportedPinState = {"LOW", "HIGH"};
    std::vector<int> AcquirerConstants::supportedPinStateInt = {0,1};
    int AcquirerConstants::maxSamples = 16384;
-   std::vector<string> AcquirerConstants::supportedAttenuation = {"1x", "10x"};
+   std::vector<int> AcquirerConstants::supportedAttenuation = {1, 10};

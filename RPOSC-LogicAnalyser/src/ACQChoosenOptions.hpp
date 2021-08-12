@@ -18,7 +18,7 @@ class ACQChoosenOptions : public PContainer{
     double sampleTime; // time to sample (used to calculate if sampleCount and decimation/rate are fitting)
     uint decimation; // needed to set up acquirer. Calculated with sampleRate
     vector<int> gainPerChannel;
-    vector<string> probeAttenuation;
+    vector<int> probeAttenuation;
     AllOptionsValid *allOptionsValid;
     ACQChoosenOptions(std::string name, CBaseParameter::AccessMode am, std::string defaultVal, int fpga_update, AllOptionsValid *_allOptionsValid);
     uint32_t TranslateSampleCount(int count);

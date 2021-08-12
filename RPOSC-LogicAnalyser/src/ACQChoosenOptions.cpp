@@ -39,8 +39,8 @@ void ACQChoosenOptions::OnNewInternal()
     LOG_F(INFO, "SampleTime: %f", sampleTime);
     LOG_F(INFO, "gain for Channel 1: %d", gainPerChannel[0]);
     LOG_F(INFO, "gain for Channel 2: %d", gainPerChannel[1]);
-    LOG_F(INFO, "attenuation for Channel 1: %s", probeAttenuation[0].c_str());
-    LOG_F(INFO, "attenuation for Channel 2: %s", probeAttenuation[1].c_str());
+    LOG_F(INFO, "attenuation for Channel 1: %d", probeAttenuation[0]);
+    LOG_F(INFO, "attenuation for Channel 2: %d", probeAttenuation[1]);
     LOG_F(INFO, "decimation is calculated and set to: %d", decimation);
   }
   else
@@ -65,10 +65,15 @@ bool ACQChoosenOptions::ParseParameters(nlohmann::json jsonString)
   uint8_t gain1 = TranslatePinState(tmp.c_str());
   gainPerChannel.push_back(gain1);
 
+  // convert probe from string to int and cut last character
   tmp = (string)(jsonString["probeAttenuationPerChannel"]["Channel 1"]);
-  probeAttenuation.push_back(tmp.c_str());
+  tmp = tmp.substr(0, tmp.size()-1);
+  int probe1 = stoi(tmp);
+  probeAttenuation.push_back(probe1);
   tmp = (string)(jsonString["probeAttenuationPerChannel"]["Channel 2"]);
-  probeAttenuation.push_back(tmp.c_str());
+  tmp = tmp.substr(0, tmp.size()-1);
+  int probe2 = stoi(tmp);
+  probeAttenuation.push_back(probe2);
   
   decimation = CalculateDecimation(sampleRate);
 
