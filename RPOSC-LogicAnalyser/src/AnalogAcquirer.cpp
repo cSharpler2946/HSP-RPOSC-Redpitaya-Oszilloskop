@@ -54,8 +54,8 @@
     // do all the initialization stuff for the Acquisition
     rp_AcqReset();
     LOG_F(INFO, "reset acquiring");
-    rp_AcqSetDecimation(rp_acq_decimation_t(choosenOptions->decimation));
-    rp_AcqSetTriggerDelay(choosenOptions->decimation);
+    rp_AcqSetDecimation((rp_acq_decimation_t)choosenOptions->decimation);
+    // rp_AcqSetTriggerDelay(choosenOptions->decimation); not needed because the trigger is set immediately by getting signal to start
     rp_AcqSetGain(rp_channel_t(0),rp_pinState_t(choosenOptions->gainPerChannel[0]));
     rp_AcqSetGain(rp_channel_t(1),rp_pinState_t(choosenOptions->gainPerChannel[1]));
     LOG_F(INFO, "set data, start acquisition now!!");
