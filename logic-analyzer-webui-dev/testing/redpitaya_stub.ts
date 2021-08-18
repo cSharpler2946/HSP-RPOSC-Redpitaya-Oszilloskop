@@ -160,8 +160,8 @@ class RedPitayaStub {
     startAnalyzing() {
         console.log("Starting to capture.");
 
-        var logicSession: Model.LogicSession = { measurementState: Model.MeasurementState.Starting };
-        var logicSessionJSON = JSON.stringify(logicSession);
+        this.logicSession.measurementState = Model.MeasurementState.Starting;
+        var logicSessionJSON = JSON.stringify(this.logicSession);
         var parameters: any = {};
         parameters.LOGIC_SESSION = { value: logicSessionJSON };
         this.webSocket.send(JSON.stringify({ parameters: parameters }));

@@ -213,13 +213,25 @@ function stm_doStep() {
             if(receivedData.parameters["LOGIC_SESSION"]) {
                 var logicSession = JSON.parse(receivedData.parameters["LOGIC_SESSION"].value);
                 if(logicSession.measurementState === "starting") {
+                    receivedData.parameters["LOGIC_SESSION"] = {};
                     dataToSend.parameters = {};
                     dataToSend.signals = {};
                     dataToSend.parameters["LOGIC_SESSION"] = { value: JSON.stringify({ "measurementState": "running" }) };
                     send_data();
                     state = "Acquiring";
+                    setTimeout(() => { state = "DoneAcquiring"; stm_doStep() }, 2000);
                 }
             }
+            break;
+        case "Acquiring":
+            //Intentionally left empty, nothing to do here.
+            break;
+        case "DoneAcquiring":
+            dataToSend.parameters = {};
+            dataToSend.signals = {};
+            dataToSend.parameters["LOGIC_SESSION"] = { value: JSON.stringify({ "measurementState": "stopped" }) };
+            send_data();
+            state = "UserSetsOptions";
     }
 }
 
