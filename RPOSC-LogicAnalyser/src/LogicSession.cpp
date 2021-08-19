@@ -100,8 +100,8 @@ void LogicSession::OnNewInternal() {
             i++;
         }
 
-        //Test if element is really in hashmap
-        GVariant* test;
+        //Test if element is really in hashmap. Only for testing
+        /*GVariant* test;
         const char * testKey = channelMap->channelMap.begin()->first.c_str();
         if( (test = (GVariant *)g_hash_table_lookup (channels, testKey))==NULL)
             LOG_F(ERROR, "Could not find %s in hash table", testKey);
@@ -109,6 +109,7 @@ void LogicSession::OnNewInternal() {
             LOG_F(INFO, "Found for %s, value: %d", testKey, g_variant_get_int32(test));
 
         usleep(1000);
+        */
 
         LOG_F(INFO, "Setting the channels");
         srd_error_code ret;
@@ -133,8 +134,8 @@ void LogicSession::OnNewInternal() {
                 //LOG_F(INFO, "DataPoint: %f", dataPoint);
                 mixedData[(i*setChannels.size())+y]=dataPoint;
             }
-
         }
+        measuredData->addData("Interleaved data", vector<double>(mixedData, mixedData+mixedDataLength));
         
         //parse mixedData to be in range uint_8:0-255
         LOG_F(INFO, "Parsing mixedData into range");
@@ -150,11 +151,14 @@ void LogicSession::OnNewInternal() {
         double step = UINT8_MAX/max-min;
         LOG_F(INFO, "LS: Range: %f to %f -> step: %f", min, max, step);
 
+        vector<double> tmp;
         uint8_t *normalizedData = new uint8_t[sampleCount*setChannels.size()];
         for(int i = 0; i<mixedDataLength; i++)
         {
             normalizedData[i] = (uint8_t)(mixedData[i]*step);
+            tmp.push_back(normalizedData[i]);
         }
+        measuredData->addData("Normalized data", tmp);
 
         //set sample rate
         long sampleRate = acqChoosenOptions->sampleRate;

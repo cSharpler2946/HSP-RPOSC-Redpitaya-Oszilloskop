@@ -108,8 +108,7 @@ bool ACQChoosenOptions::ValidateOptions()
     LOG_F(INFO, "Only attenuation 1 and 10 are supported!!");
     return false;
   }
-  auto foundDecimation = find(AcquirerConstants::supportedDecimations.begin(), AcquirerConstants::supportedDecimations.end(), decimation);
-  if(foundDecimation == AcquirerConstants::supportedDecimations.end())
+  if(-1 == decimation)
   {
     LOG_F(INFO, "The decimation is not supported!!");
     return false;
@@ -137,7 +136,7 @@ uint ACQChoosenOptions::CalculateDecimation(double sampleRate)
   else{
     index = -1;
   }
-  return AcquirerConstants::supportedDecimations[index];
+  return index;
 }
 
 // Translate the userfriendly string into the fitting index
