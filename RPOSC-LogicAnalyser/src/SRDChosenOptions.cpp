@@ -5,6 +5,7 @@
 #include "../lib/nlohmann/jsonWrapper.hpp"
 #include <gmodule.h> //I think there are the glib functions
 #include "Helpers.hpp"
+#include <Python.h>
 
 #define ToErr (srd_error_code)
 
@@ -16,6 +17,7 @@ PContainer(name, am, defaultVal, fpga_update) {
 }
 
 /*
+ * !!!Terminates the app currently!!!!
  * Prints current options from python object.
  * **setOptions() must be called at least once before!!**
  * Supports only GVariantTypes s(string), x(int64) and d(double).
@@ -60,8 +62,7 @@ void SRDChosenOptions::OnNewInternal() {
     {
         std::string id = curr["id"];
         std::string value = Helpers::JSONtoString(curr["value"]);
-        if (id != "num_stop_bits") //Does currently not work to set
-            optionsMap.insert(std::pair<std::string, std::string>(id, value));
+        optionsMap.insert(std::pair<std::string, std::string>(id, value));
     }
     if(setOptions(optionsMap) == SRD_OK)
     {
@@ -72,7 +73,7 @@ void SRDChosenOptions::OnNewInternal() {
     {
         LOG_F(ERROR, "Failed to set at least one srd option");
     }
-    printCurrentOptions(*decoderInst);
+    //printCurrentOptions(*decoderInst);
 }
 
 /*

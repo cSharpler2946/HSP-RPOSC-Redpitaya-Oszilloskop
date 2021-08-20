@@ -10,7 +10,7 @@ void MeasuredData::Update() {
     VALUE->Set(measuredData);
 }
 
-void MeasuredData::addData(std::string acqChannel, std::vector<double> data) {
+void MeasuredData::addData(std::string acqChannel, std::vector<float> data) {
    nlohmann::json tmp;
    tmp["acqChannel"]=acqChannel;
    tmp["data"]=data;

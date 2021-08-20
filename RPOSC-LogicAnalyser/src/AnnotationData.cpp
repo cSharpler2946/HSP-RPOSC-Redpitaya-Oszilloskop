@@ -1,12 +1,14 @@
 #include "AnnotationData.hpp"
 #include "../lib/nlohmann/jsonWrapper.hpp"
 #include <loguru.hpp>
+#include <math.h>
 
 AnnotationData::AnnotationData(std::string _name, int _size, std::string _def_value, srd_session *_srdSession):
 SContainer(_name, _size, _def_value) {
     LOG_F(INFO, "Created annotation data");
     srdSession = _srdSession;
 
+    LOG_F(INFO, "Adding callback");
     srd_error_code ret = SRD_OK;
     if((ret = ToErr srd_pd_output_callback_add(srdSession, SRD_OUTPUT_ANN, &callbackAnnotation, this)) != SRD_OK)
     {
@@ -26,7 +28,7 @@ void AnnotationData::callbackAnnotation(struct srd_proto_data *pdata, void *cb_d
     //LOG_F(INFO, "Got ann data");
     srd_proto_data_annotation *data = (srd_proto_data_annotation *)pdata->data;
     //LOG_F(INFO, "Retrieved data from pdata");
-    char **annString = (gchar **)g_slist_nth_data(pdata->pdo->di->decoder->annotations, data->ann_format); //double pointer!!, ann_format is called ann_class in lsrd4
+    char **annString = (gchar **)g_slist_nth_data(pdata->pdo->di->decoder->annotations, data->ann_class); //double pointer!!, ann_format is called ann_class in lsrd4
     //LOG_F(INFO, "Retrieved **annString %s", *annString);
 
     //LOG_F(INFO, "Got start %d", pdata->start_sample);
@@ -38,8 +40,9 @@ void AnnotationData::callbackAnnotation(struct srd_proto_data *pdata, void *cb_d
     //LOG_F(INFO, "Got annotation data: %d-%d: %d: %s: %s", pdata->start_sample, pdata->end_sample, data->ann_format, *annString, *(data->ann_text));
 
     //Testing of uart decoding
-    /*if (strcmp(*annString, "rx-data") == 0 || strcmp(*annString, "tx-data") == 0)
-        LOG_F(INFO, "Got %s: %s", *annString, *(data->ann_text));*/
+    std::string s = *annString;
+    if (s == "rx-data")
+        LOG_F(INFO, "Got %s: %s", *annString, *data->ann_text);
     
     nlohmann::json tmp;
     tmp["start"]=pdata->start_sample;

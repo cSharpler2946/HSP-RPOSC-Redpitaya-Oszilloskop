@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <unistd.h>
+#include "uartTestData.h"
 
 
 LogicSession::LogicSession(std::string name, CBaseParameter::AccessMode am, std::string defaultVal, int fpga_update, srd_session *_srdSession, srd_decoder_inst **_decoderInst, Acquirer *_acquirer, AllOptionsValid *_allOptionsValid, SRDChannelMap *_channelMap, MeasuredData *_measuredData, AnnotationData *_annotationData, ACQChoosenOptions *_acqChoosenOptions):
@@ -72,12 +73,13 @@ void LogicSession::OnNewInternal() {
         }
         
         int sampleCount;
-        std::map<std::string, std::vector<double>> dataMap;
+        std::map<std::string, std::vector<float>> dataMap;
         for(int i = 0; i<AcquirerConstants::availableChannels.size(); i++)
         {
-            vector<double> data = acquirer->getData(i);
+            vector<float> data = acquirer->getData(i);
+            //vector<float> data(testdata, testdata + sizeof(testdata)/sizeof(testdata[0]));
             measuredData->addData(AcquirerConstants::availableChannels[i], data);
-            dataMap.insert(std::pair<std::string, std::vector<double> >(AcquirerConstants::availableChannels[i], data));
+            dataMap.insert(std::pair<std::string, std::vector<float> >(AcquirerConstants::availableChannels[i], data));
             sampleCount = data.size();
         }
 
@@ -113,7 +115,7 @@ void LogicSession::OnNewInternal() {
 
         LOG_F(INFO, "Setting the channels");
         srd_error_code ret;
-        if((ret = ToErr srd_inst_channel_set_all(*decoderInst, channels, 1)) != SRD_OK)
+        if((ret = ToErr srd_inst_channel_set_all(*decoderInst, channels)) != SRD_OK)
         {
             LOG_F(ERROR, "Couldn't set channels: Error code : %d", ret);
         }
@@ -121,26 +123,26 @@ void LogicSession::OnNewInternal() {
         //Interleave data from acq channels which were used in channelMap into mixedData array
         LOG_F(INFO, "Interleaving data");
         int mixedDataLength = sampleCount*setChannels.size();
-        double *mixedData = new double[mixedDataLength];
+        float *mixedData = new float[mixedDataLength];
         for(int i = 0; i<sampleCount; i++)
         {
             for(int y = 0; y<setChannels.size(); y++)
             {
                 std::string channelId = setChannels[y];
                 //LOG_F(INFO, "ChannelId: %s", channelId.c_str());
-                std::vector<double> vect = dataMap[channelId];
+                std::vector<float> vect = dataMap[channelId];
                 //LOG_F(INFO, "Got vect, empty: %d", vect.empty()); //Empty happens if Channel names sent from frontend are not in AcquirerConstants::availableChannels
-                double dataPoint = vect[i];
+                float dataPoint = vect[i];
                 //LOG_F(INFO, "DataPoint: %f", dataPoint);
                 mixedData[(i*setChannels.size())+y]=dataPoint;
             }
         }
-        measuredData->addData("Interleaved data", vector<double>(mixedData, mixedData+mixedDataLength));
+        measuredData->addData("Interleaved data", vector<float>(mixedData, mixedData+mixedDataLength));
         
         //parse mixedData to be in range uint_8:0-255
         LOG_F(INFO, "Parsing mixedData into range");
-        double min = DBL_MAX;
-        double max = -DBL_MAX;
+        float min = FLT_MAX;
+        float max = FLT_MIN;
         for(int i = 0; i<mixedDataLength; i++) //Move min/max finding to last loop
         {
             if(mixedData[i] < min)
@@ -148,10 +150,10 @@ void LogicSession::OnNewInternal() {
             if(mixedData[i] > max)
                 max = mixedData[i];
         }
-        double step = UINT8_MAX/max-min;
+        float step = UINT8_MAX/max-min;
         LOG_F(INFO, "LS: Range: %f to %f -> step: %f", min, max, step);
 
-        vector<double> tmp;
+        vector<float> tmp;
         uint8_t *normalizedData = new uint8_t[sampleCount*setChannels.size()];
         for(int i = 0; i<mixedDataLength; i++)
         {
@@ -162,8 +164,8 @@ void LogicSession::OnNewInternal() {
 
         //set sample rate
         long sampleRate = acqChoosenOptions->sampleRate;
-        LOG_F(INFO, "Setting sample rate to: %d", sampleRate);
-        GVariant *metadata = g_variant_new_uint64(sampleRate);
+        LOG_F(INFO, "Setting sample rate to: %ld", sampleRate);
+        GVariant *metadata = g_variant_new("t", sampleRate);
         if((ret = ToErr srd_session_metadata_set(srdSession, SRD_CONF_SAMPLERATE, metadata)) != SRD_OK )
         {
             LOG_F(ERROR, "Couldn't set sampleRate: Error code : %d", ret);
@@ -176,7 +178,7 @@ void LogicSession::OnNewInternal() {
             LOG_F(ERROR, "Couldn't start srd session: Error code : %d", ret);
         }
 
-        if((ret = ToErr srd_session_send(srdSession, 0, mixedDataLength-1, normalizedData, mixedDataLength)) != SRD_OK)
+        if((ret = ToErr srd_session_send(srdSession, 0, sampleCount-1, normalizedData, mixedDataLength, 1)) != SRD_OK)
         {
             LOG_F(ERROR, "Couldn't send data to srd session: Error code : %d", ret);
         }

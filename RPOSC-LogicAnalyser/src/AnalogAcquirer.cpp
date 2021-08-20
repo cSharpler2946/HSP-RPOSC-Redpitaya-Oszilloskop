@@ -64,13 +64,27 @@
     // set the triggersrc to now so trigger is triggered now!!
     rp_AcqSetTriggerSrc(RP_TRIG_SRC_NOW);
     // wait for the buffer to be completely written
-    while(!acquisitionComplete){
+    /*while(!acquisitionComplete){
       if(previousWritePointer == writePointer)
       {
         acquisitionComplete = true;
       }
       previousWritePointer = writePointer;
+      rp_AcqGetWritePointer(&writePointer);
     }
+
+    rp_AcqStop();*/
+
+    rp_acq_trig_state_t state = RP_TRIG_STATE_TRIGGERED;
+
+    while(1){
+            rp_AcqGetTriggerState(&state);
+            if(state == RP_TRIG_STATE_TRIGGERED){
+            sleep(1);
+            break;
+            }
+    }
+    acquisitionComplete = true;
 
     LOG_F(INFO, "Write acquired data to arrays");
     // write the acquired data into the vectors
@@ -83,9 +97,11 @@
       rp_AcqGetOldestDataV(rp_channel_t(1), &choosenOptions->sampleCount, buffB);
       
       // multiply with the probe attenuation
-      for(int i = 0; i<choosenOptions->sampleCount;i++) {
-        buffA[i] *= (float)choosenOptions->probeAttenuation[0];
-        buffB[i] *= (float)choosenOptions->probeAttenuation[1];
+      if(1 != choosenOptions->probeAttenuation[0] ||  1 != choosenOptions->probeAttenuation[0]) {
+        for(int i = 0; i<choosenOptions->sampleCount;i++) {
+          buffA[i] *= (float)choosenOptions->probeAttenuation[0];
+          buffB[i] *= (float)choosenOptions->probeAttenuation[1];
+        }
       }
       
       //write data into the vectors
@@ -93,8 +109,11 @@
       acquiredDataChannelA = a;
       vector<float> b(buffB, buffB+sizeof buffB / sizeof buffB[0]);
       acquiredDataChannelB = b;
-      
-      
+
+      for(int i = 0; i<choosenOptions->sampleCount;i++) {
+        acquiredDataChannelA[i] = roundf(acquiredDataChannelA[i]*100)/100;
+        acquiredDataChannelB[i] = roundf(acquiredDataChannelB[i]*100)/100;
+      }
     }
 
     LOG_F(INFO, "check arrays and return result");
@@ -108,14 +127,14 @@
     }
   }
 
-  vector<double> AnalogAcquirer::getData(int channel)
+  vector<float> AnalogAcquirer::getData(int channel)
   {
     // get data from specified channel. The acquiredDataChannel vectors contain as much valued as defined in choosenOptions.sampleCount
-    vector<double> a(acquiredDataChannelA.begin(), acquiredDataChannelA.end());
-    vector<double> b(acquiredDataChannelB.begin(), acquiredDataChannelB.end());
+    //vector<float> a(acquiredDataChannelA.begin(), acquiredDataChannelA.end());
+    //vector<float> b(acquiredDataChannelB.begin(), acquiredDataChannelB.end());
     switch (channel) {
-      case 0: return a;
-      case 1: return b;
-      default: return vector<double>();
+      case 0: return acquiredDataChannelA;
+      case 1: return acquiredDataChannelB;
+      default: return vector<float>();
     }
   }
