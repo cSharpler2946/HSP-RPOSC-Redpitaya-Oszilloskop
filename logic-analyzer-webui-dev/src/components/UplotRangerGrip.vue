@@ -1,332 +1,205 @@
 <template>
-  <div v-bind:id="id"></div>
+  <div class="chart-navigation">
+    <div class="zoom-navigation">
+      <button class="btn btn-small btn-primary">+</button>
+      <button class="btn btn-small btn-primary">-</button>
+    </div>
+    
+    <div id="scroll-navigation">
+        <canvas id="scroll-navigation-canvas"></canvas>
+    </div>
+  </div>
 </template>
 
 <script>
 import uPlot from "uplot";
 import "uplot/dist/uPlot.min.css";
 
+import Joystick from './Joystick'
+
 export default {
   name: "UplotRangerGrip",
   data() {
     return {
-      uRanger: null,
-      testData: null,
-      initX: {
-        min: null,
-        max: null,
-      },
-      lftWid: {
-        left: null,
-        width: null,
-      },
-      minMax: {
-        min: null,
-        max: null,
-      },
-      x0: 0,
-      lft0: 0,
-      wid0: 80,
-      rangerOpts: {
-        width: 600,
-        height: 100,
-        plugins: [this.wheelZoomPlugin({ factor: 0.75 })],
-        cursor: {
-          x: false,
-          y: false,
-          points: {
-            show: false,
-          },
-          drag: {
-            setScale: false,
-            setSelect: true,
-            x: true,
-            y: false,
-          },
-        },
-        legend: {
-          show: false,
-        },
-        scales: {
-          x: {
-            time: false,
-          }
-        },
-        series: [
-          {},
-          {
-            stroke: "#0eb5b5",
-          },
-        ],
-        hooks: {
-          ready: [
-            (uRanger) => {
-              let left = Math.round(uRanger.valToPos(this.initX.min, "x"));
-              let width = Math.round(uRanger.valToPos(this.initX.max, "x")) - left;
-              let height = uRanger.bbox.height / devicePixelRatio;
-              uRanger.setSelect({ left, width, height }, false);
-
-              const sel = uRanger.root.querySelector(".u-select");
-
-              this.on("mousedown", sel, (e) => {
-                this.bindMove(e, (e) =>
-                  this.update(this.lft0 + (e.clientX - this.x0), this.wid0)
-                );
-              });
-
-              this.on("mousedown", this.placeDiv(sel, "u-grip-l"), (e) => {
-                this.bindMove(e, (e) =>
-                  this.update(
-                    this.lft0 + (e.clientX - this.x0),
-                    this.wid0 - (e.clientX - this.x0)
-                  )
-                );
-              });
-
-              this.on("mousedown", this.placeDiv(sel, "u-grip-r"), (e) => {
-                this.bindMove(e, (e) =>
-                  this.update(this.lft0, this.wid0 + (e.clientX - this.x0))
-                );
-              });
-            },
-          ],
-          setSelect: [
-            (uRanger) => {
-              this.zoom(uRanger.select.left, uRanger.select.width);
-            },
-          ],
-        },
-      },
     };
   },
   props: ["uPlotCharts", "id"],
   methods: {
-    on: function (ev, el, fn) {
-      el.addEventListener(ev, fn);
-    },
-    off: function (ev, el, fn) {
-      el.removeEventListener(ev, fn);
-    },
-    debounce: function (fn) {
-      let raf;
+    createScrollNavigation: function(){
+      var canvas = document.getElementById("scroll-navigation-canvas");
+      var ctx = canvas.getContext("2d");
+      
+      canvas.height = 20;
+      canvas.width = document.getElementById("scroll-navigation").offsetWidth;
 
-      return (...args) => {
-        if (raf) return;
+      const handleWidth = 30;
+      const handleFill = "#1fb592";
+      let handle = null;
+      let dragEnabled = false;
+      let offsetX;
+      let offsetY;
 
-        raf = requestAnimationFrame(() => {
-          fn(...args);
-          raf = null;
+      var startX;
+      var startY;
+
+      const clear = () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height)
+      }
+
+      const updateOffset = () => {
+        var boundingBorders = canvas.getBoundingClientRect();
+        offsetX = boundingBorders.left;
+        offsetY = boundingBorders.top;
+      }
+
+      const drawHandle = (x) => {
+
+        const centerX = x ? x : canvas.width / 2;
+        const centerY = canvas.height / 2;
+        const radius = canvas.height / 2;
+
+        ctx.fillStyle = handleFill;
+
+        ctx.beginPath();
+        ctx.arc(centerX - handleWidth / 2, centerY, radius, (Math.PI/180) * 90, (Math.PI/180) * 270, false);
+        ctx.fill();
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(centerX + handleWidth / 2, centerY, radius, (Math.PI/180) * 90, (Math.PI/180) * 270, true);
+        ctx.fill();
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.rect(centerX - handleWidth / 2 - 1, 0, handleWidth + 2, canvas.height);
+        ctx.fill();
+        ctx.stroke();
+
+        handle = {x: centerX - handleWidth / 2, y: 0, width: handleWidth + radius * 2, height: canvas.height, isDragging: false};
+      }
+
+      const resetHandle = () => {
+        clear();
+        drawHandle();
+      }
+
+      const isColliding = (mousePosition) => {
+
+        console.log(mousePosition, handle);
+        
+        // test if mouse is inside rect
+        if(mousePosition.x > handle.x && mousePosition.x < handle.x + handle.width &&
+           mousePosition.y > handle.y && mousePosition.y < handle.y + handle.height){
+            console.log("is dragging rect");
+            return true;
+        }
+        else {
+          // test if mouse is inside arc
+          var dx = handle.x - mousePosition.x;
+          var dy = handle.y - mousePosition.y;
+          var radius = handle.height / 2;
+
+          if(dx*dx + dy*dy < radius*radius){
+            console.log("is dragging arc");
+            return true;
+          }
+        }
+
+        return false;
+      }
+
+      const onMousedown = e => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        updateOffset();
+
+        var mouseX = parseInt(e.clientX-offsetX);
+        var mouseY = parseInt(e.clientY-offsetY);
+
+        dragEnabled = false;
+
+        if (isColliding({x: mouseX, y: mouseY})){
+          dragEnabled = true;
+          handle.isDragging = true;
+        }
+
+        // save the current mouse position
+        startX = mouseX;
+        startY = mouseY;
+      }
+
+      const onMouseup = e => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        dragEnabled = false;
+        handle.isDragging = false;
+
+        resetHandle();
+      }
+
+      const onMouseout = e => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        dragEnabled = false;
+        handle.isDragging = false;
+
+        resetHandle();
+      }
+
+      const onMousemove = e => {
+        if (dragEnabled) {
+          e.preventDefault();
+          e.stopPropagation();
+
+          var mouseX = parseInt(e.clientX-offsetX);
+          var mouseY = parseInt(e.clientY-offsetY);
+
+          // calculate the distance the mouse has moved
+          // since the last mousemove
+          var dx=mouseX-startX;
+          var dy=mouseY-startY;
+
+          // TODO: Wrong calculations with (handle.x + dx). 
+          // CAUTION: this specific calculation is correct, but there is a bug somewhere in this file
+          console.log(`calculation: ${handle.x} + ${dx}`);
+          handle.x += dx;
+          clear();
+          drawHandle(handle.x);
+
+          // save the current mouse position
+          startX = mouseX;
+          startY = mouseY;
+        }
+      }
+
+      const registerEventlisteners = () => {
+        canvas.addEventListener('mousedown', function(e){
+          onMousedown(e);
         });
-      };
-    },
-    placeDiv: function (par, cls) {
-      let el = document.createElement("div");
-      el.classList.add(cls);
-      par.appendChild(el);
-      return el;
-    },
-    update: function (newLft, newWid) {
-      let newRgt = newLft + newWid;
-      let maxRgt = this.uRanger.bbox.width / devicePixelRatio;
+        canvas.addEventListener('mousemove', function(e){
+          onMousemove(e);
+        });
+        canvas.addEventListener('mouseup', function(e){
+          onMouseup(e);
+        });
+        canvas.addEventListener('mouseout', function(e){
+          onMouseout(e);
+        });
 
-      if (newLft >= 0 && newRgt <= maxRgt) {
-        this.select(newLft, newWid);
-        this.zoom(newLft, newWid);
+        // TODO: register touch-events
       }
-    },
-    select: function (newLft, newWid) {
-      this.lftWid.left = newLft;
-      this.lftWid.width = newWid;
-      this.uRanger.setSelect(this.lftWid, false);
-    },
-    zoom: function (newLft, newWid) {
-      this.minMax.min = this.uRanger.posToVal(newLft, "x");
-      this.minMax.max = this.uRanger.posToVal(newLft + newWid, "x");
+      
+      resetHandle();
+      registerEventlisteners();
+    }
 
-      for (var i = 0; i < this.uPlotCharts.length; i++) {
-        this.uPlotCharts[i].setScale("x", this.minMax);
-      }
-    },
-    bindMove: function (e, onMove) {
-      this.x0 = e.clientX;
-      this.lft0 = this.uRanger.select.left;
-      this.wid0 = this.uRanger.select.width;
-      const _onMove = this.debounce(onMove);
-
-      this.on("mousemove", document, _onMove);
-      this.on("mouseup", document, (e) => {
-        this.off("mousemove", document, _onMove);
-      });
-      e.stopPropagation();
-    },
-    wheelZoomPlugin: function (opts) {
-
-      var self = this;
-
-      return {
-        hooks: {
-          ready: (u) => {
-          
-            let over = u.over;
-
-            // wheel scroll zoom
-            over.addEventListener("wheel", (e) => {
-              e.preventDefault();
-
-              let scrollSpeed = 10; 
-              if(e.wheelDelta < 0){
-                scrollSpeed = -10;
-              }
-
-              let newLeft = u.select.left + scrollSpeed;
-              let newWidth = u.select.width;
-
-              self.update(newLeft, newWidth);
-              
-            });
-          },
-        },
-      };
-    },
-    // wheelZoomPlugin: function (opts) {
-    //   let factor = opts.factor || 0.75;
-
-    //   let xMin, xMax, xRange;
-
-    //   function clamp(nRange, nMin, nMax, fRange, fMin, fMax) {
-    //     if (nRange > fRange) {
-    //       nMin = fMin;
-    //       nMax = fMax;
-    //     } else if (nMin < fMin) {
-    //       nMin = fMin;
-    //       nMax = fMin + nRange;
-    //     } else if (nMax > fMax) {
-    //       nMax = fMax;
-    //       nMin = fMax - nRange;
-    //     }
-
-    //     return [nMin, nMax];
-    //   }
-
-    //   return {
-    //     hooks: {
-    //       ready: (u) => {
-    //         xMin = u.scales.x.min;
-    //         xMax = u.scales.x.max;
-
-    //         xRange = xMax - xMin;
-
-    //         let over = u.over;
-    //         let rect = over.getBoundingClientRect();
-
-    //         // wheel drag pan
-    //         over.addEventListener("mousedown", (e) => {
-    //           if (e.button == 1) {
-    //             //	plot.style.cursor = "move";
-    //             e.preventDefault();
-
-    //             let left0 = e.clientX;
-    //             //	let top0 = e.clientY;
-
-    //             let scXMin0 = u.scales.x.min;
-    //             let scXMax0 = u.scales.x.max;
-
-    //             let xUnitsPerPx = u.posToVal(1, "x") - u.posToVal(0, "x");
-
-    //             function onmove(e) {
-    //               e.preventDefault();
-
-    //               let left1 = e.clientX;
-    //               //	let top1 = e.clientY;
-
-    //               let dx = xUnitsPerPx * (left1 - left0);
-
-    //               u.setScale("x", {
-    //                 min: scXMin0 - dx,
-    //                 max: scXMax0 - dx,
-    //               });
-    //             }
-
-    //             function onup(e) {
-    //               document.removeEventListener("mousemove", onmove);
-    //               document.removeEventListener("mouseup", onup);
-    //             }
-
-    //             document.addEventListener("mousemove", onmove);
-    //             document.addEventListener("mouseup", onup);
-    //           }
-    //         });
-
-    //         // wheel scroll zoom
-    //         over.addEventListener("wheel", (e) => {
-    //           e.preventDefault();
-
-    //           let { left, top } = u.cursor;
-
-    //           let leftPct = left / rect.width;
-    //           let xVal = u.posToVal(left, "x");
-    //           let oxRange = u.scales.x.max - u.scales.x.min;
-
-    //           let nxRange = e.deltaY < 0 ? oxRange * factor : oxRange / factor;
-    //           let nxMin = xVal - leftPct * nxRange;
-    //           let nxMax = nxMin + nxRange;
-    //           [nxMin, nxMax] = clamp(nxRange, nxMin, nxMax, xRange, xMin, xMax);
-
-    //           u.batch(() => {
-    //             u.setScale("x", {
-    //               min: nxMin,
-    //               max: nxMax,
-    //             });
-
-    //             this.initX.min = nxMin;
-    //             this.initX.max = nxMax;
-
-    //             for (var i = 0; i < this.uPlotCharts.length; i++) {
-    //               this.uPlotCharts[i].setScale("x", { min: nxMin, max: nxMax });
-    //             }
-    //           });
-    //         });
-    //       },
-    //     },
-    //   };
-    // },
-    getSize: function () {
-      return {
-        width: document.getElementById(this.id).offsetWidth,
-        height: 100,
-      };
-    },
   },
   beforeMount() {   
-    console.log(this.uPlotCharts[0].series);
-    var dataPoints = 16000;
 
-    this.testData = [
-      Array.from(Array(dataPoints).keys()),
-      new Array(dataPoints).fill(0).map(function (val, i) {
-        return 0;
-      }),
-    ];
-
-    this.initX.max = this.testData[0].length;
   },
   mounted() {
-    this.$nextTick(function () {
-      this.uRanger = new uPlot(
-        this.rangerOpts,
-        this.testData,
-        document.getElementById(this.id)
-      );
-      this.uRanger.setSize(this.getSize());
-
-      window.addEventListener("resize", (e) => {
-        this.uRanger.setSize(this.getSize());
-        let left = Math.round(this.uRanger.valToPos(this.initX.min, "x"));
-        let width = Math.round(this.uRanger.valToPos(this.initX.max, "x")) - left;
-
-        this.update(left, width);
-      });
-    });
+    this.createScrollNavigation();
   },
   components: {
     uPlot,
@@ -337,25 +210,84 @@ export default {
 <style lang="scss">
 @import "./../styles/_variables";
 
-.u-select {
-  top: 2px;
+.chart-navigation{
+  display: flex;
+  flex-flow: column;
 }
 
-.u-grip-l {
-  position: absolute;
-  left: -5px;
-  width: 10px;
-  height: 100%;
-  background: $uplotRangerGripLeftColor;
-  cursor: ew-resize;
+.zoom-navigation {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.u-grip-r {
-  position: absolute;
-  right: -5px;
-  width: 10px;
-  height: 100%;
-  background: $uplotRangerGripRightColor;
-  cursor: ew-resize;
+.zoom-navigation > button{
+  margin-right: 10px;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  font-size: 14pt;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+
+#scroll-navigation{
+  width: 100%;
+}
+
+#scroll-navigation-canvas {
+  background-color: dimgray;
+  border-radius: 10px;
+}
+
+
+// .joystick-base {
+//     margin: 20px 0 20px 0;
+//     position: relative;
+//     height: 116px;
+//     width: 116px;
+//     border-radius: 100%;
+//     border: 10px solid rgba(#08c, 0.1);
+//     background: rgba(#08c, 0.05);
+//     box-shadow: 0 0 15px rgba(#000, 0.5) inset,
+//         0 0 5px rgba(#000, 0.2);
+//     transition: border-color 0.3s;
+//     cursor: pointer;
+//     touch-action: none;
+//     -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+    
+//     &:hover, &.active {
+//         border-color: rgba(#08c, 0.2);
+        
+//         .joystick-shaft {
+//             background: rgba(#08c, 0.35);
+//         }
+//     }
+    
+//     &.active {
+//         background: rgba(#08c, 0.1);
+//     }
+// }
+
+// .joystick-shaft {
+//     position: absolute;
+//     top: calc(50% - 32px);
+//     left: calc(50% - 32px);
+//     height: 64px;
+//     width: 64px;
+//     border-radius: 100%;
+//     background: rgba(#08c, 0.25);
+//     box-shadow: 0 0 5px rgba(#000, 0.7) inset;
+//     transition: background 0.3s;
+//     will-change: transform;
+//     touch-action: none;
+//     -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+// }
+
 </style>
