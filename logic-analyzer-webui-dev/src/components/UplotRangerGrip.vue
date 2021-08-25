@@ -53,7 +53,6 @@ export default {
       }
 
       const drawHandle = (x) => {
-
         const centerX = x ? x : canvas.width / 2;
         const centerY = canvas.height / 2;
         const radius = canvas.height / 2;
@@ -73,7 +72,7 @@ export default {
         ctx.fill();
         ctx.stroke();
 
-        handle = {x: centerX - handleWidth / 2, y: 0, width: handleWidth + radius * 2, height: canvas.height, isDragging: false};
+        handle = {x: centerX, y: 0, width: handleWidth + radius * 2, height: canvas.height, isDragging: false};
       }
 
       const resetHandle = () => {
@@ -81,10 +80,7 @@ export default {
         drawHandle();
       }
 
-      const isColliding = (mousePosition) => {
-
-        console.log(mousePosition, handle);
-        
+      const isColliding = (mousePosition) => {        
         // test if mouse is inside rect
         if(mousePosition.x > handle.x && mousePosition.x < handle.x + handle.width &&
            mousePosition.y > handle.y && mousePosition.y < handle.y + handle.height){
@@ -160,9 +156,6 @@ export default {
           var dx=mouseX-startX;
           var dy=mouseY-startY;
 
-          // TODO: Wrong calculations with (handle.x + dx). 
-          // CAUTION: this specific calculation is correct, but there is a bug somewhere in this file
-          console.log(`calculation: ${handle.x} + ${dx}`);
           handle.x += dx;
           clear();
           drawHandle(handle.x);
