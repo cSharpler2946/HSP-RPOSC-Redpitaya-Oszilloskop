@@ -110,10 +110,10 @@
       vector<float> b(buffB, buffB+sizeof buffB / sizeof buffB[0]);
       acquiredDataChannelB = b;
 
-      for(int i = 0; i<choosenOptions->sampleCount;i++) {
+      /*for(int i = 0; i<choosenOptions->sampleCount;i++) {
         acquiredDataChannelA[i] = roundf(acquiredDataChannelA[i]*100)/100;
         acquiredDataChannelB[i] = roundf(acquiredDataChannelB[i]*100)/100;
-      }
+      }*/
     }
 
     LOG_F(INFO, "check arrays and return result");
@@ -127,14 +127,14 @@
     }
   }
 
-  vector<float> AnalogAcquirer::getData(int channel)
+  vector<double> AnalogAcquirer::getData(int channel)
   {
     // get data from specified channel. The acquiredDataChannel vectors contain as much valued as defined in choosenOptions.sampleCount
-    //vector<float> a(acquiredDataChannelA.begin(), acquiredDataChannelA.end());
-    //vector<float> b(acquiredDataChannelB.begin(), acquiredDataChannelB.end());
+    vector<double> a(acquiredDataChannelA.begin(), acquiredDataChannelA.end());
+    vector<double> b(acquiredDataChannelB.begin(), acquiredDataChannelB.end());
     switch (channel) {
-      case 0: return acquiredDataChannelA;
-      case 1: return acquiredDataChannelB;
-      default: return vector<float>();
+      case 0: return a;
+      case 1: return b;
+      default: return vector<double>();
     }
   }

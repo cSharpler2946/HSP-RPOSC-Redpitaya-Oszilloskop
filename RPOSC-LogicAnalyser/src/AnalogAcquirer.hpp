@@ -14,7 +14,7 @@ using namespace std;
 class AnalogAcquirer: public Acquirer {
 public:
   bool startAcq();
-  vector<float> getData(int channel);
+  vector<double> getData(int channel);
   AnalogAcquirer(ACQChoosenOptions *choosenOptions);
   AnalogAcquirer(int sampleRate, int decimation, int pinState, ACQChoosenOptions *acqChoosenOption);
   AnalogAcquirer();
