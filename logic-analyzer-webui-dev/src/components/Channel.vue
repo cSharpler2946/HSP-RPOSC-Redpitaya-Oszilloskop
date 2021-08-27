@@ -160,13 +160,13 @@ export default {
   beforeMount () {
 
     // FOR TESTING
-    if(this.channelId == '1'){
+    if(this.channelId == '0'){
       this.testData = [
         Array.from(Array(16000).keys()),
         measureData.data
       ]   
     }
-    else if(this.channelId == '2'){
+    else if(this.channelId == '1'){
       this.testData = [
         Array.from(Array(16000).keys()),
         new Array(16000).fill(0).map(function(val, i){

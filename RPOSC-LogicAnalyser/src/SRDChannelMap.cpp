@@ -29,29 +29,32 @@ void SRDChannelMap::OnNewInternal() {
 
     bool valid = false;
     GSList * i;
-    for (i = (*decoderInst)->decoder->channels; i; i = i->next)
-    {
-        srd_channel * ch = static_cast<srd_channel *>(i->data);
-        if(channelMap.count(ch->id)==0) //Returns the number of occurences of key in map, so 1 or 0
+    if (!(*decoderInst)->decoder->channels) { //No required channels
+        for (i = (*decoderInst)->decoder->opt_channels; i; i = i->next) //Look if one opt channel is set
         {
-            valid = false;
-            break;
-        } else {
-            valid = true;
+            srd_channel * ch = static_cast<srd_channel *>(i->data);
+            LOG_F(INFO, "Checking occurance: %s, %d", ch->id, channelMap.count(ch->id));
+            if(channelMap.count(ch->id)!=0) //Returns the number of occurences of key in map, so 1 or 0
+            {
+                valid = true;
+                break;
+            }
         }
     }
-    for (i = (*decoderInst)->decoder->opt_channels; i; i = i->next)
-    {
-        srd_channel * ch = static_cast<srd_channel *>(i->data);
-        LOG_F(INFO, "Checking occurance: %s, %d", ch->id, channelMap.count(ch->id));
-        if(channelMap.count(ch->id)==0) //Returns the number of occurences of key in map, so 1 or 0
+    else {
+        for (i = (*decoderInst)->decoder->channels; i; i = i->next) //Look if all required channels are set
         {
-            valid = false;
-            break;
-        } else {
-            valid = true;
+            srd_channel * ch = static_cast<srd_channel *>(i->data);
+            if(channelMap.count(ch->id)==0) //Returns the number of occurences of key in map, so 1 or 0
+            {
+                valid = false;
+                break;
+            } else {
+                valid = true;
+            }
         }
     }
+
     LOG_F(INFO, "Setting channelMapValidty to %d", valid);
     allOptionsValid->setChannelMapValidity(valid);
 }

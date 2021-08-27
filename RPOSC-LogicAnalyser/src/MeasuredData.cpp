@@ -15,6 +15,8 @@ void MeasuredData::addData(std::string acqChannel, std::vector<double> data) {
    tmp["acqChannel"]=acqChannel;
    tmp["data"]=data;
 
+   //LOG_F(INFO, "Added measured data: %s", tmp.dump().c_str());
+
    measuredData.push_back(tmp.dump());
 
    Update();

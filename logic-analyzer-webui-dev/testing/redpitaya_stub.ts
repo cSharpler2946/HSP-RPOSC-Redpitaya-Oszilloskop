@@ -10,15 +10,18 @@ class RedPitayaStub {
     decoderChannels: Model.DecoderChannel[]
     acquirerOptions: Model.AcquirerRequestedOptions
     channelMap: Record<string, string> = {}
-
+    logicSession: Model.LogicSession
     webSocket: WebSocket
+    
 
     constructor(decoders: Model.Decoder[], requestedOptions: Model.DecoderOption[],
-        decoderChannels: Model.DecoderChannel[], acquirerOptions: Model.AcquirerRequestedOptions) {
+        decoderChannels: Model.DecoderChannel[], acquirerOptions: Model.AcquirerRequestedOptions,
+        logicSession: Model.LogicSession) {
         this.decoders = decoders
         this.requestedOptions = requestedOptions
         this.decoderChannels = decoderChannels
         this.acquirerOptions = acquirerOptions
+        this.logicSession = logicSession
         this.webSocket = new WebSocket('ws://localhost:9200')
         this.webSocket.binaryType = 'arraybuffer'
         this.start()
@@ -78,6 +81,12 @@ class RedPitayaStub {
                             Object.assign(myself.acquirerOptions, acqReqOptions)
                             // myself.acquirerOptions = acqReqOptions;
                             console.log(myself.acquirerOptions.samplerates_Hz)
+                        }
+
+                        if(receive.parameters.LOGIC_SESSION) {
+                            var logicSession = JSON.parse(receive.parameters.LOGIC_SESSION.value)
+                            console.log("received new measurement state.")
+                            Object.assign(myself.logicSession, logicSession)
                         }
                     }
 
@@ -151,8 +160,8 @@ class RedPitayaStub {
     startAnalyzing() {
         console.log("Starting to capture.");
 
-        var logicSession: Model.LogicSession = { measurementState: "starting" };
-        var logicSessionJSON = JSON.stringify(logicSession);
+        this.logicSession.measurementState = Model.MeasurementState.Starting;
+        var logicSessionJSON = JSON.stringify(this.logicSession);
         var parameters: any = {};
         parameters.LOGIC_SESSION = { value: logicSessionJSON };
         this.webSocket.send(JSON.stringify({ parameters: parameters }));
