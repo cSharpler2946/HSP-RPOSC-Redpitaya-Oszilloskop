@@ -127,14 +127,14 @@
     }
   }
 
-  vector<double> AnalogAcquirer::getData(int channel)
+  vector<float> AnalogAcquirer::getData(int channel)
   {
     // get data from specified channel. The acquiredDataChannel vectors contain as much valued as defined in choosenOptions.sampleCount
     vector<double> a(acquiredDataChannelA.begin(), acquiredDataChannelA.end());
     vector<double> b(acquiredDataChannelB.begin(), acquiredDataChannelB.end());
     switch (channel) {
-      case 0: return a;
-      case 1: return b;
-      default: return vector<double>();
+      case 0: return acquiredDataChannelA;
+      case 1: return acquiredDataChannelA;
+      default: return vector<float>();
     }
   }

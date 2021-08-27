@@ -76,8 +76,8 @@ void LogicSession::OnNewInternal() {
         std::map<std::string, std::vector<float>> dataMap;
         for(int i = 0; i<AcquirerConstants::availableChannels.size(); i++)
         {
-            //vector<float> data = acquirer->getData(i);
-            vector<float> data(testdata, testdata + sizeof(testdata)/sizeof(testdata[0]));
+            vector<float> data = acquirer->getData(i);
+            //vector<float> data(testdata, testdata + sizeof(testdata)/sizeof(testdata[0]));
             measuredData->addData(AcquirerConstants::availableChannels[i], data);
             dataMap.insert(std::pair<std::string, std::vector<float> >(AcquirerConstants::availableChannels[i], data));
             sampleCount = data.size();
