@@ -18,6 +18,7 @@
 #include "../lib/nlohmann/jsonWrapper.hpp"
 
 #include "main.h"
+#include "TestLogic.hpp"
 
 //Signal size
 #define SIGNAL_SIZE_DEFAULT      1024
@@ -96,9 +97,10 @@ int rp_app_init(void)
     pContainerList.push_back(chosenDecoder);
     SRDChosenOptions *chosenOptions = new SRDChosenOptions("SRD_CHOSEN_OPTIONS", CBaseParameter::RW, "", false, &srdDecoderInst, allOptionsValid);
     pContainerList.push_back(chosenOptions);
+
     SRDChannelMap *srdChannelMap = new SRDChannelMap("SRD_CHANNEL_MAP", CBaseParameter::RW, "", false, allOptionsValid, &srdDecoderInst, nullptr);
     pContainerList.push_back(srdChannelMap);
-
+    
     ACQChoosenOptions *acquirerChosenOptions = new ACQChoosenOptions("ACQ_CHOSEN_OPTIONS", CBaseParameter::RW, "", false, allOptionsValid);
     pContainerList.push_back(acquirerChosenOptions);
 
@@ -106,12 +108,10 @@ int rp_app_init(void)
 
     MeasuredData *measuredData = new MeasuredData("MEASURED_DATA", 512, "");
     sContainerList.push_back(measuredData);
-    AnnotationData *annotationData = new AnnotationData("ANNOTATION_DATA", 512, "", srdSession);
-    sContainerList.push_back(annotationData);
 
-    LogicSession *logicSession = new LogicSession("LOGIC_SESSION", CBaseParameter::RW, "", false, srdSession, &srdDecoderInst, analogAcquirer, allOptionsValid, srdChannelMap, measuredData, annotationData, acquirerChosenOptions);
+    TestLogic *logicSession = new TestLogic("LOGIC_SESSION", CBaseParameter::RW, "", false, srdSession, &srdDecoderInst, analogAcquirer, allOptionsValid, srdChannelMap, measuredData, &sContainerList, acquirerChosenOptions);
     pContainerList.push_back(logicSession);
-    
+
     // Dummy daten for ACQChosenOptions
     /*
     ACQChoosenOptions *chosenOptions = new ACQChoosenOptions();

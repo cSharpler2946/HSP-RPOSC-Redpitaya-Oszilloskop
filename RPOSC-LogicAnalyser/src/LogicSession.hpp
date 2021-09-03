@@ -10,18 +10,19 @@
 #include "AllOptionsValid.hpp"
 #include "AnnotationData.hpp"
 #include "../lib/nlohmann/jsonWrapper.hpp"
+#include "ChosenDecoder.hpp"
 
-enum MeasurementState{
-    stopped,
-    starting, //Frontend button "start" was pressed
-    running //aquisition started
-};
+// enum MeasurementState{
+//     stopped,
+//     starting, //Frontend button "start" was pressed
+//     running //aquisition started
+// };
 
-NLOHMANN_JSON_SERIALIZE_ENUM(MeasurementState, {
-    {MeasurementState::stopped, "stopped"},
-    {MeasurementState::starting, "starting"},
-    {MeasurementState::running, "running"},
-})
+// NLOHMANN_JSON_SERIALIZE_ENUM(MeasurementState, {
+//     {MeasurementState::stopped, "stopped"},
+//     {MeasurementState::starting, "starting"},
+//     {MeasurementState::running, "running"},
+// })
 
 class LogicSession: public PContainer {
     public:
@@ -29,7 +30,7 @@ class LogicSession: public PContainer {
         void Update();
         void OnNewInternal();
         void runMeasurement();
-        MeasurementState measurementState;
+        //MeasurementState measurementState;
         Acquirer *acquirer;
         AllOptionsValid *allOptionsValid;
         SRDChannelMap *channelMap;
