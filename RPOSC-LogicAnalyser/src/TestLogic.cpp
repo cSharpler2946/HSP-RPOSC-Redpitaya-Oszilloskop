@@ -207,22 +207,12 @@ void TestLogic::OnNewInternal() {
         //err = ToErr srd_pd_output_callback_add(sess, SRD_OUTPUT_ANN, &callbackDings, nullptr);
         //calback experiment
         AnnotationData *annotationData = new AnnotationData("ANNOTATION_DATA", 512, "", sess);
-        LOG_F(INFO, "AKBJLSDJF");
         sContainerList->push_back(annotationData);
         annotationData->resetData();
         err = ToErr srd_decoder_load(decoderId);
         const GSList *l = srd_decoder_list();
         srd_decoder_inst *inst = srd_inst_new(sess, decoderId, nullptr);
         printOptions(inst);
-
-
-        /*******************
-        // // Add channel
-        // GHashTable * channels = g_hash_table_new(g_int_hash, g_int_equal);
-        // GVariant * gkey = (GVariant *)("rx"); //Looks like they raped glib...
-        // GVariant * gvalue = g_variant_new_int32(0);
-        // g_hash_table_insert(channels, gkey, gvalue);
-        *********************/
 
         //test from old logicSession to set channels
         LOG_F(INFO, "Generating srd channel map");
@@ -251,38 +241,14 @@ void TestLogic::OnNewInternal() {
         map<string, string> newOptions = SRDChosenOptions::chosenOptions;
         err = setOptions(inst, newOptions);
 
-        //cout << "--- Current options:" << endl;
-        //printCurrentOptions(inst);
-
         //Setting SRD_CONF_SAMPLERATE
         err = setSampleRate(sess, acqChoosenOptions->sampleRate);
         
-        /******************************
-        //Prepare UART data
-        //cout << "--- Prepare data:" << endl;
-        double min = DBL_MAX;
-        double max = -DBL_MAX;
-        for(double curr: testdata)
-        {
-            if(curr < min)
-                min = curr;
-            if(curr > max)
-                max = curr;
-        }
-        int arrsize = sizeof(testdata)/sizeof(testdata[0]);
-        //cout << "Range: " << min << " to " << max << ", Number of samples: " << arrsize << endl;
-        double step = UINT8_MAX/max-min;
-        uint8_t * inbuf = new uint8_t[arrsize];
-        for(int i = 0; i<arrsize; i++)
-        {
-            inbuf[i] = (uint8_t)testdata[i]*step;
-            //cout << (int)inbuf[i] << endl;
-        }
-        *********************************/
-       //Interleave data from acq channels which were used in channelMap into mixedData array
+        //Interleave data from acq channels which were used in channelMap into mixedData array
         LOG_F(INFO, "Interleaving data");
         int mixedDataLength = sampleCount*setChannels.size();
         float *mixedData = new float[mixedDataLength];
+
         for(int i = 0; i<sampleCount; i++)
         {
             for(int y = 0; y<setChannels.size(); y++)
@@ -296,12 +262,25 @@ void TestLogic::OnNewInternal() {
                 mixedData[(i*setChannels.size())+y]=dataPoint;
             }
         }
+
+        /*for(int y = 0; y<sampleCount; y++)
+        {
+            std::string channelId = setChannels[0];
+            std::vector<float> vect = dataMap[channelId];
+            float dataPoint = vect[y];
+            std::string channelId2 = setChannels[1];
+            std::vector<float> vect2 = dataMap[channelId2];
+            float dataPoint2 = vect2[y];
+            mixedData[y] = dataPoint;
+            mixedData[y+sampleCount] = dataPoint2;
+        }*/
+
         measuredData->addData("Interleaved data", vector<float>(mixedData, mixedData+mixedDataLength));
         
         //parse mixedData to be in range uint_8:0-255
         LOG_F(INFO, "Parsing mixedData into range");
         float min = FLT_MAX;
-        float max = FLT_MIN;
+        float max = -FLT_MAX;
         for(int i = 0; i<mixedDataLength; i++) //Move min/max finding to last loop
         {
             if(mixedData[i] < min)
@@ -313,20 +292,19 @@ void TestLogic::OnNewInternal() {
         LOG_F(INFO, "LS: Range: %f to %f -> step: %f", min, max, step);
 
         vector<float> tmp;
-        uint8_t *normalizedData = new uint8_t[sampleCount*setChannels.size()];
+        uint8_t *normalizedData = new uint8_t[mixedDataLength];
         for(int i = 0; i<mixedDataLength; i++)
         {
-            normalizedData[i] = (uint8_t)(mixedData[i]*step);
+            normalizedData[i] = (uint8_t) mixedData[i]*step;
             tmp.push_back(normalizedData[i]);
         }
         measuredData->addData("Normalized data", tmp);
-
 
         //Start session
         err = ToErr srd_session_start(sess);
 
         //Send prepared test data to decoder
-        err = ToErr srd_session_send(sess, 0, sampleCount-1, normalizedData, mixedDataLength, 1);
+        err = ToErr srd_session_send(sess, 0, mixedDataLength-1, normalizedData, mixedDataLength, 1);
 
 
 
