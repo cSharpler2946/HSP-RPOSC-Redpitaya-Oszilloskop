@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import router from './router/router'
 import App from './App.vue'
+// import VueWorker from 'vue-worker'
 
 // import bootstrap
 import './libs/bootstrap.min.css'
@@ -17,5 +18,6 @@ library.add(faPlay, faCaretDown, faCog)
 
 const app = createApp(App)
 app.use(router)
+// app.use(VueWorker)
 app.component('font-awesome-icon', FontAwesomeIcon)
 app.mount('#app')

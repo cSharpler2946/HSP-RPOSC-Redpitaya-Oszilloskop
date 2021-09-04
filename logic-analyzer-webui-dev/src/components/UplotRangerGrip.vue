@@ -1,8 +1,8 @@
 <template>
   <div class="chart-navigation">
     <div class="zoom-navigation">
-      <button class="btn btn-small btn-primary">+</button>
-      <button class="btn btn-small btn-primary">-</button>
+      <button ref="zoomInBtn" class="btn btn-small btn-primary">+</button>
+      <button ref="zoomOutBtn" class="btn btn-small btn-primary">-</button>
     </div>
     
     <div id="scroll-navigation">
@@ -14,20 +14,32 @@
 <script>
 import uPlot from "uplot";
 import "uplot/dist/uPlot.min.css";
-
-import Joystick from './Joystick'
+import { sendMessage } from './worker-api';
 
 export default {
   name: "UplotRangerGrip",
   data() {
     return {
+      scale: {
+        min: null,
+        max: null,
+      },
+      maxValue: null,
+      scrolling: {
+        factor: 0,
+        interval: null,
+      },
+      zooming: {
+        factor: 10,
+        interval: null,
+      }
     };
   },
   props: ["uPlotCharts", "id"],
   methods: {
     createScrollNavigation: function(){
-      var canvas = document.getElementById("scroll-navigation-canvas");
-      var ctx = canvas.getContext("2d");
+      let canvas = document.getElementById("scroll-navigation-canvas");
+      let ctx = canvas.getContext("2d");
       
       canvas.height = 20;
       canvas.width = document.getElementById("scroll-navigation").offsetWidth;
@@ -38,9 +50,8 @@ export default {
       let dragEnabled = false;
       let offsetX;
       let offsetY;
-
-      var startX;
-      var startY;
+      let startX;
+      let centerX;
 
       const clear = () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -52,64 +63,82 @@ export default {
         offsetY = boundingBorders.top;
       }
 
+      const onWindowResize = () => {
+        canvas.width = document.getElementById("scroll-navigation").offsetWidth;
+        updateOffset();
+        resetHandle();
+      }
+
       const drawHandle = (x) => {
-        const centerX = x ? x : canvas.width / 2;
-        const centerY = canvas.height / 2;
+        let positionX;
+
+        if (!x) {
+          positionX = canvas.width / 2;
+          centerX = positionX;
+        }
+        else{
+          positionX = x;
+        }
+
+        const positionY = canvas.height / 2;
         const radius = canvas.height / 2;
 
         ctx.fillStyle = handleFill;
 
         ctx.beginPath();
-        ctx.arc(centerX - handleWidth / 2, centerY, radius, (Math.PI/180) * 90, (Math.PI/180) * 270, false);
+        ctx.arc(positionX - handleWidth / 2, positionY, radius, (Math.PI/180) * 90, (Math.PI/180) * 270, false);
         ctx.fill();
         ctx.stroke();
         ctx.beginPath();
-        ctx.arc(centerX + handleWidth / 2, centerY, radius, (Math.PI/180) * 90, (Math.PI/180) * 270, true);
+        ctx.arc(positionX + handleWidth / 2, positionY, radius, (Math.PI/180) * 90, (Math.PI/180) * 270, true);
         ctx.fill();
         ctx.stroke();
         ctx.beginPath();
-        ctx.rect(centerX - handleWidth / 2 - 1, 0, handleWidth + 2, canvas.height);
+        ctx.rect(positionX - handleWidth / 2 - 1, 0, handleWidth + 2, canvas.height);
         ctx.fill();
         ctx.stroke();
 
-        handle = {x: centerX, y: 0, width: handleWidth + radius * 2, height: canvas.height, isDragging: false};
+        handle = {x: positionX, y: 0, width: handleWidth + radius * 2, height: canvas.height, isDragging: false};
       }
 
       const resetHandle = () => {
         clear();
         drawHandle();
+
+        if (this.scrolling.interval){
+          clearInterval(this.scrolling.interval);
+          this.scrolling.interval = null;
+        }
+
+        this.scrolling.factor = 0;
+      }
+
+      const clampHandleValue = () => {
+        if(handle.x < handle.width / 2){
+          handle.x = handle.width / 2;
+        }
+        else if (handle.x > (canvas.width - handle.width / 2)){
+          handle.x = canvas.width - handle.width / 2;
+        }
       }
 
       const isColliding = (mousePosition) => {        
         // test if mouse is inside rect
-        if(mousePosition.x > handle.x && mousePosition.x < handle.x + handle.width &&
-           mousePosition.y > handle.y && mousePosition.y < handle.y + handle.height){
-            console.log("is dragging rect");
-            return true;
-        }
-        else {
-          // test if mouse is inside arc
-          var dx = handle.x - mousePosition.x;
-          var dy = handle.y - mousePosition.y;
-          var radius = handle.height / 2;
+        let x = handle.x - handle.width/2 - 1;
 
-          if(dx*dx + dy*dy < radius*radius){
-            console.log("is dragging arc");
+        if(mousePosition.x > x && mousePosition.x < x + handle.width &&
+           mousePosition.y > handle.y && mousePosition.y < handle.y + handle.height){
             return true;
-          }
         }
 
         return false;
       }
 
-      const onMousedown = e => {
-        e.preventDefault();
-        e.stopPropagation();
-
+      const onMousedown = (clientX, clientY) => {
         updateOffset();
 
-        var mouseX = parseInt(e.clientX-offsetX);
-        var mouseY = parseInt(e.clientY-offsetY);
+        var mouseX = parseInt(clientX-offsetX);
+        var mouseY = parseInt(clientY-offsetY);
 
         dragEnabled = false;
 
@@ -120,79 +149,217 @@ export default {
 
         // save the current mouse position
         startX = mouseX;
-        startY = mouseY;
       }
 
-      const onMouseup = e => {
-        e.preventDefault();
-        e.stopPropagation();
-
+      const onMouseup = () => {
         dragEnabled = false;
         handle.isDragging = false;
 
         resetHandle();
       }
 
-      const onMouseout = e => {
-        e.preventDefault();
-        e.stopPropagation();
-
-        dragEnabled = false;
-        handle.isDragging = false;
-
-        resetHandle();
-      }
-
-      const onMousemove = e => {
+      const onMousemove = clientX => {
         if (dragEnabled) {
-          e.preventDefault();
-          e.stopPropagation();
+          var mouseX = parseInt(clientX-offsetX);
 
-          var mouseX = parseInt(e.clientX-offsetX);
-          var mouseY = parseInt(e.clientY-offsetY);
-
-          // calculate the distance the mouse has moved
-          // since the last mousemove
+          // calculate the distance the mouse has moved since the last mousemove
           var dx=mouseX-startX;
-          var dy=mouseY-startY;
-
           handle.x += dx;
+
+          clampHandleValue();
           clear();
           drawHandle(handle.x);
 
+          // IDEA: Make exponential function to calculate scrolling factor
+          this.scrolling.factor = (handle.x - centerX);
+          if (this.scrolling.factor > 100){
+            this.scrolling.factor = 100;
+          }
+          if (this.scrolling.factor < -100){
+            this.scrolling.factor = -100;
+          }
+
+          if(!this.scrolling.interval){
+            const self = this;
+            this.scrolling.interval = setInterval(function() {
+              self.onScrollChart()
+              } , 100)
+          }
+
           // save the current mouse position
           startX = mouseX;
-          startY = mouseY;
         }
       }
 
       const registerEventlisteners = () => {
         canvas.addEventListener('mousedown', function(e){
-          onMousedown(e);
+          e.preventDefault();
+          e.stopPropagation();
+          onMousedown(e.clientX, e.clientY);
         });
-        canvas.addEventListener('mousemove', function(e){
-          onMousemove(e);
+        window.addEventListener('mouseup', function(e){
+          e.preventDefault();
+          e.stopPropagation();
+          onMouseup();
         });
-        canvas.addEventListener('mouseup', function(e){
-          onMouseup(e);
+        window.addEventListener('mousemove', function(e){
+          e.preventDefault();
+          e.stopPropagation();
+          onMousemove(e.clientX);
         });
-        canvas.addEventListener('mouseout', function(e){
-          onMouseout(e);
+        canvas.addEventListener('touchstart', function(e){
+          e.preventDefault();
+          e.stopPropagation();
+          onMousedown(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
+        });
+        window.addEventListener('touchend', function(e){
+          e.preventDefault();
+          e.stopPropagation();
+          onMouseup();
+        });
+        window.addEventListener('touchmove', function(e){
+          e.preventDefault();
+          e.stopPropagation();
+          onMousemove(e.changedTouches[0].clientX);
         });
 
-        // TODO: register touch-events
+        window.addEventListener("resize", e => {
+          onWindowResize();
+        });
       }
       
       resetHandle();
       registerEventlisteners();
+    },
+    onScrollChart: function(){
+      let dx = this.scrolling.factor;
+
+      for (let i = 0; i < this.uPlotCharts.length; i++) {
+
+        let min = this.uPlotCharts[i].scales.x.min;
+        let max = this.uPlotCharts[i].scales.x.max;
+
+        if (dx < 0 && min <= 0) return;
+        if (dx > 0 && max >= this.maxValue) return;
+
+        this.scale.min = this.clampValue(min + dx);
+        this.scale.max = this.clampValue(max + dx);
+
+        this.uPlotCharts[i].setScale("x", this.scale);
+      }
+    },
+    onZoomChart: function(zoomIn){
+
+      const zoomFactor = this.zooming.factor;
+
+      for (let i = 0; i < this.uPlotCharts.length; i++) {
+
+        let min = this.uPlotCharts[i].scales.x.min;
+        let max = this.uPlotCharts[i].scales.x.max;
+
+        if(zoomIn) {
+
+          // clamp minimal zoom range
+          if(max - min <= 10) {
+            return;
+          }
+
+          this.scale.min = this.clampValue(min + zoomFactor);
+          this.scale.max = this.clampValue(max - zoomFactor);
+        }
+        else {
+          this.scale.min = this.clampValue(min - zoomFactor);
+          this.scale.max = this.clampValue(max + zoomFactor);
+        }
+
+        this.uPlotCharts[i].setScale("x", this.scale);  
+      }
+    },
+    clampValue(a) {  
+      if (a < 0) {
+        return 0;
+      }
+      else if (a > this.maxValue){
+        return this.maxValue;
+      }
+      else {
+        return a;
+      }
+    },
+    setMaxValue(){
+      const self = this;
+
+      for (let i = 0; i < this.uPlotCharts.length; i++) {
+          this.uPlotCharts[i].data.forEach(arr => {
+            if(self.maxValue < arr.length){
+              self.maxValue = arr.length;
+            }
+          });
+      }
+    },
+    initializeZoomEventListeners: function(){
+      const self = this;
+      this.$refs['zoomInBtn'].addEventListener('mousedown', function (e) {
+      if(self.zooming.interval)
+        return;
+
+      // self.onZoomChart(true);
+      self.zooming.interval = setInterval(function () {
+        self.onZoomChart(true);
+        self.zooming.factor += 10;
+      }, 100)
+    });
+
+    this.$refs['zoomInBtn'].addEventListener('mouseup', function (e) {
+      if(!self.zooming.interval)
+        return;
+
+      clearInterval(self.zooming.interval);
+      self.zooming.interval = null;
+      self.zooming.factor = 10;
+    });
+
+    this.$refs['zoomOutBtn'].addEventListener('mousedown', function (e) {
+      if(self.zooming.interval)
+        return;
+
+      // self.onZoomChart(false);
+      self.zooming.interval = setInterval(function () {
+        self.onZoomChart(false);
+        self.zooming.factor += 10;
+      }, 100)
+    });
+
+    this.$refs['zoomOutBtn'].addEventListener('mouseup', function (e) {
+      if(!self.zooming.interval)
+        return;
+
+      clearInterval(self.zooming.interval);
+      self.zooming.interval = null;
+      self.zooming.factor = 10;
+    });
+
+    },
+    postMessage() {
+      sendMessage('Hello world!');
     }
 
   },
-  beforeMount() {   
-
-  },
   mounted() {
+
     this.createScrollNavigation();
+
+    this.setMaxValue();
+
+    this.initializeZoomEventListeners();
+   
+    for (let i = 0; i < this.uPlotCharts.length; i++) {
+        this.scale.min = 0;
+        this.scale.max = 60;
+
+        this.uPlotCharts[i].setScale("x", this.scale);
+        console.log(this.uPlotCharts[i].scales);
+    }
   },
   components: {
     uPlot,
@@ -206,6 +373,7 @@ export default {
 .chart-navigation{
   display: flex;
   flex-flow: column;
+  margin: 0 15px;
 }
 
 .zoom-navigation {

@@ -18,11 +18,12 @@
     "jquery-ui": "^1.12.1",
     "jquery-ui-dist": "^1.12.1",
     "jquery-ui-touch-punch": "^0.2.3",
-    "uplot": "^1.6.11",
     "mathjs": "^9.3.2",
+    "uplot": "^1.6.11",
     "vue": "^3.0.0",
     "vue-class-component": "^8.0.0-0",
     "vue-router": "^4.0.6",
+    "vue-worker": "^1.2.1",
     "vue3-apexcharts": "^1.2.1"
   },
   "devDependencies": {
@@ -45,7 +46,8 @@
     "eslint-plugin-vue": "^7.0.0-0",
     "node-sass": "^5.0.0",
     "sass-loader": "^10.1.1",
-    "typescript": "~4.1.5"
+    "typescript": "~4.1.5",
+    "worker-loader": "^3.0.8"
   },
   "eslintConfig": {
     "root": true,
