@@ -64,13 +64,16 @@
     // set the triggersrc to now so trigger is triggered now!!
     rp_AcqSetTriggerSrc(RP_TRIG_SRC_NOW);
     // wait for the buffer to be completely written
-    while(!acquisitionComplete){
-      if(previousWritePointer == writePointer)
-      {
-        acquisitionComplete = true;
-      }
-      previousWritePointer = writePointer;
+    rp_acq_trig_state_t state = RP_TRIG_STATE_TRIGGERED;
+
+    while(1){
+            rp_AcqGetTriggerState(&state);
+            if(state == RP_TRIG_STATE_TRIGGERED){
+            sleep(1);
+            break;
+            }
     }
+    acquisitionComplete = true;
 
     LOG_F(INFO, "Write acquired data to arrays");
     // write the acquired data into the vectors

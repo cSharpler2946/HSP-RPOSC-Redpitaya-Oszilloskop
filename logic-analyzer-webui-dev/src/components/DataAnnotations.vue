@@ -23,25 +23,11 @@ export default {
   data () {
     return {
         uplot: null,
-        frames: [
-                    [
-                        [  0,  18,  37,  55,  74,  92, 111, 129, 148, 166, 185, 203, 222, 240],
-                        ["a", "a", "b", "b", "b", "b", "c", "a", "a", "d", "d", "d", "d", "d"],
-                    ],
-			    ],
-        stateDisplay: [
-				{},
-				{
-					"a": {stroke: "red",   fill: "rgba(255, 0, 0, 0.2)"},
-					"b": {stroke: "green", fill: "rgba(0, 255, 0, 0.2)"},
-					"c": {stroke: "blue",  fill: "rgba(0, 0, 255, 0.2)"},
-					"d": {stroke: "cyan",  fill: "rgba(0, 255, 255, 0.2)"},
-				}
-			],
     }
   },
   methods: {
-      timelinePlugin: function(opts){
+      dataAnnotaionPlugin: function(opts){
+        var self = this;
         const { fontColor, count, fill, stroke } = opts;
 
         const pxRatio    = devicePixelRatio;
@@ -129,6 +115,11 @@ export default {
 
         function drawPaths(u, sidx, idx0, idx1) {
             uPlot.orient(u, sidx, (series, dataX, dataY, scaleX, scaleY, valToPosX, valToPosY, xOff, yOff, xDim, yDim, moveTo, lineTo, rect) => {
+
+                if(!self.renderAnnotation(scaleX.min, scaleX.max)){
+                    return;
+                }
+                
                 let strokeWidth = round((series.width || 0) * pxRatio);
 
                 u.ctx.save();
@@ -189,6 +180,10 @@ export default {
             u.ctx.textBaseline = "middle";
 
             uPlot.orient(u, sidx, (series, dataX, dataY, scaleX, scaleY, valToPosX, valToPosY, xOff, yOff, xDim, yDim, moveTo, lineTo, rect) => {
+                if(!self.renderAnnotation(scaleX.min, scaleX.max)){
+                    return;
+                }
+
                 let strokeWidth = round((series.width || 0) * pxRatio);
                 let textOffset = rampWidth;
 
@@ -263,10 +258,10 @@ export default {
                                 hovered[i] = found;
 
                                 h.style.display = null;
-                                h.style.left    = round(found.x / pxRatio) + "px";
-                                h.style.top     = round(found.y / pxRatio) + "px";
-                                h.style.width   = round(found.w / pxRatio) + "px";
-                                h.style.height  = round(found.h / pxRatio) + "px";
+                                h.style.left    = ~(found.x / pxRatio) + "px";
+                                h.style.top     = ~(found.y / pxRatio) + "px";
+                                h.style.width   = ~(found.w / pxRatio) + "px";
+                                h.style.height  = ~(found.h / pxRatio) + "px";
                             }
                         }
                         else if (hovered[i] != null) {
@@ -310,16 +305,12 @@ export default {
                     size:       70,
                     grid:       {show: false},
                     ticks:      {show: false},
-
                     side:       3,
                 });
 
                 opts.series.forEach((s, i) => {
                     if (i > 0) {
                         uPlot.assign(s, {
-                        //	width: 0,
-                        //	pxAlign: false,
-                        //	stroke: "rgba(255,0,0,0.5)",
                             paths: drawPaths,
                             points: {
                                 show: drawPoints
@@ -354,7 +345,7 @@ export default {
                 },
                 series: o.series,
                 plugins: [
-                    this.timelinePlugin({
+                    this.dataAnnotaionPlugin({
                         count: d.length - 1,
                         ...o,
                     }),
@@ -387,18 +378,55 @@ export default {
       getSize: function(){
          return {
            width: document.getElementById("dataAnnotations").offsetWidth,
-           height: 100
+           height: 150
         }
-    },
+      },
+    renderAnnotation: function(min, max){
+        if((max - min) > 80){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }   
   },
   mounted () {
-        let data = uPlot.join(this.frames, this.frames.map(f => [1,1]));
-
         // Read from test-annotations.json
-        let testData = testAnnotations.map(item => item.start);
-        let testAn = testAnnotations.map(item => item.annotationText);
-        let testFrames = [ testData, testAn];
+        let singleBits = testAnnotations.map(item => {
+            if(item.annotationClass === "rx-data"){
+                return;
+            }
+            
+            return item.start
+        });
+        let singleAnnotations = testAnnotations.map(item => {
+            if(item.annotationClass === "rx-data"){
+                return;
+            }
 
+            return item.annotationText
+        });
+
+        let dataBits = testAnnotations.map(item => {
+            if(item.annotationClass !== "rx-data"){
+                return;
+            }
+            
+            return item.start
+        });
+        let dataAnnotaions = testAnnotations.map(item => {
+            if(item.annotationClass !== "rx-data"){
+                return;
+            }
+
+            return item.annotationText
+        });
+        let dataFrames = [ 
+            [singleBits, singleAnnotations],
+            [dataBits, dataAnnotaions]
+        ];
+
+        let data = uPlot.join(dataFrames, dataFrames.map(f => [1,1]));
         this.unsetSameFutureValues(data);
 
         this.uplot = this.makeChart({
@@ -412,16 +440,24 @@ export default {
                         fill:  "rgba(51, 187, 85, 0.7)",
                         stroke: "darkgreen",
                         width: 2,
+                    },
+                    {
+                        label: "rtx-data",
+                        fill:  "rgba(51, 187, 85, 0.7)",
+                        stroke: "darkgreen",
+                        width: 2,
                     }
                 ],
             size:   [0.9, 100],
-            fill:   (seriesIdx, dataIdx, value) => this.stateDisplay[seriesIdx][value].fill,
-            stroke: (seriesIdx, dataIdx, value) => this.stateDisplay[seriesIdx][value].stroke,
+            fill:   (seriesIdx, dataIdx, value) => "rgba(0, 255, 0, 0.2)",
+            stroke: (seriesIdx, dataIdx, value) => "rgba(0, 200, 0)",
         }, data);
 
         window.addEventListener("resize", e => {
             this.uplot.setSize(this.getSize());
         });
+
+        this.$emit('uplot', this.uplot);
   },
   components: {
     uPlot,
