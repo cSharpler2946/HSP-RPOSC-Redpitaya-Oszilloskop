@@ -188,8 +188,8 @@ void TestLogic::OnNewInternal() {
         std::map<std::string, std::vector<float>> dataMap;
         for(int i = 0; i<AcquirerConstants::availableChannels.size(); i++)
         {
-            //vector<float> data = acquirer->getData(i);
-            vector<float> data(testdata, testdata + sizeof(testdata)/sizeof(testdata[0]));
+            vector<float> data = acquirer->getData(i);
+            //vector<float> data(testdata, testdata + sizeof(testdata)/sizeof(testdata[0]));
             measuredData->addData(AcquirerConstants::availableChannels[i], data);
             dataMap.insert(std::pair<std::string, std::vector<float> >(AcquirerConstants::availableChannels[i], data));
             sampleCount = data.size();
@@ -259,21 +259,9 @@ void TestLogic::OnNewInternal() {
                 //LOG_F(INFO, "Got vect, empty: %d", vect.empty()); //Empty happens if Channel names sent from frontend are not in AcquirerConstants::availableChannels
                 float dataPoint = vect[i];
                 //LOG_F(INFO, "DataPoint: %f", dataPoint);
-                mixedData[(i*setChannels.size())+y]=dataPoint;
+                mixedData[(sampleCount*y)+i]=dataPoint;
             }
         }
-
-        /*for(int y = 0; y<sampleCount; y++)
-        {
-            std::string channelId = setChannels[0];
-            std::vector<float> vect = dataMap[channelId];
-            float dataPoint = vect[y];
-            std::string channelId2 = setChannels[1];
-            std::vector<float> vect2 = dataMap[channelId2];
-            float dataPoint2 = vect2[y];
-            mixedData[y] = dataPoint;
-            mixedData[y+sampleCount] = dataPoint2;
-        }*/
 
         measuredData->addData("Interleaved data", vector<float>(mixedData, mixedData+mixedDataLength));
         
