@@ -101,6 +101,16 @@ int rp_app_init(void)
 
     ACQChoosenOptions *acquirerChosenOptions = new ACQChoosenOptions("ACQ_CHOSEN_OPTIONS", CBaseParameter::RW, "", false, allOptionsValid);
     pContainerList.push_back(acquirerChosenOptions);
+
+    AnalogAcquirer *analogAcquirer = new AnalogAcquirer(acquirerChosenOptions);
+
+    MeasuredData *measuredData = new MeasuredData("MEASURED_DATA", 512, "");
+    sContainerList.push_back(measuredData);
+    AnnotationData *annotationData = new AnnotationData("ANNOTATION_DATA", 512, "", srdSession);
+    sContainerList.push_back(annotationData);
+
+    LogicSession *logicSession = new LogicSession("LOGIC_SESSION", CBaseParameter::RW, "", false, srdSession, &srdDecoderInst, analogAcquirer, allOptionsValid, srdChannelMap, measuredData, annotationData, acquirerChosenOptions);
+    pContainerList.push_back(logicSession);
     
     // Dummy daten for ACQChosenOptions
     /*
@@ -108,18 +118,18 @@ int rp_app_init(void)
     chosenOptions->sampleRate = 1;
     chosenOptions->decimation = 1;
     chosenOptions->sampleCount = 16384;
-    chosenOptions->pinState = 1;
+    chosenOptions->pinState = 1; */
     //start acquisition
-    activeAcquirer = new Acquirer(chosenOptions); //TODO: Get parameter (ACQChosenOption)
-    bool result = activeAcquirer->startAcq();
+    //activeAcquirer = new AnalogAcquirer(acquirerChosenOptions); //TODO: Get parameter (ACQChosenOption)
+    //bool result = activeAcquirer->startAcq();
     // get and send data
-    vector<double> data = activeAcquirer->getData(0);
-    LOG_F(INFO, "%f", data[0]);
-    measuredData = new MeasuredData("MEASURED_DATA", data.size(), "");
-    measuredData->addData("Channel 1", data);
-    LOG_F(INFO, "added data to measuredData");
-    sContainerList.push_back(measuredData);
-    */
+    //vector<double> data = activeAcquirer->getData(0);
+    //LOG_F(INFO, "%f", data[0]);
+    //measuredData = new MeasuredData("MEASURED_DATA", data.size(), "");
+    //measuredData->addData("Channel 1", data);
+    //LOG_F(INFO, "added data to measuredData");
+    //sContainerList.push_back(measuredData);
+    
 
     //usleep(1000);
 

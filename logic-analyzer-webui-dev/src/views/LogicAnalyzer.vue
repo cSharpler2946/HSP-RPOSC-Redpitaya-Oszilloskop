@@ -16,11 +16,17 @@
               class="btn"
               v-on:click="onStartAnalyzing()"
             >
-              <span>Start Analyzing</span>
-              <font-awesome-icon
-                icon="play"
-                style="vertical-align: middle; margin-left: 10px"
-              />
+              <div v-if="this.logicSession.measurementState === 'running'">
+                <span>Analyzing in progress</span>
+                <font-awesome-icon icon="spinner" class="fa-spin" style="vertical-align: middle; margin-left: 10px"/>
+              </div>
+              <div v-else>
+                <span>Start Analyzing </span>
+                <font-awesome-icon
+                  icon="play"
+                  style="vertical-align: middle; margin-left: 10px"
+                />
+              </div>
             </button>
           </div>
 
@@ -32,10 +38,10 @@
         </div>
 
         <Channel
-          v-for="n in decoderChannels.length"
-          :key="n"
-          :channelId="n"
-          :channelName="`Channel ${n}`"
+          v-for="(channelName, index) in acquirerRequestedOptions.availableChannels"
+          :key="index"
+          :channelId="index"
+          :channelName="channelName"
           :decoderChannels="decoderChannels"
           :channelData="decodedData"
           v-on:decoder-channel-changed="onDecoderChannelChanged"
@@ -202,6 +208,7 @@ export default {
           data: [],
         },
       ],
+      logicSession: {},
       uPlotCharts: [],
     };
   },
@@ -229,8 +236,9 @@ export default {
   },
   methods: {
     onStartAnalyzing() {
-      this.getData();
-      console.log(this.decodedData);
+      /*this.getData();
+      console.log(this.decodedData);*/
+      this.redpitaya.startAnalyzing();
     },
     getData: function () {
       // this.decodedData = this.redpitaya.receiveData(arg1, arg2);
@@ -276,16 +284,16 @@ export default {
   },
   mounted() {
     // Build up WebSocket-Connection with RedPitaya in here.
-    // this.redpitaya = new RedPitaya(
-    //   this.app_id,
-    //   this.get_app_url,
-    //   this.get_socket_url,
-    //   this.decoders,
-    //   this.requestedOptions,
-    //   this.decoderChannels,
-    //   this.acquirerRequestedOptions
-    // );
-    this.redpitaya = new RedPitayaStub(this.decoders, this.requestedOptions, this.decoderChannels, this.acquirerRequestedOptions);
+    /*this.redpitaya = new RedPitaya(
+       this.app_id,
+       this.get_app_url,
+       this.get_socket_url,
+       this.decoders,
+       this.requestedOptions,
+       this.decoderChannels,
+       this.acquirerRequestedOptions
+     );*/
+    this.redpitaya = new RedPitayaStub(this.decoders, this.requestedOptions, this.decoderChannels, this.acquirerRequestedOptions, this.logicSession);
     this.redpitaya.start();
   },
   components: {

@@ -1,4 +1,4 @@
-#include "Acquirer.hpp"
+#include "AnalogAcquirer.hpp"
 //#include <sstream>
 /* TODO: Hier ACQChoosenOptions object das im Konstruktor übergeben wird nehmen und entsprechen in startAcquire auf fpga image setzen
 * Vor Starten die SetSrdMetadata starten, die von Florian geschrieben wurde..
@@ -23,23 +23,23 @@
 
   // base constructor with default parameters
   //Acquirer::Acquirer(int sampleRate = 1, int decimation = 1, int pinState = 1, ACQChoosenOptions *choosenOptions = new ACQChoosenOptions()){}
-  Acquirer::Acquirer(){}
-  Acquirer::Acquirer(ACQChoosenOptions *_choosenOptions)
+  AnalogAcquirer::AnalogAcquirer(){}
+  AnalogAcquirer::AnalogAcquirer(ACQChoosenOptions *_choosenOptions)
   {
     choosenOptions = _choosenOptions;
   }
 
   // sets all the needed parameters and starts the acquisition
-  bool Acquirer::startAcq()
+  bool AnalogAcquirer::startAcq()
   {
 
-    /*LOOB BACK FROM OUTPUT of channel 1 - ONLY FOR TESTING
+    // LOOB BACK FROM OUTPUT of channel 1 - ONLY FOR TESTING
     // Delete if it works!!
     rp_GenReset();
     rp_GenFreq(RP_CH_1, 20000.0);
-    rp_GenAmp(RP_CH_1, 1.0);
-    rp_GenWaveform(RP_CH_1, RP_WAVEFORM_SIN);
-    rp_GenOutEnable(RP_CH_1);*/
+    rp_GenAmp(RP_CH_1, 10);
+    rp_GenWaveform(RP_CH_1, RP_WAVEFORM_SINE);
+    rp_GenOutEnable(RP_CH_1);
 
     // needed variables
     uint32_t writePointer;
@@ -54,13 +54,12 @@
     // do all the initialization stuff for the Acquisition
     rp_AcqReset();
     LOG_F(INFO, "reset acquiring");
-    //rp_AcqSetDecimation(rp_acq_decimation_t(choosenOptions->decimation));
-    //rp_AcqSetTriggerDelay(choosenOptions->decimation); // TODO: Calculate the needed time to get sampleCount with defined sampleRate
-    //rp_AcqSetGain(rp_channel_t(0),rp_pinState_t(choosenOptions->gainPerChannel[0]));
-    //rp_AcqSetGain(rp_channel_t(1),rp_pinState_t(choosenOptions->gainPerChannel[1]));
+    rp_AcqSetDecimation((rp_acq_decimation_t)choosenOptions->decimation);
+    rp_AcqSetGain(rp_channel_t(0),rp_pinState_t(choosenOptions->gainPerChannel[0]));
+    rp_AcqSetGain(rp_channel_t(1),rp_pinState_t(choosenOptions->gainPerChannel[1]));
     LOG_F(INFO, "set data, start acquisition now!!");
     rp_AcqStart();
-    usleep(100);   //TODO: replace this by proper method like timer
+    usleep(choosenOptions->sampleTime);   //wait as long as the acquisition should take
 
     // set the triggersrc to now so trigger is triggered now!!
     rp_AcqSetTriggerSrc(RP_TRIG_SRC_NOW);
@@ -82,11 +81,20 @@
       acquisitionComplete = false;
       rp_AcqGetOldestDataV(rp_channel_t(0), &choosenOptions->sampleCount, buffA);
       rp_AcqGetOldestDataV(rp_channel_t(1), &choosenOptions->sampleCount, buffB);
+      
+      // multiply with the probe attenuation
+      for(int i = 0; i<choosenOptions->sampleCount;i++) {
+        buffA[i] *= (float)choosenOptions->probeAttenuation[0];
+        buffB[i] *= (float)choosenOptions->probeAttenuation[1];
+      }
+      
       //write data into the vectors
       vector<float> a(buffA, buffA+sizeof buffA / sizeof buffA[0]);
       acquiredDataChannelA = a;
       vector<float> b(buffB, buffB+sizeof buffB / sizeof buffB[0]);
       acquiredDataChannelB = b;
+      
+      
     }
 
     LOG_F(INFO, "check arrays and return result");
@@ -100,7 +108,7 @@
     }
   }
 
-  vector<double> Acquirer::getData(int channel)
+  vector<double> AnalogAcquirer::getData(int channel)
   {
     // get data from specified channel. The acquiredDataChannel vectors contain as much valued as defined in choosenOptions.sampleCount
     vector<double> a(acquiredDataChannelA.begin(), acquiredDataChannelA.end());

@@ -9,7 +9,7 @@
 
 #include "CStringSignal.h"
 
-#include "Acquirer.hpp"
+#include "AnalogAcquirer.hpp"
 #include "SRDDecoderList.hpp"
 #include "ChosenDecoder.hpp"
 #include "SRDRequestedOptions.hpp"
@@ -19,6 +19,7 @@
 #include "ACQRequestedOptions.hpp"
 #include "SRDChosenOptions.hpp"
 #include "SRDChannelMap.hpp"
+#include "LogicSession.hpp"
 
 #ifdef __cplusplus
 extern "C" {

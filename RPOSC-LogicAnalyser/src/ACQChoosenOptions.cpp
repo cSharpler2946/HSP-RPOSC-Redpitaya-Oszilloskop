@@ -3,8 +3,6 @@ using namespace std;
 #include "ACQChoosenOptions.hpp"
 #include <loguru.hpp>
 
-// TODO: TranslateFunction um strings auf richtigen Typen zu ändern.
-// Macht es sinn den Typen aus rp.h zu inkludieren
 //double sampleRate; //index to set sampleCount in rp.h
 //int decimation; //index to set decimation in rp.h
 //uint32_t sampleCount; // index to set buffer size to read the data into
@@ -15,67 +13,113 @@ using namespace std;
 
 ACQChoosenOptions::ACQChoosenOptions(std::string name, CBaseParameter::AccessMode am, std::string defaultVal, int fpga_update, AllOptionsValid *_allOptionsValid) : PContainer(name, am, defaultVal, fpga_update)
 {
-  allOptionsValid = _allOptionsValid;
+  allOptionsValid = _allOptionsValid; //TODO: Set the options valid, when they are (currently hotfixed with default value = true in AllOptionsValid.hpp)
 }
 
 void ACQChoosenOptions::OnNewInternal()
 {
   LOG_F(INFO, "update parameters for acquisition!");
-
   nlohmann::json tmp = nlohmann::json::parse(VALUE->Value());
-  if(ResetParameters(tmp))
+
+  if(ParseParameters(tmp))
   {
+    if(ValidateOptions())
+    {
+      LOG_F(INFO, "Options are validated successfully!");
+      allOptionsValid->setAcquirerValidity(true);
+    }
+    else{
+      LOG_F(INFO, "Options are invalid!");
+      allOptionsValid->setAcquirerValidity(false);
+      return;
+    }
     LOG_F(INFO, "Successfully updated parameter values for Aquirer!");
     LOG_F(INFO, "SampleRate: %f", sampleRate);
     LOG_F(INFO, "SampleCount: %d", sampleCount);
     LOG_F(INFO, "SampleTime: %f", sampleTime);
     LOG_F(INFO, "gain for Channel 1: %d", gainPerChannel[0]);
     LOG_F(INFO, "gain for Channel 2: %d", gainPerChannel[1]);
-    LOG_F(INFO, "attenuation for Channel 1: %s", probeAttenuation[0].c_str());
-    LOG_F(INFO, "attenuation for Channel 2: %s", probeAttenuation[1].c_str());
+    LOG_F(INFO, "attenuation for Channel 1: %d", probeAttenuation[0]);
+    LOG_F(INFO, "attenuation for Channel 2: %d", probeAttenuation[1]);
+    LOG_F(INFO, "decimation is calculated and set to: %d", decimation);
   }
-  decimation = CalculateDecimation(sampleRate);
-  LOG_F(INFO, "decimation is calculated and set to: %d", decimation);
+  else
+  {
+    LOG_F(INFO, "Something went wrong by parsing the options!!");
+    allOptionsValid->setAcquirerValidity(false);
+  }
 }
 
-bool ACQChoosenOptions::ResetParameters(nlohmann::json jsonString)
+// Parse the Json into the Variables
+bool ACQChoosenOptions::ParseParameters(nlohmann::json jsonString)
 {
   gainPerChannel.clear();
   probeAttenuation.clear();
   sampleRate = jsonString["samplerate_Hz"];
   sampleCount = jsonString["samplecount"];
   sampleTime = jsonString["sampletime_us"];
-  string tmp = (string)(jsonString["gainPerChannel"]["IN1"]);
+  string tmp = (string)(jsonString["gainPerChannel"]["Channel 1"]); //TODO: Make dependent on constants
   uint8_t gain0 = TranslatePinState(tmp.c_str());
   gainPerChannel.push_back(gain0);
-  tmp = (string)(jsonString["gainPerChannel"]["IN2"]);
+  tmp = (string)(jsonString["gainPerChannel"]["Channel 2"]);
   uint8_t gain1 = TranslatePinState(tmp.c_str());
   gainPerChannel.push_back(gain1);
 
-  tmp = (string)(jsonString["probeAttenuationPerChannel"]["IN1"]);
-  probeAttenuation.push_back(tmp.c_str());
-  tmp = (string)(jsonString["probeAttenuationPerChannel"]["IN2"]);
-  probeAttenuation.push_back(tmp.c_str());
+  // convert probe from string to int and cut last character
+  tmp = (string)(jsonString["probeAttenuationPerChannel"]["Channel 1"]);
+  tmp = tmp.substr(0, tmp.size()-1);
+  int probe1 = stoi(tmp);
+  probeAttenuation.push_back(probe1);
+  tmp = (string)(jsonString["probeAttenuationPerChannel"]["Channel 2"]);
+  tmp = tmp.substr(0, tmp.size()-1);
+  int probe2 = stoi(tmp);
+  probeAttenuation.push_back(probe2);
   
+  decimation = CalculateDecimation(sampleRate);
+
   return true;
 }
 
-// Translate the userfriendly string into the fitting index
-// NOt necessary anymore because rate is already deliverd as double
-uint ACQChoosenOptions::TranslateSampleRate(double sampleRate){
-  int index = -1;
-  auto found = find(AcquirerConstants::supportedSampleRates.begin(), AcquirerConstants::supportedSampleRates.end(), sampleRate);
-
-  // if element found, we need the index because setting the sampleRate is done by an integer number
-  if(found != AcquirerConstants::supportedSampleRates.end())
+// checks the variables for validity (if one of the variables is unvalid false is returned)
+bool ACQChoosenOptions::ValidateOptions()
+{
+  auto foundRate = find(AcquirerConstants::supportedSampleRates.begin(), AcquirerConstants::supportedSampleRates.end(), sampleRate);
+  if(foundRate == AcquirerConstants::supportedSampleRates.end())
   {
-    index = found - AcquirerConstants::supportedSampleRates.begin();
+    LOG_F(INFO, "Sample Rate is not supported!!");
+    return false;
   }
-  // if element is not found return -1 as an error
-  else{
-    index = -1;
+  if(sampleCount > AcquirerConstants::maxSamples)
+  {
+    LOG_F(INFO, "Sample count is bigger than buffer!!");
+    return false;
   }
-  return index;
+  auto foundGain0 = find(AcquirerConstants::supportedPinStateInt.begin(), AcquirerConstants::supportedPinStateInt.end(), gainPerChannel[0]);
+  auto foundGain1 = find(AcquirerConstants::supportedPinStateInt.begin(), AcquirerConstants::supportedPinStateInt.end(), gainPerChannel[1]);
+  if(foundGain0 == AcquirerConstants::supportedPinStateInt.end() || foundGain1 == AcquirerConstants::supportedPinStateInt.end())
+  {
+    LOG_F(INFO, "only gain high and low are supported!!");
+    return false;
+  }
+  auto foundAttenuation0 = find(AcquirerConstants::supportedAttenuation.begin(), AcquirerConstants::supportedAttenuation.end(), probeAttenuation[0]);
+  auto foundAttenuation1 = find(AcquirerConstants::supportedAttenuation.begin(), AcquirerConstants::supportedAttenuation.end(), probeAttenuation[1]);
+  if(foundAttenuation0 == AcquirerConstants::supportedAttenuation.end() || foundAttenuation1 == AcquirerConstants::supportedAttenuation.end())
+  {
+    LOG_F(INFO, "Only attenuation 1 and 10 are supported!!");
+    return false;
+  }
+  if(-1 == decimation)
+  {
+    LOG_F(INFO, "The decimation is not supported!!");
+    return false;
+  }
+  // calculate the SampleTime for the given SampleRate(if not valid already aborted above) and the sampleCount(max 16384 if bigger, already aborted above)
+  // sampleRate * sampleTime <= maxSamples
+  if(sampleRate*sampleTime <= AcquirerConstants::maxSamples)
+  {
+    return false;
+  }
+  return true;
 }
 
 // Translate the userfriendly string into the fitting index
@@ -92,7 +136,7 @@ uint ACQChoosenOptions::CalculateDecimation(double sampleRate)
   else{
     index = -1;
   }
-  return AcquirerConstants::supportedDecimations[index];
+  return index;
 }
 
 // Translate the userfriendly string into the fitting index
@@ -124,14 +168,4 @@ uint32_t ACQChoosenOptions::TranslateSampleCount(int count)
   else{
     return -1;
   }
-}
-
-// convert time string to int and check if its in the range.
-uint ACQChoosenOptions::TranslateSampleTime(string time)
-{
-  uint32_t index = -1;
-  // convert the string into an integer and check if it's in the range
-  index = std::stoi(time);
-  // TODO: calculation how long we can sample with the defined sampleRate and the defined buffersize
-    return index;
 }

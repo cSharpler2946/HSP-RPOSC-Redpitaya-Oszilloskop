@@ -18,14 +18,14 @@ enum MeasurementState{
 };
 
 NLOHMANN_JSON_SERIALIZE_ENUM(MeasurementState, {
-    {stopped, "stopped"},
-    {starting, "starting"},
-    {running, "running"},
+    {MeasurementState::stopped, "stopped"},
+    {MeasurementState::starting, "starting"},
+    {MeasurementState::running, "running"},
 })
 
 class LogicSession: public PContainer {
     public:
-        LogicSession(std::string name, CBaseParameter::AccessMode am, std::string defaultVal, int fpga_update, srd_session *_srdSession, srd_decoder_inst **_decoderInst, Acquirer *_acquirer, AllOptionsValid *_allOptionsValid, SRDChannelMap *_channelMap, MeasuredData *_measuredData, AnnotationData *_annotationData);
+        LogicSession(std::string name, CBaseParameter::AccessMode am, std::string defaultVal, int fpga_update, srd_session *_srdSession, srd_decoder_inst **_decoderInst, Acquirer *_acquirer, AllOptionsValid *_allOptionsValid, SRDChannelMap *_channelMap, MeasuredData *_measuredData, AnnotationData *_annotationData, ACQChoosenOptions *_acqChoosenOptions);
         void Update();
         void OnNewInternal();
         void runMeasurement();
@@ -37,4 +37,5 @@ class LogicSession: public PContainer {
         srd_decoder_inst **decoderInst;
         MeasuredData *measuredData;
         AnnotationData *annotationData;
+        ACQChoosenOptions *acqChoosenOptions;
 };
