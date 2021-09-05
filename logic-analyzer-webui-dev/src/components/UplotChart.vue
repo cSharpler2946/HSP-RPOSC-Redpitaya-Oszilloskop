@@ -184,6 +184,12 @@ export default {
     };
     
     this.uplot = this.makeChart(cfg);
+    
+    this.uplot.setData(this.data);
+    console.log("uPlot chart:");
+    console.log(this.uplot);
+    console.log("Data:");
+    console.log(this.data);
 
     window.addEventListener("resize", e => {
       this.uplot.setSize(this.getSize());

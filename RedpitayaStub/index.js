@@ -126,6 +126,19 @@ const acquirer_options = {
     ]
 }
 
+const exampleData = require("./exampleData.json");
+
+var measuredData = [
+    {
+        acqChannel: "IN1",
+        data: exampleData.data
+    },
+    {
+        acqChannel: "IN2",
+        data: new Array(16384/2).fill([0, 1]).flat()
+    }
+]
+
 wsServer.on("request", function(request) {
     if (!originIsAllowed(request.origin)) {
       // Make sure we only accept requests from an allowed origin
@@ -224,12 +237,14 @@ function stm_doStep() {
             }
             break;
         case "Acquiring":
-            //Intentionally left empty, nothing to do here.
+            //Intentionally left empty, nothing to do here but wait for the timeout.
             break;
         case "DoneAcquiring":
             dataToSend.parameters = {};
             dataToSend.signals = {};
             dataToSend.parameters["LOGIC_SESSION"] = { value: JSON.stringify({ "measurementState": "stopped" }) };
+            measuredDataJsonRepr = measuredData.map(JSON.stringify);
+            dataToSend.signals["MEASURED_DATA"] = { value: measuredDataJsonRepr }
             send_data();
             state = "UserSetsOptions";
     }
@@ -237,7 +252,7 @@ function stm_doStep() {
 
 function send_data() {
     console.log("Sending message:")
-    console.log(util.inspect(dataToSend, true, 10));
+    console.log(util.inspect(dataToSend, {showHidden: true, depth: 10, maxArrayLength: 20, maxStringLength: 100}));
     var compressed = pako.deflate(JSON.stringify(dataToSend));
     connection.sendBytes(Buffer.from(compressed));
 }

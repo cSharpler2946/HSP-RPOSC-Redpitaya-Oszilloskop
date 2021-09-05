@@ -8,6 +8,7 @@ class RedPitaya {
   decoderChannels: Model.DecoderChannel[]
   acquirerOptions: Model.AcquirerRequestedOptions
   logicSession: Model.LogicSession
+  measuredData: Model.MeasuredData
   webSocket?: WebSocket;
   app_id: string
   app_url: string
@@ -18,7 +19,7 @@ class RedPitaya {
   constructor (app_id: string, app_url: string, socket_url: string,
     decoders: Model.Decoder[], requestedOptions: Model.DecoderOption[],
     decoderChannels: Model.DecoderChannel[], acquirerOptions: Model.AcquirerRequestedOptions,
-    logicSession: Model.LogicSession) {
+    logicSession: Model.LogicSession, measuredData: Model.MeasuredData) {
     this.app_id = app_id
     this.app_url = app_url
     this.socket_url = socket_url
@@ -28,6 +29,7 @@ class RedPitaya {
     this.requestedOptions = requestedOptions
     this.decoderChannels = decoderChannels
     this.logicSession = logicSession
+    this.measuredData = measuredData
   }
 
   test () {

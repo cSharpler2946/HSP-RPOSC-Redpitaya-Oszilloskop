@@ -38,12 +38,12 @@
         </div>
 
         <Channel
-          v-for="(channelName, index) in acquirerRequestedOptions.availableChannels"
+          v-for="(channelName, index) in channelsWithAvailableData"
           :key="index"
           :channelId="index"
           :channelName="channelName"
           :decoderChannels="decoderChannels"
-          :channelData="decodedData"
+          :channelData="measuredDataByChannel[channelName]"
           v-on:decoder-channel-changed="onDecoderChannelChanged"
           @uplot="persistChart"
         />
@@ -207,6 +207,7 @@ export default {
         },
       ],
       logicSession: {},
+      measuredData: { channelData: [] },
       uPlotCharts: [],
     };
   },
@@ -231,6 +232,22 @@ export default {
         ).toString(16)
       );
     },
+    measuredDataByChannel() {
+      console.log("measured data by channel has changed");
+      console.log(this.measuredData.channelData.reduce((dataByChannel, channel) => (dataByChannel[channel.acqChannel] = channel.data, dataByChannel), {}));
+      return this.measuredData.channelData.reduce((dataByChannel, channel) => (dataByChannel[channel.acqChannel] = channel.data, dataByChannel), {})
+    },
+
+    channelsWithAvailableData() {
+      if(!this.acquirerRequestedOptions.availableChannels)
+      {
+        return [];
+      }
+      else {
+        return this.acquirerRequestedOptions?.availableChannels.filter(channelName => this.measuredDataByChannel[channelName]?.length > 0);
+      }
+      
+    }
   },
   methods: {
     onStartAnalyzing() {
@@ -291,7 +308,7 @@ export default {
        this.decoderChannels,
        this.acquirerRequestedOptions
      );*/
-    this.redpitaya = new RedPitayaStub(this.decoders, this.requestedOptions, this.decoderChannels, this.acquirerRequestedOptions, this.logicSession);
+    this.redpitaya = new RedPitayaStub(this.decoders, this.requestedOptions, this.decoderChannels, this.acquirerRequestedOptions, this.logicSession, this.measuredData);
     this.redpitaya.start();
   },
   components: {

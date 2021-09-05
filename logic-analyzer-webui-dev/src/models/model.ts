@@ -48,3 +48,12 @@ export enum MeasurementState {
     Starting = "starting",
     Running = "running"
 }
+
+export interface MeasuredData {
+    channelData: ChannelData[]
+}
+
+export interface ChannelData {
+    acqChannel: string,
+    data: number[]
+}
