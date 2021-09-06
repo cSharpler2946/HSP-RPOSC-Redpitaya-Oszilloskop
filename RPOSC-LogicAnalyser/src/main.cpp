@@ -18,7 +18,7 @@
 #include "../lib/nlohmann/jsonWrapper.hpp"
 
 #include "main.h"
-#include "TestLogic.hpp"
+#include "LogicSession.hpp"
 
 //Signal size
 #define SIGNAL_SIZE_DEFAULT      1024
@@ -69,6 +69,7 @@ int rp_app_init(void)
         LOG_F(INFO, "LibSigrokDecode init success: Using version: %s\n", srd_lib_version_string_get());
         LOG_F(INFO, "Creating srd_session object");
         srd_session_new(&srdSession);
+        srd_log_loglevel_set(SRD_LOG_DBG);
     }
     //End: Tests
 
@@ -109,7 +110,7 @@ int rp_app_init(void)
     MeasuredData *measuredData = new MeasuredData("MEASURED_DATA", 512, "");
     sContainerList.push_back(measuredData);
 
-    TestLogic *logicSession = new TestLogic("LOGIC_SESSION", CBaseParameter::RW, "", false, srdSession, &srdDecoderInst, analogAcquirer, allOptionsValid, srdChannelMap, measuredData, &sContainerList, acquirerChosenOptions);
+    LogicSession *logicSession = new LogicSession("LOGIC_SESSION", CBaseParameter::RW, "", false, srdSession, &srdDecoderInst, analogAcquirer, allOptionsValid, srdChannelMap, measuredData, &sContainerList, acquirerChosenOptions);
     pContainerList.push_back(logicSession);
 
     // Dummy daten for ACQChosenOptions

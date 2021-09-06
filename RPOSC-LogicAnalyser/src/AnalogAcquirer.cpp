@@ -93,9 +93,9 @@
     float buffB[choosenOptions->sampleCount];
     if(acquisitionComplete){
       acquisitionComplete = false;
-      rp_AcqGetOldestDataV(rp_channel_t(0), &choosenOptions->sampleCount, buffA);
-      rp_AcqGetOldestDataV(rp_channel_t(1), &choosenOptions->sampleCount, buffB);
-      
+      rp_AcqGetLatestDataV(rp_channel_t(0), &choosenOptions->sampleCount, buffA); //Chaned from Oldest to Latest data
+      rp_AcqGetLatestDataV(rp_channel_t(1), &choosenOptions->sampleCount, buffB);
+
       // multiply with the probe attenuation
       if(1 != choosenOptions->probeAttenuation[0] ||  1 != choosenOptions->probeAttenuation[0]) {
         for(int i = 0; i<choosenOptions->sampleCount;i++) {
@@ -109,11 +109,6 @@
       acquiredDataChannelA = a;
       vector<float> b(buffB, buffB+sizeof buffB / sizeof buffB[0]);
       acquiredDataChannelB = b;
-
-      /*for(int i = 0; i<choosenOptions->sampleCount;i++) {
-        acquiredDataChannelA[i] = roundf(acquiredDataChannelA[i]*100)/100;
-        acquiredDataChannelB[i] = roundf(acquiredDataChannelB[i]*100)/100;
-      }*/
     }
 
     LOG_F(INFO, "check arrays and return result");

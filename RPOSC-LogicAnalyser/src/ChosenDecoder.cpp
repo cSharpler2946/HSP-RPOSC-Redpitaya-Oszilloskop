@@ -17,11 +17,15 @@ PContainer(name, am, defaultVal, fpga_update) {
 std::string ChosenDecoder::decoderId = "";
 
 void ChosenDecoder::OnNewInternal() {
-    LOG_F(INFO, "Unloading all old decoders");
+    //LOG_F(INFO, "Unloading all old decoders");
     srd_error_code err;
-     if((err = ToErr srd_decoder_unload_all()) != SRD_OK) {
-         LOG_F(ERROR, "Failed unloading old decoders! (srd_error_coder: %d)", err);
-    }
+    // if((err = ToErr srd_decoder_unload_all()) != SRD_OK) {
+    //     LOG_F(ERROR, "Failed unloading old decoders! (srd_error_coder: %d)", err);
+    // }
+
+    //Fix for segfault on chaning decoder after run
+    srd_exit();
+    srd_init(nullptr);
     
     nlohmann::json tmp = nlohmann::json::parse(VALUE->Value());
     std::string id = tmp["id"];

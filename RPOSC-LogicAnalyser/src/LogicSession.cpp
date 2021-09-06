@@ -4,13 +4,12 @@
 #include <string>
 #include <vector>
 #include <unistd.h>
-//#include "uartTestData.h"
+#include "uartTestData.h"
 #include <Python.h>
 #include <libsigrokdecode/libsigrokdecode.h>
-#include <SRDHelpers.hpp>
 #include <SRDChosenOptions.hpp>
 
-LogicSession::LogicSession(std::string name, CBaseParameter::AccessMode am, std::string defaultVal, int fpga_update, srd_session *_srdSession, srd_decoder_inst **_decoderInst, Acquirer *_acquirer, AllOptionsValid *_allOptionsValid, SRDChannelMap *_channelMap, MeasuredData *_measuredData, AnnotationData *_annotationData, ACQChoosenOptions *_acqChoosenOptions):
+LogicSession::LogicSession(std::string name, CBaseParameter::AccessMode am, std::string defaultVal, int fpga_update, srd_session *_srdSession, srd_decoder_inst **_decoderInst, Acquirer *_acquirer, AllOptionsValid *_allOptionsValid, SRDChannelMap *_channelMap, MeasuredData *_measuredData, std::vector<SContainer*> *_sContainerList, ACQChoosenOptions *_acqChoosenOptions):
 PContainer(name, am, defaultVal, fpga_update) {
     LOG_F(INFO, "LogicSession instantiated");
     srdSession = _srdSession;
@@ -19,24 +18,96 @@ PContainer(name, am, defaultVal, fpga_update) {
     allOptionsValid = _allOptionsValid;
     channelMap = _channelMap;
     measuredData = _measuredData;
-    annotationData = _annotationData;
+    sContainerList = _sContainerList;
     acqChoosenOptions = _acqChoosenOptions;
 }
 
 void LogicSession::Update() {
     nlohmann::json tmp;
-    //tmp["measurementState"]=measurementState; //Should use strings because of declaration "NLOHMANN_JSON_SERIALIZE_ENUM" in .hpp
+    tmp["measurementState"]=measurementState; //Should use strings because of declaration "NLOHMANN_JSON_SERIALIZE_ENUM" in .hpp
 
     VALUE->Set(tmp.dump());
 }
 
+void printOptions(srd_decoder_inst * inst)
+{
+    GSList *i;
+    for (i = inst->decoder->options; i; i = i->next) {
+        struct srd_decoder_option *p = static_cast<srd_decoder_option *>(i->data);
+        const GVariantType *type = g_variant_get_type(p->def);
+        const gchar * typeS = g_variant_type_peek_string(type);
+        //cout << p->id << ":" << typeS << ":";
+        LOG_F(INFO, "%d : %s", p->id, typeS);
+        if(g_variant_is_of_type(p->def, G_VARIANT_TYPE_INT64)) {
+            LOG_F(INFO, "%d", g_variant_get_uint64(p->def));
+            //cout << g_variant_get_uint64(p->def) << ":";
+            g_list_foreach(reinterpret_cast<GList *>(p->values), [](gpointer data, gpointer user_data){ cout << g_variant_get_int64((GVariant*)data) << ","; }, nullptr);
+        } else if (g_variant_is_of_type(p->def, G_VARIANT_TYPE_STRING)) {
+            LOG_F(INFO, "%s", g_variant_get_string(p->def, nullptr));
+            //cout << g_variant_get_string(p->def, nullptr) << ":";
+            g_list_foreach(reinterpret_cast<GList *>(p->values), [](gpointer data, gpointer user_data){ cout << g_variant_get_string((GVariant*)data, nullptr) << ","; }, nullptr);
+        } else if (g_variant_is_of_type(p->def, G_VARIANT_TYPE_DOUBLE)) {
+            LOG_F(INFO, "%f", g_variant_get_double(p->def));
+            //cout << g_variant_get_double(p->def) << ":";
+            g_list_foreach(reinterpret_cast<GList *>(p->values), [](gpointer data, gpointer user_data){ cout << g_variant_get_double((GVariant*)data) << ","; }, nullptr);
+        }
+        //cout << endl;
+    }
+}
+
+srd_error_code setOptions(srd_decoder_inst * inst, map<string,string> options)
+{
+    //Construct g_hash_table from options:map<>
+    GHashTable *table = g_hash_table_new(g_int_hash, g_int_equal);
+    for (const auto& [key, value] : options)
+    {
+        const gchar *gkey = key.c_str();
+        //Searches srd_decoder_options for type string of option. Ignores options that can not be found in inst->decoder->options
+        GSList * tmp = g_slist_find_custom(inst->decoder->options, gkey, [](gconstpointer elem, gconstpointer cmp){
+            return strcmp(((srd_decoder_option *)elem)->id, (char *)cmp);
+        });
+        if (tmp == nullptr) {
+            cout << "Provided option not found: " << gkey << endl;
+            continue;
+        }
+        srd_decoder_option * p = static_cast<srd_decoder_option *>(tmp->data);
+
+        GVariant * gvalue;
+        if(g_variant_is_of_type(p->def, G_VARIANT_TYPE_INT64)) {
+            //int64
+            gvalue = g_variant_new_int64(stol(value));
+        } else if (g_variant_is_of_type(p->def, G_VARIANT_TYPE_STRING)) {
+            //string
+            gvalue = g_variant_new_string(value.c_str());
+        } else if (g_variant_is_of_type(p->def, G_VARIANT_TYPE_DOUBLE)) {
+            //double
+            gvalue = g_variant_new_double(stod(value));
+        }
+
+        if(gvalue == nullptr) {
+            cout << "Error converting option to gvariant: " << gkey << endl;
+            continue;
+        }
+
+        g_hash_table_insert(table, (gpointer)gkey, (gpointer)gvalue);
+    }
+
+    return ToErr srd_inst_option_set(inst, table);
+}
+
+srd_error_code setSampleRate(srd_session* srdSession, uint64_t rate)
+{
+    GVariant *metadata = g_variant_new ("t", rate); //Following function only supports the uint64 (="t") data type!!
+    return ToErr srd_session_metadata_set(srdSession, SRD_CONF_SAMPLERATE, metadata);
+}
+
 void LogicSession::OnNewInternal() {
     nlohmann::json tmp = nlohmann::json::parse(VALUE->Value());
-    /*measurementState = tmp["measurementState"].get<MeasurementState>();
+    measurementState = tmp["measurementState"].get<MeasurementState>();
     LOG_F(INFO, "Recieved new measurement state %s -> %d", tmp.dump().c_str(), measurementState);
 
    if(measurementState==starting) {
-       TODO: Add logic to logicSessions
+       /* TODO: Add logic to logicSessions
        * Start measurement chain:
        * - Evtl. check the AllDataValid object
        * - reset MeasuredData and AnnotationData
@@ -46,19 +117,22 @@ void LogicSession::OnNewInternal() {
        * - Calls to MeasuredData::addData()
        * - Mix data accoriding to the SRDChannelMap
        * - Prepare mixed data to be in uInt8 range
-       * - run "ToErr srd_session_send(sess, 0, arrsize-1, inbuf, arrsize, 1);"
+       * - run "ToErr srd_session_send(srdSession, 0, arrsize-1, inbuf, arrsize, 1);"
        * - set measurementState=stopped and call Update()
+       */
         //Libsigrokdecode init
-        static srd_session *decoderSession;
-        static srd_decoder_inst *decoderInstance;
-        srd_error_code err;
 
-        if (( ToErr srd_exit()) != SRD_OK)
+        LOG_F(INFO, "Starting logic session");
+        const char *decoderId = ChosenDecoder::decoderId.c_str();
+
+        srd_error_code err;
+        //Initialize srd
+        //srd_session *srdSession;
+        if ((ToErr srd_exit()) != SRD_OK)
         {
-            LOG_F(INFO, "LibSigrokDecode exit failed\n");
+            LOG_F(ERROR, "Libsigrok exit failed");
             return;
         }
-
         if ((ToErr srd_init(nullptr)) != SRD_OK)
         {
             LOG_F(INFO, "LibSigrokDecode init failed\n");
@@ -68,106 +142,44 @@ void LogicSession::OnNewInternal() {
         {
             LOG_F(INFO, "LibSigrokDecode init success: Using version: %s\n", srd_lib_version_string_get());
             LOG_F(INFO, "Creating srd_session object");
-            srd_session_new(&decoderSession);
+            srd_session_new(&srdSession);
+            srd_log_loglevel_set(SRD_LOG_DBG);
         }
 
-    //End: Tests
-    
-        AnnotationData *annotationDatas = new AnnotationData("ANNOTATION_DATA", 512, "", decoderSession);
-        //sContainerList.push_back(annotationData);
+        AnnotationData *annotationData = new AnnotationData("ANNOTATION_DATA", 512, "", srdSession);
+        sContainerList->push_back(annotationData);
+        annotationData->resetData();
 
-        LOG_F(INFO, "Starting logic session");
-
-        if((err = ToErr srd_decoder_unload_all()) != SRD_OK) {
-            LOG_F(ERROR, "Failed unloading old decoders! (srd_error_coder: %d)", err);
-        }
+        //Load decoder w. id
         LOG_F(INFO, "Loading decoder with id \"%s\"...", ChosenDecoder::decoderId.c_str());
-        if((err = ToErr srd_decoder_load(ChosenDecoder::decoderId.c_str())) != SRD_OK) {
+        if((err = ToErr srd_decoder_load(decoderId)) != SRD_OK) {
             LOG_F(ERROR, "Failed loading decoder (srd_error_coder: %d). Please select new one", err);
             return;
         }
-        decoderInstance = srd_inst_new(decoderSession, ChosenDecoder::decoderId.c_str(), nullptr); //Set decoder instance
+        srd_decoder_inst *inst = srd_inst_new(srdSession, decoderId, nullptr);
 
-        //Construct g_hash_table from options:map<>
-        GHashTable *table = g_hash_table_new(g_int_hash, g_int_equal);
-        for (const auto& elem : SRDChosenOptions::chosenOptions)
+        //Add options to decoder instance
+        map<string, string> newOptions = SRDChosenOptions::chosenOptions;
+        err = setOptions(inst, newOptions);
+        if (err == SRD_OK)
+            allOptionsValid->setDecoderValidity(true);
+
+        if (allOptionsValid->areAllOptionsValid() == false)
         {
-            auto &key = elem.first;
-            auto &value = elem.second;
-            const gchar *gkey = key.c_str();
-            LOG_F(INFO, "Setting srdOption %s to %s", gkey, value.c_str());
-            //Searches srd_decoder_options for type string of option. Ignores options that can not be found in inst->decoder->options
-            GSList * tmp = g_slist_find_custom((decoderInstance)->decoder->options, gkey, [](gconstpointer elem, gconstpointer cmp){
-                return strcmp(((srd_decoder_option *)elem)->id, (char *)cmp);
-            });
-            if (tmp == nullptr) {
-                LOG_F(INFO, "Provided option not found: %s", gkey);
-                continue;
-            }
-            srd_decoder_option * p = static_cast<srd_decoder_option *>(tmp->data);
-
-            GVariant * gvalue;
-            if(g_variant_is_of_type(p->def, G_VARIANT_TYPE_INT64)) {
-                //int64
-                gvalue = g_variant_new_int64(stoll(value));
-            } else if (g_variant_is_of_type(p->def, G_VARIANT_TYPE_STRING)) {
-                //string
-                gvalue = g_variant_new_string(value.c_str());
-            } else if (g_variant_is_of_type(p->def, G_VARIANT_TYPE_DOUBLE)) {
-                //double
-                gvalue = g_variant_new_double(stod(value));
-            }
-
-            if(gvalue == nullptr) {
-                LOG_F(ERROR, "Error converting option to gvariant: %s", gkey);
-                continue;
-            }
-
-            g_hash_table_insert(table, (gpointer)gkey, (gpointer)gvalue);
-        }
-
-        srd_inst_option_set((decoderInstance), table);
-        allOptionsValid->setDecoderValidity(true);
-
-        PyObject *pyOptions = PyObject_GetAttrString(static_cast<PyObject *>(decoderInstance->py_inst), "options");
-        if(PyTuple_Check(pyOptions)) {
-            LOG_F(ERROR, "Error: Run setOptions() before using printCurrentOptions()");
+            LOG_F(ERROR, "Tried to start aquisition, but not all options were valid");
+            measurementState = stopped;
+            Update();
             return;
         }
-        GSList *j;
-        for (j = decoderInstance->decoder->options; j; j = j->next) {
-            struct srd_decoder_option *p = static_cast<srd_decoder_option *>(j->data);
-            gchar *key = p->id;
-            std::string value = "NOT SET";
-            PyObject *tmpVal = PyDict_GetItemString(pyOptions, key);
-            if(g_variant_is_of_type(p->def, G_VARIANT_TYPE_INT64)) {
-                //int64
-                value = std::to_string(PyLong_AsLong(tmpVal));
-            } else if (g_variant_is_of_type(p->def, G_VARIANT_TYPE_STRING)) {
-                //string
-                value = PyUnicode_AsUTF8(tmpVal);
-            } else if (g_variant_is_of_type(p->def, G_VARIANT_TYPE_DOUBLE)) {
-                //double
-                value = std::to_string(PyFloat_AsDouble(tmpVal));
-            }
-            LOG_F(INFO, "Current options %s: %s", key, value.c_str());
-        }
 
-
-        //TODO: Completly untested and not implemented completely
-        if (allOptionsValid->areAllOptionsValid() == false)
-            {
-                LOG_F(ERROR, "Tried to start aquisition, but not all options were valid");
-                measurementState = stopped;
-                Update();
-                return;
-            }
+        //Reset measured data
         measuredData->resetData();
-        annotationDatas->resetData();
 
+        //Set state
         measurementState = running;
         Update();
 
+        //Start acquisition
         if(!acquirer->startAcq())
         {
             LOG_F(ERROR, "Acquirer was not able to fill its buffers.");
@@ -175,19 +187,20 @@ void LogicSession::OnNewInternal() {
             Update();
             return;
         }
-        
+
+        //Get acquired data
         int sampleCount;
         std::map<std::string, std::vector<float>> dataMap;
         for(int i = 0; i<AcquirerConstants::availableChannels.size(); i++)
         {
-            //vector<float> data = acquirer->getData(i);
-            vector<float> data(testdata, testdata + sizeof(testdata)/sizeof(testdata[0]));
+            vector<float> data = acquirer->getData(i);
+            //vector<float> data(testdata, testdata + sizeof(testdata)/sizeof(testdata[0])); //Testdata
             measuredData->addData(AcquirerConstants::availableChannels[i], data);
             dataMap.insert(std::pair<std::string, std::vector<float> >(AcquirerConstants::availableChannels[i], data));
             sampleCount = data.size();
         }
 
-        //Generate an set the srd channel map
+        //Set channels
         LOG_F(INFO, "Generating srd channel map");
         vector<std::string> setChannels;
         int i = 0;
@@ -197,7 +210,6 @@ void LogicSession::OnNewInternal() {
             char * tmpFirst = new char[paar.first.length()]; 
             strcpy(tmpFirst, paar.first.c_str());
             GVariant * gkey = (GVariant *)(tmpFirst); //Invalid cast... Comp options? ... Looks like they raped glib...
-            //GVariant * gkey = g_variant_new_string(paar.first.c_str());
             GVariant * gvalue = g_variant_new_int32(i);
             g_hash_table_insert(channels, gkey, gvalue);
             LOG_F(INFO, "Inserted into srd channel map: %s -> %d", (const char*)gkey, i);
@@ -205,43 +217,37 @@ void LogicSession::OnNewInternal() {
             setChannels.push_back(paar.second);
             i++;
         }
-
-        //Test if element is really in hashmap. Only for testing
-        /*GVariant* test;
-        const char * testKey = channelMap->channelMap.begin()->first.c_str();
-        if( (test = (GVariant *)g_hash_table_lookup (channels, testKey))==NULL)
-            LOG_F(ERROR, "Could not find %s in hash table", testKey);
-        else
-            LOG_F(INFO, "Found for %s, value: %d", testKey, g_variant_get_int32(test));
-
-        usleep(1000);
-
-
         LOG_F(INFO, "Setting the channels");
-        srd_error_code ret;
-        if((ret = ToErr srd_inst_channel_set_all(decoderInstance, channels)) != SRD_OK)
+        if((err = ToErr srd_inst_channel_set_all(inst, channels)) != SRD_OK)
         {
-            LOG_F(ERROR, "Couldn't set channels: Error code : %d", ret);
+            LOG_F(ERROR, "Couldn't set channels: Error code : %d", err);
         }
 
-        //Interleave data from acq channels which were used in channelMap into mixedData array
-        LOG_F(INFO, "Interleaving data");
+        //Setting SRD_CONF_SAMPLERATE
+        err = setSampleRate(srdSession, acqChoosenOptions->sampleRate);
+        if (err != SRD_OK)
+        {
+            LOG_F(ERROR, "Couldn't set sampleRate: Error code : %d", err);
+            return;
+        }
+        
+        //Concatenate data
+        LOG_F(INFO, "Concatenate data");
         int mixedDataLength = sampleCount*setChannels.size();
         float *mixedData = new float[mixedDataLength];
+
         for(int i = 0; i<sampleCount; i++)
         {
             for(int y = 0; y<setChannels.size(); y++)
             {
                 std::string channelId = setChannels[y];
-                //LOG_F(INFO, "ChannelId: %s", channelId.c_str());
                 std::vector<float> vect = dataMap[channelId];
-                //LOG_F(INFO, "Got vect, empty: %d", vect.empty()); //Empty happens if Channel names sent from frontend are not in AcquirerConstants::availableChannels
                 float dataPoint = vect[i];
-                //LOG_F(INFO, "DataPoint: %f", dataPoint);
-                mixedData[(i*setChannels.size())+y]=dataPoint;
+                mixedData[(sampleCount*y)+i]=dataPoint;
             }
         }
-        measuredData->addData("Interleaved data", vector<float>(mixedData, mixedData+mixedDataLength));
+
+        measuredData->addData("concatenated data", vector<float>(mixedData, mixedData+mixedDataLength));
         
         //parse mixedData to be in range uint_8:0-255
         LOG_F(INFO, "Parsing mixedData into range");
@@ -254,36 +260,32 @@ void LogicSession::OnNewInternal() {
             if(mixedData[i] > max)
                 max = mixedData[i];
         }
-        float step = UINT8_MAX/max-min;
-        LOG_F(INFO, "LS: Range: %f to %f -> step: %f", min, max, step);
+        float step = UINT8_MAX/(max-min);
+        LOG_F(INFO, "Range: %f to %f -> step: %f", min, max, step);
 
         vector<float> tmp;
-        uint8_t *normalizedData = new uint8_t[sampleCount*setChannels.size()];
+        uint8_t *normalizedData = new uint8_t[mixedDataLength];
         for(int i = 0; i<mixedDataLength; i++)
         {
-            normalizedData[i] = (uint8_t)(mixedData[i]*step);
+            //normalizedData[i] = (uint8_t) (mixedData[i]*step);
+            normalizedData[i] = (mixedData[i] > max/2) ? UINT8_MAX : 0; //Decoder does not work with in between data on edges
             tmp.push_back(normalizedData[i]);
         }
         measuredData->addData("Normalized data", tmp);
 
-        //set sample rate
-        long sampleRate = acqChoosenOptions->sampleRate;
-        LOG_F(INFO, "Setting sample rate to: %ld", sampleRate);
-        GVariant *metadata = g_variant_new("t", sampleRate);
-        if((ret = ToErr srd_session_metadata_set(decoderSession, SRD_CONF_SAMPLERATE, metadata)) != SRD_OK )
+        //Start session
+        LOG_F(INFO, "Starting decoding");
+        err = ToErr srd_session_start(srdSession);
+        if (err != SRD_OK)
         {
-            LOG_F(ERROR, "Couldn't set sampleRate: Error code : %d", ret);
+            LOG_F(ERROR, "Couldn't start srd session: Error code : %d", err);
         }
 
-        //run decoder
-        LOG_F(INFO, "Starting decoding");
-        if((ret = ToErr srd_session_start(decoderSession)) != SRD_OK)
+        //Send prepared test data to decoder
+        err = ToErr srd_session_send(srdSession, 0, mixedDataLength-1, normalizedData, mixedDataLength, 1);
+        if (err != SRD_OK)
         {
-            LOG_F(ERROR, "Couldn't start srd session: Error code : %d", ret);
-        }
-        if((ret = ToErr srd_session_send(decoderSession, 0, sampleCount-1, normalizedData, sampleCount, 1)) != SRD_OK)
-        {
-            LOG_F(ERROR, "Couldn't send data to srd session: Error code : %d", ret);
+            LOG_F(ERROR, "Couldn't send data to srd session: Error code : %d", err);
         }
 
         LOG_F(INFO, "Decoding finished, setting measurementState back to stopped");
@@ -291,6 +293,6 @@ void LogicSession::OnNewInternal() {
         Update();
         
         delete mixedData;
-        //TODO: delete normalizedData
-   }*/
+        delete normalizedData;
+   }
 }
