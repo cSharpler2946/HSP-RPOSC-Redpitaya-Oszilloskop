@@ -38,7 +38,7 @@
         </div>
 
         <Channel
-          v-for="(channelName, index) in channelsWithAvailableData"
+          v-for="(channelName, index) in acquirerRequestedOptions.availableChannels"
           :key="index"
           :channelId="index"
           :channelName="channelName"
@@ -239,17 +239,6 @@ export default {
       console.log(this.measuredData.channelData.reduce((dataByChannel, channel) => (dataByChannel[channel.acqChannel] = channel.data, dataByChannel), {}));
       return this.measuredData.channelData.reduce((dataByChannel, channel) => (dataByChannel[channel.acqChannel] = channel.data, dataByChannel), {})
     },
-
-    channelsWithAvailableData() {
-      if(!this.acquirerRequestedOptions.availableChannels)
-      {
-        return [];
-      }
-      else {
-        return this.acquirerRequestedOptions?.availableChannels.filter(channelName => this.measuredDataByChannel[channelName]?.length > 0);
-      }
-      
-    }
   },
   methods: {
     onStartAnalyzing() {

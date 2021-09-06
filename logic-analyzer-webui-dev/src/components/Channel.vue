@@ -27,7 +27,8 @@
 
       <div class="signal-box col-md-9 col-12">
         
-        <UplotChart :options="chartOptions" :data="channelDataWithIndices" :id="channelId" @uplot="returnUplotToParent"></UplotChart>
+        <UplotChart v-if="channelDataWithIndices.length > 0"
+         :options="chartOptions" :data="channelDataWithIndices" :id="channelId" @uplot="returnUplotToParent"></UplotChart>
 
       </div>
   </div>
