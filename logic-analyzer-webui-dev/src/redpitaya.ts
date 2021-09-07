@@ -8,6 +8,7 @@ class RedPitaya {
   decoderChannels: Model.DecoderChannel[]
   acquirerOptions: Model.AcquirerRequestedOptions
   logicSession: Model.LogicSession
+  measuredData: Model.MeasuredData
   webSocket?: WebSocket;
   app_id: string
   app_url: string
@@ -18,7 +19,7 @@ class RedPitaya {
   constructor (app_id: string, app_url: string, socket_url: string,
     decoders: Model.Decoder[], requestedOptions: Model.DecoderOption[],
     decoderChannels: Model.DecoderChannel[], acquirerOptions: Model.AcquirerRequestedOptions,
-    logicSession: Model.LogicSession) {
+    logicSession: Model.LogicSession, measuredData: Model.MeasuredData) {
     this.app_id = app_id
     this.app_url = app_url
     this.socket_url = socket_url
@@ -28,6 +29,7 @@ class RedPitaya {
     this.requestedOptions = requestedOptions
     this.decoderChannels = decoderChannels
     this.logicSession = logicSession
+    this.measuredData = measuredData
   }
 
   test () {
@@ -114,6 +116,12 @@ class RedPitaya {
               var decoderChannels_list = decoderChannels_json_repr.map(JSON.parse)
               myself.decoderChannels.splice(0)
               myself.decoderChannels.push(...decoderChannels_list)
+            }
+            if(receive.signals.MEASURED_DATA) {
+              var measuredChannels_json_repr = receive.signals.MEASURED_DATA.value
+              var measuredChannelsList = measuredChannels_json_repr.map(JSON.parse)
+              myself.measuredData.channelData.splice(0)
+              myself.measuredData.channelData.push(...measuredChannelsList)
             }
           }
           if (receive.parameters) {

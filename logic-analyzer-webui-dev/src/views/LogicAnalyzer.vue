@@ -43,7 +43,7 @@
           :channelId="index"
           :channelName="channelName"
           :decoderChannels="decoderChannels"
-          :channelData="decodedData"
+          :channelData="measuredDataByChannel[channelName]"
           v-on:decoder-channel-changed="onDecoderChannelChanged"
           @uplot="persistChart"
         />
@@ -52,7 +52,9 @@
           <div class="chart-scroller-offset col-md-3 col-12"></div>
           <div class="chart col-md-9 col-12">
             <!-- <ChartScroller v-if="decoderChannels.length > 0" /> -->
-            <DataAnnotations/>
+            <DataAnnotations
+               @uplot="persistChart"
+            />
           </div>
         </div>
 
@@ -207,6 +209,7 @@ export default {
         },
       ],
       logicSession: {},
+      measuredData: { channelData: [] },
       uPlotCharts: [],
     };
   },
@@ -230,6 +233,16 @@ export default {
           (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
         ).toString(16)
       );
+    },
+    measuredDataByChannel() {
+      console.log("measured data by channel has changed");
+      console.log(this.measuredData.channelData.reduce((dataByChannel, channel) => (dataByChannel[channel.acqChannel] = channel.data, dataByChannel), {}));
+      if(this.measuredData.channelData.length === 0) {
+        console.log("no measured data yet.");
+        console.log(this.acquirerRequestedOptions.availableChannels.reduce((dataByChannel, channel) => (dataByChannel[channel] = [], dataByChannel), {}));
+        return this.acquirerRequestedOptions.availableChannels.reduce((dataByChannel, channel) => (dataByChannel[channel] = [], dataByChannel), {})
+      }
+      return this.measuredData.channelData.reduce((dataByChannel, channel) => (dataByChannel[channel.acqChannel] = channel.data, dataByChannel), {})
     },
   },
   methods: {
@@ -277,6 +290,8 @@ export default {
       return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c => (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16));
     },
     persistChart: function(e){
+      console.log("persist chart called:");
+      console.log(e);
       this.uPlotCharts.push(e);
     }
   },
@@ -289,9 +304,17 @@ export default {
        this.decoders,
        this.requestedOptions,
        this.decoderChannels,
+<<<<<<< HEAD
        this.acquirerRequestedOptions
      );
     //this.redpitaya = new RedPitayaStub(this.decoders, this.requestedOptions, this.decoderChannels, this.acquirerRequestedOptions, this.logicSession);
+=======
+       this.acquirerRequestedOptions,
+       this.logicSession,
+       this.measuredData
+     );
+    this.redpitaya = new RedPitayaStub(this.decoders, this.requestedOptions, this.decoderChannels, this.acquirerRequestedOptions, this.logicSession, this.measuredData);
+>>>>>>> main
     this.redpitaya.start();
   },
   components: {

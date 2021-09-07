@@ -12,16 +12,17 @@ class RedPitayaStub {
     channelMap: Record<string, string> = {}
     logicSession: Model.LogicSession
     webSocket: WebSocket
-    
+    measuredData: Model.MeasuredData
 
     constructor(decoders: Model.Decoder[], requestedOptions: Model.DecoderOption[],
         decoderChannels: Model.DecoderChannel[], acquirerOptions: Model.AcquirerRequestedOptions,
-        logicSession: Model.LogicSession) {
+        logicSession: Model.LogicSession, measuredData: Model.MeasuredData) {
         this.decoders = decoders
         this.requestedOptions = requestedOptions
         this.decoderChannels = decoderChannels
         this.acquirerOptions = acquirerOptions
         this.logicSession = logicSession
+        this.measuredData = measuredData
         this.webSocket = new WebSocket('ws://localhost:9200')
         this.webSocket.binaryType = 'arraybuffer'
         this.start()
@@ -72,6 +73,12 @@ class RedPitayaStub {
                             var decoderChannels_list = decoderChannels_json_repr.map(JSON.parse)
                             myself.decoderChannels.splice(0)
                             myself.decoderChannels.push(...decoderChannels_list)
+                        }
+                        if(receive.signals.MEASURED_DATA) {
+                            var measuredChannels_json_repr = receive.signals.MEASURED_DATA.value
+                            var measuredChannelsList = measuredChannels_json_repr.map(JSON.parse)
+                            myself.measuredData.channelData.splice(0)
+                            myself.measuredData.channelData.push(...measuredChannelsList)
                         }
                     }
                     if (receive.parameters) {

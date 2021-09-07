@@ -1,62 +1,65 @@
 <template>
-    <div class="channel-wrapper row">
+<div>
+  <div class="channel-wrapper row">
 
-        <div class="channel-box col-md-3 col-12">
-            <div class="row" style="padding:0;">
+      <div class="channel-box col-md-3 col-12">
+          <div class="row" style="padding:0;">
 
-                <div class="channel-id-box col-2 d-flex align-items-center">
-                    {{ channelId }}
-                </div>
+              <div class="channel-id-box col-2 d-flex align-items-center">
+                  {{ channelId }}
+              </div>
 
-                <div @dblclick="edit = true" class="col-8 channel d-flex align-items-center">
-                    <div v-show="edit == false">
-                        <label> {{ channelName }}</label>
-                        <div class="selected-decoder-channel"><strong>selected:</strong> {{ decoderChannel ?? '-' }}</div>
-                    </div>
-                    <input class="form-control" v-show="edit == true" v-model="channelName" :maxlength="maxCharacters"
-                    v-on:blur="edit=false; $emit('update')" @keyup.enter="edit=false; $emit('update')">
-                </div>
+              <div @dblclick="edit = true" class="col-8 channel d-flex align-items-center">
+                  <div v-show="edit == false">
+                      <label> {{ channelName }}</label>
+                      <div class="selected-decoder-channel"><strong>selected:</strong> {{ decoderChannel ?? '-' }}</div>
+                  </div>
+                  <input class="form-control" v-show="edit == true" v-model="channelName" :maxlength="maxCharacters"
+                  v-on:blur="edit=false; $emit('update')" @keyup.enter="edit=false; $emit('update')">
+              </div>
 
-                <div class="col-2 channel-settings d-flex align-items-center">
-                    <font-awesome-icon icon="cog" @click="openChannelSettings" class="fas fa-cog channel-settings-btn"
-                    data-bs-toggle="modal" v-bind:data-bs-target="'#channel-settings-modal-' + channelId" />
-                </div>
-            </div>
-        </div>
-
-        <div class="signal-box col-md-9 col-12">
-          
-          <UplotChart :options="chartOptions" :data="testData" :id="channelId" @uplot="returnUplotToParent"></UplotChart>
-
-        </div>
-    </div>
-
-<div class="modal fade" v-bind:id="'channel-settings-modal-' + channelId" tabindex="-1" aria-labelledby="channelSettings" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Settings for: <b>{{channelName}}</b></h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <div class="col-2 channel-settings d-flex align-items-center">
+                  <font-awesome-icon icon="cog" @click="openChannelSettings" class="fas fa-cog channel-settings-btn"
+                  data-bs-toggle="modal" v-bind:data-bs-target="'#channel-settings-modal-' + channelId" />
+              </div>
+          </div>
       </div>
 
-      <div class="modal-body">
-        <div class="row">
-            <label class="col-sm-4 col-form-label">Decoder Channel:</label>
-            <div class="col-sm-8">
-                <select v-model="selected" v-bind:id="'select-decoder-' + channelId" class="form-select" aria-label="Select decoder channel">
-                    <option :value="null" disabled hidden>Select decoder channel</option>
-                    <option v-for="decoderChannel in decoderChannels" v-bind:key="decoderChannel" v-bind:value="decoderChannel.id">
-                        {{ decoderChannel["name"] }}
-                    </option>
-                </select>
-            </div>
-        </div>
-      </div>
+      <div class="signal-box col-md-9 col-12">
+        
+        <UplotChart v-if="channelDataWithIndices.length > 0"
+         :options="chartOptions" :data="channelDataWithIndices" :id="channelId" @uplot="returnUplotToParent"></UplotChart>
 
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
-        <button @click="editChannelSettings(selected)" type="button" class="btn btn-success" data-bs-dismiss="modal">Ok</button>
+      </div>
+  </div>
+
+  <div class="modal fade" v-bind:id="'channel-settings-modal-' + channelId" tabindex="-1" aria-labelledby="channelSettings" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Settings for: <b>{{channelName}}</b></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+          <div class="row">
+              <label class="col-sm-4 col-form-label">Decoder Channel:</label>
+              <div class="col-sm-8">
+                  <select v-model="selected" v-bind:id="'select-decoder-' + channelId" class="form-select" aria-label="Select decoder channel">
+                      <option :value="null" disabled hidden>Select decoder channel</option>
+                      <option v-for="decoderChannel in decoderChannels" v-bind:key="decoderChannel" v-bind:value="decoderChannel.id">
+                          {{ decoderChannel["name"] }}
+                      </option>
+                  </select>
+              </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+          <button @click="editChannelSettings(selected)" type="button" class="btn btn-success" data-bs-dismiss="modal">Ok</button>
+        </div>
       </div>
     </div>
   </div>
@@ -64,12 +67,16 @@
 
 </template>
 
-<script>
+<script lang="ts">
+//The UplotChart component is still plain js, so we need to suppress the typescript error (wtf, sebi? use typescript! 😠)
+//@ts-ignore
 import UplotChart from './UplotChart';
 
+import { Options, Vue } from 'vue-class-component';
+import { PropType } from 'vue';
 const measureData = require("./../../testing/test-data.json");
 
-export default {
+@Options({
   name: 'Channel',
   data () {
     return {
@@ -109,7 +116,7 @@ export default {
 					],
 
       },
-      testData: null,
+      channelDataWithIndices: [],
     }
   },
   props: {
@@ -119,10 +126,24 @@ export default {
     },
     channelName: String,
     decoderChannels: [],
-    channelData: [],
+    channelData: {
+      type: Object as PropType<Array<Number>>,
+      required: true
+    }
+  },
+  watch: {
+    channelData: {
+      handler: function(newChannelData) {
+        
+        console.log("channel data changed.");
+        this.channelDataWithIndices.splice(0);
+        this.channelDataWithIndices.push(...[Array.from(this.channelData.keys()), this.channelData]);
+        console.log(this.channelDataWithIndices);
+      }
+    }
   },
   methods: {
-    editChannelName: function (channel) {
+    editChannelName: function (channel: any) {
       this.editedChannel = channel
     },
     openChannelSettings: function () {
@@ -130,7 +151,7 @@ export default {
 
       // When opening the modal, set the selected element to the current selected decoderChannel value.
       // Otherwise, the user might think that he's selected another channel, but in reality he just clicked "cancel" and not "ok".
-      var selectDecoderDOM = document.getElementById('select-decoder-' + this.channelId)
+      var selectDecoderDOM = document.getElementById('select-decoder-' + this.channelId) as HTMLSelectElement
       var options = selectDecoderDOM.options
 
       if (this.decoderChannel === null || this.decoderChannel === undefined) {
@@ -145,7 +166,7 @@ export default {
         }
       }
     },
-    editChannelSettings: function (selected) {
+    editChannelSettings: function (selected: any) {
       this.decoderChannel = selected
       var eventParams = {
         channelName: this.channelName,
@@ -153,18 +174,21 @@ export default {
       }
       this.$emit('decoder-channel-changed', eventParams)
     },
-    returnUplotToParent: function(e){
-        this.$emit("uplot", e);
+    returnUplotToParent: function(e: any){
+      console.log("uplot emitted");
+      this.$emit("uplot", e);
     }
   },
   beforeMount () {
 
     // FOR TESTING
-    if(this.channelId == '0'){
+    /*if(this.channelId == '0'){
       this.testData = [
         Array.from(Array(16000).keys()),
         measureData.data
-      ]   
+      ]
+      console.log("testdata:");
+      console.log(this.testData);
     }
     else if(this.channelId == '1'){
       this.testData = [
@@ -184,22 +208,17 @@ export default {
         Array.from(Array(16000).keys()),
         new Array(16000).fill(0)
       ]
-    }
+    }*/
     // - FOR TESTING
-  },
-  mounted(){
-    if(this.channelId == '3'){
-      var canvas = document.getElementsByTagName('canvas')[2];
-      var c = canvas.getContext('2d');
-      c.fillStyle = "black";
-      c.fillRect(10, 10, 100, 100);
-
-    }
   },
   components: {
     UplotChart
   }
+})
+
+export default class Channel extends Vue {
 }
+
 </script>
 
 <style lang="scss" scoped>

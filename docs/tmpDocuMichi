@@ -1,0 +1,27 @@
+- undefined symbo rp_app_init --> restart
+- compiler plugin to short --> copy arm compiler again to the project.. Dont know why but seems like different linux distros are not working well together.
+
+install new libsigrok:
+remove old version
+- apt remove libsigrokdecode-dev libsigrokdecode2
+- install autoconf 'apt install autoconf'
+- install automake 'apt install automake'
+- install libtool 'apt install libtool'
+- install libzip 'apt install libzip-dev'
+
+for c++ bindings
+- install glibmm-2.4 'apt install libglibmm-2.4-dev'
+- install doxygen 'apt install doxygen'
+- the other necessary packages should be installed already.
+- https://sigrok.org/wiki/Building#Build_requirements
+
+- install the libsigrok decoder finally
+
+- link the new shared object. 
+- cd /etc/ld.so.conf.d
+- create new file like 'libsigrok.conf' or something similar
+- add the path of the installed libsigrokdecode.so to the file.
+- run 'ldconfig' to refresh the settings
+
+how to build with new buildumgebung:
+
