@@ -297,15 +297,17 @@ export default {
   },
   mounted() {
     // Build up WebSocket-Connection with RedPitaya in here.
-    /*this.redpitaya = new RedPitaya(
+    this.redpitaya = new RedPitaya(
        this.app_id,
        this.get_app_url,
        this.get_socket_url,
        this.decoders,
        this.requestedOptions,
        this.decoderChannels,
-       this.acquirerRequestedOptions
-     );*/
+       this.acquirerRequestedOptions,
+       this.logicSession,
+       this.measuredData
+     );
     this.redpitaya = new RedPitayaStub(this.decoders, this.requestedOptions, this.decoderChannels, this.acquirerRequestedOptions, this.logicSession, this.measuredData);
     this.redpitaya.start();
   },
