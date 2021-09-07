@@ -175,7 +175,8 @@ const measureData = require("./../../testing/test-data.json");
       this.$emit('decoder-channel-changed', eventParams)
     },
     returnUplotToParent: function(e: any){
-        this.$emit("uplot", e);
+      console.log("uplot emitted");
+      this.$emit("uplot", e);
     }
   },
   beforeMount () {
