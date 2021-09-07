@@ -237,6 +237,11 @@ export default {
     measuredDataByChannel() {
       console.log("measured data by channel has changed");
       console.log(this.measuredData.channelData.reduce((dataByChannel, channel) => (dataByChannel[channel.acqChannel] = channel.data, dataByChannel), {}));
+      if(this.measuredData.channelData.length === 0) {
+        console.log("no measured data yet.");
+        console.log(this.acquirerRequestedOptions.availableChannels.reduce((dataByChannel, channel) => (dataByChannel[channel] = [], dataByChannel), {}));
+        return this.acquirerRequestedOptions.availableChannels.reduce((dataByChannel, channel) => (dataByChannel[channel] = [], dataByChannel), {})
+      }
       return this.measuredData.channelData.reduce((dataByChannel, channel) => (dataByChannel[channel.acqChannel] = channel.data, dataByChannel), {})
     },
   },

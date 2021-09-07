@@ -117,6 +117,12 @@ class RedPitaya {
               myself.decoderChannels.splice(0)
               myself.decoderChannels.push(...decoderChannels_list)
             }
+            if(receive.signals.MEASURED_DATA) {
+              var measuredChannels_json_repr = receive.signals.MEASURED_DATA.value
+              var measuredChannelsList = measuredChannels_json_repr.map(JSON.parse)
+              myself.measuredData.channelData.splice(0)
+              myself.measuredData.channelData.push(...measuredChannelsList)
+            }
           }
           if (receive.parameters) {
             if (receive.parameters.WEBSOCKET_OPENED) {

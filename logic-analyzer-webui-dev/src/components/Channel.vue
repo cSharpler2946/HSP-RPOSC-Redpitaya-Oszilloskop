@@ -135,8 +135,10 @@ const measureData = require("./../../testing/test-data.json");
     channelData: {
       handler: function(newChannelData) {
         
-        console.log("TestData:");
-        console.log(this.testData);
+        console.log("channel data changed.");
+        this.channelDataWithIndices.splice(0);
+        this.channelDataWithIndices.push(...[Array.from(this.channelData.keys()), this.channelData]);
+        console.log(this.channelDataWithIndices);
       }
     }
   },
@@ -207,12 +209,6 @@ const measureData = require("./../../testing/test-data.json");
       ]
     }*/
     // - FOR TESTING
-  },
-  created() {
-    console.log("channel created.");
-    console.log(this.channelDataWithIndices);
-    this.channelDataWithIndices.splice(0);
-    this.channelDataWithIndices.push(...[Array.from(this.channelData.keys()), this.channelData]);
   },
   components: {
     UplotChart
