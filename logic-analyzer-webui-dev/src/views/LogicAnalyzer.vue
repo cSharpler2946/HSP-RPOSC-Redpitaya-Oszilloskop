@@ -297,6 +297,7 @@ export default {
   },
   mounted() {
     // Build up WebSocket-Connection with RedPitaya in here.
+    //this.redpitaya = new RedPitayaStub(this.decoders, this.requestedOptions, this.decoderChannels, this.acquirerRequestedOptions, this.logicSession);
     this.redpitaya = new RedPitaya(
        this.app_id,
        this.get_app_url,
@@ -304,17 +305,10 @@ export default {
        this.decoders,
        this.requestedOptions,
        this.decoderChannels,
-<<<<<<< HEAD
-       this.acquirerRequestedOptions
-     );
-    //this.redpitaya = new RedPitayaStub(this.decoders, this.requestedOptions, this.decoderChannels, this.acquirerRequestedOptions, this.logicSession);
-=======
        this.acquirerRequestedOptions,
        this.logicSession,
        this.measuredData
      );
-    this.redpitaya = new RedPitayaStub(this.decoders, this.requestedOptions, this.decoderChannels, this.acquirerRequestedOptions, this.logicSession, this.measuredData);
->>>>>>> main
     this.redpitaya.start();
   },
   components: {
