@@ -41,7 +41,7 @@ void AnnotationData::callbackAnnotation(struct srd_proto_data *pdata, void *cb_d
 
     //Testing of uart decoding
     std::string s = *annString;
-    if (s == "rx-data" || s == "tx-data")
+    if (s == "rx-data" || s == "tx-data" || s == "data" || s == "data-read" || s == "data-write")
         LOG_F(INFO, "Got %s: %s", *annString, *data->ann_text);
     
     nlohmann::json tmp;
