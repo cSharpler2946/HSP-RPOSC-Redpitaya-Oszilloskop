@@ -181,6 +181,8 @@ export default {
 
             uPlot.orient(u, sidx, (series, dataX, dataY, scaleX, scaleY, valToPosX, valToPosY, xOff, yOff, xDim, yDim, moveTo, lineTo, rect) => {
                 if(!self.renderAnnotation(scaleX.min, scaleX.max)){
+                    // Render text "zoom in to see annotations"
+                    u.ctx.fillText("Please zoom in to see annotations", u.bbox.width / 2, u.bbox.height / 2);
                     return;
                 }
 
