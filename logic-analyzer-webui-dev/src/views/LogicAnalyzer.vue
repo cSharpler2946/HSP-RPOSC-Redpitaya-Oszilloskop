@@ -52,8 +52,9 @@
           <div class="chart-scroller-offset col-md-3 col-12"></div>
           <div class="chart col-md-9 col-12">
             <!-- <ChartScroller v-if="decoderChannels.length > 0" /> -->
-            <DataAnnotations
+            <DataAnnotations v-if="annotationData.annotations.length > 0"
                @uplot="persistChart"
+               :annotationData="annotationData"
             />
           </div>
         </div>
@@ -210,6 +211,7 @@ export default {
       ],
       logicSession: {},
       measuredData: { channelData: [] },
+      annotationData: { annotations: [] },
       uPlotCharts: [],
     };
   },
@@ -297,7 +299,7 @@ export default {
   },
   mounted() {
     // Build up WebSocket-Connection with RedPitaya in here.
-    this.redpitaya = new RedPitaya(
+    /*this.redpitaya = new RedPitaya(
        this.app_id,
        this.get_app_url,
        this.get_socket_url,
@@ -306,9 +308,10 @@ export default {
        this.decoderChannels,
        this.acquirerRequestedOptions,
        this.logicSession,
-       this.measuredData
-     );
-    this.redpitaya = new RedPitayaStub(this.decoders, this.requestedOptions, this.decoderChannels, this.acquirerRequestedOptions, this.logicSession, this.measuredData);
+       this.measuredData,
+       this.annotationData
+     );*/
+    this.redpitaya = new RedPitayaStub(this.decoders, this.requestedOptions, this.decoderChannels, this.acquirerRequestedOptions, this.logicSession, this.measuredData, this.annotationData);
     this.redpitaya.start();
   },
   components: {

@@ -57,3 +57,14 @@ export interface ChannelData {
     acqChannel: string,
     data: number[]
 }
+
+export interface AnnotationData {
+    annotations: AnnotationDefinition[]
+}
+
+export interface AnnotationDefinition {
+    annotationClass: string,
+    annotationText: string,
+    start: number,
+    end: number
+}
