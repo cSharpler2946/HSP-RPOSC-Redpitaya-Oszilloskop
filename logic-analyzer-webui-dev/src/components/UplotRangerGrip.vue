@@ -23,7 +23,6 @@ export default {
         min: null,
         max: null,
       },
-      maxValue: null,
       scrolling: {
         factor: 0,
         interval: null,
@@ -41,7 +40,13 @@ export default {
       }
     };
   },
-  props: ["uPlotCharts", "id"],
+  props: ["uPlotCharts", "id", "maxValue"],
+  watch: {
+    // TODO: watch "maxValue" and call setScale for each chart whenever maxValue changes
+    maxValue: function(newVal, oldVal){
+      console.log('Prop changed: ', newVal, ' | was: ', oldVal)
+    }
+  },
   methods: {
     createScrollNavigation: function(){
       let canvas = document.getElementById("scroll-navigation-canvas");
@@ -322,6 +327,8 @@ export default {
       }
     },
     onZoomStart(zoomIn){
+      console.log("zooming in:", this.scale);
+
       if(this.zooming.interval)
         return;
 
@@ -404,14 +411,16 @@ export default {
 
     this.createScrollNavigation();
 
-    this.setMaxValue();
+    // this.setMaxValue();
+
+    console.log("max value:", this.maxValue);
 
     this.initializeZoomEventListeners();
+
+    this.scale.min = 0;
+    this.scale.max = 60;
    
     for (let i = 0; i < this.uPlotCharts.length; i++) {
-        this.scale.min = 0;
-        this.scale.max = 60;
-
         this.uPlotCharts[i].setScale("x", this.scale);
     }
   },
