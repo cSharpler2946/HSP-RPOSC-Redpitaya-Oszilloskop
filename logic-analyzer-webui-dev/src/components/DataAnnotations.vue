@@ -23,6 +23,11 @@ export default {
   data () {
     return {
         uplot: null,
+        zoomInText: "Please zoom in to see annotations",
+        annotations:{
+            fill: "rgba(51, 187, 85, 0.7)",
+            stroke: "darkgreen",
+        }
     }
   },
   methods: {
@@ -47,10 +52,10 @@ export default {
         }
 
         const size  = opts.size  ?? [0.6, Infinity];
-        const align = opts.align ?? 0;
+        // const align = opts.align ?? 0;
 
-        const gapFactor = 1 - size[0];
-        const maxWidth  = (size[1] ?? inf) * pxRatio;
+        // const gapFactor = 1 - size[0];
+        // const maxWidth  = (size[1] ?? inf) * pxRatio;
 
         const fillPaths = new Map();
         const strokePaths = new Map();
@@ -181,8 +186,9 @@ export default {
 
             uPlot.orient(u, sidx, (series, dataX, dataY, scaleX, scaleY, valToPosX, valToPosY, xOff, yOff, xDim, yDim, moveTo, lineTo, rect) => {
                 if(!self.renderAnnotation(scaleX.min, scaleX.max)){
-                    // Render text "zoom in to see annotations"
-                    u.ctx.fillText("Please zoom in to see annotations", u.bbox.width / 2, u.bbox.height / 2);
+                    // Render zoomInText to indicate, that the user needs to zoom in to see any data annotations
+                    u.ctx.textAlign = "center";
+                    u.ctx.fillText(self.zoomInText, u.ctx.canvas.offsetWidth / 2, u.ctx.canvas.offsetHeight / 2);
                     return;
                 }
 
@@ -431,6 +437,7 @@ export default {
         let data = uPlot.join(dataFrames, dataFrames.map(f => [1,1]));
         this.unsetSameFutureValues(data);
 
+        const self = this;
         this.uplot = this.makeChart({
             fontColor: "black",
             series: [
@@ -439,14 +446,14 @@ export default {
                     },
                     {
                         label: "rtx",
-                        fill:  "rgba(51, 187, 85, 0.7)",
-                        stroke: "darkgreen",
+                        fill:  self.annotations.fill,
+                        stroke: self.annotations.stroke,
                         width: 2,
                     },
                     {
                         label: "rtx-data",
-                        fill:  "rgba(51, 187, 85, 0.7)",
-                        stroke: "darkgreen",
+                        fill:  self.annotations.fill,
+                        stroke: self.annotations.stroke,
                         width: 2,
                     }
                 ],
