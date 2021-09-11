@@ -53,6 +53,7 @@
           <div class="chart col-md-9 col-12">
             <!-- <ChartScroller v-if="decoderChannels.length > 0" /> -->
             <DataAnnotations
+              v-if="annotaions.length > 0"
                @uplot="persistChart"
             />
           </div>
