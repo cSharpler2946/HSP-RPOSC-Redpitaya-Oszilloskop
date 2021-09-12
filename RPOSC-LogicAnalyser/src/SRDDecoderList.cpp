@@ -17,6 +17,8 @@ void SRDDecoderList::Update() {
     vector<string> decoders;
     decoders.push_back("{\"id\": \"i2c\",\"name\": \"I2C\",\"longname\": \"I squared C\",\"desc\": \"Synchronous open drain protocol with one controller and many peripherals.\"}");
     decoders.push_back("{\"id\": \"uart\",\"name\": \"UART\",\"longname\": \"UART RS232\",\"desc\": \"Asynchronous point-to-point protocol. Very old.\"}");
+    decoders.push_back("{\"id\": \"can\",\"name\": \"CAN\",\"longname\": \"Controller Area Network\",\"desc\": \"Field bus protocol for distributed realtime control.\"}");
+
 
     //Update VALUE
     VALUE->Set(decoders);

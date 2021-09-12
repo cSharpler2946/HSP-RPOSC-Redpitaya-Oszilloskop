@@ -3,18 +3,18 @@
 </template>
 
 <script>
-import uPlot from "uplot";
-import "uplot/dist/uPlot.min.css";
+import uPlot from 'uplot';
+import 'uplot/dist/uPlot.min.css';
 
-import * as distr from "../libs/distr.js";
-import * as quadtree from "../libs/quadtree.js";
+import * as distr from '../libs/distr.js';
+import * as quadtree from '../libs/quadtree.js';
 
 const testAnnotations = require("./../../testing/test-annotations.json");
 const { round, min, max, ceil } = Math;
 const rampWidth = 10;
 
 function pointWithin(px, py, rlft, rtop, rrgt, rbtm) {
-  return px >= rlft && px <= rrgt && py >= rtop && py <= rbtm;
+    return px >= rlft && px <= rrgt && py >= rtop && py <= rbtm;
 }
 
 const chartOptions = {
@@ -371,8 +371,8 @@ export default {
 
       let hovered = Array(count).fill(null);
 
-      let yMids = Array(count).fill(0);
-      let ySplits = Array(count).fill(0);
+        let yMids = Array(count).fill(0);
+        let ySplits = Array(count).fill(0);
 
       return {
         hooks: {

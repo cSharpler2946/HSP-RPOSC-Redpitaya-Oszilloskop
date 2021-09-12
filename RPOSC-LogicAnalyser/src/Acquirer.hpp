@@ -7,5 +7,5 @@
 class Acquirer{
     public:
         virtual bool startAcq(){};
-        virtual vector<double> getData(int channel){};
+        virtual vector<float> getData(int channel){};
 };

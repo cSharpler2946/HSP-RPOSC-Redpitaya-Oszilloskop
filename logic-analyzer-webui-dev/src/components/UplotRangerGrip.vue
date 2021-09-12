@@ -1,8 +1,8 @@
 <template>
   <div class="chart-navigation">
     <div class="zoom-navigation">
-      <button ref="zoomInBtn" class="btn btn-small btn-primary">+</button>
-      <button ref="zoomOutBtn" class="btn btn-small btn-primary">-</button>
+      <button ref="zoomInBtn" class="zoomBtn">+</button>
+      <button ref="zoomOutBtn" class="zoomBtn">-</button>
     </div>
     
     <div id="scroll-navigation">
@@ -14,7 +14,6 @@
 <script>
 import uPlot from "uplot";
 import "uplot/dist/uPlot.min.css";
-import { sendMessage } from './worker-api';
 
 export default {
   name: "UplotRangerGrip",
@@ -28,10 +27,17 @@ export default {
       scrolling: {
         factor: 0,
         interval: null,
+        handle: {
+          color: "#1fb592",
+          width: 30
+        }
       },
       zooming: {
-        factor: 10,
+        factor: 0,
+        growthRate: 1,
+        maxGrowthRate: 10,
         interval: null,
+        minRange: 10,
       }
     };
   },
@@ -44,8 +50,8 @@ export default {
       canvas.height = 20;
       canvas.width = document.getElementById("scroll-navigation").offsetWidth;
 
-      const handleWidth = 30;
-      const handleFill = "#1fb592";
+      const handleWidth = this.scrolling.handle.width;
+      const handleFill = this.scrolling.handle.color;
       let handle = null;
       let dragEnabled = false;
       let offsetX;
@@ -170,15 +176,25 @@ export default {
           clear();
           drawHandle(handle.x);
 
-          // IDEA: Make exponential function to calculate scrolling factor
-          this.scrolling.factor = (handle.x - centerX);
-          if (this.scrolling.factor > 100){
-            this.scrolling.factor = 100;
-          }
-          if (this.scrolling.factor < -100){
-            this.scrolling.factor = -100;
+          // this should never happen and the check is just in case.
+          // if this value would be '0', it would result in errors in the lines below
+          if((handle.x - centerX) === 0){
+            return;
           }
 
+          let scrollWidth = this.scale.max - this.scale.min;
+          let sign = handle.x - centerX > 0 ? 1 : -1;
+
+          // calc how much percentage from center to left/right the handler was dragged.
+          let scrollInputValue = (handle.x - centerX) > 0 ? 
+          ((handle.x + handle.width / 2 - centerX) / centerX) : 
+          (((centerX - handle.x + handle.width / 2) / centerX) * -1);
+
+          // calc and set the scroll value
+          let scrollValue = sign * Math.pow(scrollWidth, Math.abs(scrollInputValue)) / 10;
+          this.scrolling.factor = ~~(scrollValue * 100) / 100;
+
+          // call the actual scroll method
           if(!this.scrolling.interval){
             const self = this;
             this.scrolling.interval = setInterval(function() {
@@ -232,18 +248,16 @@ export default {
       registerEventlisteners();
     },
     onScrollChart: function(){
-      let dx = this.scrolling.factor;
-
       for (let i = 0; i < this.uPlotCharts.length; i++) {
 
-        let min = this.uPlotCharts[i].scales.x.min;
-        let max = this.uPlotCharts[i].scales.x.max;
+        if (this.scrolling.factor < 0 && this.scale.min <= 0) 
+          return;
 
-        if (dx < 0 && min <= 0) return;
-        if (dx > 0 && max >= this.maxValue) return;
+        if (this.scrolling.factor > 0 && this.scale.max >= this.maxValue) 
+          return;
 
-        this.scale.min = this.clampValue(min + dx);
-        this.scale.max = this.clampValue(max + dx);
+        this.scale.min = this.clampValue(this.scale.min + this.scrolling.factor);
+        this.scale.max = this.clampValue(this.scale.max + this.scrolling.factor);
 
         this.uPlotCharts[i].setScale("x", this.scale);
       }
@@ -254,18 +268,28 @@ export default {
 
       for (let i = 0; i < this.uPlotCharts.length; i++) {
 
-        let min = this.uPlotCharts[i].scales.x.min;
-        let max = this.uPlotCharts[i].scales.x.max;
+        let min = this.scale.min;
+        let max = this.scale.max;
+
+        // calc growthRate
+        this.zooming.growthRate = (max - min) / 100;
+        this.zooming.growthRate = this.zooming.growthRate > this.zooming.maxGrowthRate ? 
+                                  this.zooming.maxGrowthRate : 
+                                  this.zooming.growthRate;
 
         if(zoomIn) {
-
           // clamp minimal zoom range
-          if(max - min <= 10) {
+          if (((max - zoomFactor) - (min + zoomFactor)) + 1 <= this.zooming.minRange) {
+
+            this.zooming.factor = 0;
+            this.zooming.growthRate = 1;
+
             return;
           }
-
-          this.scale.min = this.clampValue(min + zoomFactor);
-          this.scale.max = this.clampValue(max - zoomFactor);
+          else{
+            this.scale.min = this.clampValue(min + zoomFactor);
+            this.scale.max = this.clampValue(max - zoomFactor);
+          }
         }
         else {
           this.scale.min = this.clampValue(min - zoomFactor);
@@ -297,53 +321,84 @@ export default {
           });
       }
     },
+    onZoomStart(zoomIn){
+      if(this.zooming.interval)
+        return;
+
+      const self = this;
+      this.zooming.interval = setInterval(function () {
+        self.onZoomChart(zoomIn);
+        self.zooming.factor += self.zooming.growthRate;
+      }, 100)
+    },
+    onZoomEnd(){
+      if(!this.zooming.interval)
+          return;
+
+      clearInterval(this.zooming.interval);
+      this.zooming.interval = null;
+    },
     initializeZoomEventListeners: function(){
       const self = this;
+
+      // Mouse
       this.$refs['zoomInBtn'].addEventListener('mousedown', function (e) {
-      if(self.zooming.interval)
-        return;
+        e.preventDefault();
+        e.stopPropagation();
 
-      // self.onZoomChart(true);
-      self.zooming.interval = setInterval(function () {
-        self.onZoomChart(true);
-        self.zooming.factor += 10;
-      }, 100)
-    });
+        self.onZoomStart(true);
+      });
 
-    this.$refs['zoomInBtn'].addEventListener('mouseup', function (e) {
-      if(!self.zooming.interval)
-        return;
+      this.$refs['zoomInBtn'].addEventListener('mouseup', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
 
-      clearInterval(self.zooming.interval);
-      self.zooming.interval = null;
-      self.zooming.factor = 10;
-    });
+        self.onZoomEnd();
+      });
 
-    this.$refs['zoomOutBtn'].addEventListener('mousedown', function (e) {
-      if(self.zooming.interval)
-        return;
+      this.$refs['zoomOutBtn'].addEventListener('mousedown', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
 
-      // self.onZoomChart(false);
-      self.zooming.interval = setInterval(function () {
-        self.onZoomChart(false);
-        self.zooming.factor += 10;
-      }, 100)
-    });
+        self.onZoomStart(false);
+      });
 
-    this.$refs['zoomOutBtn'].addEventListener('mouseup', function (e) {
-      if(!self.zooming.interval)
-        return;
+      this.$refs['zoomOutBtn'].addEventListener('mouseup', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
 
-      clearInterval(self.zooming.interval);
-      self.zooming.interval = null;
-      self.zooming.factor = 10;
-    });
+        self.onZoomEnd();
+      });
 
+      // Touch
+      this.$refs['zoomInBtn'].addEventListener('touchstart', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        self.onZoomStart(true);
+      });
+
+      this.$refs['zoomInBtn'].addEventListener('touchend', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        self.onZoomEnd();
+      });
+
+      this.$refs['zoomOutBtn'].addEventListener('touchstart', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        self.onZoomStart(false);
+      });
+
+      this.$refs['zoomOutBtn'].addEventListener('touchend', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        self.onZoomEnd();
+      });
     },
-    postMessage() {
-      sendMessage('Hello world!');
-    }
-
   },
   mounted() {
 
@@ -358,7 +413,6 @@ export default {
         this.scale.max = 60;
 
         this.uPlotCharts[i].setScale("x", this.scale);
-        console.log(this.uPlotCharts[i].scales);
     }
   },
   components: {
@@ -383,8 +437,8 @@ export default {
   justify-content: center;
 }
 
-.zoom-navigation > button{
-  margin-right: 10px;
+.zoom-navigation > button {
+  margin: 0 5px;
   width: 25px;
   height: 25px;
   border-radius: 50%;
@@ -392,6 +446,14 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: #1fb592;
+  color: black;
+  border: 1px solid black;
+  line-height: 0;
+
+  &:hover {
+    box-shadow: 0 0 0 5px rgba(28, 247, 196, 0.3), 
+  }
 }
 
 *, *:before, *:after {
@@ -406,49 +468,4 @@ export default {
   background-color: dimgray;
   border-radius: 10px;
 }
-
-
-// .joystick-base {
-//     margin: 20px 0 20px 0;
-//     position: relative;
-//     height: 116px;
-//     width: 116px;
-//     border-radius: 100%;
-//     border: 10px solid rgba(#08c, 0.1);
-//     background: rgba(#08c, 0.05);
-//     box-shadow: 0 0 15px rgba(#000, 0.5) inset,
-//         0 0 5px rgba(#000, 0.2);
-//     transition: border-color 0.3s;
-//     cursor: pointer;
-//     touch-action: none;
-//     -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
-    
-//     &:hover, &.active {
-//         border-color: rgba(#08c, 0.2);
-        
-//         .joystick-shaft {
-//             background: rgba(#08c, 0.35);
-//         }
-//     }
-    
-//     &.active {
-//         background: rgba(#08c, 0.1);
-//     }
-// }
-
-// .joystick-shaft {
-//     position: absolute;
-//     top: calc(50% - 32px);
-//     left: calc(50% - 32px);
-//     height: 64px;
-//     width: 64px;
-//     border-radius: 100%;
-//     background: rgba(#08c, 0.25);
-//     box-shadow: 0 0 5px rgba(#000, 0.7) inset;
-//     transition: background 0.3s;
-//     will-change: transform;
-//     touch-action: none;
-//     -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
-// }
-
 </style>

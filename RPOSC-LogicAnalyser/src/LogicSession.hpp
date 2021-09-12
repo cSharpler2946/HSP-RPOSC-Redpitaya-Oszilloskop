@@ -10,6 +10,7 @@
 #include "AllOptionsValid.hpp"
 #include "AnnotationData.hpp"
 #include "../lib/nlohmann/jsonWrapper.hpp"
+#include "ChosenDecoder.hpp"
 
 enum MeasurementState{
     stopped,
@@ -25,7 +26,7 @@ NLOHMANN_JSON_SERIALIZE_ENUM(MeasurementState, {
 
 class LogicSession: public PContainer {
     public:
-        LogicSession(std::string name, CBaseParameter::AccessMode am, std::string defaultVal, int fpga_update, srd_session *_srdSession, srd_decoder_inst **_decoderInst, Acquirer *_acquirer, AllOptionsValid *_allOptionsValid, SRDChannelMap *_channelMap, MeasuredData *_measuredData, AnnotationData *_annotationData, ACQChoosenOptions *_acqChoosenOptions);
+        LogicSession(std::string name, CBaseParameter::AccessMode am, std::string defaultVal, int fpga_update, srd_session *_srdSession, srd_decoder_inst **_decoderInst, Acquirer *_acquirer, AllOptionsValid *_allOptionsValid, SRDChannelMap *_channelMap, MeasuredData *_measuredData, std::vector<SContainer*> *_sContainerList, ACQChoosenOptions *_acqChoosenOptions);
         void Update();
         void OnNewInternal();
         void runMeasurement();
@@ -36,6 +37,6 @@ class LogicSession: public PContainer {
         srd_session *srdSession;
         srd_decoder_inst **decoderInst;
         MeasuredData *measuredData;
-        AnnotationData *annotationData;
+        std::vector<SContainer*> *sContainerList;
         ACQChoosenOptions *acqChoosenOptions;
 };
