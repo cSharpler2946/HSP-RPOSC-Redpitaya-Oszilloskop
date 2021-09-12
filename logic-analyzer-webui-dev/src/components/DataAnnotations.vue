@@ -555,7 +555,7 @@ export default {
   },
   mounted() {
     // Read from test-annotations.json
-    let singleBits = testAnnotations.map(item => {
+    /*let singleBits = testAnnotations.map(item => {
             if(item.annotationClass === "rx-data"){
                 return;
             }
@@ -599,9 +599,9 @@ export default {
 
         this.uplot = this.makeChart(chartOptions, data);
         this.uplot.redraw();
-        this.uplot.setScale("x", {min: 0, max: 60});
+        this.uplot.setScale("x", {min: 0, max: 60});*/
 
-    /*console.log("annotation data: ", this.annotationData);
+    console.log("annotation data: ", this.annotationData);
     var groupedAnnotationData = this.groupBy(
       this.annotationData.annotations,
       "annotationClass"
@@ -660,7 +660,7 @@ export default {
 
     var options = chartOptions;
     options.series = chartSeriesOptions;
-    this.uplot = this.makeChart(options, uplotInput);*/
+    this.uplot = this.makeChart(options, uplotInput);
 
     window.addEventListener("resize", (e) => {
       this.uplot.setSize(this.getSize());

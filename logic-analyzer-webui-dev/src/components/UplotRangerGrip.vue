@@ -44,7 +44,12 @@ export default {
   watch: {
     // TODO: watch "maxValue" and call setScale for each chart whenever maxValue changes
     maxValue: function(newVal, oldVal){
-      console.log('Prop changed: ', newVal, ' | was: ', oldVal)
+      console.log('Prop changed: ', newVal, ' | was: ', oldVal);
+      this.scale.min = 0;
+      this.scale.max = newVal;
+      for (let i = 0; i < this.uPlotCharts.length; i++) {
+        this.uPlotCharts[i].setScale("x", this.scale);
+      }
     }
   },
   methods: {
@@ -377,15 +382,10 @@ export default {
         self.onZoomEnd();
       });
 
-==== BASE ====
     },
     postMessage() {
       sendMessage('Hello world!');
     }
-==== BASE ====
-
-==== BASE ====
-==== BASE ====
   },
   mounted() {
 
