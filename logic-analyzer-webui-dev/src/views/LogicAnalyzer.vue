@@ -67,6 +67,7 @@
               v-if="decoderChannels.length > 0"
               :id="generate_uid"
               :uPlotCharts="uPlotCharts"
+              :maxValue="maxValue"
             />
           </div>
         </div>
@@ -213,6 +214,7 @@ export default {
       measuredData: { channelData: [] },
       annotationData: { annotations: [] },
       uPlotCharts: [],
+      maxValue: 60,
     };
   },
   computed: {
@@ -244,7 +246,15 @@ export default {
         console.log(this.acquirerRequestedOptions.availableChannels.reduce((dataByChannel, channel) => (dataByChannel[channel] = [], dataByChannel), {}));
         return this.acquirerRequestedOptions.availableChannels.reduce((dataByChannel, channel) => (dataByChannel[channel] = [], dataByChannel), {})
       }
-      return this.measuredData.channelData.reduce((dataByChannel, channel) => (dataByChannel[channel.acqChannel] = channel.data, dataByChannel), {})
+      let data = this.measuredData.channelData.reduce((dataByChannel, channel) => (dataByChannel[channel.acqChannel] = channel.data, dataByChannel), {})
+
+      // set the max value new, after new measured data come in
+      for(var key in data){
+        if (data[key].length > this.maxValue)
+          this.maxValue = data[key].length;
+      }
+
+      return data;
     },
   },
   methods: {

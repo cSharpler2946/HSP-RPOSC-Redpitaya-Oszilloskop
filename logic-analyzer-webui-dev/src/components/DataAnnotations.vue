@@ -337,7 +337,10 @@ export default {
             rect
           ) => {
             if (!self.renderAnnotation(scaleX.min, scaleX.max)) {
-              return;
+                // Render zoomInText to indicate, that the user needs to zoom in to see any data annotations
+                u.ctx.textAlign = "center";
+                u.ctx.fillText(self.zoomInText, u.ctx.canvas.offsetWidth / 2, u.ctx.canvas.offsetHeight / 2);
+                return;
             }
 
             let strokeWidth = round((series.width || 0) * pxRatio);
@@ -546,6 +549,10 @@ export default {
       }
     },
   },
+  updated(){
+      console.log("Annotations got updated");
+        this.uplot.redraw();
+  },
   mounted() {
     // Read from test-annotations.json
     let singleBits = testAnnotations.map(item => {
@@ -591,6 +598,8 @@ export default {
         this.unsetSameFutureValues(data);
 
         this.uplot = this.makeChart(chartOptions, data);
+        this.uplot.redraw();
+        this.uplot.setScale("x", {min: 0, max: 60});
 
     /*console.log("annotation data: ", this.annotationData);
     var groupedAnnotationData = this.groupBy(
