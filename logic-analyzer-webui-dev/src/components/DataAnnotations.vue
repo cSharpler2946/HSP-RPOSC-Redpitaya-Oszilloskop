@@ -55,56 +55,8 @@ export default {
   },
   watch: {
     annotationData: {
-      handler: function (newAnnotationData) {
-        console.log("annotation data: ", this.annotationData);
-              var groupedAnnotationData = this.groupBy(this.annotationData.annotations, "annotationClass");
-              console.log("grouped annotation data: ", groupedAnnotationData)
-              var indices = Object.values(groupedAnnotationData).flatMap(annotations => annotations.map(annotation => annotation.start));
-              indices.sort((x, y) => x - y); //We need to give a comparison function, because JS sorts numbers lexicographically by default.
-              indices = indices.filter(function (e, i, a) { return e !== a[i - 1] }); //taken from https://stackoverflow.com/a/61974900.
-              console.log("indices", indices);
-              var annotationsByStart = {};
-              for(var annotationClass in groupedAnnotationData) {
-                  annotationsByStart[annotationClass] = new Map(groupedAnnotationData[annotationClass].map(annotation => [annotation.start, annotation]));
-              }
-              console.log("annotations by start: ", annotationsByStart);
-              var timeSeriesByAnnotationClass = {};
-              for(var annotationClass in annotationsByStart) {
-                  timeSeriesByAnnotationClass[annotationClass] = [];
-                  indices.forEach(index => {
-                    if(annotationsByStart[annotationClass].has(index)) {
-                        timeSeriesByAnnotationClass[annotationClass].push(annotationsByStart[annotationClass].get(index).annotationText);
-                    }
-                    else {
-                        timeSeriesByAnnotationClass[annotationClass].push(undefined);
-                    }
-                  })
-              }
-              console.log("timeSeriesByAnnotationClass: ", timeSeriesByAnnotationClass);
-
-              var uplotInput = [];
-              var chartSeriesOptions = [];
-
-              uplotInput.push(indices);
-              chartSeriesOptions.push({ label: "annotations" });
-              for(var annotationClass in timeSeriesByAnnotationClass) {
-                  uplotInput.push(timeSeriesByAnnotationClass[annotationClass]);
-                  chartSeriesOptions.push(
-                      {
-                          label: annotationClass,
-                          fill:  "rgba(51, 187, 85, 0.7)",
-                          stroke: "darkgreen",
-                          width: 2,
-                      }
-                  );
-              }
-
-              console.log("uplot input: ", uplotInput);
-              console.log("chart series options: ", chartSeriesOptions);
-
-              var options = chartOptions;
-              options.series = chartSeriesOptions;
-              this.uplot = this.makeChart(options, uplotInput);
+      handler: function () {
+        this.renderAnnotations();
       },
       deep: true,
     },
@@ -135,12 +87,6 @@ export default {
           draw(i, laneOffPx, laneWidPx);
         });
       }
-
-      const size = opts.size ?? [0.6, Infinity];
-      const align = opts.align ?? 0;
-
-      const gapFactor = 1 - size[0];
-      const maxWidth = (size[1] ?? inf) * pxRatio;
 
       const fillPaths = new Map();
       const strokePaths = new Map();
@@ -249,7 +195,7 @@ export default {
             lineTo,
             rect
           ) => {
-            if (!self.renderAnnotation(scaleX.min, scaleX.max)) {
+            if (!self.renderAnnotationsEnabled(scaleX.min, scaleX.max)) {
               return;
             }
 
@@ -338,7 +284,7 @@ export default {
             lineTo,
             rect
           ) => {
-            if (!self.renderAnnotation(scaleX.min, scaleX.max)) {
+            if (!self.renderAnnotationsEnabled(scaleX.min, scaleX.max)) {
                 // Render zoomInText to indicate, that the user needs to zoom in to see any data annotations
                 u.ctx.textAlign = "center";
                 u.ctx.fillText("Zoom in to see annotations", u.ctx.canvas.offsetWidth / 2, u.ctx.canvas.offsetHeight / 2);
@@ -543,12 +489,66 @@ export default {
         height: Object.keys(this.groupedAnnotationData).length * 30 + 50,
       };
     },
-    renderAnnotation: function (min, max) {
+    renderAnnotationsEnabled: function (min, max) {
       if (max - min > 80) {
         return false;
       } else {
         return true;
       }
+    },
+    getUplotAnnotations(){
+      console.debug("annotation data: ", this.annotationData);
+      this.groupedAnnotationData = this.groupBy(this.annotationData.annotations, "annotationClass");
+
+      let annotationDataArr = [];
+      for (let annotationGroupName in this.groupedAnnotationData) {
+
+        let texts = [];
+        let indices = [];
+
+        let annotationGroup = this.groupedAnnotationData[annotationGroupName];
+        for (let i = 0; i < annotationGroup.length; i++) {
+          texts.push(annotationGroup[i].annotationText);
+          indices.push(annotationGroup[i].start);
+
+          if(annotationGroup[i + 1] && annotationGroup[i].end != annotationGroup[i + 1].start){
+            // push null, if the end of an annotation was reached to mark the ending of it.
+            // otherwise, the annotation would be drawn until another annotation is hit.
+            texts.push(null);
+            indices.push(annotationGroup[i].end);
+          }
+          else if (!annotationGroup[i + 1]){
+            // push null at the end of the annotationGroup to mark the "finish line"
+            texts.push(null);
+            indices.push(annotationGroup[i].end);
+          }
+        }
+
+        annotationDataArr.push([indices, texts]);
+      }
+      
+      let annotationData = uPlot.join(annotationDataArr, annotationDataArr.map(f => [1,1]));
+      return annotationData;
+    },
+    renderAnnotations() {  
+      const annotations = this.getUplotAnnotations();
+
+      var chartSeriesOptions = [];
+      chartSeriesOptions.push({ label: "annotations" });
+      for (var annotationClass in this.groupedAnnotationData) {
+        chartSeriesOptions.push({
+          label: annotationClass,
+          fill: "rgba(51, 187, 85, 0.7)",
+          stroke: "darkgreen",
+          width: 2,
+        });
+      }
+
+      console.log("chartSeriesOptions:", chartSeriesOptions);
+
+      var options = chartOptions;
+      options.series = chartSeriesOptions;
+      this.uplot = this.makeChart(options, annotations);
     },
   },
   updated(){
@@ -556,66 +556,7 @@ export default {
         this.uplot.redraw();
   },
   mounted() {
-    console.log("annotation data: ", this.annotationData);
-    this.groupedAnnotationData = this.groupBy(
-      this.annotationData.annotations,
-      "annotationClass"
-    );
-    console.log("grouped annotation data: ", this.groupedAnnotationData);
-    var indices = Object.values(this.groupedAnnotationData).flatMap((annotations) =>
-      annotations.flatMap((annotation) => [annotation.start, annotation.end])
-    );
-    indices.sort((x, y) => x - y); //We need to give a comparison function, because JS sorts numbers lexicographically by default.
-    indices = indices.filter(function (e, i, a) {
-      return e !== a[i - 1];
-    }); //taken from https://stackoverflow.com/a/61974900.
-    console.log("indices", indices);
-    var annotationsByStart = {};
-    for (var annotationClass in this.groupedAnnotationData) {
-      annotationsByStart[annotationClass] = new Map(
-        this.groupedAnnotationData[annotationClass].map((annotation) => [
-          annotation.start,
-          annotation,
-        ])
-      );
-    }
-    console.log("annotations by start: ", annotationsByStart);
-    var timeSeriesByAnnotationClass = {};
-    for (var annotationClass in annotationsByStart) {
-      timeSeriesByAnnotationClass[annotationClass] = [];
-      indices.forEach((index) => {
-        if (annotationsByStart[annotationClass].has(index)) {
-          timeSeriesByAnnotationClass[annotationClass].push(
-            annotationsByStart[annotationClass].get(index).annotationText
-          );
-        } else {
-          timeSeriesByAnnotationClass[annotationClass].push(null);
-        }
-      });
-    }
-    console.log("timeSeriesByAnnotationClass: ", timeSeriesByAnnotationClass);
-
-    var uplotInput = [];
-    var chartSeriesOptions = [];
-
-    uplotInput.push(indices);
-    chartSeriesOptions.push({ label: "annotations" });
-    for (var annotationClass in timeSeriesByAnnotationClass) {
-      uplotInput.push(timeSeriesByAnnotationClass[annotationClass]);
-      chartSeriesOptions.push({
-        label: annotationClass,
-        fill: "rgba(51, 187, 85, 0.7)",
-        stroke: "darkgreen",
-        width: 2,
-      });
-    }
-
-    console.log("uplot input: ", uplotInput);
-    console.log("chart series options: ", chartSeriesOptions);
-
-    var options = chartOptions;
-    options.series = chartSeriesOptions;
-    this.uplot = this.makeChart(options, uplotInput);
+    this.renderAnnotations();
 
     window.addEventListener("resize", (e) => {
       this.uplot.setSize(this.getSize());
