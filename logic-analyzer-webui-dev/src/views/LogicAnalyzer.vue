@@ -151,7 +151,7 @@
             role="tabpanel"
             aria-labelledby="nav-decoded-data-tab"
           >
-            <DecodedData />
+            <DecodedData :annotationData="annotationData" />
           </div>
           <div
             class="tab-pane fade"

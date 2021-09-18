@@ -332,8 +332,6 @@ export default {
       }
     },
     onZoomStart(zoomIn){
-      console.log("zooming in:", this.scale);
-
       if(this.zooming.interval)
         return;
 
@@ -390,10 +388,6 @@ export default {
   mounted() {
 
     this.createScrollNavigation();
-
-    // this.setMaxValue();
-
-    console.log("max value:", this.maxValue);
 
     this.initializeZoomEventListeners();
 

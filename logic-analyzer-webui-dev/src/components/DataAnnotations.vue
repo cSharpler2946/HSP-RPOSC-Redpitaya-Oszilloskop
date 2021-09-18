@@ -46,6 +46,8 @@ export default {
   data() {
     return {
       uplot: null,
+      groupedAnnotationData: null,
+      zoomInText: "Zoom in to see annotations"
     };
   },
   props: {
@@ -54,7 +56,7 @@ export default {
   watch: {
     annotationData: {
       handler: function (newAnnotationData) {
-        /*console.log("annotation data: ", this.annotationData);
+        console.log("annotation data: ", this.annotationData);
               var groupedAnnotationData = this.groupBy(this.annotationData.annotations, "annotationClass");
               console.log("grouped annotation data: ", groupedAnnotationData)
               var indices = Object.values(groupedAnnotationData).flatMap(annotations => annotations.map(annotation => annotation.start));
@@ -102,7 +104,7 @@ export default {
 
               var options = chartOptions;
               options.series = chartSeriesOptions;
-              this.uplot = this.makeChart(options, uplotInput);*/
+              this.uplot = this.makeChart(options, uplotInput);
       },
       deep: true,
     },
@@ -339,7 +341,7 @@ export default {
             if (!self.renderAnnotation(scaleX.min, scaleX.max)) {
                 // Render zoomInText to indicate, that the user needs to zoom in to see any data annotations
                 u.ctx.textAlign = "center";
-                u.ctx.fillText(self.zoomInText, u.ctx.canvas.offsetWidth / 2, u.ctx.canvas.offsetHeight / 2);
+                u.ctx.fillText("Zoom in to see annotations", u.ctx.canvas.offsetWidth / 2, u.ctx.canvas.offsetHeight / 2);
                 return;
             }
 
@@ -538,7 +540,7 @@ export default {
     getSize: function () {
       return {
         width: document.getElementById("dataAnnotations").offsetWidth,
-        height: 150,
+        height: Object.keys(this.groupedAnnotationData).length * 30 + 50,
       };
     },
     renderAnnotation: function (min, max) {
@@ -554,61 +556,14 @@ export default {
         this.uplot.redraw();
   },
   mounted() {
-    // Read from test-annotations.json
-    /*let singleBits = testAnnotations.map(item => {
-            if(item.annotationClass === "rx-data"){
-                return;
-            }
-            
-            return item.start
-        });
-        let singleAnnotations = testAnnotations.map(item => {
-            if(item.annotationClass === "rx-data"){
-                return;
-            }
-
-            return item.annotationText
-        });
-
-        let dataBits = testAnnotations.map(item => {
-            if(item.annotationClass !== "rx-data"){
-                return;
-            }
-            
-            return item.start
-        });
-        let dataAnnotaions = testAnnotations.map(item => {
-            if(item.annotationClass !== "rx-data"){
-                return;
-            }
-
-            return item.annotationText
-        });
-        let dataFrames = [ 
-            [singleBits, singleAnnotations],
-            [dataBits, dataAnnotaions]
-        ];
-
-        console.log("data before join: ", dataFrames);
-
-        let data = uPlot.join(dataFrames, dataFrames.map(f => [1,1]));
-
-        console.log("data after join: ", data);
-
-        this.unsetSameFutureValues(data);
-
-        this.uplot = this.makeChart(chartOptions, data);
-        this.uplot.redraw();
-        this.uplot.setScale("x", {min: 0, max: 60});*/
-
     console.log("annotation data: ", this.annotationData);
-    var groupedAnnotationData = this.groupBy(
+    this.groupedAnnotationData = this.groupBy(
       this.annotationData.annotations,
       "annotationClass"
     );
-    console.log("grouped annotation data: ", groupedAnnotationData);
-    var indices = Object.values(groupedAnnotationData).flatMap((annotations) =>
-      annotations.map((annotation) => annotation.start)
+    console.log("grouped annotation data: ", this.groupedAnnotationData);
+    var indices = Object.values(this.groupedAnnotationData).flatMap((annotations) =>
+      annotations.flatMap((annotation) => [annotation.start, annotation.end])
     );
     indices.sort((x, y) => x - y); //We need to give a comparison function, because JS sorts numbers lexicographically by default.
     indices = indices.filter(function (e, i, a) {
@@ -616,9 +571,9 @@ export default {
     }); //taken from https://stackoverflow.com/a/61974900.
     console.log("indices", indices);
     var annotationsByStart = {};
-    for (var annotationClass in groupedAnnotationData) {
+    for (var annotationClass in this.groupedAnnotationData) {
       annotationsByStart[annotationClass] = new Map(
-        groupedAnnotationData[annotationClass].map((annotation) => [
+        this.groupedAnnotationData[annotationClass].map((annotation) => [
           annotation.start,
           annotation,
         ])
@@ -634,7 +589,7 @@ export default {
             annotationsByStart[annotationClass].get(index).annotationText
           );
         } else {
-          timeSeriesByAnnotationClass[annotationClass].push(undefined);
+          timeSeriesByAnnotationClass[annotationClass].push(null);
         }
       });
     }
