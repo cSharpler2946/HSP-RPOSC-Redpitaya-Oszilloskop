@@ -19,7 +19,6 @@
 #include "ACQRequestedOptions.hpp"
 #include "SRDChosenOptions.hpp"
 #include "SRDChannelMap.hpp"
-#include "LogicSession.hpp"
 
 #ifdef __cplusplus
 extern "C" {

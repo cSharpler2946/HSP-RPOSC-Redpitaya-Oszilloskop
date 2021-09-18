@@ -13,4 +13,5 @@ public:
     void OnNewInternal() override;
     srd_decoder_inst **decoderInst;
     AllOptionsValid *allOptionsValid;
+    static std::map<std::string, std::string> chosenOptions;
 };

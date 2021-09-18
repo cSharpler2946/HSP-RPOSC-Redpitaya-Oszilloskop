@@ -43,7 +43,7 @@
           :channelId="index"
           :channelName="channelName"
           :decoderChannels="decoderChannels"
-          :channelData="decodedData"
+          :channelData="measuredDataByChannel[channelName]"
           v-on:decoder-channel-changed="onDecoderChannelChanged"
           @uplot="persistChart"
         />
@@ -210,6 +210,7 @@ export default {
         },
       ],
       logicSession: {},
+      measuredData: { channelData: [] },
       uPlotCharts: [],
     };
   },
@@ -233,6 +234,16 @@ export default {
           (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
         ).toString(16)
       );
+    },
+    measuredDataByChannel() {
+      console.log("measured data by channel has changed");
+      console.log(this.measuredData.channelData.reduce((dataByChannel, channel) => (dataByChannel[channel.acqChannel] = channel.data, dataByChannel), {}));
+      if(this.measuredData.channelData.length === 0) {
+        console.log("no measured data yet.");
+        console.log(this.acquirerRequestedOptions.availableChannels.reduce((dataByChannel, channel) => (dataByChannel[channel] = [], dataByChannel), {}));
+        return this.acquirerRequestedOptions.availableChannels.reduce((dataByChannel, channel) => (dataByChannel[channel] = [], dataByChannel), {})
+      }
+      return this.measuredData.channelData.reduce((dataByChannel, channel) => (dataByChannel[channel.acqChannel] = channel.data, dataByChannel), {})
     },
   },
   methods: {
@@ -280,21 +291,25 @@ export default {
       return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c => (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16));
     },
     persistChart: function(e){
+      console.log("persist chart called:");
+      console.log(e);
       this.uPlotCharts.push(e);
     }
   },
   mounted() {
     // Build up WebSocket-Connection with RedPitaya in here.
-    /*this.redpitaya = new RedPitaya(
+    //this.redpitaya = new RedPitayaStub(this.decoders, this.requestedOptions, this.decoderChannels, this.acquirerRequestedOptions, this.logicSession);
+    this.redpitaya = new RedPitaya(
        this.app_id,
        this.get_app_url,
        this.get_socket_url,
        this.decoders,
        this.requestedOptions,
        this.decoderChannels,
-       this.acquirerRequestedOptions
-     );*/
-    this.redpitaya = new RedPitayaStub(this.decoders, this.requestedOptions, this.decoderChannels, this.acquirerRequestedOptions, this.logicSession);
+       this.acquirerRequestedOptions,
+       this.logicSession,
+       this.measuredData
+     );
     this.redpitaya.start();
   },
   components: {

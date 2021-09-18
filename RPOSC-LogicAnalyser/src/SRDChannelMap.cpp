@@ -27,8 +27,8 @@ void SRDChannelMap::OnNewInternal() {
         channelMap.insert(std::pair<std::string, std::string>(srdC, acqC)); //Test if this really returns strings
     }
 
-    bool valid = false;
-    GSList * i;
+    bool valid = true;
+    /*GSList * i;
     if (!(*decoderInst)->decoder->channels) { //No required channels
         for (i = (*decoderInst)->decoder->opt_channels; i; i = i->next) //Look if one opt channel is set
         {
@@ -55,7 +55,7 @@ void SRDChannelMap::OnNewInternal() {
         }
     }
 
-    LOG_F(INFO, "Setting channelMapValidty to %d", valid);
+    LOG_F(INFO, "Setting channelMapValidty to %d", valid);*/
     allOptionsValid->setChannelMapValidity(valid);
 }
 
