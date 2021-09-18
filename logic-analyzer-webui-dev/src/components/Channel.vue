@@ -9,13 +9,11 @@
                   {{ channelId }}
               </div>
 
-              <div @dblclick="edit = true" class="col-8 channel d-flex align-items-center">
-                  <div v-show="edit == false">
-                      <label> {{ channelName }}</label>
-                      <div class="selected-decoder-channel"><strong>selected:</strong> {{ decoderChannel ?? '-' }}</div>
-                  </div>
-                  <input class="form-control" v-show="edit == true" v-model="channelName" :maxlength="maxCharacters"
-                  v-on:blur="edit=false; $emit('update')" @keyup.enter="edit=false; $emit('update')">
+              <div class="col-8 channel d-flex align-items-center">
+                <div>
+                  <label> {{ channelName }}</label>
+                  <div class="selected-decoder-channel"><strong>selected:</strong> {{ decoderChannel ?? '-' }}</div>
+                </div>
               </div>
 
               <div class="col-2 channel-settings d-flex align-items-center">
@@ -74,7 +72,6 @@ import UplotChart from './UplotChart';
 
 import { Options, Vue } from 'vue-class-component';
 import { PropType } from 'vue';
-const measureData = require("./../../testing/test-data.json");
 
 @Options({
   name: 'Channel',
@@ -85,7 +82,6 @@ const measureData = require("./../../testing/test-data.json");
       channelSettingComponents: [],
       decoderChannel: null,
       selected: null,
-      edit: false,
       chartOptions: {
           height: 100,
           strokeColor: "#0eb5b5",
