@@ -23,7 +23,6 @@ export default {
         min: null,
         max: null,
       },
-      maxValue: null,
       scrolling: {
         factor: 0,
         interval: null,
@@ -41,7 +40,18 @@ export default {
       }
     };
   },
-  props: ["uPlotCharts", "id"],
+  props: ["uPlotCharts", "id", "maxValue"],
+  watch: {
+    // TODO: watch "maxValue" and call setScale for each chart whenever maxValue changes
+    maxValue: function(newVal, oldVal){
+      console.log('Prop changed: ', newVal, ' | was: ', oldVal);
+      this.scale.min = 0;
+      this.scale.max = newVal;
+      for (let i = 0; i < this.uPlotCharts.length; i++) {
+        this.uPlotCharts[i].setScale("x", this.scale);
+      }
+    }
+  },
   methods: {
     createScrollNavigation: function(){
       let canvas = document.getElementById("scroll-navigation-canvas");
@@ -370,48 +380,21 @@ export default {
         self.onZoomEnd();
       });
 
-      // Touch
-      this.$refs['zoomInBtn'].addEventListener('touchstart', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-
-        self.onZoomStart(true);
-      });
-
-      this.$refs['zoomInBtn'].addEventListener('touchend', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-
-        self.onZoomEnd();
-      });
-
-      this.$refs['zoomOutBtn'].addEventListener('touchstart', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-
-        self.onZoomStart(false);
-      });
-
-      this.$refs['zoomOutBtn'].addEventListener('touchend', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-
-        self.onZoomEnd();
-      });
     },
+    postMessage() {
+      sendMessage('Hello world!');
+    }
   },
   mounted() {
 
     this.createScrollNavigation();
 
-    this.setMaxValue();
-
     this.initializeZoomEventListeners();
+
+    this.scale.min = 0;
+    this.scale.max = 60;
    
     for (let i = 0; i < this.uPlotCharts.length; i++) {
-        this.scale.min = 0;
-        this.scale.max = 60;
-
         this.uPlotCharts[i].setScale("x", this.scale);
     }
   },

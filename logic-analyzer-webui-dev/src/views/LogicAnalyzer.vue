@@ -52,9 +52,9 @@
           <div class="chart-scroller-offset col-md-3 col-12"></div>
           <div class="chart col-md-9 col-12">
             <!-- <ChartScroller v-if="decoderChannels.length > 0" /> -->
-            <DataAnnotations
-              v-if="annotaions.length > 0"
+            <DataAnnotations v-if="annotationData.annotations.length > 0"
                @uplot="persistChart"
+               :annotationData="annotationData"
             />
           </div>
         </div>
@@ -67,6 +67,7 @@
               v-if="decoderChannels.length > 0"
               :id="generate_uid"
               :uPlotCharts="uPlotCharts"
+              :maxValue="maxValue"
             />
           </div>
         </div>
@@ -150,7 +151,7 @@
             role="tabpanel"
             aria-labelledby="nav-decoded-data-tab"
           >
-            <DecodedData />
+            <DecodedData :annotationData="annotationData" />
           </div>
           <div
             class="tab-pane fade"
@@ -211,7 +212,9 @@ export default {
       ],
       logicSession: {},
       measuredData: { channelData: [] },
+      annotationData: { annotations: [] },
       uPlotCharts: [],
+      maxValue: 60,
     };
   },
   computed: {
@@ -243,7 +246,15 @@ export default {
         console.log(this.acquirerRequestedOptions.availableChannels.reduce((dataByChannel, channel) => (dataByChannel[channel] = [], dataByChannel), {}));
         return this.acquirerRequestedOptions.availableChannels.reduce((dataByChannel, channel) => (dataByChannel[channel] = [], dataByChannel), {})
       }
-      return this.measuredData.channelData.reduce((dataByChannel, channel) => (dataByChannel[channel.acqChannel] = channel.data, dataByChannel), {})
+      let data = this.measuredData.channelData.reduce((dataByChannel, channel) => (dataByChannel[channel.acqChannel] = channel.data, dataByChannel), {})
+
+      // set the max value new, after new measured data come in
+      for(var key in data){
+        if (data[key].length > this.maxValue)
+          this.maxValue = data[key].length;
+      }
+
+      return data;
     },
   },
   methods: {
@@ -298,8 +309,7 @@ export default {
   },
   mounted() {
     // Build up WebSocket-Connection with RedPitaya in here.
-    //this.redpitaya = new RedPitayaStub(this.decoders, this.requestedOptions, this.decoderChannels, this.acquirerRequestedOptions, this.logicSession);
-    this.redpitaya = new RedPitaya(
+    /*this.redpitaya = new RedPitaya(
        this.app_id,
        this.get_app_url,
        this.get_socket_url,
@@ -308,8 +318,10 @@ export default {
        this.decoderChannels,
        this.acquirerRequestedOptions,
        this.logicSession,
-       this.measuredData
-     );
+       this.measuredData,
+       this.annotationData
+     );*/
+    this.redpitaya = new RedPitayaStub(this.decoders, this.requestedOptions, this.decoderChannels, this.acquirerRequestedOptions, this.logicSession, this.measuredData, this.annotationData);
     this.redpitaya.start();
   },
   components: {

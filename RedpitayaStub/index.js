@@ -139,6 +139,9 @@ var measuredData = [
     }
 ]
 
+const testAnnotations = require("./test-annotations.json");
+
+
 wsServer.on("request", function(request) {
     if (!originIsAllowed(request.origin)) {
       // Make sure we only accept requests from an allowed origin
@@ -245,6 +248,8 @@ function stm_doStep() {
             dataToSend.parameters["LOGIC_SESSION"] = { value: JSON.stringify({ "measurementState": "stopped" }) };
             measuredDataJsonRepr = measuredData.map(JSON.stringify);
             dataToSend.signals["MEASURED_DATA"] = { value: measuredDataJsonRepr }
+            annotationsJsonRepr = testAnnotations.map(JSON.stringify);
+            dataToSend.signals["ANNOTATION_DATA"] = { value: annotationsJsonRepr }
             send_data();
             state = "UserSetsOptions";
     }
