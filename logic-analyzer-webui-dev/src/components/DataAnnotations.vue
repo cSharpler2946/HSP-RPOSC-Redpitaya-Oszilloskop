@@ -9,8 +9,7 @@ import 'uplot/dist/uPlot.min.css';
 import * as distr from '../libs/distr.js';
 import * as quadtree from '../libs/quadtree.js';
 
-const testAnnotations = require("./../../testing/test-annotations.json");
-const { round, min, max, ceil } = Math;
+const { round } = Math;
 const rampWidth = 10;
 
 function pointWithin(px, py, rlft, rtop, rrgt, rbtm) {
@@ -19,26 +18,9 @@ function pointWithin(px, py, rlft, rtop, rrgt, rbtm) {
 
 const chartOptions = {
   fontColor: "black",
-  series: [
-    {
-      label: "annotations",
-    },
-    {
-      label: "rtx",
-      fill: "rgba(51, 187, 85, 0.7)",
-      stroke: "darkgreen",
-      width: 2,
-    },
-    {
-      label: "rtx-data",
-      fill: "rgba(51, 187, 85, 0.7)",
-      stroke: "darkgreen",
-      width: 2,
-    },
-  ],
   size: [0.9, 100],
-  fill: (seriesIdx, dataIdx, value) => "rgba(0, 255, 0, 0.2)",
-  stroke: (seriesIdx, dataIdx, value) => "rgba(0, 200, 0)",
+  fill: () => "rgba(0, 255, 0, 0.2)",
+  stroke: () => "rgba(0, 200, 0)",
 };
 
 export default {
@@ -454,6 +436,15 @@ export default {
           markers: {
             width: 0,
           },
+        },
+        cursor: {
+          bind: {
+            mouseup: () => {},
+            mousedown: () => {},
+          },
+          sync: {
+            key: 0,
+          }
         },
         series: o.series,
         plugins: [

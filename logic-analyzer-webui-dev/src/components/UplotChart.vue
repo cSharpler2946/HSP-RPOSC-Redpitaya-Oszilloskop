@@ -101,9 +101,14 @@ export default {
 							stroke: (u, seriesIdx)       => u.series[seriesIdx].points.stroke(u, seriesIdx) + '90',
 							fill:   (u, seriesIdx)       => "#fff",
 						},
+            bind: {
+              mouseup: () => {},
+              mousedown: () => {},
+            },
 						sync: {
 							key: 0,
-						}
+						},
+            y: false,
 					},
 					scales: {
 						x: {
