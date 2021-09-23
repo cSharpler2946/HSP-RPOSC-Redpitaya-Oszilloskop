@@ -1,0 +1,18 @@
+@import "./variables";
+
+@mixin link() {
+  color: $linkColor;
+  text-decoration: none;
+  &:link {
+    color: $linkColor;
+  }
+  &:visited {
+    color: $linkColor;
+  }
+  &:hover {
+    color: $linkColorHover;
+  }
+  &:active {
+    color: $linkColor;
+  }
+}

@@ -1,0 +1,125 @@
+#include "AnalogAcquirer.hpp"
+//#include <sstream>
+/* TODO: Hier ACQChoosenOptions object das im Konstruktor übergeben wird nehmen und entsprechen in startAcquire auf fpga image setzen
+* Vor Starten die SetSrdMetadata starten, die von Florian geschrieben wurde..
+* Dann das acquirieren starten und wenn fertig boolean mit true zurück geben, wenn irgendein Fehler, dann false
+* Variablen entsprechend anpassen und public setzen (werden in UI angezeigt)
+* Datentypen sind std::string und alles was mehrdimensional ist vectoren
+* Defaultwerte für Konstruktorparameters.
+* keine Werte wie sampleRate setzen, da die beim Start aus ChoosenOptions geholt werden.
+* möglichen Werte aus header aussuchen und reinschreiben (z.B. supportedSampleRates)
+*/
+
+   // the choosen options and vectors to write the samples in
+   std::vector<float> acquiredDataChannelA;
+   std::vector<float> acquiredDataChannelB;
+   ACQChoosenOptions *choosenOptions;
+
+   //internal values to check if the acquisition is successfully finished
+   bool acquisitionPending = false;
+   bool acquisitionComplete = false;
+   uint32_t previousWritePointer = 0;
+   //CBooleanParameter startAcquisition("START_ACQUISITION", CBaseParameter::AccessMode::RW, false, false);
+
+  // base constructor with default parameters
+  //Acquirer::Acquirer(int sampleRate = 1, int decimation = 1, int pinState = 1, ACQChoosenOptions *choosenOptions = new ACQChoosenOptions()){}
+  AnalogAcquirer::AnalogAcquirer(){}
+  AnalogAcquirer::AnalogAcquirer(ACQChoosenOptions *_choosenOptions)
+  {
+    choosenOptions = _choosenOptions;
+  }
+
+  // sets all the needed parameters and starts the acquisition
+  bool AnalogAcquirer::startAcq()
+  {
+
+    // LOOB BACK FROM OUTPUT of channel 1 - ONLY FOR TESTING
+    // Delete if it works!!
+    rp_GenReset();
+    rp_GenFreq(RP_CH_1, 20000.0);
+    rp_GenAmp(RP_CH_1, 10);
+    rp_GenWaveform(RP_CH_1, RP_WAVEFORM_SINE);
+    rp_GenOutEnable(RP_CH_1);
+
+    // needed variables
+    uint32_t writePointer;
+    rp_AcqGetWritePointer(&writePointer);
+
+    // clear the vector
+    acquiredDataChannelA.clear();
+    acquiredDataChannelB.clear();
+    // SetSrdMetadata();
+    LOG_F(INFO, "cleared channel vectors");
+
+    // do all the initialization stuff for the Acquisition
+    rp_AcqReset();
+    LOG_F(INFO, "reset acquiring");
+    rp_AcqSetDecimation((rp_acq_decimation_t)choosenOptions->decimation);
+    rp_AcqSetGain(rp_channel_t(0),rp_pinState_t(choosenOptions->gainPerChannel[0]));
+    rp_AcqSetGain(rp_channel_t(1),rp_pinState_t(choosenOptions->gainPerChannel[1]));
+    LOG_F(INFO, "set data, start acquisition now!!");
+    rp_AcqStart();
+    usleep(choosenOptions->sampleTime);   //wait as long as the acquisition should take
+
+    // set the triggersrc to now so trigger is triggered now!!
+    rp_AcqSetTriggerSrc(RP_TRIG_SRC_NOW);
+    // wait for the buffer to be completely written
+
+    rp_acq_trig_state_t state = RP_TRIG_STATE_TRIGGERED;
+
+    while(1){
+      rp_AcqGetTriggerState(&state);
+      if(state == RP_TRIG_STATE_TRIGGERED){
+      sleep(1);
+      break;
+      }
+    }
+    acquisitionComplete = true;
+
+    LOG_F(INFO, "Write acquired data to arrays");
+    // write the acquired data into the vectors
+    // therefore create temp buffer array
+    float buffA[choosenOptions->sampleCount];
+    float buffB[choosenOptions->sampleCount];
+    if(acquisitionComplete){
+      acquisitionComplete = false;
+      rp_AcqGetLatestDataV(rp_channel_t(0), &choosenOptions->sampleCount, buffA); //Chaned from Oldest to Latest data
+      rp_AcqGetLatestDataV(rp_channel_t(1), &choosenOptions->sampleCount, buffB);
+
+      // multiply with the probe attenuation
+      if(1 != choosenOptions->probeAttenuation[0] ||  1 != choosenOptions->probeAttenuation[0]) {
+        for(int i = 0; i<choosenOptions->sampleCount;i++) {
+          buffA[i] *= (float)choosenOptions->probeAttenuation[0];
+          buffB[i] *= (float)choosenOptions->probeAttenuation[1];
+        }
+      }
+      
+      //write data into the vectors
+      vector<float> a(buffA, buffA+sizeof buffA / sizeof buffA[0]);
+      acquiredDataChannelA = a;
+      vector<float> b(buffB, buffB+sizeof buffB / sizeof buffB[0]);
+      acquiredDataChannelB = b;
+    }
+
+    LOG_F(INFO, "check arrays and return result");
+    // check if vectors are filled with data
+    if(!acquiredDataChannelA.empty() && !acquiredDataChannelB.empty())
+    {
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
+  vector<float> AnalogAcquirer::getData(int channel)
+  {
+    // get data from specified channel. The acquiredDataChannel vectors contain as much valued as defined in choosenOptions.sampleCount
+    vector<double> a(acquiredDataChannelA.begin(), acquiredDataChannelA.end());
+    vector<double> b(acquiredDataChannelB.begin(), acquiredDataChannelB.end());
+    switch (channel) {
+      case 0: return acquiredDataChannelA;
+      case 1: return acquiredDataChannelA;
+      default: return vector<float>();
+    }
+  }
