@@ -224,28 +224,31 @@ export default {
           onMousedown(e.clientX, e.clientY);
         });
         window.addEventListener('mouseup', function(e){
-          e.preventDefault();
-          e.stopPropagation();
+          // e.preventDefault();
+          // e.stopPropagation();
           onMouseup();
         });
         window.addEventListener('mousemove', function(e){
-          e.preventDefault();
-          e.stopPropagation();
+          // e.preventDefault();
+          // e.stopPropagation();
           onMousemove(e.clientX);
         });
         canvas.addEventListener('touchstart', function(e){
-          e.preventDefault();
-          e.stopPropagation();
+          // e.preventDefault();
+          // e.stopPropagation();
+          console.log("Touchstart");
           onMousedown(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
         });
         window.addEventListener('touchend', function(e){
-          e.preventDefault();
-          e.stopPropagation();
+          // e.preventDefault();
+          // e.stopPropagation();
+          console.log("Touchend");
           onMouseup();
         });
         window.addEventListener('touchmove', function(e){
-          e.preventDefault();
-          e.stopPropagation();
+          // e.preventDefault();
+          // e.stopPropagation();
+          console.log("touchmove");
           onMousemove(e.changedTouches[0].clientX);
         });
 
@@ -380,9 +383,35 @@ export default {
         self.onZoomEnd();
       });
 
-    },
-    postMessage() {
-      sendMessage('Hello world!');
+       // Mouse
+      this.$refs['zoomInBtn'].addEventListener('touchstart', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        self.onZoomStart(true);
+      });
+
+      this.$refs['zoomInBtn'].addEventListener('touchend', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        self.onZoomEnd();
+      });
+
+      this.$refs['zoomOutBtn'].addEventListener('touchstart', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        self.onZoomStart(false);
+      });
+
+      this.$refs['zoomOutBtn'].addEventListener('touchend', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        self.onZoomEnd();
+      });
+
     }
   },
   mounted() {
